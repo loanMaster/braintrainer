@@ -17,8 +17,8 @@ defineProps({ rating: Number })
   text-shadow: 2px 1px black;
 }
 .c-star-inactive {
-  opacity: 0.2;
-  color: darkgray;
+  opacity: 0.3;
+  color: lightyellow;
   text-shadow: 2px 1px black;
 }
 </style>

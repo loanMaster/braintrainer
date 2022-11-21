@@ -1,11 +1,9 @@
 import {defineStore} from 'pinia';
 import {PersistenceService} from "src/shared-services/persistence.service";
 import {v4 as uuidv4} from 'uuid'
-import {i18n} from "boot/i18n";
 import {LETTERS} from "src/const/letters";
-import {NavService} from "src/router/nav.service";
 import {calculateScore} from "src/util/calculate-score";
-import {Composer, useI18n} from "vue-i18n";
+import {Composer} from "vue-i18n";
 
 const refractoryTime = 500;
 const maxRefractoryTime = 1500;

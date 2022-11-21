@@ -1,16 +1,19 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-
+  <q-layout view="hHh lpR fFf" class="column">
     <q-header elevated class="bg-primary text-white ">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <q-icon name="psychology" size="2rem"/>
           </q-avatar>
-          Title
+          Braintrainer
         </q-toolbar-title>
-        <q-space ></q-space>
+        <q-space class="desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('PLAY')" class="q-ml-sm q-px-md desktop-only" />
+        <q-btn flat dense no-wrap no-caps :label="$t('HIGHSCORES')" class="q-ml-sm q-px-md desktop-only" />
+        <q-btn flat dense no-wrap no-caps :label="$t('DOCUMENTATION')" class="q-ml-sm q-px-md desktop-only" />
+        <q-space class="desktop-only"/>
         <div>
           <q-btn flat round dense icon="language" class="q-mr-xs" />
           <q-menu>
@@ -57,9 +60,10 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="column flex-auto">
       <router-view />
     </q-page-container>
+
 
   </q-layout>
 </template>

@@ -1,23 +1,19 @@
 <template>
-  <div class="c-wrapper">
-    <span>{{ store.exercise.totalStrikeCount }}❌</span>
+  <div class="c-wrapper no-pointer-events row flex-center text-negative">
+    <span>{{ store.exercise.totalStrikeCount }}</span><q-icon name="close"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useAppStore} from "stores/app-store";
+import {useAppStore} from "stores/app-store";s
 const store = useAppStore();
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .c-wrapper {
-  display: flex;
-  align-items: center;
   font-size: 2.5rem;
-  user-select: none;
-  color: red;
 }
-@media screen and (max-width: 992px) {
+@media screen and (max-width: $breakpoint-sm) {
   .c-wrapper {
     font-size: 1.5rem;
   }

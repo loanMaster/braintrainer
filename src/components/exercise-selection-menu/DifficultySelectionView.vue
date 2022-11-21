@@ -1,13 +1,14 @@
 <template>
-  <div class="g-game-container user-select-none">
-    <h1 class="text-center mb-2 mt-4">{{ $t(nameOfTheGame) }}</h1>
-    <h2 class="text-center mt-2 mb-2">{{ $t('Select difficulty') }}</h2>
-    <div class="c-game-selection-container mt-2">
+    <q-toolbar class="bg-accent text-white">
+      <q-toolbar-title>{{ $t(nameOfTheGame) }}</q-toolbar-title>
+    </q-toolbar>
+    <div class="full-width text-center q-ma-sm">
+    <h4>{{ $t('Select difficulty') }}</h4>
+    <div>
       <div v-for="difficulty in difficulties" class="c-difficulty-selection-buttons" :key="difficulty" >
-        <button class="btn btn-outline-dark text-center g-flex-1 position-relative" @click="selectDifficulty(difficulty)">
-          <Stars :rating="getStars(difficulty)" class="c-stars"/>
-          {{ $t(difficulty) }}
-        </button>
+          <q-btn color="primary" class="shadow-5 q-ma-sm" rounded :label="$t(difficulty)" @click="selectDifficulty(difficulty)">
+          <StarsRating :rating="getStars(difficulty)" class="c-stars q-ml-xs"/>
+          </q-btn>
       </div>
     </div>
   </div>
@@ -69,38 +70,6 @@ function startGame () {
 </script>
 
 <style scoped>
-.c-game-selection-container {
-  margin: auto;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-}
-
-@media screen and (max-width: 992px) and (orientation: landscape) {
-  .c-game-selection-container {
-    width: 60%;
-  }
-}
-
-@media screen and (max-width: 992px) and (orientation: portrait) {
-  .c-game-selection-container {
-    width: 90%;
-  }
-}
-.c-stars {
-  font-size: 1.5rem;
-  position: absolute;
-  right: 3px;
-}
-
-.c-difficulty-selection-buttons {
-  min-width: 50%;
-  display: flex;
-  padding: 10px;
-  justify-content: center;
-}
-
 @media screen and (max-width: 992px) and (orientation: landscape) {
   .c-stars {
     font-size: 1rem;

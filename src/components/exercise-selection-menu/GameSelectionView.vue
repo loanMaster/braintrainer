@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center full-width">
+  <div class="text-center full-width q-mb-sm">
     <div class="bg-secondary q-pt-sm q-pb-md">
       <h1>BrainTrainer</h1>
       <h3>{{ $t('Improve your visualization skills and short term memory')}}</h3>
@@ -7,20 +7,11 @@
         <q-btn color="primary text-center text-h5" rounded :label="$t('Start your daily training')" @click="startDailyTraining"/>
       </div>
     </div>
-    <h2 class="text-center mt-4">{{ $t('Select an exercise')}}</h2>
+    <h2 class="text-center">{{ $t('Select an exercise')}}</h2>
     <div>
       <div v-for="game in games" :key="game" class="q-mx-auto text-center ">
         <q-btn color="primary" class="shadow-5 q-ma-sm" rounded :label="$t(game)" @click="selectGame(game)"/>
       </div>
-    </div>
-    <div class="mt-4">
-      <h2>{{ $t('More apps') }}</h2>
-      <OtherSites/>
-    </div>
-
-    <div class="mt-4 pb-4">
-      <h2>{{ $t('Donate') }}</h2>
-      <DonationLinks/>
     </div>
   </div>
 </template>
@@ -86,47 +77,3 @@ function onNameEntered (name: string) {
   }
 }
 </script>
-
-<style scoped lang="scss">
-.c-content {
-  max-width: $breakpoint-sm-max
-}
-
-.c-game-selection-container {
-  margin-top: 24px;
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-}
-
-.c-game-list {
-  min-width: 50%;
-  display: flex;
-  padding: 10px;
-  justify-content: flex-start;
-}
-
-@media screen and (max-width: 660px) {
-  .c-game-selection-container {
-    flex-direction: column;
-    margin-top: 12px;
-  }
-}
-
-.c-game-selection-button {
-  position: relative;
-  flex: 1;
-}
-@media screen and (max-width: 992px) and (orientation: portrait) {
-  .c-game-list, .c-game-selection-container {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 992px) {
-  .c-game-selection-button {
-    width: 100%;
-    text-align: left;
-  }
-}
-</style>

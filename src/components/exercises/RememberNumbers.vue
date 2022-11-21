@@ -1,25 +1,28 @@
 <template>
-  <div class="g-game-container" @click="containerClicked">
+  <div class="column flex-auto">
     <ExerciseHeader
       @repeat="repeat"
-      ref="exerciseHeader"
     />
-    <div class="g-exercise-content" ref="core-exercise">
-      <div ref="buttons" class="mb-2">
-        <NumPad :disabled="inputDisabled" @button-click="onNumberEntered"/>
+    <div class="column justify-center column flex-auto content-center" @click="containerClicked">
+      <div ref="numpad" class="relative-position">
+       <NumPadWithDisplay  :input-disabled="inputDisabled" :input-value="inputValue" @button-click="onNumberEntered"/>
       </div>
-      <input :value="inputValue" disabled class="c-input-field g-medium-font">
     </div>
   </div>
+  <q-footer class="bg-accent text-white no-pointer-events">
+    <q-toolbar>
+      <q-toolbar-title>Footer</q-toolbar-title>
+    </q-toolbar>
+  </q-footer>
 </template>
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services//tween.service'
 import { keyInput } from 'src/util/key.input'
-import NumPad from 'src/components/shared/NumPad.vue'
+import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue'
+import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue'
 import { takeUntil } from 'rxjs'
 import { SoundService } from 'src/shared-services//sound.service'
-import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue'
 import { ref, onBeforeMount, computed, onMounted, onBeforeUnmount } from 'vue'
 import {useAppStore} from "stores/app-store";
 import {exerciseUtils} from "components/exercises/exercise.utils";
@@ -44,7 +47,7 @@ const inputDisabled = ref(false) // -> to state
 const revealed = ref(false) // -> to state
 
 const destroy = new Subject<void>();
-const buttons = ref()
+const numpad = ref()
 
 const sequenceLength = computed(() => {
   return exerciseUtils.difficulty(route) === 'easy' ? 6 : exerciseUtils.difficulty(route) === 'normal' ? 8 : 10
@@ -75,11 +78,11 @@ onMounted(async () => {
       persistent: true
     }).onOk(async () => {
       inputDisabled.value = false
-      await new TweenService().fadeOut(buttons.value, 0)
+      await new TweenService().fadeOut(numpad.value, 0)
       nextQuestion()
     })
   } else {
-    await new TweenService().fadeOut(buttons.value, 0)
+    await new TweenService().fadeOut(numpad.value, 0)
     nextQuestion()
   }
 })
@@ -101,10 +104,10 @@ async function nextQuestion () {
     await exerciseUtils.finishExercise()
     return
   }
-  await new TweenService().fadeOut(buttons.value)
+  await new TweenService().fadeOut(numpad.value)
   store.$patch(store => store.exercise.strikes = 0)
   createTask()
-  await new TweenService().fadeIn(buttons.value)
+  await new TweenService().fadeIn(numpad.value)
   await playAudio()
   inputDisabled.value = false
 }
@@ -134,7 +137,7 @@ async function onNumberEntered (num: number) {
     if (currentIndex === sequenceLength.value) {
       inputDisabled.value = true
       store.$patch((state) => state.exercise.correctAnswers++)
-      new TweenService().fadeOut(buttons.value)
+      new TweenService().fadeOut(numpad.value)
       new SoundService().playSuccess()
       await exerciseUtils.wait(100)
       nextQuestion()
@@ -146,7 +149,7 @@ async function onNumberEntered (num: number) {
         reveal()
       }
     }
-    new TweenService().wiggle(buttons.value)
+    new TweenService().wiggle(numpad.value)
   }
 }
 
@@ -166,24 +169,18 @@ function containerClicked () {
   }
 }
 
-async function repeat () {
+store.$subscribe((mutation: SubscriptionCallbackMutation<any>) => {
+  if ((mutation as SubscriptionCallbackMutationPatchObject<any>).payload &&
+    (mutation as SubscriptionCallbackMutationPatchObject<any>).payload.pause !== undefined) {
+    soundService.pause(store.exercise.paused || false)
+  }
+})
+
+async function repeat() {
   if (!soundService.isPlaying()) {
     inputDisabled.value = true
     await playAudio()
     inputDisabled.value = false
   }
 }
-
-store.$subscribe((mutation: SubscriptionCallbackMutation<any>, state) => {
-  if ((mutation as SubscriptionCallbackMutationPatchObject<any>).payload &&
-    (mutation as SubscriptionCallbackMutationPatchObject<any>).payload.pause !== undefined) {
-    soundService.pause(store.exercise.paused || false)
-  }
-})
 </script>
-
-<style scoped>
-.c-input-field {
-  max-width: 80%;
-}
-</style>
