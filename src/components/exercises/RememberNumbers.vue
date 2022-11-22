@@ -23,30 +23,19 @@ import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay
 import { takeUntil } from 'rxjs'
 import { SoundService } from 'src/shared-services//sound.service'
 import { ref, Ref, onBeforeMount, computed, onMounted, onBeforeUnmount } from 'vue'
-import {useAppStore} from "stores/app-store";
 import {exerciseUtils} from "components/exercises/exercise.utils";
-import { Subject } from 'rxjs'
-import {useRoute} from "vue-router";
-import {SubscriptionCallbackMutation, SubscriptionCallbackMutationPatchObject} from "pinia";
-import {useQuasar} from "quasar";
-import {useI18n} from "vue-i18n";
-import {repeatX} from "components/exercises/register-defaults";
-
-const store = useAppStore()
-const $q = useQuasar()
-const { t } = useI18n()
+import {createExerciseContext} from "components/exercises/register-defaults";
 
 let currentIndex = 0
 const inputValue = ref('')
-const route = useRoute()
 
 const currentAudio: Ref<{ src: string; val: number }[]> = ref([])
 
-const soundService = new SoundService()
-const inputDisabled = ref(false)
-const revealed = ref(false)
+const { soundService, revealed, destroy, $q, t, route, store, inputDisabled, containerClicked, repeat } = createExerciseContext({
+  playAudioCb: () => playAudio(),
+  nextQuestionCb: () => nextQuestion(),
+})
 
-const destroy = new Subject<void>();
 const numpad = ref()
 
 const sequenceLength = computed(() => {
@@ -78,12 +67,6 @@ onMounted(async () => {
     inputDisabled.value = false
     nextQuestion()
   })
-})
-
-onBeforeUnmount(() => {
-  soundService.stop()
-  destroy.next()
-  destroy.complete()
 })
 
 async function nextQuestion () {
@@ -155,28 +138,4 @@ const solution = computed(() => {
   }
   return temp
 })
-
-function containerClicked () {
-  if (revealed.value) {
-    nextQuestion()
-  }
-}
-
-store.$subscribe((mutation: SubscriptionCallbackMutation<any>) => {
-  if ((mutation as SubscriptionCallbackMutationPatchObject<any>).payload &&
-    (mutation as SubscriptionCallbackMutationPatchObject<any>).payload.pause !== undefined) {
-    soundService.pause(store.pause || false)
-  }
-})
-
-async function repeat() {
-  if (!soundService.isPlaying()) {
-    const revealedWhenStarting = revealed.value
-    inputDisabled.value = true
-    await playAudio()
-    if (!revealedWhenStarting) {
-      inputDisabled.value = false
-    }
-  }
-}
 </script>
