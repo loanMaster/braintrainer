@@ -1,5 +1,8 @@
 <template>
   <h1 class="text-center mt-4">{{ $t('Your Scores') }}</h1>
+  <q-inner-loading :showing="!playerScores">
+    <q-spinner-gears size="4em" color="primary"/>
+  </q-inner-loading>
   <div v-if="playerScores">
     <table class="table table-borderless">
       <thead>
@@ -37,16 +40,13 @@ import { GAMES } from 'src/const/games'
 import StartRating from 'src/components/shared/StarsRating.vue'
 import { ref, Ref, onMounted, computed } from 'vue'
 import {useAppStore} from "stores/app-store";
-import {hideLoadingIndicator, showLoadingIndicator} from "src/util/loading-indicator";
 import {useQuasar} from "quasar";
 
 const playerScores: Ref<PlayerPercentiles | null> = ref(null)
 const $q = useQuasar()
 
 onMounted(async () => {
-  showLoadingIndicator($q)
   playerScores.value = await new ScoreService().fetchPlayerScores()
-  hideLoadingIndicator($q)
 })
 
 const scores = computed(() => {

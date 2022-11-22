@@ -2,7 +2,6 @@ import {newExercise, useAppStore} from "stores/app-store";
 import {getNameOfTheGame} from "src/util/game.name.helper";
 import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import {NavService} from "src/router/nav.service";
-import {calculateRating} from "src/util/calculate-rating";
 
 export const exerciseUtils = {
   wait: (time: number)  => new Promise(resolve => setTimeout(resolve, time)),
@@ -11,7 +10,7 @@ export const exerciseUtils = {
   finishExercise: () => {
     useAppStore().finishExercise()
     new NavService().navigateTo({
-      name: 'score'
+      name: 'score-screen'
     })
   },
   beginExercise: (numberOfQuestions: number) => {

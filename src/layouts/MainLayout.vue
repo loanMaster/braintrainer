@@ -10,9 +10,11 @@
           Braintrainer
         </q-toolbar-title>
         <q-space class="desktop-only"/>
-        <q-btn flat dense no-wrap no-caps :label="$t('PLAY')" class="q-ml-sm q-px-md desktop-only" />
-        <q-btn flat dense no-wrap no-caps :label="$t('HIGHSCORES')" class="q-ml-sm q-px-md desktop-only" />
-        <q-btn flat dense no-wrap no-caps :label="$t('DOCUMENTATION')" class="q-ml-sm q-px-md desktop-only" />
+
+        <q-btn flat dense no-wrap no-caps :label="$t('Play')" :to="`/play`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Your Scores')" :to="`/player-scores`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Documentation')" :to="`/documentation`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Highscores')" :to="`/highscores`" class="q-ml-sm q-px-md desktop-only"/>
         <q-space class="desktop-only"/>
         <div>
           <q-btn flat round dense icon="language" class="q-mr-xs" />

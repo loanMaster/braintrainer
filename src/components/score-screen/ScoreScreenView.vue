@@ -43,7 +43,6 @@ import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue'
 import {newExercise, useAppStore} from 'src/stores/app-store'
 import {useQuasar} from "quasar";
 import {useI18n} from "vue-i18n";
-import {hideLoadingIndicator, showLoadingIndicator} from "src/util/loading-indicator";
 
 const store = useAppStore()
 const $q = useQuasar()
@@ -74,7 +73,6 @@ onBeforeMount(() => {
 })
 
 onMounted(async () => {
-  showLoadingIndicator($q)
   if (store.exercise.fail) {
     new SoundService().playFail()
   } else {
@@ -95,7 +93,6 @@ onMounted(async () => {
       isNewHighScore: false
     }
   }
-  hideLoadingIndicator($q)
   new TweenService().fadeIn(stars.value as HTMLElement, 0.5)
   new TweenService().fadeIn(scores.value as HTMLElement, 0.5)
 })

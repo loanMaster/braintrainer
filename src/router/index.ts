@@ -16,3 +16,4 @@ export const router = createRouter({
 export default route(function (/* { store, ssrContext } */) {
   return router;
 });
+

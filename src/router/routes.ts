@@ -3,7 +3,9 @@ import DifficultySelectionView from 'src/components/exercise-selection-menu/Diff
 import RememberNumbers from 'src/components/exercises/RememberNumbers.vue'
 import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue'
 import GameSelectionView from 'src/components/exercise-selection-menu/GameSelectionView.vue'
-import ExerciseView from 'src/components/exercises/ExerciseView.vue'
+import HighscoresView from 'src/components/highscores/HighscoresView.vue'
+import DocumentationView from 'src/components/documentation/DocumentationView.vue'
+import PlayerScoresView from 'src/components/player-scores/PlayerScoresView.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,6 +13,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
         { path: '', component: GameSelectionView },
+        {
+          path: 'play',
+          name: 'gameselection',
+          component: GameSelectionView
+        },
         {
           path: 'play/:game',
           name: 'difficulty',
@@ -25,11 +32,24 @@ const routes: RouteRecordRaw[] = [
           path: '/score-screen',
           name: 'scorescreen',
           component: ScoreScreenView
+        },
+        {
+          path: '/highscores',
+          name: 'highscores',
+          component: HighscoresView
+        },
+        {
+          path: '/documentation',
+          name: 'DocumentationView',
+          component: DocumentationView
+        },
+        {
+          path: '/player-scores',
+          name: 'PlayerScores',
+          component: PlayerScoresView
         }
       ],
   },
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

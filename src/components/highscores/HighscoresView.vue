@@ -1,5 +1,8 @@
 <template>
   <h1 class="text-center mt-4">🎉 Highscores</h1>
+  <q-inner-loading :showing="!highscores">
+    <q-spinner-gears size="4em" color="primary"/>
+  </q-inner-loading>
   <div v-if="highscores">
     <table class="table table-borderless g-max-width-100">
       <thead>
@@ -33,16 +36,12 @@
 import { GAMES } from 'src/const/games'
 import {HighScoresDto, ScoreService} from "src/shared-services/score.service";
 import { ref, computed, onMounted, Ref } from 'vue'
-import {hideLoadingIndicator, showLoadingIndicator} from "src/util/loading-indicator";
 import {useQuasar} from "quasar";
 
 let highscores: Ref<HighScoresDto | null> = ref(null)
-const $q = useQuasar()
 
 onMounted(async () => {
-  showLoadingIndicator($q)
   highscores.value = await new ScoreService().fetchHighscores()
-  hideLoadingIndicator($q)
 })
 
 const games = computed(() => {

@@ -18,45 +18,66 @@ const preload = (src: string) => {
   })
 }
 
+const loadedSounds: { [key: string]: Howl } = {}
+
 export class SoundService {
-
-  static howlSuccess: Howl
-  static howlError: Howl
-  static howlFail: Howl
-  static howlFinished: Howl
-
   howls: Howl[] = []
   isPlayingSequence = false
   _isPlaying = false
   queue: Sound[] = []
   pausing: Subject<boolean> = new BehaviorSubject<boolean>(false)
-
+  private soundsToPreload: { [key: string]: string } = {
+    success: '/sounds/Menu1A.ogg',
+    error: '/sounds/negative_2.ogg',
+    fail: '/sounds/game_over_bad_chest.ogg',
+    finished: '/sounds/fuck2.ogg',
+  }
   constructor() {
-    if (!SoundService.howlSuccess) {
-      SoundService.howlSuccess = preload('/sounds/Menu1A.ogg')
-      SoundService.howlError = preload('/sounds/negative_2.ogg')
-      SoundService.howlFail = preload('/sounds/game_over_bad_chest.ogg')
-      SoundService.howlFinished = preload('/sounds/fuck2.ogg')
+    this.tryPreloadSounds()
+  }
+
+  tryPreloadSounds () {
+    if (this.isAudioContextRunning()) {
+      Object.keys(this.soundsToPreload).forEach(k => {
+        if (!loadedSounds[k]) {
+          loadedSounds[k] = preload(this.soundsToPreload[k])
+        }
+      })
     }
   }
 
-  isAudioContextRunning () {
-    return new AudioContext().state === "running"
+  private getSound(sound: string) {
+    if (!loadedSounds[sound]) {
+      loadedSounds[sound] = preload(this.soundsToPreload[sound])
+    }
+    return loadedSounds[sound]
   }
 
-  play (sound: Sound): Promise<void> {
+  isAudioContextRunning () {
+    try {
+      return new AudioContext().state === "running"
+    } catch (e) {
+      return false
+    }
+  }
+
+  async play (sound: Sound): Promise<void> {
+    this._isPlaying = true
+    await this.pausing.pipe(filter(p => !p), take(1)).toPromise()
+    const howl = new Howl({
+      src: [sound.audio ? 'data:audio/x-mp3;base64,' + sound.audio : sound.src as string],
+      autoplay: false,
+      loop: sound.loop || false,
+      html5: true
+    })
+    return this.playHowl(howl)
+  }
+
+  private playHowl (howl: Howl, loop = false): Promise<void> {
     this._isPlaying = true
     return new Promise(async (resolve) => {
-      await this.pausing.pipe(filter(p => !p), take(1)).toPromise()
-      const howl = new Howl({
-        src: [sound.audio ? 'data:audio/x-mp3;base64,' + sound.audio : sound.src as string],
-        autoplay: true,
-        loop: sound.loop || false,
-        html5: true
-      })
-      this.howls.push(howl)
       howl.on('end', () => {
-        if (!sound.loop) {
+        if (!loop) {
           this.howls.splice(this.howls.indexOf(howl), 1)
           this._isPlaying = false
           resolve()
@@ -67,6 +88,8 @@ export class SoundService {
         this._isPlaying = false
         resolve()
       })
+      this.howls.push(howl)
+      howl.play()
     })
   }
 
@@ -100,18 +123,18 @@ export class SoundService {
   }
 
   playSuccess () {
-    SoundService.howlSuccess.play()
+    return this.playHowl(this.getSound('success'))
   }
 
   playLevelFinished () {
-    SoundService.howlFinished.play()
+    return this.getSound('finished').play()
   }
 
   playFail () {
-    SoundService.howlFail.play()
+    return this.getSound('fail').play()
   }
 
   playError () {
-    SoundService.howlError.play()
+    return this.getSound('error').play()
   }
 }

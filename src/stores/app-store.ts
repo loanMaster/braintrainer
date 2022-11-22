@@ -5,8 +5,8 @@ import {LETTERS} from "src/const/letters";
 import {calculateScore} from "src/util/calculate-score";
 import {Composer} from "vue-i18n";
 
-const refractoryTime = 500;
-const maxRefractoryTime = 1500;
+const refractoryTime = 250;
+const maxRefractoryTime = 750;
 
 export interface Exercise {
   correctAnswers: number;
@@ -22,7 +22,6 @@ export interface Exercise {
   lastStrike: number;
   lastSuccessfulStrike: number;
   currentQuestion: number;
-  paused?: boolean;
   rating?: number;
   score?: number
 }
