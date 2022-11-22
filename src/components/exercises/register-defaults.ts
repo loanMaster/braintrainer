@@ -23,11 +23,12 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb }: { playAud
     destroy.complete()
   })
 
-  store.$subscribe((mutation: SubscriptionCallbackMutation<any>) => {
-    if ((mutation as SubscriptionCallbackMutationPatchObject<any>).payload &&
-      (mutation as SubscriptionCallbackMutationPatchObject<any>).payload.pause !== undefined) {
-      soundService.pause(store.pause || false)
-    }
+  store.$onAction(({ name, after }) => {
+    after(() => {
+      if (name === 'pause' || name === 'resume') {
+        soundService.pause(store.isPaused)
+      }
+    })
   })
 
   function containerClicked () {

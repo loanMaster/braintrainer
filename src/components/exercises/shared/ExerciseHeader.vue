@@ -41,6 +41,6 @@
   })
 
   function pause() {
-    store.$patch({pause: true})
+    store.pause()
   }
 </script>

@@ -22,19 +22,19 @@ import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue'
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue'
 import { takeUntil } from 'rxjs'
 import { SoundService } from 'src/shared-services//sound.service'
-import { ref, Ref, onBeforeMount, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue'
 import {exerciseUtils} from "components/exercises/exercise.utils";
 import {createExerciseContext} from "components/exercises/register-defaults";
-
-let currentIndex = 0
-const inputValue = ref('')
-
-const currentAudio: Ref<{ src: string; val: number }[]> = ref([])
 
 const { soundService, revealed, destroy, $q, t, route, store, inputDisabled, containerClicked, repeat } = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
 })
+
+let currentIndex = 0
+const inputValue = ref('')
+
+const currentAudio: Ref<{ src: string; val: number }[]> = ref([])
 
 const numpad = ref()
 
@@ -64,6 +64,7 @@ onMounted(async () => {
     ok: t('OK'),
     persistent: true
   }).onOk(async () => {
+    store.$patch(store => store.exercise.state = 'started')
     inputDisabled.value = false
     nextQuestion()
   })

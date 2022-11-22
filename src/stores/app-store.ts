@@ -16,7 +16,7 @@ export interface Exercise {
   fail: boolean;
   difficulty: string;
   nameOfTheGame: string;
-  finished: boolean;
+  state: 'created' | 'paused' | 'started' | 'finished';
   beginTimeStamp: number;
   totalStrikeCount: number;
   lastStrike: number;
@@ -34,7 +34,7 @@ export const newExercise = (nameOfTheGame: string, difficulty: string, totalQues
     fail: false,
     difficulty,
     nameOfTheGame,
-    finished: false,
+    state: 'created',
     beginTimeStamp: Date.now(),
     totalStrikeCount: 0,
     lastSuccessfulStrike: 0,
@@ -73,7 +73,6 @@ export interface IAppState {
   exercise: Exercise
   machineId: string
   dailyTraining: DailyTraining
-  pause: boolean
   _language: string
 }
 
@@ -137,7 +136,6 @@ export const useAppStore = defineStore('main', {
       machineId: new PersistenceService().fetch('machineId') || uuidv4(),
       players: players,
       dailyTraining: {active: false, results: [] as Exercise[]},
-      pause: false,
       exercise: newExercise('rememberNumbers', 'easy', 5),
       _language: getBrowserLanguage()
     } as IAppState
@@ -151,6 +149,9 @@ export const useAppStore = defineStore('main', {
     },
     letters (): string {
       return LETTERS[useAppStore().language as 'de'|'en'|'es']
+    },
+    isPaused (): boolean {
+      return this.exercise.state === 'paused'
     }
   },
   actions: {
@@ -233,9 +234,23 @@ export const useAppStore = defineStore('main', {
     },
     finishExercise() {
       this.exercise.duration = Date.now() - this.exercise.beginTimeStamp
-      this.exercise.finished = true
+      this.exercise.state = 'finished'
       this.exercise.score = calculateScore(this.exercise)
       this.exercise.rating = calculateRating(this.exercise)
+    },
+    pause (): boolean {
+      if (this.exercise.state === 'started') {
+        this.exercise.state = 'paused'
+        return true
+      }
+      return false
+    },
+    resume (): boolean {
+      if (this.exercise.state === 'paused') {
+        this.exercise.state = 'started'
+        return true
+      }
+      return false
     }
   }
 });

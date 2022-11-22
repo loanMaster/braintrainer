@@ -12,13 +12,13 @@ const store = useAppStore()
 const destroy = new Subject<void>();
 let timeElapsed = ref(0)
 
+let lastTick = Date.now()
 onMounted(() => {
-  let lastTick = Date.now()
-  interval(1000).pipe(takeUntil(destroy)).subscribe(() => {
-    //if (!store.pause) {
+  interval(200).pipe(takeUntil(destroy)).subscribe(() => {
+    if (store.exercise.state === 'started') {
       timeElapsed.value += Date.now() - lastTick
       lastTick = Date.now()
-    //}
+    }
   })
 })
 
@@ -26,6 +26,17 @@ const elapsedTimeFormatted = computed(() => {
   const minutes = Math.floor(timeElapsed.value / 1000 / 60)
   const seconds = Math.floor((timeElapsed.value - 60000 * minutes) / 1000)
   return `${padNumber(minutes,2)}:${padNumber(seconds, 2)}`
+})
+
+store.$onAction(({ name, after }) => {
+  after(() => {
+    if (name === 'pause') {
+      timeElapsed.value += Date.now() - lastTick
+    }
+    if (name === 'resume') {
+      lastTick = Date.now()
+    }
+  })
 })
 
 onBeforeMount(() => {
