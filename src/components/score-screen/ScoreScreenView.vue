@@ -1,42 +1,63 @@
 <template>
-  <div class="d-flex flex-column align-items-center justify-content-between g-full-height">
-    <h1 class="mt-2">{{ $t('Exercise finished') }}</h1>
-    <div class="c-container">
-      <div class="c-stars c-transparent" ref="stars">
-        <span v-for="(val) in Array.from(Array(3 - store.exercise.rating).keys())" :key="val" class="c-star-inactive">★</span>
-        <span v-for="(val) in Array.from(Array(store.exercise.rating).keys())" :key="val" class="c-star-active">★</span>
+  <div class="column items-center justify-center bg-primary q-ma-md non-selectable">
+    <div class="bg-white shadow-5 rounded-borders text-center q-ma-lg q-pa-lg" style="width: 66%">
+      <div class="text-h4 q-mb-sm">{{ $t('Exercise finished') }}</div>
+      <div class="row justify-center text-h2 q-mb-lg" ref="stars">
+        <div v-for="(val) in Array.from(Array(store.exercise.rating).keys())" :key="val" class="c-star-active animated pulse infinite" style="--animate-duration: 1s;" >★</div>
+        <div v-for="(val) in Array.from(Array(3 - store.exercise.rating).keys())" :key="val" class="c-star-inactive">★</div>
       </div>
-      <div class="c-score-list g-small-font c-transparent" ref="scores">
-        <div class="mt-2 mb-2">{{ $t('Solved: {correct} / {total}', { correct: store.exercise.correctAnswers, total: store.exercise.totalQuestions }) }}</div>
-        <div class="mt-2 mb-2">{{ $t('{time} seconds, {strikes} mistakes', { strikes: store.exercise.errors, time: store.exercise.duration } ) }}</div>
-        <div class="mt-2 mb-2">{{ $t('Score: {score}', { score: store.exercise.score }) }}</div>
-        <div class="mt-2 mb-2" v-if="updateScoreResponse?.isNewHighScore">🍾 {{ $t('New Highscore') }} 🥂</div>
-        <div class="mt-2 mb-2" v-if="!updateScoreResponse?.isNewHighScore">{{ $t('Better than {percentile}% of players', { percentile: percentile }) }}</div>
+      <div class="row justify-center no-wrap q-mx-lg" style="min-height: 40vh">
+        <div class="column flex-1">
+          <div class="text-h4">Auswertung</div>
+          <div class="column q-mt-lg">
+            <div class="row justify-between">
+              <span>Gelöst</span>
+              <span>{{store.exercise.correctAnswers}} / {{store.exercise.totalQuestions}}</span>
+            </div>
+            <div class="row justify-between">
+              <span>Fehler</span>
+              <span>{{ store.exercise.totalStrikeCount }}</span>
+            </div>
+            <div class="row justify-between">
+              <span>Benötigte Zeit</span>
+              <span>{{ store.exercise.duration }} Sekunden</span>
+            </div>
+          </div>
+          <div class="q-mt-sm">
+            <div class="text-left">
+              <q-skeleton type="rect" class="text-h2" v-if="!updateScoreResponse"/>
+              <div v-if="updateScoreResponse" class="q-mb-sm">Besser als 64% der Spieler</div>
+              <div class="text-center animated text-h6 animate bounceIn" style="--animate-duration: 2s" v-if="updateScoreResponse?.isNewHighScore">🎉 Neuer highscore 🎉</div>
+            </div>
+          </div>
+        </div>
+        <div class="column flex-1">
+          <div class="text-h4">Bewertung</div>
+          <q-knob
+            :model-value="score"
+            show-value
+            readonly
+            size="lg"
+            :thickness="0.22"
+            color="lime"
+            font-size="2rem"
+            track-color="lime-3"
+            class="text-lime q-ma-md flex-auto full-width no-pointer-events"
+          />
+        </div>
       </div>
-    </div>
-    <div class="c-buttons">
-      <button v-if="dailyTrainingActive && hasNextDailyExercise()" @click="continueDailyTraining" class="g-mr-2 g-ml-2 mb-2 btn btn-outline-dark">{{ $t('Continue daily training') }}</button>
-      <button @click="playAgain" class="g-mr-2 g-ml-2 mb-2 btn btn-outline-dark">{{ $t('Play again') }}</button>
-    </div>
-    <div class="mt-4">
-      <h2>{{ $t('More apps') }}</h2>
-      <OtherSites/>
-    </div>
-
-    <div class="mt-4 pb-4">
-      <h2>{{ $t('Donate') }}</h2>
-      <DonationLinks/>
+      <div class="row justify-center">
+        <q-btn v-if="dailyTrainingActive && hasNextDailyExercise()" @click="continueDailyTraining">{{ $t('Continue daily training') }}</q-btn>
+        <q-btn @click="playAgain">{{ $t('Play again') }}</q-btn>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import AppModal from 'src/components/shared/AppModal.vue'
 import { ScoreService, UpdateScoreResponse } from 'src/shared-services/score.service'
 import { SoundService } from 'src/shared-services/sound.service'
 import { DailyTrainingService } from 'src/shared-services/daily-training.service'
-import OtherSites from 'src/components/shared/OtherSites.vue'
-import DonationLinks from 'src/components/shared/DonationLinks.vue'
 import { TweenService } from 'src/shared-services/tween.service'
 import { NavService } from 'src/router/nav.service'
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue'
@@ -49,6 +70,7 @@ const $q = useQuasar()
 const { t } = useI18n()
 const stars = ref()
 const scores = ref()
+const score = ref(0)
 const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null)
 
 const percentile = computed(() =>
@@ -56,12 +78,11 @@ const percentile = computed(() =>
 )
 
 onBeforeMount(() => {
-
   // for debugging
   store.$patch(store => {
     store.exercise = newExercise('memory', 'hard', 10)
     store.exercise.rating = 2
-    store.exercise.score = 1000
+    store.exercise.score = 78
   })
 
   if (dailyTrainingActive.value && !hasNextDailyExercise()) {
@@ -93,8 +114,13 @@ onMounted(async () => {
       isNewHighScore: false
     }
   }
-  new TweenService().fadeIn(stars.value as HTMLElement, 0.5)
-  new TweenService().fadeIn(scores.value as HTMLElement, 0.5)
+  score.value = store.exercise.score!
+  setTimeout(() => {
+    updateScoreResponse.value  = {
+      percentile: 3,
+      isNewHighScore: true
+    }
+  }, 2000)
 })
 
 function playAgain () {
@@ -122,33 +148,6 @@ function continueDailyTraining () {
 </script>
 
 <style scoped>
-.c-score-list {
-  text-align: center;
-}
-.c-stars {
-  font-size: 3rem;
-}
-@media screen and (max-width: 992px) and (orientation: landscape) {
-  .c-stars {
-    font-size: 2rem;
-  }
-}
-.c-container {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-}
-.c-buttons {
- display: flex;
- flex-direction: column;
-}
-@media screen and (max-width: 992px) and (orientation: landscape) {
-  .c-buttons {
-    flex-direction: row;
-  }
-}
 .c-star-active {
   color: yellow;
   text-shadow: 2px 1px black;
@@ -157,8 +156,5 @@ function continueDailyTraining () {
   opacity: 0.2;
   color: darkgray;
   text-shadow: 2px 1px black;
-}
-.c-transparent {
-  opacity: 0
 }
 </style>

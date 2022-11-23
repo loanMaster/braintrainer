@@ -5,9 +5,8 @@ import { ref, onBeforeUnmount } from 'vue'
 import {Subject} from "rxjs";
 import {useAppStore} from "stores/app-store";
 import {useRoute} from "vue-router";
-import {SubscriptionCallbackMutation, SubscriptionCallbackMutationPatchObject} from "pinia";
 
-export function createExerciseContext({ playAudioCb, nextQuestionCb }: { playAudioCb: () => any, nextQuestionCb: () => any }) {
+export function createExerciseContext({ playAudioCb, nextQuestionCb, startCb }: { playAudioCb: () => any, nextQuestionCb: () => any, startCb: () => any }) {
   const store = useAppStore()
   const $q = useQuasar()
   const { t } = useI18n()
@@ -19,14 +18,29 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb }: { playAud
 
   onBeforeUnmount(() => {
     soundService.stop()
+    soundService.deactivate()
+    store.$patch(store => store.exercise.state = 'created')
     destroy.next()
     destroy.complete()
   })
 
   store.$onAction(({ name, after }) => {
-    after(() => {
+    after(async () => {
       if (name === 'pause' || name === 'resume') {
         soundService.pause(store.isPaused)
+      }
+      if (name === 'beginExercise') {
+        startCb()
+      }
+      if (name === 'repeatAudio') {
+        if (!soundService.isPlaying()) {
+          const revealedWhenStarting = revealed.value
+          inputDisabled.value = true
+          await playAudioCb()
+          if (!revealedWhenStarting) {
+            inputDisabled.value = false
+          }
+        }
       }
     })
   })
@@ -34,17 +48,6 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb }: { playAud
   function containerClicked () {
     if (revealed.value) {
       nextQuestionCb()
-    }
-  }
-
-  async function repeat() {
-    if (!soundService.isPlaying()) {
-      const revealedWhenStarting = revealed.value
-      inputDisabled.value = true
-      await playAudioCb()
-      if (!revealedWhenStarting) {
-        inputDisabled.value = false
-      }
     }
   }
 
@@ -57,7 +60,6 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb }: { playAud
     $q,
     route,
     containerClicked,
-    repeat,
     t
   }
 }

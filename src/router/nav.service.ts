@@ -12,9 +12,10 @@ export class NavService {
     if (navRoute.name === 'play') {
       if (navRoute.nameOfTheGame && navRoute.difficulty) {
         return this.languagePrefix + navRoute.name + '/' + navRoute.nameOfTheGame + '/' + navRoute.difficulty
-      } else if (navRoute.nameOfTheGame) {
-        return this.languagePrefix + navRoute.name + '/' + navRoute.nameOfTheGame
       }
+    }
+    if (navRoute.name === 'select-difficulty' && navRoute.nameOfTheGame) {
+      return this.languagePrefix + 'play/select-difficulty/' + navRoute.nameOfTheGame
     }
     return this.removeTrailingSlash(this.languagePrefix + navRoute.name)
   }

@@ -30,7 +30,7 @@ export const newExercise = (nameOfTheGame: string, difficulty: string, totalQues
     correctAnswers: 0,
     totalQuestions,
     strikes: 0,
-    duration: 0,
+    duration: 10,
     fail: false,
     difficulty,
     nameOfTheGame,
@@ -39,7 +39,7 @@ export const newExercise = (nameOfTheGame: string, difficulty: string, totalQues
     totalStrikeCount: 0,
     lastSuccessfulStrike: 0,
     lastStrike: 0,
-    currentQuestion: 0,
+    currentQuestion: 0
 })
 
 export interface Ratings {
@@ -251,6 +251,12 @@ export const useAppStore = defineStore('main', {
         return true
       }
       return false
+    },
+    beginExercise () {
+      this.exercise.state = 'started'
+    },
+    repeatAudio () {
+      // noop
     }
   }
 });

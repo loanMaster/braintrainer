@@ -4,23 +4,29 @@ export class TweenService {
     element.style.setProperty('visibility', visible ? 'visible' : 'hidden')
   }
 
-  async fadeOut (element: HTMLElement, duration = 0.5) {
-    this.animateCSS(element, 'fadeOut', false, duration)
+  setDisplay(element: HTMLElement, display: string) {
+    element.style.setProperty('display', display)
   }
 
-  async fadeIn (element: HTMLElement, duration = 0.5) {
-    this.animateCSS(element, 'fadeIn', false, duration)
+  fadeOut (element: HTMLElement, duration = 0.5) {
+    return this.animateCSS(element, 'fadeOut', false, duration)
   }
 
-  async wiggle (element: HTMLElement) {
-    this.animateCSS(element, 'headShake', true)
+  fadeIn (element: HTMLElement, duration = 0.5) {
+    return this.animateCSS(element, 'fadeIn', false, duration)
+  }
+
+  wiggle (element: HTMLElement) {
+    return this.animateCSS(element, 'headShake', true)
   }
 
   animateCSS (element: HTMLElement, animation: string, resetAfter: boolean, duration?: number) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const animationName = `${animation}`;
 
-      element.classList.remove(...element.getAttribute('x-animation')?.split(',') || '')
+      if (element.hasAttribute('x-animation')) {
+        element.classList.remove(...element.getAttribute('x-animation')!.split(','))
+      }
       element.setAttribute('x-animation', animationName)
       element.classList.add(`animated`, animationName);
       if (duration) {

@@ -1,7 +1,4 @@
 <template>
-    <q-toolbar class="bg-accent text-white">
-      <q-toolbar-title>{{ $t(nameOfTheGame) }}</q-toolbar-title>
-    </q-toolbar>
     <div class="full-width text-center q-ma-sm">
     <h4>{{ $t('Select difficulty') }}</h4>
     <div>

@@ -1,36 +1,38 @@
 <template>
-  <h1 class="text-center mt-4">{{ $t('Your Scores') }}</h1>
-  <q-inner-loading :showing="!playerScores">
-    <q-spinner-gears size="4em" color="primary"/>
-  </q-inner-loading>
-  <div v-if="playerScores">
-    <table class="table table-borderless">
-      <thead>
-      <tr>
-        <th scope="col">{{ $t('Game') }}</th>
-        <th scope="col">{{ $t('Difficulty') }}</th>
-        <th scope="col">{{ $t('Score') }}</th>
-        <th scope="col">{{ $t('Better than') }}</th>
-        <th scope="col">{{ $t('Rating') }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-        v-for="game in games"
-        :key="game"
-      >
-        <td>{{ $t(game.name) }}</td>
-        <td>{{ $t(game.difficulty) }}</td>
-        <td>
-          {{ scores[game.name][game.difficulty] }}
-        </td>
-        <td>{{ Math.floor(percentiles[game.name][game.difficulty] * 100) }}%</td>
-        <td>
-          <StartRating :rating="getRating(game.name, game.difficulty)"/>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+  <div>
+    <h1 class="text-center mt-4">{{ $t('Your Scores') }}</h1>
+    <q-inner-loading :showing="!playerScores">
+      <q-spinner-gears size="4em" color="primary"/>
+    </q-inner-loading>
+    <div v-if="playerScores">
+      <table class="table table-borderless">
+        <thead>
+        <tr>
+          <th scope="col">{{ $t('Game') }}</th>
+          <th scope="col">{{ $t('Difficulty') }}</th>
+          <th scope="col">{{ $t('Score') }}</th>
+          <th scope="col">{{ $t('Better than') }}</th>
+          <th scope="col">{{ $t('Rating') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          v-for="game in games"
+          :key="game"
+        >
+          <td>{{ $t(game.name) }}</td>
+          <td>{{ $t(game.difficulty) }}</td>
+          <td>
+            {{ scores[game.name][game.difficulty] }}
+          </td>
+          <td>{{ Math.floor(percentiles[game.name][game.difficulty] * 100) }}%</td>
+          <td>
+            <StartRating :rating="getRating(game.name, game.difficulty)"/>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

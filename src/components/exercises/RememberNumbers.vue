@@ -1,24 +1,14 @@
 <template>
-  <div class="column flex-auto relative-position">
-    <ExerciseHeader
-      @repeat="repeat"
-    />
-    <div class="column justify-center column flex-auto content-center" @click="containerClicked">
-      <div ref="numpad" class="relative-position">
-       <NumPadWithDisplay :input-disabled="inputDisabled" :input-value="inputValue" @button-click="onNumberEntered"/>
-      </div>
-      <SolutionBanner :show="revealed" :solution="solution" @click="containerClicked"/>
-    </div>
+  <div ref="numpad" class="relative-position" @click="containerClicked">
+    <NumPadWithDisplay :input-disabled="inputDisabled" :input-value="inputValue" @button-click="onNumberEntered"/>
   </div>
-  <ExerciseFooter/>
+  <SolutionBanner :show="revealed" :solution="solution" @click="containerClicked"/>
 </template>
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services//tween.service'
 import { keyInput } from 'src/util/key.input'
-import ExerciseFooter from 'src/components/exercises/shared/ExerciseFooter.vue'
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue'
-import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue'
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue'
 import { takeUntil } from 'rxjs'
 import { SoundService } from 'src/shared-services//sound.service'
@@ -26,9 +16,10 @@ import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue'
 import {exerciseUtils} from "components/exercises/exercise.utils";
 import {createExerciseContext} from "components/exercises/register-defaults";
 
-const { soundService, revealed, destroy, $q, t, route, store, inputDisabled, containerClicked, repeat } = createExerciseContext({
+const { soundService, revealed, destroy, $q, t, route, store, inputDisabled, containerClicked } = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
+  startCb: () => start()
 })
 
 let currentIndex = 0
@@ -59,16 +50,14 @@ onMounted(async () => {
   })
 
   inputDisabled.value = true
-  $q.dialog({
-    message: t('Merken Sie sich die Ziffern und wiederholen Sie sie in der gleichen Reihenfolge. Klicken Sie auf "OK" sobaldZ Sie bereit sind.'),
-    ok: t('OK'),
-    persistent: true
-  }).onOk(async () => {
-    store.$patch(store => store.exercise.state = 'started')
-    inputDisabled.value = false
-    nextQuestion()
-  })
+  new TweenService().setDisplay(numpad.value, 'none')
 })
+
+async function start() {
+  new TweenService().setDisplay(numpad.value, 'block')
+  await new TweenService().fadeIn(numpad.value)
+  nextQuestion()
+}
 
 async function nextQuestion () {
   soundService.stop()
@@ -78,6 +67,7 @@ async function nextQuestion () {
   currentIndex = 0
   store.$patch(store => store.exercise.currentQuestion++)
   if (store.exercise.currentQuestion > store.exercise.totalQuestions) {
+    await exerciseUtils.wait(200)
     await exerciseUtils.finishExercise()
     return
   }
@@ -113,7 +103,7 @@ async function onNumberEntered (num: number) {
       inputDisabled.value = true
       store.$patch((state) => state.exercise.correctAnswers++)
       new SoundService().playSuccess()
-      await exerciseUtils.wait(150)
+      await exerciseUtils.wait(175) // optimize sound!
       nextQuestion()
     }
   } else {

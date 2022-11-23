@@ -1,24 +1,12 @@
 <template>
-  <div class="text-center full-width q-mb-sm">
-    <div class="bg-secondary q-pt-sm q-pb-md">
-      <h1>BrainTrainer</h1>
-      <h3>{{ $t('Improve your visualization skills and short term memory')}}</h3>
-      <div>
-        <q-btn color="primary text-center text-h5" rounded :label="$t('Start your daily training')" @click="startDailyTraining"/>
-      </div>
-    </div>
-    <h2 class="text-center">{{ $t('Select an exercise')}}</h2>
-    <div>
-      <div v-for="game in games" :key="game" class="q-mx-auto text-center ">
-        <q-btn color="primary" class="shadow-5 q-ma-sm" rounded :label="$t(game)" @click="selectGame(game)"/>
-      </div>
+  <div class="flex-auto column justify-center items-center">
+    <div v-for="game in games" :key="game" class="q-mx-auto text-center ">
+      <q-btn color="primary" class="shadow-5 q-ma-sm" rounded :label="$t(game)" @click="selectGame(game)"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import DonationLinks from 'src/components/shared/DonationLinks.vue'
-import OtherSites from 'src/components/shared/OtherSites.vue'
 import { ref, onMounted } from 'vue'
 import {useAppStore} from "stores/app-store";
 import {GAMES} from "src/const/games";
@@ -37,7 +25,7 @@ onMounted(() => useAppStore().finishDailyTraining())
 const games = ref(GAMES)
 
 function selectGame (game: string) {
-  new NavService().navigateTo({ name: 'play', nameOfTheGame: game.toLowerCase() })
+  new NavService().navigateTo({ name: 'select-difficulty', nameOfTheGame: game.toLowerCase() })
 }
 
 function getMedals (game: string): number {

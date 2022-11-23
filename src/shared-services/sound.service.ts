@@ -23,6 +23,7 @@ const loadedSounds: { [key: string]: Howl } = {}
 export class SoundService {
   howls: Howl[] = []
   isPlayingSequence = false
+  private deactivated = false
   _isPlaying = false
   queue: Sound[] = []
   pausing: Subject<boolean> = new BehaviorSubject<boolean>(false)
@@ -74,6 +75,9 @@ export class SoundService {
   }
 
   private playHowl (howl: Howl, loop = false): Promise<void> {
+    if (this.deactivated) {
+      return new Promise(resolve => resolve)
+    }
     this._isPlaying = true
     return new Promise(async (resolve) => {
       howl.on('end', () => {
@@ -120,6 +124,10 @@ export class SoundService {
     }
     this.queue.forEach(q => { q.skip = true })
     this.queue = []
+  }
+
+  deactivate () {
+    this.deactivated = true
   }
 
   playSuccess () {

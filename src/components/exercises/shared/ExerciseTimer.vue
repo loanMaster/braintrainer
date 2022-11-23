@@ -1,5 +1,5 @@
 <template>
-  <span class="text-h6">{{elapsedTimeFormatted}}</span><q-icon name="timer" tag="timer-outline" size="2rem"></q-icon>
+  <span class="text-h6 non-selectable">{{elapsedTimeFormatted}}</span><q-icon name="timer" tag="timer-outline" size="2rem"></q-icon>
 </template>
 
 <script setup lang="ts">
@@ -33,7 +33,7 @@ store.$onAction(({ name, after }) => {
     if (name === 'pause') {
       timeElapsed.value += Date.now() - lastTick
     }
-    if (name === 'resume') {
+    if (name === 'resume' || name === 'beginExercise') {
       lastTick = Date.now()
     }
   })

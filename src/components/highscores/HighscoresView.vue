@@ -1,34 +1,36 @@
 <template>
-  <h1 class="text-center mt-4">🎉 Highscores</h1>
-  <q-inner-loading :showing="!highscores">
-    <q-spinner-gears size="4em" color="primary"/>
-  </q-inner-loading>
-  <div v-if="highscores">
-    <table class="table table-borderless g-max-width-100">
-      <thead>
-      <tr>
-        <th scope="col">{{ $t('Game') }}</th>
-        <th scope="col">{{ $t('Difficulty') }}</th>
-        <th scope="col">{{ $t('Player') }}</th>
-        <th scope="col">{{ $t('Score') }}</th>
-        <th scope="col">{{ $t('Your Score') }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr
-        v-for="game in games"
-        :key="game"
-      >
-        <td>{{ $t(game.name) }}</td>
-        <td>{{ $t(game.difficulty) }}</td>
-        <td :class="highscores[game.name][game.difficulty].isYou ? 'my-highlight' : ''">
-          {{ highscores[game.name][game.difficulty].playerName }}
-        </td>
-        <td>{{ highscores[game.name][game.difficulty].score }}</td>
-        <td>{{ highscores[game.name][game.difficulty].yourScore || '-' }}</td>
-      </tr>
-      </tbody>
-    </table>
+  <div>
+    <h1 class="text-center mt-4">🎉 Highscores</h1>
+    <q-inner-loading :showing="!highscores">
+      <q-spinner-gears size="4em" color="primary"/>
+    </q-inner-loading>
+    <div v-if="highscores">
+      <table class="table table-borderless g-max-width-100">
+        <thead>
+        <tr>
+          <th scope="col">{{ $t('Game') }}</th>
+          <th scope="col">{{ $t('Difficulty') }}</th>
+          <th scope="col">{{ $t('Player') }}</th>
+          <th scope="col">{{ $t('Score') }}</th>
+          <th scope="col">{{ $t('Your Score') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr
+          v-for="game in games"
+          :key="game"
+        >
+          <td>{{ $t(game.name) }}</td>
+          <td>{{ $t(game.difficulty) }}</td>
+          <td :class="highscores[game.name][game.difficulty].isYou ? 'my-highlight' : ''">
+            {{ highscores[game.name][game.difficulty].playerName }}
+          </td>
+          <td>{{ highscores[game.name][game.difficulty].score }}</td>
+          <td>{{ highscores[game.name][game.difficulty].yourScore || '-' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
