@@ -24,14 +24,12 @@ router.beforeEach(async (to, from, next: NavigationGuardNext) => {
   if (initialPageLoad) {
     initialPageLoad = false
     if (language === 'en' && useAppStore().language !== language) {
-      console.log(`initialPageLoad store:${useAppStore().language} route:${language}`)
       next(removeTrailingSlash(`/${useAppStore().language}${to.fullPath}`))
       return
     }
   }
   next()
   if (useAppStore().language !== language) {
-    console.log(`store:${useAppStore().language} route:${language}`)
     setTimeout(() => { useAppStore().setLanguage(i18n, language as string) }) // TODO find better solution
   }
 })
@@ -40,8 +38,6 @@ store.$onAction(({ name, after }) => {
   after(() => {
     if (name == 'setLanguage') {
       const language = route.params.language || 'en'
-      console.log(router.currentRoute.value)
-      console.log(`$onAction store:${useAppStore().language} route:${language}`)
       if (store.language !== language) {
         const withoutLangPath = (router.currentRoute.value.fullPath + '/')
           .replaceAll('//', '')
