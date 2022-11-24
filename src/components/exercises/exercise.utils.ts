@@ -2,6 +2,8 @@ import {newExercise, useAppStore} from "stores/app-store";
 import {getNameOfTheGame} from "src/util/game.name.helper";
 import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import {NavService} from "src/router/nav.service";
+import {SoundService} from "src/shared-services/sound.service";
+import { Ref } from 'vue'
 
 export const exerciseUtils = {
   wait: (time: number)  => new Promise(resolve => setTimeout(resolve, time)),
@@ -13,13 +15,30 @@ export const exerciseUtils = {
       name: 'score-screen'
     })
   },
-  beginExercise: (numberOfQuestions: number) => {
-    useAppStore().$patch({
-      exercise: newExercise(
-        getNameOfTheGame(useRoute().params.game as string),
+  createExercise: (numberOfQuestions: number) => {
+    useAppStore().$patch(store => {
+      store.exercise = newExercise(
+        getNameOfTheGame(useRoute().params.game as string)!,
         useRoute().params.difficulty as string,
         numberOfQuestions
       )
     })
+  },
+  prepareNewQuestion: async ({ inputDisabled, soundService, revealed }: { inputDisabled: Ref<boolean>, revealed: Ref<boolean>, soundService: SoundService }): Promise<boolean> => {
+    inputDisabled.value = true
+    soundService.stop()
+    useAppStore().$patch(store => store.exercise.currentQuestion++)
+    if (useAppStore().exercise.currentQuestion > useAppStore().exercise.totalQuestions) {
+      await exerciseUtils.wait(200)
+      await useAppStore().finishExercise()
+      new NavService().navigateTo({
+        name: 'score-screen'
+      })
+      return false
+    } else {
+      useAppStore().$patch(store => store.exercise.strikes = 0)
+      revealed.value = false
+      return true
+    }
   }
 }

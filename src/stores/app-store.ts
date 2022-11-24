@@ -26,7 +26,7 @@ export interface Exercise {
   score?: number
 }
 
-export const newExercise = (nameOfTheGame: string, difficulty: string, totalQuestions: number) => ({
+export const newExercise = (nameOfTheGame: string, difficulty: string, totalQuestions: number): Exercise => ({
     correctAnswers: 0,
     totalQuestions,
     strikes: 0,
@@ -137,7 +137,7 @@ export const useAppStore = defineStore('main', {
       players: players,
       dailyTraining: {active: false, results: [] as Exercise[]},
       exercise: newExercise('rememberNumbers', 'easy', 5),
-      _language: getBrowserLanguage()
+      _language: localStorage.getItem('language') || getBrowserLanguage()
     } as IAppState
   },
   getters: {
@@ -199,6 +199,7 @@ export const useAppStore = defineStore('main', {
     setLanguage (i18n: Composer<any>, lang: string) {
       i18n.locale.value = lang
       this._language = lang
+      localStorage.setItem('language', lang)
     },
     async addUser (userName: string) {
       const additionalPlayer = newPlayer()

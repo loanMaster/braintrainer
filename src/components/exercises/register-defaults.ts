@@ -12,7 +12,7 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb, startCb }: 
   const { t } = useI18n()
   const route = useRoute()
   const soundService = new SoundService()
-  const inputDisabled = ref(false)
+  const inputDisabled = ref(true)
   const revealed = ref(false)
   const destroy = new Subject<void>();
 

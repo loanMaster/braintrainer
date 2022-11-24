@@ -14,7 +14,7 @@
 import { defineProps, defineEmits } from 'vue'
 
 defineProps({
-  solution: String,
+  solution: [String, Number],
   show: Boolean
 })
 const emits = defineEmits(['clicked'])

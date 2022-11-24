@@ -16,11 +16,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {useAppStore} from "stores/app-store";
+import {useI18n} from "vue-i18n";
 
 const show = ref(false)
+const i18n = useI18n()
 
 function languageSelected (lang: string) {
-  useAppStore().setLanguage(lang)
+  useAppStore().setLanguage(i18n, lang)
   show.value = false
 }
 </script>

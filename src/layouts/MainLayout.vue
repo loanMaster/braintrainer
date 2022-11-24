@@ -3,7 +3,7 @@
     <q-header elevated class="bg-primary text-white ">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title>
+        <q-toolbar-title class="non-selectable">
           <q-avatar>
             <q-icon name="psychology" size="2rem"/>
           </q-avatar>
@@ -11,10 +11,10 @@
         </q-toolbar-title>
         <q-space class="desktop-only"/>
 
-        <q-btn flat dense no-wrap no-caps :label="$t('Play')" :to="`/play`" class="q-ml-sm q-px-md desktop-only"/>
-        <q-btn flat dense no-wrap no-caps :label="$t('Your Scores')" :to="`/player-scores`" class="q-ml-sm q-px-md desktop-only"/>
-        <q-btn flat dense no-wrap no-caps :label="$t('Documentation')" :to="`/documentation`" class="q-ml-sm q-px-md desktop-only"/>
-        <q-btn flat dense no-wrap no-caps :label="$t('Highscores')" :to="`/highscores`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Play')" :to="`${langPrefix}/play`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Your Scores')" :to="`${langPrefix}/player-scores`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Documentation')" :to="`${langPrefix}/documentation`" class="q-ml-sm q-px-md desktop-only"/>
+        <q-btn flat dense no-wrap no-caps :label="$t('Highscores')" :to="`${langPrefix}/highscores`" class="q-ml-sm q-px-md desktop-only"/>
         <q-space class="desktop-only"/>
         <div>
           <q-btn flat round dense icon="language" class="q-mr-xs" />
@@ -79,15 +79,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import {useAppStore} from "stores/app-store";
 import {useI18n} from "vue-i18n";
+import {useRoute} from "vue-router";
 const leftDrawerOpen = ref(false)
 
 onMounted(() => {
   leftDrawerOpen.value = false
 })
 
+const route = useRoute()
 const i18n = useI18n();
 function toggleLeftDrawer () {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -95,6 +97,11 @@ function toggleLeftDrawer () {
 function setLanguage(lang: string) {
   useAppStore().setLanguage(i18n, lang)
 }
+
+const langPrefix = computed(() =>  {
+  return useAppStore().language === 'en' ? '' : '/' + useAppStore().language
+})
+
 const links1 = ref([
   { icon: 'web', text: 'Top stories' },
   { icon: 'person', text: 'For you' },

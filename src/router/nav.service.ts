@@ -11,7 +11,7 @@ export class NavService {
   getPath (navRoute: NavRoute) {
     if (navRoute.name === 'play') {
       if (navRoute.nameOfTheGame && navRoute.difficulty) {
-        return this.languagePrefix + navRoute.name + '/' + navRoute.nameOfTheGame + '/' + navRoute.difficulty
+        return this.languagePrefix + navRoute.name + '/' + navRoute.difficulty + '/' + navRoute.nameOfTheGame
       }
     }
     if (navRoute.name === 'select-difficulty' && navRoute.nameOfTheGame) {

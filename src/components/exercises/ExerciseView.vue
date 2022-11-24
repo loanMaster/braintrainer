@@ -28,11 +28,11 @@
 
   onMounted(async () => {
     await new TweenService().setDisplay(exercise.value, 'none')
-    await new TweenService().animateCSS(instructions.value, 'bounceInDown', true, 1.25)
+    await new TweenService().animateCSS(instructions.value, 'bounceInDown', 1.25)
   })
 
   async function start() {
-    await new TweenService().animateCSS(instructions.value, 'bounceOutUp', true, 1)
+    await new TweenService().animateCSS(instructions.value, 'bounceOutUp',  1)
     new TweenService().setDisplay(instructionsWrapper.value, 'none')
     new TweenService().setDisplay(exercise.value, 'flex')
     store.beginExercise()

@@ -8,26 +8,32 @@ export class TweenService {
     element.style.setProperty('display', display)
   }
 
-  fadeOut (element: HTMLElement, duration = 0.5) {
-    return this.animateCSS(element, 'fadeOut', false, duration)
+  async fadeOut (element: HTMLElement, duration = 0.5) {
+    await this._animateCSS(element, 'fadeOut', duration)
+    element.classList.remove(`animated`, 'fadeOut');
+    element.style.setProperty('opacity', '0')
   }
 
-  fadeIn (element: HTMLElement, duration = 0.5) {
-    return this.animateCSS(element, 'fadeIn', false, duration)
+  async fadeIn (element: HTMLElement, duration = 0.5) {
+    await this._animateCSS(element, 'fadeIn', duration)
+    element.classList.remove(`animated`, 'fadeIn');
+    element.style.setProperty('opacity', '1')
   }
 
-  wiggle (element: HTMLElement) {
-    return this.animateCSS(element, 'headShake', true)
+  async wiggle (element: HTMLElement, duration = 0.5) {
+    await this._animateCSS(element, 'headShake')
+    element.classList.remove(`animated`, 'headShake');
   }
 
-  animateCSS (element: HTMLElement, animation: string, resetAfter: boolean, duration?: number) {
+  async animateCSS (element: HTMLElement, animation: string, duration?: number) {
+    await this._animateCSS(element, animation, duration)
+    element.classList.remove(`animated`, animation);
+  }
+
+  private _animateCSS (element: HTMLElement, animation: string, duration = 0.5) {
     return new Promise((resolve, reject) => {
       const animationName = `${animation}`;
 
-      if (element.hasAttribute('x-animation')) {
-        element.classList.remove(...element.getAttribute('x-animation')!.split(','))
-      }
-      element.setAttribute('x-animation', animationName)
       element.classList.add(`animated`, animationName);
       if (duration) {
         element.style.setProperty('--animate-duration', String(duration) + 's')
@@ -38,10 +44,7 @@ export class TweenService {
         if (duration) {
           element.style.removeProperty('--animate-duration')
         }
-        if (resetAfter) {
-          element.classList.remove(`animated`, animationName);
-          element.removeAttribute('x-animation')
-        }
+
         resolve('Animation ended');
       }
 

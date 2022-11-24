@@ -35,7 +35,7 @@ const sequenceLength = computed(() => {
 
 onBeforeMount(() => {
   const numberOfQuestions = 5
-  exerciseUtils.beginExercise(numberOfQuestions)
+  exerciseUtils.createExercise(numberOfQuestions)
 })
 
 onMounted(async () => {
@@ -60,18 +60,11 @@ async function start() {
 }
 
 async function nextQuestion () {
-  soundService.stop()
-  inputDisabled.value = true
-  revealed.value = false
   inputValue.value = ''
   currentIndex = 0
-  store.$patch(store => store.exercise.currentQuestion++)
-  if (store.exercise.currentQuestion > store.exercise.totalQuestions) {
-    await exerciseUtils.wait(200)
-    await exerciseUtils.finishExercise()
+  if (!await exerciseUtils.prepareNewQuestion({ inputDisabled, soundService, revealed })) {
     return
   }
-  store.$patch(store => store.exercise.strikes = 0)
   createTask()
   await playAudio()
   inputDisabled.value = false

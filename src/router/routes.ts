@@ -1,6 +1,7 @@
 import {RouteRecordRaw} from 'vue-router';
 import DifficultySelectionView from 'src/components/exercises/exercise-selection-menu/DifficultySelectionView.vue'
 import RememberNumbers from 'src/components/exercises/RememberNumbers.vue'
+import MentalArithmetic from 'src/components/exercises/MentalArithmetic.vue'
 import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue'
 import GameSelectionView from 'src/components/exercises/exercise-selection-menu/GameSelectionView.vue'
 import HighscoresView from 'src/components/highscores/HighscoresView.vue'
@@ -12,12 +13,12 @@ import MainLayout from 'src/layouts/MainLayout.vue'
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '/:language(es|de)?',
     component: MainLayout,
     children: [
       {path: '', component: GameSelectionView},
       {
-        path: '/play',
+        path: 'play',
         component: ExerciseBaseLayout,
         children: [
           {
@@ -26,39 +27,46 @@ const routes: RouteRecordRaw[] = [
             component: GameSelectionView
           },
           {
-            path: '/play/select-difficulty/:game',
+            path: ':difficulty(easy|normal|hard)',
+            component: ExerciseView,
+            name: 'exercise',
+            children: [
+              {
+                path: ':game(remembernumbers)',
+                name: 'rememberNumbers',
+                component: RememberNumbers
+              },
+              {
+                path: ':game(mentalarithmetic)',
+                name: 'mentalarithmetic',
+                component: MentalArithmetic
+              }
+              ]
+          },
+          {
+            path: 'select-difficulty/:game',
             name: 'select-difficulty',
             component: DifficultySelectionView
           },
-          {
-            path: '/play/:game/:difficulty',
-            component: ExerciseView,
-            name: 'exercise',
-            children: [{
-              path: '',
-              name: 'rememberNumbers',
-              component: RememberNumbers
-            }]
-          }
         ]
       },
       {
-        path: '/score-screen',
+        path: 'score-screen',
         name: 'scorescreen',
         component: ScoreScreenView
       },
       {
-        path: '/highscores',
+        path: 'highscores',
         name: 'highscores',
         component: HighscoresView
       },
       {
-        path: '/documentation',
+        path: 'documentation',
         name: 'DocumentationView',
         component: DocumentationView
       },
       {
-        path: '/player-scores',
+        path: 'player-scores',
         name: 'PlayerScores',
         component: PlayerScoresView
       }

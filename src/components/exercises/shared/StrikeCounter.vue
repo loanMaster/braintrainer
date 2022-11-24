@@ -1,5 +1,5 @@
 <template>
-  <div class="c-wrapper no-pointer-events row flex-center text-negative">
+  <div class="c-wrapper no-pointer-events row flex-center text-negative non-selectable">
     <span>{{ store.exercise.totalStrikeCount }}</span><q-icon name="close"/>
   </div>
 </template>
