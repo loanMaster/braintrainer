@@ -1,14 +1,10 @@
 <template>
   <div class="column items-center justify-center bg-primary q-ma-md non-selectable">
-    <div class="bg-white shadow-5 rounded-borders text-center q-ma-lg q-pa-lg" style="width: 66%">
+    <div class="bg-white shadow-5 rounded-borders text-center q-ma-lg q-pa-lg overflow-hidden" style="width: 66%">
       <div class="text-h4 q-mb-sm">{{ $t('Exercise finished') }}</div>
-      <div class="row justify-center text-h2 q-mb-lg" ref="stars">
-        <div v-for="(val) in Array.from(Array(store.exercise.rating).keys())" :key="val" class="c-star-active animated pulse infinite" style="--animate-duration: 1s;" >★</div>
-        <div v-for="(val) in Array.from(Array(3 - store.exercise.rating).keys())" :key="val" class="c-star-inactive">★</div>
-      </div>
       <div class="row justify-center no-wrap q-mx-lg" style="min-height: 40vh">
         <div class="column flex-1">
-          <div class="text-h4">Auswertung</div>
+          <div class="text-h5">Auswertung</div>
           <div class="column q-mt-lg">
             <div class="row justify-between">
               <span>Gelöst</span>
@@ -25,25 +21,28 @@
           </div>
           <div class="q-mt-sm">
             <div class="text-left">
-              <q-skeleton type="rect" class="text-h2" v-if="!updateScoreResponse"/>
               <div v-if="updateScoreResponse" class="q-mb-sm">Besser als 64% der Spieler</div>
               <div class="text-center animated text-h6 animate bounceIn" style="--animate-duration: 2s" v-if="updateScoreResponse?.isNewHighScore">🎉 Neuer highscore 🎉</div>
             </div>
           </div>
         </div>
         <div class="column flex-1">
-          <div class="text-h4">Bewertung</div>
-          <q-knob
-            :model-value="score"
-            show-value
-            readonly
-            size="lg"
-            :thickness="0.22"
-            color="lime"
-            font-size="2rem"
-            track-color="lime-3"
-            class="text-lime q-ma-md flex-auto full-width no-pointer-events"
-          />
+          <div class="text-h5">Bewertung</div>
+          <div ref="knob" class="full-width flex-auto column">
+            <q-knob
+              ref="knob"
+              :model-value="score"
+              show-value
+              readonly
+              instant-feedback
+              size="lg"
+              :thickness="0.22"
+              color="lime"
+              font-size="2rem"
+              track-color="lime-3"
+              class="text-lime q-ma-md flex-auto full-width no-pointer-events"
+            />
+          </div>
         </div>
       </div>
       <div class="row justify-center">
@@ -64,12 +63,13 @@ import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue'
 import {newExercise, useAppStore} from 'src/stores/app-store'
 import {useQuasar} from "quasar";
 import {useI18n} from "vue-i18n";
+import {takeUntil} from "rxjs/operators";
+import {interval, Subject} from "rxjs";
 
 const store = useAppStore()
 const $q = useQuasar()
 const { t } = useI18n()
-const stars = ref()
-const scores = ref()
+const knob = ref()
 const score = ref(0)
 const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null)
 
@@ -101,26 +101,31 @@ onMounted(async () => {
   }
 
   if (store.player.name !== 'tester007') {
-    /*updateScoreResponse.value = await new ScoreService().updateScore({ // TODO call store?
-      score: score,
-      nameOfTheGame: exerciseResult.nameOfTheGame,
-      difficulty: exerciseResult.difficulty,
-      name: $store.getters.player.name,
-      id: $store.getters.player.id
-    })*/
+    updateScoreResponse.value = await new ScoreService().updateScore({
+      score: store.exercise.score!,
+      nameOfTheGame: store.exercise.nameOfTheGame,
+      difficulty: store.exercise.difficulty,
+      name: store.player.name,
+      id: store.player.id
+    })
   } else {
     updateScoreResponse.value = {
       percentile: 3,
       isNewHighScore: false
     }
   }
-  score.value = store.exercise.score!
+  const stop = new Subject<void>()
   setTimeout(() => {
-    updateScoreResponse.value  = {
-      percentile: 3,
-      isNewHighScore: true
-    }
-  }, 2000)
+    interval(20).pipe(takeUntil(stop)).subscribe(() => {
+      if (score.value < store.exercise.score!) {
+        score.value++
+      } else {
+        new TweenService().animateCSS(knob.value, 'pulse', 1)
+        stop.next()
+        stop.complete()
+      }
+    })
+  }, 250)
 })
 
 function playAgain () {
@@ -146,15 +151,3 @@ function continueDailyTraining () {
   })
 }
 </script>
-
-<style scoped>
-.c-star-active {
-  color: yellow;
-  text-shadow: 2px 1px black;
-}
-.c-star-inactive {
-  opacity: 0.2;
-  color: darkgray;
-  text-shadow: 2px 1px black;
-}
-</style>
