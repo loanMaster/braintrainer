@@ -42,6 +42,7 @@ onMounted(async () => {
   keyInput.pipe(takeUntil(destroy)).subscribe(key => {
     if (revealed.value) {
       nextQuestion()
+      return
     }
     const number = Number(key.key)
     if (!isNaN(number)) {
@@ -100,13 +101,7 @@ async function onNumberEntered (num: number) {
       nextQuestion()
     }
   } else {
-    if (store.strike()) {
-      new SoundService().playError()
-      if (store.exercise.strikes >= 3) {
-        reveal()
-      }
-    }
-    new TweenService().wiggle(numpad.value)
+    exerciseUtils.handleMistake(reveal, numpad)
   }
 }
 

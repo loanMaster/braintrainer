@@ -1,7 +1,7 @@
 import {SoundService} from "src/shared-services/sound.service";
 import {useQuasar} from "quasar";
 import {useI18n} from "vue-i18n";
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount, computed } from 'vue'
 import {Subject} from "rxjs";
 import {useAppStore} from "stores/app-store";
 import {useRoute} from "vue-router";
@@ -15,6 +15,10 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb, startCb }: 
   const inputDisabled = ref(true)
   const revealed = ref(false)
   const destroy = new Subject<void>();
+
+  const difficulty = computed(() => {
+    return route.params.difficulty
+  })
 
   onBeforeUnmount(() => {
     soundService.stop()
@@ -60,6 +64,7 @@ export function createExerciseContext({ playAudioCb, nextQuestionCb, startCb }: 
     $q,
     route,
     containerClicked,
+    difficulty,
     t
   }
 }

@@ -19,6 +19,7 @@ import {TweenService} from "src/shared-services/tween.service";
 import {AudioResponse, ExerciseService} from "src/shared-services/exercise.service";
 import {keyInput} from "src/util/key.input";
 import {ReplaySubject, Subject, take} from "rxjs";
+import {skip} from "rxjs/operators";
 
 const { soundService, revealed, destroy, t, store, inputDisabled, containerClicked, route } = createExerciseContext({
   playAudioCb: () => playAudio(),
@@ -43,13 +44,7 @@ onBeforeMount(async() => {
   exerciseUtils.createExercise(numberOfQuestions)
   nextAudio = new ReplaySubject<AudioResponse[]>(numberOfQuestions)
   nextAudio.pipe(take(numberOfQuestions), takeUntil(destroy)).subscribe(() => loadNextAudio())
-
-  nextAudio.next(await new ExerciseService().fetchNumbers({
-    min: difficulty === 'easy' ? 10 : difficulty === 'normal' ? 100 : 1000,
-    max: difficulty === 'easy' ? 100 : difficulty === 'normal' ? 1000 : 10000,
-    lang: store.language,
-    count: 2
-  }))
+  loadNextAudio()
 })
 
 onMounted(async () => {
@@ -76,7 +71,7 @@ async function nextQuestion () {
     await new TweenService().fadeOut(numpad.value)
   }
   showLoadingIndicator.value = true
-  currentAudio = await nextAudio.pipe(take(1)).toPromise() as AudioResponse[]
+  currentAudio = await nextAudio.pipe(skip(store.exercise.currentQuestion - 1), take(1)).toPromise() as AudioResponse[]
   showLoadingIndicator.value = false
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpad.value, 'block')
@@ -135,13 +130,7 @@ async function onNumberEntered (num: number) {
       nextQuestion()
     }
   } else {
-    if (store.strike()) {
-      new SoundService().playError()
-      if (store.exercise.strikes >= 3) {
-        reveal()
-      }
-    }
-    new TweenService().wiggle(numpad.value)
+    exerciseUtils.handleMistake(reveal, numpad)
   }
 }
 

@@ -22,7 +22,6 @@ import {useQuasar} from "quasar";
 import {useI18n} from "vue-i18n";
 import {showEnterUsernameDialog} from "src/util/show-enter-username-dialog";
 
-const showSpellingInfo = ref(false)
 const selectedDifficulty = ref('')
 const difficulties = ref(['easy', 'normal', 'hard'])
 
@@ -42,20 +41,8 @@ async function selectDifficulty (difficulty: string) {
     const name = await showEnterUsernameDialog($q, t);
     if (name) {
       useAppStore().setName(name)
-      spellingInfo()
+      startGame()
     }
-  } else {
-    spellingInfo()
-  }
-}
-
-function spellingInfo () {
-  const lang = useAppStore().language
-  if (lang !== 'es' && (nameOfTheGame.value === 'SpellBackwards' || nameOfTheGame.value === 'WordScramble')) {
-    $q.dialog({
-      title: t('A hint regarding spelling'),
-      message: t('A hint regarding spelling')
-    })
   } else {
     startGame()
   }

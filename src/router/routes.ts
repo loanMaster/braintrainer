@@ -1,6 +1,12 @@
 import {RouteRecordRaw} from 'vue-router';
 import DifficultySelectionView from 'src/components/exercises/exercise-selection-menu/DifficultySelectionView.vue'
 import RememberNumbers from 'src/components/exercises/RememberNumbers.vue'
+import WordScramble from 'src/components/exercises/WordScramble.vue'
+import MathMarathon from 'src/components/exercises/MathMarathon.vue'
+import RememberWords from 'src/components/exercises/RememberWords.vue'
+import AudioMemory from 'src/components/exercises/AudioMemory.vue'
+import SpellBackwards from 'src/components/exercises/SpellBackwards.vue'
+import ListenBackwards from 'src/components/exercises/ListenBackwards.vue'
 import MentalArithmetic from 'src/components/exercises/MentalArithmetic.vue'
 import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue'
 import GameSelectionView from 'src/components/exercises/exercise-selection-menu/GameSelectionView.vue'
@@ -40,8 +46,38 @@ const routes: RouteRecordRaw[] = [
                 path: ':game(mentalarithmetic)',
                 name: 'mentalarithmetic',
                 component: MentalArithmetic
+              },
+              {
+                path: ':game(listenbackwards)',
+                name: 'listenbackwards',
+                component: ListenBackwards
+              },
+              {
+                path: ':game(rememberwords)',
+                name: 'rememberwords',
+                component: RememberWords
+              },
+              {
+                path: ':game(spellbackwards)',
+                name: 'SpellBackwards',
+                component: SpellBackwards
+              },
+              {
+                path: ':game(memory)',
+                name: 'memory',
+                component: AudioMemory
+              },
+              {
+                path: ':game(wordscramble)',
+                name: 'wordscramble',
+                component: WordScramble
+              },
+              {
+                path: ':game(mathmarathon)',
+                name: 'mathmarathon',
+                component: MathMarathon
               }
-              ]
+            ]
           },
           {
             path: 'select-difficulty/:game',

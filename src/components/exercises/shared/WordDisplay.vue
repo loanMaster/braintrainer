@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 3rem" class="user-select-none">
+  <div class="non-selectable text-h3 text-center">
     <span class="g-medium-font">{{ firstPart }}</span>
     <span class="g-medium-font" :style="{ 'color': highlightColor }">{{ highlight }}</span>
     <span class="g-medium-font">{{ lastPart }}</span>
@@ -7,34 +7,31 @@
   </template>
 
 <script setup lang="ts">
-import { defineProps, computed, ref, Ref } from 'vue'
+import { defineProps, computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   value: String,
   highlightIndex: Number,
   highlightColor: String
 })
 
-const value: Ref<string | undefined> = ref(undefined)
-const highlightIndex: Ref<number | undefined> = ref(undefined)
-
 const firstPart = computed(() => {
-  if (highlightIndex.value !== undefined && highlightIndex.value >= 0) {
-    return value.value?.substr(0, highlightIndex.value).replaceAll('_', '_ ')
+  if (props.highlightIndex !== undefined && props.highlightIndex >= 0) {
+    return props.value?.substr(0, props.highlightIndex).replaceAll('_', '_ ')
   }
-  return value
+  return props.value!
 })
 
 const lastPart = computed(() => {
-  if (highlightIndex.value !== undefined && highlightIndex.value >= 0) {
-    return value.value?.substr(highlightIndex.value + 1).replaceAll('_', '_ ')
+  if (props.highlightIndex !== undefined && props.highlightIndex >= 0) {
+    return props.value?.substr(props.highlightIndex + 1).replaceAll('_', '_ ')
   }
   return ''
 })
 
 const highlight = computed(() => {
-  if (highlightIndex.value !== undefined && highlightIndex.value >= 0) {
-    return value.value?.substr(highlightIndex.value, 1).replaceAll('_', '_ ')
+  if (props.highlightIndex !== undefined && props.highlightIndex >= 0) {
+    return props.value?.substr(props.highlightIndex, 1).replaceAll('_', '_ ')
   }
   return ''
 })

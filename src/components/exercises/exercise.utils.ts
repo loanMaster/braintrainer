@@ -4,6 +4,7 @@ import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import {NavService} from "src/router/nav.service";
 import {SoundService} from "src/shared-services/sound.service";
 import { Ref } from 'vue'
+import {TweenService} from "src/shared-services/tween.service";
 
 export const exerciseUtils = {
   wait: (time: number)  => new Promise(resolve => setTimeout(resolve, time)),
@@ -14,6 +15,15 @@ export const exerciseUtils = {
     new NavService().navigateTo({
       name: 'score-screen'
     })
+  },
+  handleMistake: function (reveal: () => any, elementToWiggle: Ref<HTMLElement>) {
+    if (useAppStore().strike()) {
+      new SoundService().playError()
+      if (useAppStore().exercise.strikes >= 3) {
+        reveal()
+      }
+    }
+    new TweenService().wiggle(elementToWiggle.value)
   },
   createExercise: (numberOfQuestions: number) => {
     useAppStore().$patch(store => {
