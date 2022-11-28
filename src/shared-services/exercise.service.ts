@@ -1,4 +1,4 @@
-import {useAppStore} from "stores/app-store";
+import { requestHelper } from 'src/shared-services/request.helper';
 
 export interface RandomWord {
   lang: string;
@@ -27,77 +27,70 @@ export interface AudioResponse {
 }
 
 export interface AnagramResponse {
-  words: string[]
+  words: string[];
 }
 
 export class ExerciseService {
-  private getStandardRequestInit (): RequestInit {
-    return {
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-machine': useAppStore().machineId,
-        'x-player': useAppStore().player.id
-      }
-    }
+  get serverPath() {
+    return serverPath || '';
   }
 
-  get serverPath () {
-    return serverPath || ''
-  }
-
-  async fetchRandomWords (randomWord: RandomWord): Promise<AudioResponse[]> {
+  async fetchRandomWords(randomWord: RandomWord): Promise<AudioResponse[]> {
     const response = await fetch(this.serverPath + '/speech/words', {
-      ...this.getStandardRequestInit(),
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(randomWord)
-    })
-    return response.json()
+      body: JSON.stringify(randomWord),
+    });
+    return response.json();
   }
 
-  async fetchNumbers (numberRequest: NumberRequest): Promise<AudioResponse[]> {
+  async fetchNumbers(numberRequest: NumberRequest): Promise<AudioResponse[]> {
     const response = await fetch(this.serverPath + '/speech/numbers', {
-      ...this.getStandardRequestInit(),
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(numberRequest)
-    })
-    return response.json()
+      body: JSON.stringify(numberRequest),
+    });
+    return response.json();
   }
 
-  async fetchHomophone (randomWord: RandomWord): Promise<HomophoneAudioResponse> {
+  async fetchHomophone(
+    randomWord: RandomWord
+  ): Promise<HomophoneAudioResponse> {
     const response = await fetch(this.serverPath + '/speech/homophone', {
-      ...this.getStandardRequestInit(),
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(randomWord)
-    })
-    return response.json()
+      body: JSON.stringify(randomWord),
+    });
+    return response.json();
   }
 
-  async fetchWordsBackwards (randomWord: RandomWord): Promise<AudioResponse> {
-    const response = await fetch(this.serverPath +'/speech/words-backwards', {
-      ...this.getStandardRequestInit(),
+  async fetchWordsBackwards(randomWord: RandomWord): Promise<AudioResponse> {
+    const response = await fetch(this.serverPath + '/speech/words-backwards', {
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(randomWord)
-    })
-    return response.json()
+      body: JSON.stringify(randomWord),
+    });
+    return response.json();
   }
 
-  async fetchAlphabet (query: { lang: string }): Promise<AudioResponse[]> {
-    const response = await fetch(this.serverPath +'/speech/alphabet', {
-      ...this.getStandardRequestInit(),
+  async fetchAlphabet(query: { lang: string }): Promise<AudioResponse[]> {
+    const response = await fetch(this.serverPath + '/speech/alphabet', {
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(query)
-    })
-    return response.json()
+      body: JSON.stringify(query),
+    });
+    return response.json();
   }
 
-  async fetchAnagram (randomWord: RandomWord): Promise<AnagramResponse> {
-    const response = await fetch(this.serverPath + '/dictionary/random-anagram', {
-      ...this.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(randomWord)
-    })
-    return response.json()
+  async fetchAnagram(randomWord: RandomWord): Promise<AnagramResponse> {
+    const response = await fetch(
+      this.serverPath + '/dictionary/random-anagram',
+      {
+        ...requestHelper.getStandardRequestInit(),
+        method: 'POST',
+        body: JSON.stringify(randomWord),
+      }
+    );
+    return response.json();
   }
 }

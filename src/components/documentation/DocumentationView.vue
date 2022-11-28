@@ -7,10 +7,14 @@
     <h5 class="mt-2">{{ $t('Why do we need another brain jogging app?') }}</h5>
     {{ $t('Why do we need another brain jogging app?_answer') }}
 
-    <h5 class="mt-2">{{ $t('What skills can I improve using BrainTrainer?') }}</h5>
+    <h5 class="mt-2">
+      {{ $t('What skills can I improve using BrainTrainer?') }}
+    </h5>
     {{ $t('What skills can I improve using BrainTrainer?_answer') }}
 
-    <h5 class="mt-2">{{ $t('Are these skills helpful in my every day life?') }}</h5>
+    <h5 class="mt-2">
+      {{ $t('Are these skills helpful in my every day life?') }}
+    </h5>
     {{ $t('Are these skills helpful in my every day life?_answer') }}
 
     <h5 class="mt-2">{{ $t('What do the stars and medals mean?') }}</h5>
@@ -23,4 +27,3 @@
     support@braintrainer.io
   </div>
 </template>
-

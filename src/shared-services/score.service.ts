@@ -1,4 +1,4 @@
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 export interface Score {
   easy: number;
@@ -49,52 +49,55 @@ export interface UpdateScoreResponse {
 }
 
 export class ScoreService {
-  private get store () {
+  private get store() {
     return useAppStore();
   }
 
-  private getStandardRequestInit (): RequestInit {
+  private getStandardRequestInit(): RequestInit {
     return {
       mode: 'cors',
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         'x-machine': this.store.machineId,
-        'x-player': this.store.player.id
-      }
-    }
+        'x-player': this.store.player.id,
+      },
+    };
   }
 
-  get serverPath () {
-    return serverPath || ''
+  get serverPath() {
+    return serverPath || '';
   }
 
-  async updateScore (scoreUpdate: ScoreUpdate): Promise<UpdateScoreResponse> {
-    const scoreAsDoubleBase64 = btoa(btoa(JSON.stringify(scoreUpdate)))
-    const inverted = scoreAsDoubleBase64.split('').reverse().join('')
+  async updateScore(scoreUpdate: ScoreUpdate): Promise<UpdateScoreResponse> {
+    const scoreAsDoubleBase64 = btoa(btoa(JSON.stringify(scoreUpdate)));
+    const inverted = scoreAsDoubleBase64.split('').reverse().join('');
 
-    const response = await fetch(this.serverPath +'/player/raw', {
+    const response = await fetch(this.serverPath + '/player/raw', {
       ...this.getStandardRequestInit(),
       method: 'PUT',
-      body: JSON.stringify({ v: inverted })
-    })
-    return response.json()
+      body: JSON.stringify({ v: inverted }),
+    });
+    return response.json();
   }
 
-  async fetchHighscores (): Promise<HighScoresDto> {
-    const response = await fetch(this.serverPath +'/player/highscores', {
+  async fetchHighscores(): Promise<HighScoresDto> {
+    const response = await fetch(this.serverPath + '/player/highscores', {
       ...this.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify({ id: this.store.player.id })
-    })
-    return response.json()
+      body: JSON.stringify({ id: this.store.player.id }),
+    });
+    return response.json();
   }
 
-  async fetchPlayerScores (): Promise<PlayerPercentiles> {
-    const response = await fetch(this.serverPath +`/player/${this.store.player.id}/score-percentiles`, {
-      ...this.getStandardRequestInit(),
-      method: 'GET'
-    })
-    return response.json()
+  async fetchPlayerScores(): Promise<PlayerPercentiles> {
+    const response = await fetch(
+      this.serverPath + `/player/${this.store.player.id}/score-percentiles`,
+      {
+        ...this.getStandardRequestInit(),
+        method: 'GET',
+      }
+    );
+    return response.json();
   }
 }

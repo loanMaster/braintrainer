@@ -6,5 +6,5 @@ export const GAMES = [
   'Memory',
   'RememberWords',
   'RememberNumbers',
-  'WordScramble'
-]
+  'WordScramble',
+];

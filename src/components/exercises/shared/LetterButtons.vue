@@ -1,44 +1,51 @@
 <template>
-  <div  class="row q-gutter-sm justify-center">
+  <div class="row q-gutter-sm justify-center">
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
-      <q-btn color="primary" class="text-h5" @click="selectLetter(label, $event)" :disable="disabled">{{label}}</q-btn>
+      <q-btn
+        color="primary"
+        class="text-h5"
+        @click="selectLetter(label, $event)"
+        :disable="disabled"
+        >{{ label }}</q-btn
+      >
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, Ref, defineEmits } from 'vue'
-import {useAppStore} from "stores/app-store";
+import { defineProps, ref, Ref, defineEmits } from 'vue';
+import { useAppStore } from 'stores/app-store';
 
 const props = defineProps({
   disabled: Boolean,
-  numberOfButtons: Number
-})
-const emits = defineEmits(['letter-selected'])
+  numberOfButtons: Number,
+});
+const emits = defineEmits(['letter-selected']);
 
-const buttonLabels: Ref<string[]> = ref([])
+const buttonLabels: Ref<string[]> = ref([]);
 
-function selectLetter (letter: string, event: Event) {
-  event.stopPropagation()
-  emits('letter-selected', letter)
+function selectLetter(letter: string, event: Event) {
+  event.stopPropagation();
+  emits('letter-selected', letter);
 }
 
-function showAtLeast (mandatoryLetters: string[]) {
-  const allLetters = useAppStore().letters
-  buttonLabels.value = []
+function showAtLeast(mandatoryLetters: string[]) {
+  const allLetters = useAppStore().letters;
+  buttonLabels.value = [];
   for (const letter of mandatoryLetters) {
-    buttonLabels.value.push(letter)
+    buttonLabels.value.push(letter);
   }
   while (buttonLabels.value.length < props.numberOfButtons!) {
-    const nextRandomLetter = allLetters[Math.floor(Math.random() * allLetters.length)]
+    const nextRandomLetter =
+      allLetters[Math.floor(Math.random() * allLetters.length)];
     if (buttonLabels.value.indexOf(nextRandomLetter) === -1) {
-      buttonLabels.value.push(nextRandomLetter)
+      buttonLabels.value.push(nextRandomLetter);
     }
   }
   buttonLabels.value.sort((a, b) => {
-    return allLetters.indexOf(a) < allLetters.indexOf(b) ? -1 : 1
-  })
+    return allLetters.indexOf(a) < allLetters.indexOf(b) ? -1 : 1;
+  });
 }
 
-defineExpose({ showAtLeast })
+defineExpose({ showAtLeast });
 </script>

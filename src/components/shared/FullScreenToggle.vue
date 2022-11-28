@@ -1,13 +1,15 @@
 <template>
-  <div class="c-full-screen-button user-select-none" @click="toggleFullScreen">&#x26F6;</div>
+  <div class="c-full-screen-button user-select-none" @click="toggleFullScreen">
+    &#x26F6;
+  </div>
 </template>
 
 <script setup lang="ts">
-async function toggleFullScreen () {
+async function toggleFullScreen() {
   if (document.fullscreenElement) {
-    await document.exitFullscreen()
+    await document.exitFullscreen();
   } else {
-    await document.querySelector('#app')!.requestFullscreen()
+    await document.querySelector('#app')!.requestFullscreen();
   }
 }
 </script>

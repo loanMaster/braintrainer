@@ -1,123 +1,167 @@
 <template>
   <div ref="buttons" class="row q-gutter-sm justify-center">
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
-      <q-btn color="primary" @click="selectWord(label, $event)" :disabled="inputDisabled" class="transition-duration-md"
-      >{{label}}</q-btn>
+      <q-btn
+        color="primary"
+        @click="selectWord(label, $event)"
+        :disabled="inputDisabled"
+        class="transition-duration-md"
+        >{{ label }}</q-btn
+      >
     </div>
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator"/>
-  <SolutionBanner :show="revealed" :solution="solution" @click="containerClicked"/>
+  <LoadingIndicator :showing="showLoadingIndicator" />
+  <SolutionBanner
+    :show="revealed"
+    :solution="solution"
+    @click="containerClicked"
+  />
 </template>
 
 <script setup lang="ts">
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue'
-import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue'
-import { takeUntil } from 'rxjs'
-import {createExerciseContext} from "components/exercises/register-defaults";
-import {SoundService} from "src/shared-services/sound.service";
-import {computed, onBeforeMount, onMounted, ref, Ref} from "vue";
-import {exerciseUtils} from "components/exercises/exercise.utils";
-import {TweenService} from "src/shared-services/tween.service";
-import {AudioResponse, ExerciseService} from "src/shared-services/exercise.service";
-import {ReplaySubject, Subject, take} from "rxjs";
-import {skip} from "rxjs/operators";
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
+import { takeUntil } from 'rxjs';
+import { createExerciseContext } from 'components/exercises/register-defaults';
+import { SoundService } from 'src/shared-services/sound.service';
+import { computed, onBeforeMount, onMounted, ref, Ref } from 'vue';
+import { exerciseUtils } from 'components/exercises/exercise.utils';
+import { TweenService } from 'src/shared-services/tween.service';
+import {
+  AudioResponse,
+  ExerciseService,
+} from 'src/shared-services/exercise.service';
+import { ReplaySubject, Subject, take } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
-const { soundService, revealed, destroy, t, store, inputDisabled, containerClicked, route } = createExerciseContext({
+const {
+  soundService,
+  revealed,
+  destroy,
+  t,
+  store,
+  inputDisabled,
+  containerClicked,
+  route,
+} = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
-  startCb: () => nextQuestion()
-})
+  startCb: () => nextQuestion(),
+});
 
-let currentIndex = 0
-let nextAudio: Subject<AudioResponse>
-let currentAudio: Ref<AudioResponse | undefined> = ref(undefined)
-const buttons = ref()
-const showLoadingIndicator = ref(false)
+let currentIndex = 0;
+let nextAudio: Subject<AudioResponse>;
+let currentAudio: Ref<AudioResponse | undefined> = ref(undefined);
+const buttons = ref();
+const showLoadingIndicator = ref(false);
 
-const buttonLabels: Ref<string[]> = ref([])
+const buttonLabels: Ref<string[]> = ref([]);
 
 onBeforeMount(() => {
-  const numberOfQuestions = 10
-  exerciseUtils.createExercise(numberOfQuestions)
-  nextAudio = new ReplaySubject<AudioResponse>(numberOfQuestions)
-  nextAudio.pipe(take(numberOfQuestions), takeUntil(destroy)).subscribe(() => loadNextAudio())
-  loadNextAudio()
-})
+  const numberOfQuestions = 10;
+  exerciseUtils.createExercise(numberOfQuestions);
+  nextAudio = new ReplaySubject<AudioResponse>(numberOfQuestions);
+  nextAudio
+    .pipe(take(numberOfQuestions), takeUntil(destroy))
+    .subscribe(() => loadNextAudio());
+  loadNextAudio();
+});
 
 const numberOfOptions = computed(() => {
-  return difficulty.value === 'easy' ? 4 : difficulty.value === 'normal' ? 6 : 8
-})
+  return difficulty.value === 'easy'
+    ? 4
+    : difficulty.value === 'normal'
+    ? 6
+    : 8;
+});
 
-const difficulty = computed(() => exerciseUtils.difficulty(route)!)
+const difficulty = computed(() => exerciseUtils.difficulty(route)!);
 
-onMounted(async() => {
-  new TweenService().setDisplay(buttons.value, 'none')
+onMounted(async () => {
+  new TweenService().setDisplay(buttons.value, 'none');
   for (let idx = 0; idx < numberOfOptions.value; idx++) {
-    buttonLabels.value.push('?')
+    buttonLabels.value.push('?');
   }
-})
+});
 
-async function nextQuestion () {
-  currentIndex = 0
-  if (!await exerciseUtils.prepareNewQuestion({ inputDisabled, soundService, revealed })) {
-    return
+async function nextQuestion() {
+  currentIndex = 0;
+  if (
+    !(await exerciseUtils.prepareNewQuestion({
+      inputDisabled,
+      soundService,
+      revealed,
+    }))
+  ) {
+    return;
   }
   if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(buttons.value)
+    await new TweenService().fadeOut(buttons.value);
   }
-  showLoadingIndicator.value = true
-  currentAudio.value = await nextAudio.pipe(skip(store.exercise.currentQuestion - 1), take(1)).toPromise()
-  showLoadingIndicator.value = false
+  showLoadingIndicator.value = true;
+  currentAudio.value = await nextAudio
+    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
+    .toPromise();
+  showLoadingIndicator.value = false;
 
-  const permutation = Array.from(Array(numberOfOptions.value).keys())
-  permutation.sort(() => Math.random() - 0.5)
-  const alts: string[] = (currentAudio.value as AudioResponse).alts as string[]
+  const permutation = Array.from(Array(numberOfOptions.value).keys());
+  permutation.sort(() => Math.random() - 0.5);
+  const alts: string[] = (currentAudio.value as AudioResponse).alts as string[];
   for (let idx = 0; idx < numberOfOptions.value; idx++) {
-    buttonLabels.value[idx] = alts[permutation[idx]]
+    buttonLabels.value[idx] = alts[permutation[idx]];
   }
 
-  inputDisabled.value = false
+  inputDisabled.value = false;
   if (store.exercise.currentQuestion === 1) {
-    new TweenService().setDisplay(buttons.value, 'flex')
+    new TweenService().setDisplay(buttons.value, 'flex');
   }
-  await new TweenService().fadeIn(buttons.value)
-  playAudio()
+  await new TweenService().fadeIn(buttons.value);
+  playAudio();
 }
 
-async function playAudio () {
-  await soundService.play(currentAudio.value as AudioResponse)
+async function playAudio() {
+  await soundService.play(currentAudio.value as AudioResponse);
 }
 
-async function loadNextAudio (): Promise<void> {
-  nextAudio.next(await new ExerciseService().fetchWordsBackwards({
-    minLength: difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 4 : 5,
-    maxLength: difficulty.value === 'easy' ? 5 : difficulty.value === 'normal' ? 6 : 20,
-    lang: store.language,
-    number: numberOfOptions.value
-  }))
+async function loadNextAudio(): Promise<void> {
+  nextAudio.next(
+    await new ExerciseService().fetchWordsBackwards({
+      minLength:
+        difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 4 : 5,
+      maxLength:
+        difficulty.value === 'easy'
+          ? 5
+          : difficulty.value === 'normal'
+          ? 6
+          : 20,
+      lang: store.language,
+      number: numberOfOptions.value,
+    })
+  );
 }
 
-async function selectWord (label: string, $event: Event) {
-  $event.stopPropagation()
-  if ((currentAudio.value?.val as string).toUpperCase() === label.toUpperCase()) {
-    inputDisabled.value = true
-    new SoundService().playSuccess()
-    store.$patch(store => store.exercise.correctAnswers++)
-    await exerciseUtils.wait(200)
-    new TweenService().fadeOut(buttons.value)
-    nextQuestion()
+async function selectWord(label: string, $event: Event) {
+  $event.stopPropagation();
+  if (
+    (currentAudio.value?.val as string).toUpperCase() === label.toUpperCase()
+  ) {
+    inputDisabled.value = true;
+    new SoundService().playSuccess();
+    store.$patch((store) => store.exercise.correctAnswers++);
+    await exerciseUtils.wait(200);
+    new TweenService().fadeOut(buttons.value);
+    nextQuestion();
   } else {
-    exerciseUtils.handleMistake(reveal, buttons)
+    exerciseUtils.handleMistake(reveal, buttons);
   }
 }
 
-function reveal () {
-  inputDisabled.value = true
-  revealed.value = true
+function reveal() {
+  inputDisabled.value = true;
+  revealed.value = true;
 }
 
 const solution = computed(() => {
-  return currentAudio.value?.val
-})
+  return currentAudio.value?.val;
+});
 </script>
-

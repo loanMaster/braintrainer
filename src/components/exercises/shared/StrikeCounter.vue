@@ -1,11 +1,14 @@
 <template>
-  <div class="c-wrapper no-pointer-events row flex-center text-negative non-selectable">
-    <span>{{ store.exercise.totalStrikeCount }}</span><q-icon name="close"/>
+  <div
+    class="c-wrapper no-pointer-events row flex-center text-negative non-selectable"
+  >
+    <span>{{ store.exercise.totalStrikeCount }}</span
+    ><q-icon name="close" />
   </div>
 </template>
 
 <script setup lang="ts">
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 const store = useAppStore();
 </script>
 

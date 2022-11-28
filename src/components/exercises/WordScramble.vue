@@ -1,250 +1,313 @@
 <template>
   <div ref="coreExercise" class="column">
-    <div class="c-speech-bubble text-h5 transition-duration-md non-selectable" ref="speechBubble" :style="{ opacity: playingAudio ? '1' : '0' }">
+    <div
+      class="c-speech-bubble text-h5 transition-duration-md non-selectable"
+      ref="speechBubble"
+      :style="{ opacity: playingAudio ? '1' : '0' }"
+    >
       <div>{{ currentlySpokenLetter }}</div>
     </div>
     <div class="q-my-md">
-      <WordDisplay :value="inputValue" :highlightIndex="currentIndex" :highlightColor="highlightError ? 'red' : 'black'"/>
+      <WordDisplay
+        :value="inputValue"
+        :highlightIndex="currentIndex"
+        :highlightColor="highlightError ? 'red' : 'black'"
+      />
     </div>
     <div>
-      <LetterButtons ref="letterButtons" :numberOfButtons="20" @letter-selected="onLetterEntered"/>
+      <LetterButtons
+        ref="letterButtons"
+        :numberOfButtons="20"
+        @letter-selected="onLetterEntered"
+      />
     </div>
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator"/>
-  <SolutionBanner :show="revealed" :solution="getMatchingAnagram()" @click="containerClicked"/>
+  <LoadingIndicator :showing="showLoadingIndicator" />
+  <SolutionBanner
+    :show="revealed"
+    :solution="getMatchingAnagram()"
+    @click="containerClicked"
+  />
 </template>
 
 <script setup lang="ts">
-  import { TweenService } from 'src/shared-services//tween.service'
-  import { keyInput } from 'src/util/key.input'
-  import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue'
-  import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue'
-  import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue'
-  import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue'
-  import {takeUntil, ReplaySubject } from 'rxjs'
-  import { SoundService } from 'src/shared-services//sound.service'
-  import { ref, onBeforeMount, onMounted } from 'vue'
-  import {exerciseUtils} from "components/exercises/exercise.utils";
-  import {createExerciseContext} from "components/exercises/register-defaults";
-  import {AudioResponse, ExerciseService} from "src/shared-services/exercise.service";
-  import {skip, take} from "rxjs/operators";
+import { TweenService } from 'src/shared-services//tween.service';
+import { keyInput } from 'src/util/key.input';
+import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
+import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
+import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import { takeUntil, ReplaySubject } from 'rxjs';
+import { SoundService } from 'src/shared-services//sound.service';
+import { ref, onBeforeMount, onMounted } from 'vue';
+import { exerciseUtils } from 'components/exercises/exercise.utils';
+import { createExerciseContext } from 'components/exercises/register-defaults';
+import {
+  AudioResponse,
+  ExerciseService,
+} from 'src/shared-services/exercise.service';
+import { skip, take } from 'rxjs/operators';
 
-  const { soundService, revealed, destroy, $q, t, route, store, inputDisabled, containerClicked, difficulty } = createExerciseContext({
-    playAudioCb: () => playAudio(),
-    nextQuestionCb: () => nextQuestion(),
-    startCb: () => nextQuestion()
-  })
+const {
+  soundService,
+  revealed,
+  destroy,
+  $q,
+  t,
+  route,
+  store,
+  inputDisabled,
+  containerClicked,
+  difficulty,
+} = createExerciseContext({
+  playAudioCb: () => playAudio(),
+  nextQuestionCb: () => nextQuestion(),
+  startCb: () => nextQuestion(),
+});
 
-  const currentIndex = ref(0)
-  const inputValue = ref('')
-  const coreExercise = ref()
-  const letterButtons = ref()
-  const showLoadingIndicator = ref(false)
-  let nextAnagrams: ReplaySubject<string[]>
-  let anagrams: string[] = []
-  let alphabet: AudioResponse[] = []
-  let loadAlphabet: Promise<AudioResponse[]>
-  let permutation: string[] = []
-  const playingAudio = ref(false)
-  let skipAudio = false
-  const currentlySpokenLetter = ref('')
-  let highlightError = false
+const currentIndex = ref(0);
+const inputValue = ref('');
+const coreExercise = ref();
+const letterButtons = ref();
+const showLoadingIndicator = ref(false);
+let nextAnagrams: ReplaySubject<string[]>;
+let anagrams: string[] = [];
+let alphabet: AudioResponse[] = [];
+let loadAlphabet: Promise<AudioResponse[]>;
+let permutation: string[] = [];
+const playingAudio = ref(false);
+let skipAudio = false;
+const currentlySpokenLetter = ref('');
+let highlightError = false;
 
-  onBeforeMount(() => {
-    const numberOfQuestions = 10
-    exerciseUtils.createExercise(numberOfQuestions)
-    nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions)
-    nextAnagrams.pipe(take(numberOfQuestions), takeUntil(destroy)).subscribe(() => loadNextAnagram())
-    loadNextAnagram()
-    loadAlphabet = startLoadAlphabet()
-  })
+onBeforeMount(() => {
+  const numberOfQuestions = 10;
+  exerciseUtils.createExercise(numberOfQuestions);
+  nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
+  nextAnagrams
+    .pipe(take(numberOfQuestions), takeUntil(destroy))
+    .subscribe(() => loadNextAnagram());
+  loadNextAnagram();
+  loadAlphabet = startLoadAlphabet();
+});
 
-  onMounted(() => {
-    keyInput.pipe(takeUntil(destroy)).subscribe(key => {
-      if (store.letters.indexOf(key.key.toUpperCase()) > -1) {
-        onLetterEntered(key.key.toUpperCase())
+onMounted(() => {
+  keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
+    if (store.letters.indexOf(key.key.toUpperCase()) > -1) {
+      onLetterEntered(key.key.toUpperCase());
+    }
+  });
+  new TweenService().setDisplay(coreExercise.value, 'none');
+});
+
+async function nextQuestion() {
+  currentIndex.value = 0;
+  if (
+    !(await exerciseUtils.prepareNewQuestion({
+      inputDisabled,
+      soundService,
+      revealed,
+    }))
+  ) {
+    return;
+  }
+  await stopAudio();
+  if (store.exercise.currentQuestion > 1) {
+    new TweenService().fadeOut(coreExercise.value);
+  }
+  if (alphabet.length === 0) {
+    alphabet = await loadAlphabet;
+  }
+
+  showLoadingIndicator.value = true;
+  anagrams = (await nextAnagrams
+    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
+    .toPromise()) as string[];
+  showLoadingIndicator.value = false;
+  anagrams = anagrams.map((v) => v.toUpperCase());
+  do {
+    permutation = getMatchingAnagram().split('');
+    permutation.sort(() => Math.random() - 0.5);
+  } while (isAnagram(permutation));
+  displayEmptyInput();
+  updateButtonLabels();
+  if (store.exercise.currentQuestion === 1) {
+    new TweenService().setDisplay(coreExercise.value, 'flex');
+  }
+  await new TweenService().fadeIn(coreExercise.value);
+  inputDisabled.value = false;
+  await playAudio();
+}
+
+function isAnagram(permutation: string[]): boolean {
+  const toTest = permutation.join('');
+  return anagrams.indexOf(toTest) > -1;
+}
+
+function updateButtonLabels() {
+  const matchingAnagram = getMatchingAnagram();
+  const setOfLetter: Set<string> = new Set(matchingAnagram.split(''));
+  const letters: string[] = Array.from(setOfLetter);
+  letterButtons.value.showAtLeast(letters);
+}
+
+async function playAudio() {
+  if (playingAudio.value) {
+    return;
+  }
+  skipAudio = false;
+  playingAudio.value = true;
+  console.log(permutation.length);
+  for (let idx = 0; idx < permutation.length; idx++) {
+    const matchingAudio = alphabet.find(
+      (a) => (a.val as string).toUpperCase() === permutation[idx]
+    );
+    console.log('matchingAudio found');
+    if (!skipAudio) {
+      currentlySpokenLetter.value = (matchingAudio as AudioResponse)
+        .val as string;
+      console.log('soundService.play');
+      await soundService.play(matchingAudio as AudioResponse);
+    }
+    if (!skipAudio) {
+      currentlySpokenLetter.value = '';
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
+  playingAudio.value = false;
+}
+
+async function stopAudio() {
+  skipAudio = true;
+  soundService.stop();
+  await new Promise((resolve) => {
+    const checkPlaying = () => {
+      if (playingAudio.value) {
+        setTimeout(() => {
+          checkPlaying();
+        }, 50);
+      } else {
+        resolve(true);
       }
-    })
-    new TweenService().setDisplay(coreExercise.value, 'none')
-  })
+    };
+    checkPlaying();
+  });
+}
 
-  async function nextQuestion () {
-    currentIndex.value = 0
-    if (!await exerciseUtils.prepareNewQuestion({ inputDisabled, soundService, revealed })) {
-      return
-    }
-    await stopAudio()
-    if (store.exercise.currentQuestion > 1) {
-      new TweenService().fadeOut(coreExercise.value)
-    }
-    if (alphabet.length === 0) {
-      alphabet = await loadAlphabet
-    }
+async function startLoadAlphabet(): Promise<AudioResponse[]> {
+  return new ExerciseService().fetchAlphabet({
+    lang: store.language,
+  });
+}
 
-    showLoadingIndicator.value = true
-    anagrams = await nextAnagrams
-      .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-      .toPromise() as string[]
-    showLoadingIndicator.value = false
-    anagrams = anagrams.map(v => v.toUpperCase())
-    do {
-      permutation = getMatchingAnagram().split('')
-      permutation.sort(() => Math.random() - 0.5)
-    } while (isAnagram(permutation))
-    displayEmptyInput()
-    updateButtonLabels()
-    if (store.exercise.currentQuestion === 1) {
-      new TweenService().setDisplay(coreExercise.value, 'flex')
-    }
-    await new TweenService().fadeIn(coreExercise.value)
-    inputDisabled.value = false
-    await playAudio()
+async function loadNextAnagram(): Promise<void> {
+  nextAnagrams.next(
+    (
+      await new ExerciseService().fetchAnagram({
+        minLength:
+          difficulty.value === 'easy'
+            ? 3
+            : difficulty.value === 'normal'
+            ? 5
+            : 6,
+        maxLength:
+          difficulty.value === 'easy'
+            ? 4
+            : difficulty.value === 'normal'
+            ? 6
+            : 7,
+        lang: store.language,
+        number: 1,
+      })
+    ).words
+  );
+}
+
+async function onLetterEntered(letter: string) {
+  if (revealed.value) {
+    nextQuestion();
+    return;
   }
-
-  function isAnagram (permutation: string[]): boolean {
-    const toTest = permutation.join('')
-    return anagrams.indexOf(toTest) > -1
+  if (inputDisabled.value) {
+    return;
   }
-
-  function updateButtonLabels () {
-    const matchingAnagram = getMatchingAnagram()
-    const setOfLetter: Set<string> = new Set(matchingAnagram.split(''))
-    const letters: string[] = Array.from(setOfLetter)
-    letterButtons.value.showAtLeast(letters)
-  }
-
-  async function playAudio () {
-    if (playingAudio.value) {
-      return
+  const correct = matchesAnagram(letter);
+  if (correct) {
+    displayLetter(letter, false);
+    currentIndex.value++;
+    const anagram = getMatchingAnagram();
+    if (currentIndex.value >= anagram.length) {
+      inputDisabled.value = true;
+      new SoundService().playSuccess();
+      store.$patch((store) => store.exercise.correctAnswers++);
+      await exerciseUtils.wait(150);
+      nextQuestion();
     }
-    skipAudio = false
-    playingAudio.value = true
-    console.log(permutation.length)
-    for (let idx = 0; idx < permutation.length; idx++) {
-      const matchingAudio = alphabet
-        .find(a => (a.val as string).toUpperCase() === permutation[idx])
-      console.log("matchingAudio found")
-      if (!skipAudio) {
-        currentlySpokenLetter.value = (matchingAudio as AudioResponse).val as string
-        console.log("soundService.play")
-        await soundService.play(matchingAudio as AudioResponse)
-      }
-      if (!skipAudio) {
-        currentlySpokenLetter.value = ''
-        await new Promise(resolve => setTimeout(resolve, 100))
-      }
-    }
-    playingAudio.value = false
+  } else {
+    displayLetter(letter, true);
+    exerciseUtils.handleMistake(reveal, coreExercise);
   }
+}
 
-  async function stopAudio () {
-    skipAudio = true
-    soundService.stop()
-    await new Promise((resolve) => {
-      const checkPlaying = () => {
-        if (playingAudio.value) {
-          setTimeout(() => {
-            checkPlaying()
-          }, 50)
-        } else {
-          resolve(true)
-        }
-      }
-      checkPlaying()
-    })
-  }
+function displayEmptyInput() {
+  const anagram = getMatchingAnagram();
+  inputValue.value = '__________________________________'.substring(
+    0,
+    anagram.length
+  );
+  highlightError = false;
+}
 
-  async function startLoadAlphabet (): Promise<AudioResponse[]> {
-    return new ExerciseService().fetchAlphabet({
-      lang: store.language
-    })
-  }
+function displayLetter(letter: string, hasError: boolean) {
+  const word = getMatchingAnagram();
+  const nextLetter = letter.toUpperCase();
+  const existingLetters = word.substring(0, currentIndex.value);
+  const spaces = '__________________________________'.substring(
+    currentIndex.value + 1,
+    word.length
+  );
+  inputValue.value = existingLetters + nextLetter + spaces;
+  highlightError = hasError;
+}
 
-  async function loadNextAnagram (): Promise<void> {
-    nextAnagrams.next((await new ExerciseService().fetchAnagram({
-      minLength: difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 5 : 6,
-      maxLength: difficulty.value === 'easy' ? 4 : difficulty.value === 'normal' ? 6 : 7,
-      lang: store.language,
-      number: 1
-    })).words)
-  }
+function reveal() {
+  inputDisabled.value = true;
+  revealed.value = true;
+}
 
-  async function onLetterEntered (letter: string) {
-    if (revealed.value) {
-      nextQuestion()
-      return
-    }
-    if (inputDisabled.value) {
-      return
-    }
-    const correct = matchesAnagram(letter)
-    if (correct) {
-      displayLetter(letter, false)
-      currentIndex.value++
-      const anagram = getMatchingAnagram()
-      if (currentIndex.value >= anagram.length) {
-        inputDisabled.value = true
-        new SoundService().playSuccess()
-        store.$patch(store => store.exercise.correctAnswers++)
-        await exerciseUtils.wait(150)
-        nextQuestion()
-      }
-    } else {
-      displayLetter(letter, true)
-      exerciseUtils.handleMistake(reveal, coreExercise)
+function getMatchingAnagram(): string {
+  const text = inputValue.value
+    .replaceAll(' ', '')
+    .substring(0, currentIndex.value);
+  for (const anagram of anagrams) {
+    if (anagram.startsWith(text)) {
+      return anagram;
     }
   }
+  return '';
+}
 
-  function displayEmptyInput () {
-    const anagram = getMatchingAnagram()
-    inputValue.value = '__________________________________'.substring(0, anagram.length)
-    highlightError = false
-  }
-
-  function displayLetter (letter: string, hasError: boolean) {
-    const word = getMatchingAnagram()
-    const nextLetter = letter.toUpperCase()
-    const existingLetters = word.substring(0, currentIndex.value)
-    const spaces = '__________________________________'.substring(currentIndex.value + 1, word.length)
-    inputValue.value  = existingLetters + nextLetter + spaces
-    highlightError = hasError
-  }
-
-  function reveal () {
-    inputDisabled.value = true
-    revealed.value = true
-  }
-
-  function getMatchingAnagram (): string {
-    const text = inputValue.value.replaceAll(' ', '').substring(0, currentIndex.value)
-    for (const anagram of anagrams) {
-      if (anagram.startsWith(text)) {
-        return anagram
-      }
-    }
-    return ''
-  }
-
-  function matchesAnagram (letter: string): boolean {
-    const text = inputValue.value.replaceAll(' ', '').substring(0, currentIndex.value) + letter
-    for (const anagram of anagrams) {
-      if (anagram.startsWith(text)) {
-        return true
-      }
-    }
-    return false
-  }
-
-  async function repeat () {
-    if (!soundService.isPlaying()) {
-      await playAudio()
+function matchesAnagram(letter: string): boolean {
+  const text =
+    inputValue.value.replaceAll(' ', '').substring(0, currentIndex.value) +
+    letter;
+  for (const anagram of anagrams) {
+    if (anagram.startsWith(text)) {
+      return true;
     }
   }
+  return false;
+}
 
-  onBeforeMount(() => {
-    skipAudio = true
-  })
+async function repeat() {
+  if (!soundService.isPlaying()) {
+    await playAudio();
+  }
+}
 
+onBeforeMount(() => {
+  skipAudio = true;
+});
 </script>
 
 <style scoped>

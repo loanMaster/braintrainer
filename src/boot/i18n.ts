@@ -2,7 +2,7 @@ import { boot } from 'quasar/wrappers';
 import { createI18n } from 'vue-i18n';
 
 import messages from 'src/i18n';
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 export type MessageLanguages = keyof typeof messages;
 

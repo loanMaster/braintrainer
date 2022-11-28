@@ -1,14 +1,24 @@
 <template>
   <div>
-    <span v-for="(val) in Array.from(Array(3 - rating).keys())" :key="val" class="c-star-inactive">★</span>
-    <span v-for="(val) in Array.from(Array(rating).keys())" :key="val" class="c-star-active">★</span>
+    <span
+      v-for="val in Array.from(Array(3 - rating).keys())"
+      :key="val"
+      class="c-star-inactive"
+      >★</span
+    >
+    <span
+      v-for="val in Array.from(Array(rating).keys())"
+      :key="val"
+      class="c-star-active"
+      >★</span
+    >
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps } from 'vue';
 
-defineProps({ rating: Number })
+defineProps({ rating: Number });
 </script>
 
 <style scoped>
