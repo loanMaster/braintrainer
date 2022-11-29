@@ -77,7 +77,7 @@ const relations = [
   "Nephew",
   "Grandchild"
 ]
-let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.your_' + v))
+let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.my_' + v))
 const wrapper = ref();
 const character = ref(male_names[0])
 
@@ -105,7 +105,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(wrapper.value);
   }
-  const task = new RelativesService().createExercise(
+  const task = new RelativesService().createRelationshipTree(
     difficulty.value as string
   );
   character.value = task.gender === 'f' ?
@@ -164,6 +164,6 @@ const whoIs = computed(() => {
 })
 
 const solution = computed(() => {
-  return currentTask.value?.solutions.map(s => t('findRelatives.your_' + s)).join(' / ');
+  return currentTask.value?.solutions.map(s => t('findRelatives.my_' + s)).join(' / ');
 });
 </script>
