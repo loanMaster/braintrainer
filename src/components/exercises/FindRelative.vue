@@ -8,7 +8,7 @@
         <q-btn
           color="primary"
           @click="selectWord(idx, $event)"
-          :disabled="isButtonDisabled(idx)"
+          :disabled="inputDisabled"
           class="transition-duration-md"
           >{{ $t( label) }}</q-btn
         >
@@ -29,10 +29,8 @@ import { Sound, SoundService } from 'src/shared-services//sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {
-  RelationshipService,
-} from 'src/shared-services/relationship.service';
 import { useAppStore } from 'stores/app-store';
+import { RelativesService } from "components/exercises/service/relatives.service";
 
 const {
   soundService,
@@ -79,7 +77,7 @@ const relations = [
   "Nephew",
   "Grandchild"
 ]
-let buttonLabels: Ref<string[]> = ref(relations.map(v => 'your_' + v))
+let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.your_' + v))
 const wrapper = ref();
 const character = ref(male_names[0])
 
@@ -94,15 +92,6 @@ onMounted(async () => {
   new TweenService().setDisplay(wrapper.value, 'none');
 });
 
-const sequenceLength = computed(() => {
-  return difficulty.value === 'easy'
-    ? 6
-    : difficulty.value === 'normal'
-    ? 9
-    : 12;
-});
-
-
 async function nextQuestion() {
   if (
     !(await exerciseUtils.prepareNewQuestion({
@@ -116,17 +105,16 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(wrapper.value);
   }
-  const task = new RelationshipService().createExercise(
+  const task = new RelativesService().createExercise(
     difficulty.value as string
   );
-  const isFemale = new RelationshipService().getGender(task.queue[0]) === 'f'
-  character.value = isFemale ?
+  character.value = task.gender === 'f' ?
     female_names[Math.floor((Math.random() * female_names.length))] :  male_names[Math.floor((Math.random() * male_names.length))]
-  const texts = [t(`{name}_is`, { name: t(character.value) }), t('subj_' + task.queue[0])];
+  const texts = [t(`findRelatives.{name}_is`, { name: t('findRelatives.' + character.value) }), t('findRelatives.subj_' + task.queue[0])];
   for (let i = 1; i < task.queue.length - 1; i++) {
-    texts.push(t('poss_' + task.queue[i]));
+    texts.push(t('findRelatives.poss_' + task.queue[i]));
   }
-  texts.push(t('of_your_' + task.queue[task.queue.length - 1]));
+  texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
   const audio = texts.map((text) => {
     return { src: `/sounds/relatives/${useAppStore().language}_${text}.mp3` };
@@ -166,22 +154,16 @@ function selectWord(idx: number, $event: Event) {
   }
 }
 
-function isButtonDisabled(idx: number) {
-  return (
-    inputDisabled.value
-  );
-}
-
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
 }
 
 const whoIs = computed(() => {
-  return t('Who is {name}?', { name: t(character.value) })
+  return t('findRelatives.Who is {name}?', { name: t('findRelatives.' + character.value) })
 })
 
 const solution = computed(() => {
-  return currentTask.value?.solutions.map(s => t('your_' + s)).join(' / ');
+  return currentTask.value?.solutions.map(s => t('findRelatives.your_' + s)).join(' / ');
 });
 </script>

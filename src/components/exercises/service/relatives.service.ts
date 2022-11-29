@@ -8,9 +8,10 @@ export const possibleRelations = [
   'Cousin'
 ];
 
-export interface RelationshipTask {
+export interface FindRelativeTask {
   queue: string[];
   solutions: string[];
+  gender: string;
 }
 
 const fatherMotherMapping = {
@@ -52,7 +53,6 @@ const daughterSonChildMapping = {
 };
 
 const grandparentMapping = {
-  Child: ['Mother', 'Father', 'Uncle', 'Aunt'],
   Son: ['Father', 'Uncle'],
   Daughter: ['Mother', 'Aunt'],
 };
@@ -62,7 +62,7 @@ const nieceNephewMapping = {
   Mother: ['Sister'],
   Brother: ['Nephew'],
   Sister: ['Niece'],
-  Cousin: ['Daughter', 'Son', 'Child'],
+  Cousin: ['Daughter'],
 };
 
 const mapping: { [key: string]: any } = {
@@ -127,7 +127,6 @@ export class Relative {
     let incest = false
     this.parents.forEach(p => {
       if (this.parents.some(p2 => p2.hasSibling(p.id))) {
-        this.printTrace()
         incest = true
       }
     })
@@ -144,13 +143,6 @@ export class Relative {
     return incest
   }
 
-  printTrace () {
-    if (this.previous) {
-      this.previous.printTrace()
-    }
-    console.log(`${this.relationship} -> ${this.type}`)
-  }
-
   private hasSibling(id: number) {
     return this.siblings.map(s => s.id).indexOf(id) > -1
   }
@@ -161,7 +153,7 @@ export class Relative {
   next: Relative[] = []
 }
 
-export class RelationshipService {
+export class RelativesService {
   getGender (value: string) {
     switch (value) {
       case 'Sister':
@@ -172,7 +164,6 @@ export class RelationshipService {
       case 'Grandmother':
       case 'Aunt':
         return 'f'
-      case 'Child':
       case 'Grandchild':
         return 'n'
       default:
@@ -252,7 +243,7 @@ export class RelationshipService {
     return n;
   }
 
-  tryCreateExercise(difficulty: string) {
+  tryCreateExercise(difficulty: string): { incest: boolean, value: FindRelativeTask }  {
     const length = difficulty === 'easy' ? 3 : difficulty === 'normal' ? 4 : 5;
     const queue = [];
     let currentRelationship = 'You';
@@ -273,14 +264,14 @@ export class RelationshipService {
     }
     const incest = this.isIncest(queue)
     const qReverse = queue.reverse();
-    return { queue: qReverse, solutions: this.whoIs(qReverse), incest };
+    return { incest, value: { queue: qReverse, solutions: this.whoIs(qReverse), gender: this.getGender(qReverse[0]) } };
   }
 
-  createExercise(difficulty: string): RelationshipTask {
-    let result: any
-    do {
+  createExercise(difficulty: string): FindRelativeTask {
+    let result = this.tryCreateExercise(difficulty)
+    while (result.incest) {
       result = this.tryCreateExercise(difficulty)
-    } while (result.incest)
-    return { queue: result.queue, solutions: result.solutions }
+    }
+    return result.value
   }
 }
