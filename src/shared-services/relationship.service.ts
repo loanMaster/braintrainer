@@ -3,10 +3,9 @@ export const possibleRelations = [
   'Brother',
   'Mother',
   'Father',
-  'Child',
   'Son',
   'Daughter',
-  'Cousin',
+  'Cousin'
 ];
 
 export interface RelationshipTask {
@@ -19,7 +18,6 @@ const fatherMotherMapping = {
   Father: ['Grandfather'],
   Sister: ['Aunt'],
   Brother: ['Uncle'],
-  Child: ['Brother', 'Sister', 'You'],
   Son: ['Brother', 'You'],
   Daughter: ['Sister', 'You'],
 };
@@ -29,7 +27,6 @@ const UncleAuntMapping = {
   Father: ['Grandfather'],
   Sister: ['Aunt', 'Mother'],
   Brother: ['Uncle', 'Father'],
-  Child: ['Cousin'],
   Son: ['Cousin'],
   Daughter: ['Cousin'],
 };
@@ -41,7 +38,6 @@ const sisterBrotherMapping = {
   Sister: ['Sister', 'You'],
   Brother: ['Brother', 'You'],
   Son: ['Nephew'],
-  Child: ['Nephew', 'Niece'],
   Daughter: ['Niece'],
 };
 
@@ -51,7 +47,6 @@ const daughterSonChildMapping = {
   Cousin: ['Niece'],
   Sister: ['Daughter'],
   Brother: ['Son'],
-  Child: ['Grandchild'],
   Son: ['Grandchild'],
   Daughter: ['Grandchild'],
 };
@@ -82,7 +77,6 @@ const mapping: { [key: string]: any } = {
     Brother: ['Cousin'],
     Daughter: ['Niece'],
     Son: ['Nephew'],
-    Child: ['Niece', 'Nephew'],
     Uncle: ['Father', 'Uncle'],
     Aunt: ['Mother', 'Aunt'],
   },
@@ -101,6 +95,72 @@ const mapping: { [key: string]: any } = {
   Child: daughterSonChildMapping,
 };
 
+export class Relative {
+  public id: number;
+  constructor (public type: string, public previous: Relative, public relationship: string) {
+    this.id = Math.random()
+    switch (relationship) {
+      case 'Mother':
+      case 'Father':
+        this.children.push(previous)
+        this.siblings.push(...previous.parents)
+        previous.parents.push(this)
+        break;
+      case 'Son':
+      case 'Daughter':
+      case 'Child':
+        this.parents.push(previous)
+        this.siblings.push(...previous.children)
+        previous.children.push(this)
+        break;
+      case 'Brother':
+      case 'Sister':
+        this.siblings.push(previous)
+        this.siblings.push(...previous.siblings)
+        this.parents.push(...previous.parents)
+        previous.siblings.push(this)
+        break;
+    }
+  }
+
+  isIncest(): boolean {
+    let incest = false
+    this.parents.forEach(p => {
+      if (this.parents.some(p2 => p2.hasSibling(p.id))) {
+        this.printTrace()
+        incest = true
+      }
+    })
+
+    const parentIds: number[] = []
+    this.children.forEach(c => {
+      parentIds.push(...c.parents.map(parent => parent.id))
+    })
+    parentIds.forEach(id => {
+      if (this.hasSibling(id)) {
+        incest = true
+      }
+    })
+    return incest
+  }
+
+  printTrace () {
+    if (this.previous) {
+      this.previous.printTrace()
+    }
+    console.log(`${this.relationship} -> ${this.type}`)
+  }
+
+  private hasSibling(id: number) {
+    return this.siblings.map(s => s.id).indexOf(id) > -1
+  }
+
+  parents: Relative[] = [];
+  children: Relative[] = [];
+  siblings: Relative[] = [];
+  next: Relative[] = []
+}
+
 export class RelationshipService {
   getGender (value: string) {
     switch (value) {
@@ -108,6 +168,7 @@ export class RelationshipService {
       case 'Mother':
       case 'Daughter':
       case 'Niece':
+      case 'Cousin':
       case 'Grandmother':
       case 'Aunt':
         return 'f'
@@ -116,6 +177,42 @@ export class RelationshipService {
         return 'n'
       default:
         return 'm'
+    }
+  }
+
+  public isIncest(sequence: string[]) {
+    try {
+      this.buildTree(new Relative('You', undefined as any, ''), sequence, 0, [])
+      return false
+    } catch (error) {
+      return true;
+    }
+  }
+
+  private buildTree(current: Relative, sequence: string[], idx: number, leafes: Relative[]): void {
+    if (current.type === 'You') {
+      const nextNode = new Relative(sequence[idx], current, sequence[idx])
+      current.next = [nextNode]
+      return this.buildTree(nextNode, sequence, idx+1, leafes);
+    } else {
+      if (mapping[current.type][sequence[idx]]) {
+        mapping[current.type][sequence[idx]].map((rel: string) => {
+          const nextNode = new Relative(rel, current, sequence[idx])
+          if (nextNode.isIncest()) {
+            throw Error("Incest")
+          }
+          current.next.push(nextNode)
+        })
+        current.next.forEach(next => {
+          if (idx < sequence.length -1) {
+            this.buildTree(next, sequence, idx+1, leafes)
+          } else {
+            leafes.push(next)
+          }
+        })
+      } else {
+        leafes.push(current)
+      }
     }
   }
 
@@ -143,7 +240,7 @@ export class RelationshipService {
     if (current === 'You') {
       return possibleRelations[
         Math.floor(Math.random() * possibleRelations.length)
-      ];
+        ];
     }
     if (!mapping[current]) {
       return undefined;
@@ -155,7 +252,7 @@ export class RelationshipService {
     return n;
   }
 
-  createExercise(difficulty: string): RelationshipTask {
+  tryCreateExercise(difficulty: string) {
     const length = difficulty === 'easy' ? 3 : difficulty === 'normal' ? 4 : 5;
     const queue = [];
     let currentRelationship = 'You';
@@ -172,11 +269,18 @@ export class RelationshipService {
       currentRelationship =
         currentRelationships[
           Math.floor(Math.random() * currentRelationships.length)
-        ];
+          ];
     }
+    const incest = this.isIncest(queue)
     const qReverse = queue.reverse();
-    console.log(qReverse)
-    console.log(this.whoIs(qReverse))
-    return { queue: qReverse, solutions: this.whoIs(qReverse) };
+    return { queue: qReverse, solutions: this.whoIs(qReverse), incest };
+  }
+
+  createExercise(difficulty: string): RelationshipTask {
+    let result: any
+    do {
+      result = this.tryCreateExercise(difficulty)
+    } while (result.incest)
+    return { queue: result.queue, solutions: result.solutions }
   }
 }
