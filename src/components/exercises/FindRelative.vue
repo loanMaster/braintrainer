@@ -1,17 +1,24 @@
 <template>
-  <div ref="wrapper" class="position-relative column flex-1 flex-center">
-    <div class="text-h5 q-mb-md">
-      {{ whoIs }}
+  <div ref="coreExercise" class="column items-center flex-1 justify-around">
+    <div class="flex-1 row justify-center items-center">
+      <SpeechBubble :show="playingSound"
+                    :transparentText="!store.exercise.audioState.playing"
+                    :text="store.exercise.audioState.tag || '...'"/>
     </div>
-    <div ref="buttons" class="row q-gutter-sm justify-center">
-      <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
-        <q-btn
-          color="primary"
-          @click="selectWord(idx, $event)"
-          :disabled="inputDisabled"
-          class="transition-duration-md"
-          >{{ $t( label) }}</q-btn
-        >
+    <div style="flex: 2">
+      <div class="text-h5 q-mb-md row justify-center">
+        {{ whoIs }}
+      </div>
+      <div ref="buttons" class="row q-gutter-sm justify-center">
+        <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
+          <q-btn
+            color="primary"
+            @click="selectWord(idx, $event)"
+            :disabled="inputDisabled"
+            class="transition-duration-md"
+            >{{ $t( label) }}</q-btn
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -25,6 +32,7 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services//tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
+import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
 import { Sound, SoundService } from 'src/shared-services//sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
@@ -78,8 +86,9 @@ const relations = [
   "Grandchild"
 ]
 let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.my_' + v))
-const wrapper = ref();
+const coreExercise = ref();
 const character = ref(male_names[0])
+const playingSound = ref(false)
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -89,7 +98,7 @@ onBeforeMount(() => {
 const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
-  new TweenService().setDisplay(wrapper.value, 'none');
+  new TweenService().setDisplay(coreExercise.value, 'none');
 });
 
 async function nextQuestion() {
@@ -103,7 +112,7 @@ async function nextQuestion() {
     return;
   }
   if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(wrapper.value);
+    await new TweenService().fadeOut(coreExercise.value);
   }
   const task = new RelativesService().createRelationshipTree(
     difficulty.value as string
@@ -117,7 +126,7 @@ async function nextQuestion() {
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
   const audio = texts.map((text) => {
-    return { src: `/sounds/relatives/${useAppStore().language}_${text}.mp3` };
+    return { src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`, tag: text };
   });
 
   currentTask.value = {
@@ -128,9 +137,9 @@ async function nextQuestion() {
   };
 
   if (store.exercise.currentQuestion === 1) {
-    new TweenService().setDisplay(wrapper.value, 'flex');
+    new TweenService().setDisplay(coreExercise.value, 'flex');
   }
-  await new TweenService().fadeIn(wrapper.value);
+  await new TweenService().fadeIn(coreExercise.value);
 
   inputDisabled.value = false;
   await playAudio();
@@ -138,7 +147,9 @@ async function nextQuestion() {
 
 async function playAudio() {
   soundService.stop();
+  playingSound.value = true
   await soundService.playAll(currentTask.value!.audio, 100);
+  playingSound.value = false
 }
 
 function selectWord(idx: number, $event: Event) {
@@ -146,11 +157,11 @@ function selectWord(idx: number, $event: Event) {
   if (currentTask.value!.solutions.indexOf(relations[idx]) > -1) {
     inputDisabled.value = true;
     store.$patch((store) => store.exercise.correctAnswers++);
-    new TweenService().fadeOut(wrapper.value);
+    new TweenService().fadeOut(coreExercise.value);
     new SoundService().playSuccess();
     nextQuestion();
   } else {
-    exerciseUtils.handleMistake(reveal, wrapper);
+    exerciseUtils.handleMistake(reveal, coreExercise);
   }
 }
 

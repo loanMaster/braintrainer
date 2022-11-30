@@ -24,6 +24,7 @@ export interface Exercise {
   currentQuestion: number;
   rating?: number;
   score?: number;
+  audioState: AudioState
 }
 
 export const newExercise = (
@@ -44,6 +45,7 @@ export const newExercise = (
   lastSuccessfulStrike: 0,
   lastStrike: 0,
   currentQuestion: 0,
+  audioState: { playing: false, tag: '' }
 });
 
 export interface Ratings {
@@ -69,6 +71,11 @@ export interface Players {
 export interface DailyTraining {
   active: boolean;
   results: Exercise[];
+}
+
+export interface AudioState {
+  playing: boolean;
+  tag: string;
 }
 
 export interface IAppState {
@@ -294,6 +301,14 @@ export const useAppStore = defineStore('main', {
     repeatAudio() {
       // noop
     },
+    startedPlayingSound(tag: string): void {
+      this.exercise.audioState.playing = true;
+      this.exercise.audioState.tag = tag;
+    },
+    finishedPlayingSound(tag: string): void {
+      this.exercise.audioState.playing = false;
+      this.exercise.audioState.tag = tag;
+    }
   },
 });
 

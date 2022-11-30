@@ -1,4 +1,3 @@
-
 export interface FindRelativeTask {
   queue: string[];
   solutions: string[];
@@ -14,12 +13,6 @@ export const possibleRelations = [
   'Daughter',
   'Cousin'
 ];
-
-export interface FindRelativeTask {
-  queue: string[];
-  solutions: string[];
-  gender: string;
-}
 
 const fatherMotherMapping = {
   Mother: ['Grandmother'],
@@ -227,18 +220,17 @@ export class RelativesService {
   }
 
   private createTree(maxDepth: number, node: Relative = new Relative('You'), depth = 0): Relative {
-    if (depth === maxDepth) {
-      return node
-    }
-    const nextRelation = this.getNextRelation(depth, node.type)
-    if (nextRelation) {
-      const nextRelatives = node.type === 'You' ? [nextRelation] : mapping[node.type][nextRelation]
-      nextRelatives.forEach((r: string) => {
-        const nextNode = new Relative(r, node, nextRelation)
-        if (!nextNode.isIncest()) {
-          this.createTree(maxDepth, nextNode, depth + 1)
-        }
-      })
+    if (depth < maxDepth) {
+      const nextRelation = this.getNextRelation(depth, node.type)
+      if (nextRelation) {
+        const nextRelatives = node.type === 'You' ? [nextRelation] : mapping[node.type][nextRelation]
+        nextRelatives.forEach((r: string) => {
+          const nextNode = new Relative(r, node, nextRelation)
+          if (!nextNode.isIncest()) {
+            this.createTree(maxDepth, nextNode, depth + 1)
+          }
+        })
+      }
     }
     return node
   }

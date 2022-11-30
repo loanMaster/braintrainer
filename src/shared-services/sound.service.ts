@@ -1,12 +1,15 @@
 import { Howl } from 'howler';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
+import {IAppState, useAppStore} from "stores/app-store";
+import {Store, StoreDefinition} from "pinia";
 
 export interface Sound {
   audio?: string;
   src?: string;
   skip?: boolean;
   loop?: boolean;
+  tag?: string;
 }
 
 const preload = (src: string) => {
@@ -33,6 +36,7 @@ export class SoundService {
     fail: '/sounds/game_over_bad_chest.ogg',
     finished: '/sounds/fuck2.ogg',
   };
+
   constructor() {
     this.tryPreloadSounds();
   }
@@ -80,7 +84,13 @@ export class SoundService {
       loop: sound.loop || false,
       html5: true,
     });
-    return this.playHowl(howl);
+    if (sound.tag) {
+      useAppStore().startedPlayingSound(sound.tag!)
+    }
+    await this.playHowl(howl);
+    if (sound.tag) {
+      useAppStore().finishedPlayingSound(sound.tag!)
+    }
   }
 
   private playHowl(howl: Howl, loop = false): Promise<void> {

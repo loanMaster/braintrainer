@@ -1,12 +1,6 @@
 <template>
   <div ref="coreExercise" class="column">
-    <div
-      class="c-speech-bubble text-h5 transition-duration-md non-selectable"
-      ref="speechBubble"
-      :style="{ opacity: playingAudio ? '1' : '0' }"
-    >
-      <div>{{ currentlySpokenLetter }}</div>
-    </div>
+    <SpeechBubble :show="playingSound" :text="store.exercise.audioState.tag"/>
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -36,6 +30,7 @@ import { keyInput } from 'src/util/key.input';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
+import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { takeUntil, ReplaySubject } from 'rxjs';
 import { SoundService } from 'src/shared-services//sound.service';
@@ -75,10 +70,9 @@ let anagrams: string[] = [];
 let alphabet: AudioResponse[] = [];
 let loadAlphabet: Promise<AudioResponse[]>;
 let permutation: string[] = [];
-const playingAudio = ref(false);
 let skipAudio = false;
-const currentlySpokenLetter = ref('');
 let highlightError = false;
+const playingSound = ref(false)
 
 onBeforeMount(() => {
   const numberOfQuestions = 10;
@@ -111,7 +105,6 @@ async function nextQuestion() {
   ) {
     return;
   }
-  await stopAudio();
   if (store.exercise.currentQuestion > 1) {
     new TweenService().fadeOut(coreExercise.value);
   }
@@ -152,46 +145,18 @@ function updateButtonLabels() {
 }
 
 async function playAudio() {
-  if (playingAudio.value) {
-    return;
-  }
-  skipAudio = false;
-  playingAudio.value = true;
-  console.log(permutation.length);
+  playingSound.value = true
+  const audio = []
   for (let idx = 0; idx < permutation.length; idx++) {
     const matchingAudio = alphabet.find(
       (a) => (a.val as string).toUpperCase() === permutation[idx]
     );
-    console.log('matchingAudio found');
-    if (!skipAudio) {
-      currentlySpokenLetter.value = (matchingAudio as AudioResponse)
-        .val as string;
-      console.log('soundService.play');
-      await soundService.play(matchingAudio as AudioResponse);
-    }
-    if (!skipAudio) {
-      currentlySpokenLetter.value = '';
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
+    const letter = (matchingAudio as AudioResponse)
+      .val as string;
+    audio.push({ audio: matchingAudio!.audio, tag: letter })
   }
-  playingAudio.value = false;
-}
-
-async function stopAudio() {
-  skipAudio = true;
-  soundService.stop();
-  await new Promise((resolve) => {
-    const checkPlaying = () => {
-      if (playingAudio.value) {
-        setTimeout(() => {
-          checkPlaying();
-        }, 50);
-      } else {
-        resolve(true);
-      }
-    };
-    checkPlaying();
-  });
+  await soundService.playAll(audio, 100);
+  playingSound.value = false
 }
 
 async function startLoadAlphabet(): Promise<AudioResponse[]> {
@@ -309,17 +274,3 @@ onBeforeMount(() => {
   skipAudio = true;
 });
 </script>
-
-<style scoped>
-.c-speech-bubble {
-  border: 4px black solid;
-  border-radius: 20px;
-  display: flex;
-  height: 4rem;
-  width: 4rem;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  background-color: whitesmoke;
-}
-</style>
