@@ -28,6 +28,8 @@ export interface RandomWord {
   minLength: number;
   maxLength: number;
   number: number;
+  category?: string;
+  gender?: string;
 }
 
 export interface HomophoneAudioResponse {

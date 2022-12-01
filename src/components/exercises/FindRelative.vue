@@ -1,7 +1,7 @@
 <template>
   <div ref="coreExercise" class="column items-center flex-1 justify-around">
     <div class="flex-1 row justify-center items-center">
-      <SpeechBubble :show="store.exercise.playingSequence"
+      <SpeechBubble :show="store.exercise.audioState.playingSequence"
                     :transparentText="!store.exercise.audioState.playing"
                     :text="store.exercise.audioState.tag || '...'"/>
     </div>

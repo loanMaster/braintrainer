@@ -30,7 +30,6 @@ const UncleAuntMapping = {
   Father: ['Grandfather'],
   Sister: ['Aunt', 'Mother'],
   Brother: ['Uncle', 'Father'],
-  Son: ['Cousin'],
   Daughter: ['Cousin'],
 };
 

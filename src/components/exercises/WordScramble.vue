@@ -1,5 +1,5 @@
 <template>
-  <div ref="coreExercise" class="column">
+  <div ref="coreExercise" class="column items-center">
     <SpeechBubble :show="store.exercise.audioState.playingSequence" :text="store.exercise.audioState.tag"/>
     <div class="q-my-md">
       <WordDisplay
@@ -95,7 +95,6 @@ onMounted(() => {
 });
 
 async function nextQuestion() {
-  currentIndex.value = 0;
   if (
     !(await exerciseUtils.prepareNewQuestion({
       inputDisabled,
@@ -106,11 +105,12 @@ async function nextQuestion() {
     return;
   }
   if (store.exercise.currentQuestion > 1) {
-    new TweenService().fadeOut(coreExercise.value);
+    await new TweenService().fadeOut(coreExercise.value);
   }
   if (alphabet.length === 0) {
     alphabet = await loadAlphabet;
   }
+  currentIndex.value = 0;
 
   showLoadingIndicator.value = true;
   anagrams = (await nextAnagrams

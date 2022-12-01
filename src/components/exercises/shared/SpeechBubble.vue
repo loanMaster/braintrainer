@@ -17,5 +17,13 @@
 </script>
 
 <style scoped>
-
+  .c-speech-bubble {
+    border: 4px black solid;
+    border-radius: 20px;
+    display: flex;
+    min-width: 4rem;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+  }
 </style>

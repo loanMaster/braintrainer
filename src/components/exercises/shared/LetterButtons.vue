@@ -31,7 +31,7 @@ function selectLetter(letter: string, event: Event) {
 }
 
 function showAtLeast(mandatoryLetters: string[]) {
-  const allLetters = useAppStore().letters;
+  const allLetters = useAppStore().letters.split('');
   buttonLabels.value = [];
   for (const letter of mandatoryLetters) {
     buttonLabels.value.push(letter);
