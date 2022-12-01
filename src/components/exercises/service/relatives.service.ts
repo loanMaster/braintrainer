@@ -1,3 +1,5 @@
+import {randomElement} from "src/util/array.utils";
+
 export interface FindRelativeTask {
   queue: string[];
   solutions: string[];
@@ -195,16 +197,13 @@ export class RelativesService {
   private randomNextRelation(current: string) {
     let n = '';
     if (current === 'You') {
-      return possibleRelations[
-        Math.floor(Math.random() * possibleRelations.length)
-        ];
+      return randomElement(possibleRelations)
     }
     if (!mapping[current]) {
       return undefined;
     }
     while (!n || !mapping[current][n]) {
-      n =
-        possibleRelations[Math.floor(Math.random() * possibleRelations.length)];
+      n = randomElement(possibleRelations)
     }
     return n;
   }

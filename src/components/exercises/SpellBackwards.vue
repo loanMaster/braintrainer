@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { TweenService } from 'src/shared-services//tween.service';
+import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
@@ -32,7 +32,7 @@ import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { Subject, takeUntil, ReplaySubject } from 'rxjs';
-import { SoundService } from 'src/shared-services//sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';

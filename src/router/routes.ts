@@ -5,6 +5,7 @@ import WordScramble from 'src/components/exercises/WordScramble.vue';
 import MathMarathon from 'src/components/exercises/MathMarathon.vue';
 import RememberWords from 'src/components/exercises/RememberWords.vue';
 import FindRelative from 'src/components/exercises/FindRelative.vue';
+import RememberNames from 'src/components/exercises/RememberNames.vue';
 import AudioMemory from 'src/components/exercises/AudioMemory.vue';
 import SpellBackwards from 'src/components/exercises/SpellBackwards.vue';
 import ListenBackwards from 'src/components/exercises/ListenBackwards.vue';
@@ -88,6 +89,11 @@ const routes: RouteRecordRaw[] = [
                 path: ':game(findrelative)',
                 name: 'findrelative',
                 component: FindRelative,
+              },
+              {
+                path: ':game(remembernames)',
+                name: 'remembernames',
+                component: RememberNames,
               },
             ],
           },

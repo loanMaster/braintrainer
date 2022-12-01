@@ -16,11 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { TweenService } from 'src/shared-services//tween.service';
+import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import { Sound, SoundService } from 'src/shared-services//sound.service';
+import { Sound, SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';

@@ -1,7 +1,6 @@
 <template>
   <div
     class="c-speech-bubble text-h5 transition-duration-md non-selectable q-pa-sm"
-    ref="speechBubble"
     :style="{ opacity: show ? '1' : '0' }"
   >
     <div :style="{ color: transparentText ? 'transparent' : 'black' }" class="transition-duration-sm">{{ text }}</div>
@@ -18,13 +17,5 @@
 </script>
 
 <style scoped>
-  .c-speech-bubble {
-    border: 4px black solid;
-    border-radius: 20px;
-    display: flex;
-    min-width: 4rem;
-    align-items: center;
-    justify-content: center;
-    background-color: whitesmoke;
-  }
+
 </style>

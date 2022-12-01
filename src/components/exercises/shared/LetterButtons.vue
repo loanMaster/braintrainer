@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { defineProps, ref, Ref, defineEmits } from 'vue';
 import { useAppStore } from 'stores/app-store';
+import {randomElement} from "src/util/array.utils";
 
 const props = defineProps({
   disabled: Boolean,
@@ -36,8 +37,7 @@ function showAtLeast(mandatoryLetters: string[]) {
     buttonLabels.value.push(letter);
   }
   while (buttonLabels.value.length < props.numberOfButtons!) {
-    const nextRandomLetter =
-      allLetters[Math.floor(Math.random() * allLetters.length)];
+    const nextRandomLetter = randomElement(allLetters)
     if (buttonLabels.value.indexOf(nextRandomLetter) === -1) {
       buttonLabels.value.push(nextRandomLetter);
     }

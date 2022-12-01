@@ -20,10 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import { TweenService } from 'src/shared-services//tween.service';
+import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import { SoundService } from 'src/shared-services//sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
@@ -33,6 +33,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { skip, take, takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
+import {shuffle} from "src/util/array.utils";
 
 const {
   soundService,
@@ -108,8 +109,7 @@ async function nextQuestion() {
     .toPromise()) as AudioResponse[];
   showLoadingIndicator.value = false;
 
-  permutation.value = Array.from(Array(sequenceLength.value).keys());
-  permutation.value.sort(() => Math.random() - 0.5);
+  permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()))
 
   for (let idx = 0; idx < sequenceLength.value; idx++) {
     buttonLabels.value[permutation.value[idx]] = currentAudio.value[idx]

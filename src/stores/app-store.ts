@@ -45,7 +45,7 @@ export const newExercise = (
   lastSuccessfulStrike: 0,
   lastStrike: 0,
   currentQuestion: 0,
-  audioState: { playing: false, tag: '' }
+  audioState: { playing: false, tag: '', playingSequence: false }
 });
 
 export interface Ratings {
@@ -76,6 +76,7 @@ export interface DailyTraining {
 export interface AudioState {
   playing: boolean;
   tag: string;
+  playingSequence: boolean;
 }
 
 export interface IAppState {

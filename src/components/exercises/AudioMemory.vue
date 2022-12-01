@@ -34,6 +34,7 @@ import {
 import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
+import {shuffle} from "src/util/array.utils";
 
 const { soundService, revealed, t, store, inputDisabled, route, difficulty } =
   createExerciseContext({
@@ -84,7 +85,7 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
   permutation = Array.from(Array(store.exercise.totalQuestions).keys());
   permutation.push(...Array.from(Array(store.exercise.totalQuestions).keys()));
-  permutation.sort(() => Math.random() - 0.5);
+  shuffle(permutation)
   new TweenService().setDisplay(buttons.value, 'flex');
   await new TweenService().fadeIn(buttons.value);
   inputDisabled.value = false;

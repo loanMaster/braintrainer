@@ -121,6 +121,7 @@ export class SoundService {
   }
 
   async playAll(sounds: Sound[], pauseTime = 0) {
+    useAppStore().$patch(store => store.exercise.audioState.playingSequence = true)
     this.queue = [];
     sounds.forEach((s) => this.queue.push(JSON.parse(JSON.stringify(s))));
     this.isPlayingSequence = true;
@@ -131,6 +132,7 @@ export class SoundService {
       }
     }
     this.isPlayingSequence = false;
+    useAppStore().$patch(store => store.exercise.audioState.playingSequence = false)
   }
 
   isPlaying(): boolean {

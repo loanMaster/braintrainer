@@ -1,7 +1,7 @@
 <template>
   <div ref="coreExercise" class="column items-center flex-1 justify-around">
     <div class="flex-1 row justify-center items-center">
-      <SpeechBubble :show="playingSound"
+      <SpeechBubble :show="store.exercise.playingSequence"
                     :transparentText="!store.exercise.audioState.playing"
                     :text="store.exercise.audioState.tag || '...'"/>
     </div>
@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { TweenService } from 'src/shared-services//tween.service';
+import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
-import { Sound, SoundService } from 'src/shared-services//sound.service';
+import { Sound, SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
@@ -88,7 +88,6 @@ const relations = [
 let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.my_' + v))
 const coreExercise = ref();
 const character = ref(male_names[0])
-const playingSound = ref(false)
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -147,9 +146,7 @@ async function nextQuestion() {
 
 async function playAudio() {
   soundService.stop();
-  playingSound.value = true
   await soundService.playAll(currentTask.value!.audio, 100);
-  playingSound.value = false
 }
 
 function selectWord(idx: number, $event: Event) {

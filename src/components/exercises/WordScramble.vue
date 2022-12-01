@@ -1,6 +1,6 @@
 <template>
   <div ref="coreExercise" class="column">
-    <SpeechBubble :show="playingSound" :text="store.exercise.audioState.tag"/>
+    <SpeechBubble :show="store.exercise.audioState.playingSequence" :text="store.exercise.audioState.tag"/>
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { TweenService } from 'src/shared-services//tween.service';
+import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
@@ -33,7 +33,7 @@ import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { takeUntil, ReplaySubject } from 'rxjs';
-import { SoundService } from 'src/shared-services//sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { ref, onBeforeMount, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
@@ -42,6 +42,7 @@ import {
   ExerciseService,
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
+import {shuffle} from "src/util/array.utils";
 
 const {
   soundService,
@@ -72,7 +73,6 @@ let loadAlphabet: Promise<AudioResponse[]>;
 let permutation: string[] = [];
 let skipAudio = false;
 let highlightError = false;
-const playingSound = ref(false)
 
 onBeforeMount(() => {
   const numberOfQuestions = 10;
@@ -119,8 +119,7 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
   anagrams = anagrams.map((v) => v.toUpperCase());
   do {
-    permutation = getMatchingAnagram().split('');
-    permutation.sort(() => Math.random() - 0.5);
+    permutation = shuffle(getMatchingAnagram().split(''));
   } while (isAnagram(permutation));
   displayEmptyInput();
   updateButtonLabels();
@@ -145,7 +144,6 @@ function updateButtonLabels() {
 }
 
 async function playAudio() {
-  playingSound.value = true
   const audio = []
   for (let idx = 0; idx < permutation.length; idx++) {
     const matchingAudio = alphabet.find(
@@ -156,7 +154,6 @@ async function playAudio() {
     audio.push({ audio: matchingAudio!.audio, tag: letter })
   }
   await soundService.playAll(audio, 100);
-  playingSound.value = false
 }
 
 async function startLoadAlphabet(): Promise<AudioResponse[]> {

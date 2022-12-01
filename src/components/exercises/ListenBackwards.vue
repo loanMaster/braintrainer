@@ -33,6 +33,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
+import {shuffle} from "src/util/array.utils";
 
 const {
   soundService,
@@ -104,8 +105,7 @@ async function nextQuestion() {
     .toPromise();
   showLoadingIndicator.value = false;
 
-  const permutation = Array.from(Array(numberOfOptions.value).keys());
-  permutation.sort(() => Math.random() - 0.5);
+  const permutation = shuffle(Array.from(Array(numberOfOptions.value).keys()));
   const alts: string[] = (currentAudio.value as AudioResponse).alts as string[];
   for (let idx = 0; idx < numberOfOptions.value; idx++) {
     buttonLabels.value[idx] = alts[permutation[idx]];

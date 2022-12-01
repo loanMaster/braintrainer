@@ -1,5 +1,6 @@
 import { Player, useAppStore } from 'stores/app-store';
 import { GAMES } from 'src/const/games';
+import {randomElement} from "src/util/array.utils";
 
 export class DailyTrainingService {
   getNextExercise(): { nameOfTheGame: string; difficulty: string } {
@@ -11,8 +12,7 @@ export class DailyTrainingService {
       (g) => lastPlayedGames.indexOf(g) === -1
     );
 
-    const nextGame =
-      nextPossibleGames[Math.floor(Math.random() * nextPossibleGames.length)];
+    const nextGame = randomElement(nextPossibleGames)
 
     const averageEasy = player.averageRatings[nextGame]?.['easy'] || 0;
     const averageNormal = player.averageRatings[nextGame]?.['normal'] || 0;

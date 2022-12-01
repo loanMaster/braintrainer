@@ -1,5 +1,28 @@
 import { requestHelper } from 'src/shared-services/request.helper';
 
+export interface IntroductionRequest {
+  lang: string;
+  count: number;
+}
+
+export interface IntroductionResponse {
+  introductions: Introduction[]
+  optionalNames: {
+    FEMALE: string[],
+    MALE: string[]
+  }
+}
+
+export interface Introduction {
+  text: string;
+  audio: {
+    introduction: string;
+    name: string;
+  },
+  name: string;
+  gender: 'FEMALE' | 'MALE'
+}
+
 export interface RandomWord {
   lang: string;
   minLength: number;
@@ -89,6 +112,18 @@ export class ExerciseService {
         ...requestHelper.getStandardRequestInit(),
         method: 'POST',
         body: JSON.stringify(randomWord),
+      }
+    );
+    return response.json();
+  }
+
+  async fetchIntroductions(req: IntroductionRequest): Promise<IntroductionResponse> {
+    const response = await fetch(
+      this.serverPath + '/speech/introductions',
+      {
+        ...requestHelper.getStandardRequestInit(),
+        method: 'POST',
+        body: JSON.stringify(req),
       }
     );
     return response.json();
