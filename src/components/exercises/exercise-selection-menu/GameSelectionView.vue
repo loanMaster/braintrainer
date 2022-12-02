@@ -8,7 +8,7 @@
           v-for="exercise in languageExercises"
           :key="exercise"
         >
-          <q-card class="flex-1 cursor-pointer">
+          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
             <q-card-section class="bg-blue-2 text-bold">
               {{ t(exercise) }}
             </q-card-section>
@@ -25,7 +25,7 @@
           v-for="exercise in mathExercises"
           :key="exercise"
         >
-          <q-card class="flex-1 cursor-pointer">
+          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
             <q-card-section class="bg-green-2 text-bold">
               {{ t(exercise) }}
             </q-card-section>
@@ -46,7 +46,7 @@
           ]"
           :key="exercise"
         >
-          <q-card class="flex-1 cursor-pointer">
+          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
             <q-card-section class="bg-orange-2 text-bold">
               {{ t(exercise) }}
             </q-card-section>
@@ -60,7 +60,7 @@
           v-for="exercise in ['AudioMemoryAnimals', 'AudioMemory']"
           :key="exercise"
         >
-          <q-card class="flex-1 cursor-pointer">
+          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
             <q-card-section class="bg-orange-2 text-bold">
               {{ t(exercise) }}
             </q-card-section>
@@ -75,7 +75,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
-import { GAMES } from 'src/const/games';
 import { NavService } from 'src/router/nav.service';
 import { DailyTrainingService } from 'src/shared-services/daily-training.service';
 import { useQuasar } from 'quasar';
@@ -87,9 +86,6 @@ const $q = useQuasar();
 const { t } = useI18n();
 
 onMounted(() => useAppStore().finishDailyTraining());
-
-const games = ref(GAMES);
-const hovered = ref(false);
 
 const languageExercises = ref([
   'SpellBackwards',
@@ -104,7 +100,7 @@ const mathExercises = ref([
   'SolveEquation',
 ]);
 
-function selectGame(game: string) {
+function selectExercise(game: string) {
   new NavService().navigateTo({
     name: 'select-difficulty',
     nameOfTheGame: game.toLowerCase(),
@@ -160,6 +156,7 @@ function onNameEntered(name: string) {
   @extend .q-pa-md;
   @extend .q-mb-lg;
   @extend .full-width;
+  background-color: #FFFFFF00;
 }
 
 .exercise-title {

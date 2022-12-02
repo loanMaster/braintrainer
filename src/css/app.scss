@@ -14,3 +14,10 @@
 .transition-duration-sm {
   transition-duration: 0.25s;
 }
+
+.zoom-on-hover:hover {
+  transform: scale(1.05) ;
+}
+.zoom-on-hover {
+  transition-duration: 1s;
+}
