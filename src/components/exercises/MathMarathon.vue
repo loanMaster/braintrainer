@@ -1,6 +1,6 @@
 <template>
   <input :value="previousResult" disabled class="text-center text-h6" />
-  <div ref="numpad" class="column relative-position" @click="containerClicked">
+  <div ref="numpad" class="column relative-position">
     <NumPadWithDisplay
       :input-disabled="inputDisabled"
       :input-value="inputValue"
@@ -36,9 +36,6 @@ const {
   soundService,
   revealed,
   destroy,
-  $q,
-  t,
-  route,
   store,
   inputDisabled,
   containerClicked,

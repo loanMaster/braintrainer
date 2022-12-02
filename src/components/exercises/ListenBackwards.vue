@@ -33,13 +33,12 @@ import {
 } from 'src/shared-services/exercise.service';
 import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import {shuffle} from "src/util/array.utils";
+import { shuffle } from 'src/util/array.utils';
 
 const {
   soundService,
   revealed,
   destroy,
-  t,
   store,
   inputDisabled,
   containerClicked,
@@ -50,7 +49,6 @@ const {
   startCb: () => nextQuestion(),
 });
 
-let currentIndex = 0;
 let nextAudio: Subject<AudioResponse>;
 let currentAudio: Ref<AudioResponse | undefined> = ref(undefined);
 const buttons = ref();

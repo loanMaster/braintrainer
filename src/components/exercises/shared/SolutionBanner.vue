@@ -8,11 +8,14 @@
       <q-banner
         class="text-white bg-red text-center non-selectable"
         v-if="show"
-        @click="onClicked"
       >
         <div>Die Lösung ist</div>
         <div class="text-bold q-my-sm">{{ solution }}</div>
-        <div>Klicken, um fortzufahren</div>
+        <template v-slot:action>
+          <div class="text-center q-ma-auto">
+            <q-btn color="white" outline label="Weiter" @click="onClicked" />
+          </div>
+        </template>
       </q-banner>
     </transition-group>
   </div>

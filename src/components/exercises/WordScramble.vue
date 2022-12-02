@@ -1,6 +1,9 @@
 <template>
   <div ref="coreExercise" class="column items-center">
-    <SpeechBubble :show="store.exercise.audioState.playingSequence" :text="store.exercise.audioState.tag"/>
+    <SpeechBubble
+      :show="store.exercise.audioState.playingSequence"
+      :text="store.exercise.audioState.tag"
+    />
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -42,15 +45,12 @@ import {
   ExerciseService,
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
-import {shuffle} from "src/util/array.utils";
+import { shuffle } from 'src/util/array.utils';
 
 const {
   soundService,
   revealed,
   destroy,
-  $q,
-  t,
-  route,
   store,
   inputDisabled,
   containerClicked,
@@ -71,7 +71,6 @@ let anagrams: string[] = [];
 let alphabet: AudioResponse[] = [];
 let loadAlphabet: Promise<AudioResponse[]>;
 let permutation: string[] = [];
-let skipAudio = false;
 let highlightError = false;
 
 onBeforeMount(() => {
@@ -144,14 +143,13 @@ function updateButtonLabels() {
 }
 
 async function playAudio() {
-  const audio = []
+  const audio = [];
   for (let idx = 0; idx < permutation.length; idx++) {
     const matchingAudio = alphabet.find(
       (a) => (a.val as string).toUpperCase() === permutation[idx]
     );
-    const letter = (matchingAudio as AudioResponse)
-      .val as string;
-    audio.push({ audio: matchingAudio!.audio, tag: letter })
+    const letter = (matchingAudio as AudioResponse).val as string;
+    audio.push({ audio: matchingAudio!.audio, tag: letter });
   }
   await soundService.playAll(audio, 100);
 }
@@ -260,14 +258,4 @@ function matchesAnagram(letter: string): boolean {
   }
   return false;
 }
-
-async function repeat() {
-  if (!soundService.isPlaying()) {
-    await playAudio();
-  }
-}
-
-onBeforeMount(() => {
-  skipAudio = true;
-});
 </script>

@@ -41,9 +41,7 @@
 
 <script setup lang="ts">
 import { useAppStore } from 'stores/app-store';
-import { ref } from 'vue';
 import { useQuasar } from 'quasar';
-import { i18n } from 'boot/i18n';
 import { useI18n } from 'vue-i18n';
 import { showEnterUsernameDialog } from 'src/util/show-enter-username-dialog';
 

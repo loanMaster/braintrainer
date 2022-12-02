@@ -27,7 +27,6 @@
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
-import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
@@ -46,8 +45,6 @@ const {
   soundService,
   revealed,
   destroy,
-  $q,
-  t,
   route,
   store,
   inputDisabled,
@@ -162,11 +159,6 @@ async function loadNextAudio(): Promise<void> {
       number: 1,
     })
   );
-}
-
-function selectLetter(letter: string, $event: Event) {
-  $event.stopPropagation();
-  onLetterEntered(letter);
 }
 
 async function onLetterEntered(letter: string) {

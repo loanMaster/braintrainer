@@ -24,7 +24,7 @@ export interface Exercise {
   currentQuestion: number;
   rating?: number;
   score?: number;
-  audioState: AudioState
+  audioState: AudioState;
 }
 
 export const newExercise = (
@@ -45,7 +45,7 @@ export const newExercise = (
   lastSuccessfulStrike: 0,
   lastStrike: 0,
   currentQuestion: 0,
-  audioState: { playing: false, tag: '', playingSequence: false }
+  audioState: { playing: false, tag: '', playingSequence: false },
 });
 
 export interface Ratings {
@@ -309,7 +309,7 @@ export const useAppStore = defineStore('main', {
     finishedPlayingSound(tag: string): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.tag = tag;
-    }
+    },
   },
 });
 

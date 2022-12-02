@@ -1,5 +1,5 @@
 <template>
-  <div ref="numpad" class="relative-position" @click="containerClicked">
+  <div ref="numpad" class="relative-position">
     <NumPadWithDisplay
       :input-disabled="inputDisabled"
       :input-value="inputValue"
@@ -36,7 +36,6 @@ const {
   soundService,
   revealed,
   destroy,
-  t,
   store,
   inputDisabled,
   containerClicked,

@@ -33,14 +33,12 @@ import {
 } from 'src/shared-services/exercise.service';
 import { skip, take, takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
-import {shuffle} from "src/util/array.utils";
+import { shuffle } from 'src/util/array.utils';
 
 const {
   soundService,
   revealed,
   destroy,
-  $q,
-  t,
   route,
   store,
   inputDisabled,
@@ -109,7 +107,7 @@ async function nextQuestion() {
     .toPromise()) as AudioResponse[];
   showLoadingIndicator.value = false;
 
-  permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()))
+  permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()));
 
   for (let idx = 0; idx < sequenceLength.value; idx++) {
     buttonLabels.value[permutation.value[idx]] = currentAudio.value[idx]
@@ -138,7 +136,7 @@ async function loadNextAudio(): Promise<void> {
       lang: store.language,
       number: sequenceLength.value,
       category: 'ANIMALS',
-      gender: 'FEMALE'
+      gender: 'FEMALE',
     })
   );
 }

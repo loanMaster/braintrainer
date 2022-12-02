@@ -1,9 +1,11 @@
 <template>
   <div ref="coreExercise" class="column items-center flex-1 justify-around">
     <div class="flex-1 row justify-center items-center">
-      <SpeechBubble :show="store.exercise.audioState.playingSequence"
-                    :transparentText="!store.exercise.audioState.playing"
-                    :text="store.exercise.audioState.tag || '...'"/>
+      <SpeechBubble
+        :show="store.exercise.audioState.playingSequence"
+        :transparentText="!store.exercise.audioState.playing"
+        :text="store.exercise.audioState.tag || '...'"
+      />
     </div>
     <div style="flex: 2">
       <div class="text-h5 q-mb-md row justify-center">
@@ -16,7 +18,7 @@
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             class="transition-duration-md"
-            >{{ $t( label) }}</q-btn
+            >{{ $t(label) }}</q-btn
           >
         </div>
       </div>
@@ -38,12 +40,11 @@ import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useAppStore } from 'stores/app-store';
-import { RelativesService } from "components/exercises/service/relatives.service";
+import { RelativesService } from 'components/exercises/service/relatives.service';
 
 const {
   soundService,
   revealed,
-  destroy,
   t,
   route,
   store,
@@ -65,29 +66,31 @@ let currentTask: Ref<
   | undefined
 > = ref();
 
-const male_names = ['Bob', 'Charlie', 'David']
-const female_names = ['Alice', 'Eve', 'Judy']
+const male_names = ['Bob', 'Charlie', 'David'];
+const female_names = ['Alice', 'Eve', 'Judy'];
 
 const relations = [
-  "Grandmother",
-  "Grandfather",
-  "Mother",
-  "Father",
-  "Uncle",
-  "Aunt",
-  "Cousin",
-  "You",
-  "Brother",
-  "Sister",
-  "Son",
-  "Daughter",
-  "Niece",
-  "Nephew",
-  "Grandchild"
-]
-let buttonLabels: Ref<string[]> = ref(relations.map(v => 'findRelatives.my_' + v))
+  'Grandmother',
+  'Grandfather',
+  'Mother',
+  'Father',
+  'Uncle',
+  'Aunt',
+  'Cousin',
+  'You',
+  'Brother',
+  'Sister',
+  'Son',
+  'Daughter',
+  'Niece',
+  'Nephew',
+  'Grandchild',
+];
+let buttonLabels: Ref<string[]> = ref(
+  relations.map((v) => 'findRelatives.my_' + v)
+);
 const coreExercise = ref();
-const character = ref(male_names[0])
+const character = ref(male_names[0]);
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -116,16 +119,26 @@ async function nextQuestion() {
   const task = new RelativesService().createRelationshipTree(
     difficulty.value as string
   );
-  character.value = task.gender === 'f' ?
-    female_names[Math.floor((Math.random() * female_names.length))] :  male_names[Math.floor((Math.random() * male_names.length))]
-  const texts = [t(`findRelatives.{name}_is`, { name: t('findRelatives.' + character.value) }), t('findRelatives.subj_' + task.queue[0])];
+  character.value =
+    task.gender === 'f'
+      ? female_names[Math.floor(Math.random() * female_names.length)]
+      : male_names[Math.floor(Math.random() * male_names.length)];
+  const texts = [
+    t('findRelatives.{name}_is', {
+      name: t('findRelatives.' + character.value),
+    }),
+    t('findRelatives.subj_' + task.queue[0]),
+  ];
   for (let i = 1; i < task.queue.length - 1; i++) {
     texts.push(t('findRelatives.poss_' + task.queue[i]));
   }
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
   const audio = texts.map((text) => {
-    return { src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`, tag: text };
+    return {
+      src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
+      tag: text,
+    };
   });
 
   currentTask.value = {
@@ -168,10 +181,14 @@ function reveal() {
 }
 
 const whoIs = computed(() => {
-  return t('findRelatives.Who is {name}?', { name: t('findRelatives.' + character.value) })
-})
+  return t('findRelatives.Who is {name}?', {
+    name: t('findRelatives.' + character.value),
+  });
+});
 
 const solution = computed(() => {
-  return currentTask.value?.solutions.map(s => t('findRelatives.my_' + s)).join(' / ');
+  return currentTask.value?.solutions
+    .map((s) => t('findRelatives.my_' + s))
+    .join(' / ');
 });
 </script>

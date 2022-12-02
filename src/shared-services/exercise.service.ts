@@ -6,11 +6,11 @@ export interface IntroductionRequest {
 }
 
 export interface IntroductionResponse {
-  introductions: Introduction[]
+  introductions: Introduction[];
   optionalNames: {
-    FEMALE: string[],
-    MALE: string[]
-  }
+    FEMALE: string[];
+    MALE: string[];
+  };
 }
 
 export interface Introduction {
@@ -18,9 +18,9 @@ export interface Introduction {
   audio: {
     introduction: string;
     name: string;
-  },
+  };
   name: string;
-  gender: 'FEMALE' | 'MALE'
+  gender: 'FEMALE' | 'MALE';
 }
 
 export interface RandomWord {
@@ -119,15 +119,14 @@ export class ExerciseService {
     return response.json();
   }
 
-  async fetchIntroductions(req: IntroductionRequest): Promise<IntroductionResponse> {
-    const response = await fetch(
-      this.serverPath + '/speech/introductions',
-      {
-        ...requestHelper.getStandardRequestInit(),
-        method: 'POST',
-        body: JSON.stringify(req),
-      }
-    );
+  async fetchIntroductions(
+    req: IntroductionRequest
+  ): Promise<IntroductionResponse> {
+    const response = await fetch(this.serverPath + '/speech/introductions', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify(req),
+    });
     return response.json();
   }
 }

@@ -1,8 +1,7 @@
 import { Howl } from 'howler';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import {IAppState, useAppStore} from "stores/app-store";
-import {Store, StoreDefinition} from "pinia";
+import { useAppStore } from 'stores/app-store';
 
 export interface Sound {
   audio?: string;
@@ -85,11 +84,11 @@ export class SoundService {
       html5: true,
     });
     if (sound.tag) {
-      useAppStore().startedPlayingSound(sound.tag!)
+      useAppStore().startedPlayingSound(sound.tag!);
     }
     await this.playHowl(howl);
     if (sound.tag) {
-      useAppStore().finishedPlayingSound(sound.tag!)
+      useAppStore().finishedPlayingSound(sound.tag!);
     }
   }
 
@@ -121,7 +120,9 @@ export class SoundService {
   }
 
   async playAll(sounds: Sound[], pauseTime = 0) {
-    useAppStore().$patch(store => store.exercise.audioState.playingSequence = true)
+    useAppStore().$patch(
+      (store) => (store.exercise.audioState.playingSequence = true)
+    );
     this.queue = [];
     sounds.forEach((s) => this.queue.push(JSON.parse(JSON.stringify(s))));
     this.isPlayingSequence = true;
@@ -132,7 +133,9 @@ export class SoundService {
       }
     }
     this.isPlayingSequence = false;
-    useAppStore().$patch(store => store.exercise.audioState.playingSequence = false)
+    useAppStore().$patch(
+      (store) => (store.exercise.audioState.playingSequence = false)
+    );
   }
 
   isPlaying(): boolean {

@@ -1,4 +1,4 @@
-import {randomElement} from "src/util/array.utils";
+import { randomElement } from 'src/util/array.utils';
 
 export interface FindRelativeTask {
   queue: string[];
@@ -13,7 +13,7 @@ export const possibleRelations = [
   'Father',
   'Son',
   'Daughter',
-  'Cousin'
+  'Cousin',
 ];
 
 const fatherMotherMapping = {
@@ -98,85 +98,90 @@ const mapping: { [key: string]: any } = {
 
 export class Relative {
   public id: number;
-  constructor (public type: string, public previous?: Relative, public relationship?: string) {
-    this.id = Math.random()
+  constructor(
+    public type: string,
+    public previous?: Relative,
+    public relationship?: string
+  ) {
+    this.id = Math.random();
     if (previous) {
-      previous.next.push(this)
+      previous.next.push(this);
       switch (relationship) {
         case 'Mother':
         case 'Father':
-          this.children.push(previous)
-          this.siblings.push(...previous.parents)
-          previous.parents.push(this)
+          this.children.push(previous);
+          this.siblings.push(...previous.parents);
+          previous.parents.push(this);
           break;
         case 'Son':
         case 'Daughter':
         case 'Child':
-          this.parents.push(previous)
-          this.siblings.push(...previous.children)
-          previous.children.push(this)
+          this.parents.push(previous);
+          this.siblings.push(...previous.children);
+          previous.children.push(this);
           break;
         case 'Brother':
         case 'Sister':
-          this.siblings.push(previous)
-          this.siblings.push(...previous.siblings)
-          this.parents.push(...previous.parents)
-          previous.siblings.push(this)
+          this.siblings.push(previous);
+          this.siblings.push(...previous.siblings);
+          this.parents.push(...previous.parents);
+          previous.siblings.push(this);
           break;
       }
     }
   }
 
   isIncest(): boolean {
-    let incest = false
-    this.parents.forEach(p => {
-      if (this.parents.some(p2 => p2.hasSibling(p.id))) {
-        incest = true
+    let incest = false;
+    this.parents.forEach((p) => {
+      if (this.parents.some((p2) => p2.hasSibling(p.id))) {
+        incest = true;
       }
-    })
+    });
 
-    const parentIds: number[] = []
-    this.children.forEach(c => {
-      parentIds.push(...c.parents.map(parent => parent.id))
-    })
-    parentIds.forEach(id => {
+    const parentIds: number[] = [];
+    this.children.forEach((c) => {
+      parentIds.push(...c.parents.map((parent) => parent.id));
+    });
+    parentIds.forEach((id) => {
       if (this.hasSibling(id)) {
-        incest = true
+        incest = true;
       }
-    })
-    return incest
+    });
+    return incest;
   }
 
-  getLeaves (): Relative[] {
+  getLeaves(): Relative[] {
     if (this.next.length === 0) {
-      return [this]
+      return [this];
     }
-    const leaves: Relative[] = []
-    this.next.forEach(n => n.getLeaves().forEach(leaf => leaves.push(leaf)))
-    return leaves
+    const leaves: Relative[] = [];
+    this.next.forEach((n) =>
+      n.getLeaves().forEach((leaf) => leaves.push(leaf))
+    );
+    return leaves;
   }
 
-  depth (depth = 0): number {
-    return this.next.length === 0 ?
-      depth : Math.max(...this.next.map(n => n.depth(depth + 1)))
+  depth(depth = 0): number {
+    return this.next.length === 0
+      ? depth
+      : Math.max(...this.next.map((n) => n.depth(depth + 1)));
   }
 
   private hasSibling(id: number) {
-    return this.siblings.map(s => s.id).indexOf(id) > -1
+    return this.siblings.map((s) => s.id).indexOf(id) > -1;
   }
 
   parents: Relative[] = [];
   children: Relative[] = [];
   siblings: Relative[] = [];
-  next: Relative[] = []
+  next: Relative[] = [];
 }
 
-
 export class RelativesService {
+  private relations: string[] = [];
 
-  private relations: string[] = []
-
-  getGender (value: string) {
+  getGender(value: string) {
     switch (value) {
       case 'Sister':
       case 'Mother':
@@ -185,67 +190,74 @@ export class RelativesService {
       case 'Cousin':
       case 'Grandmother':
       case 'Aunt':
-        return 'f'
+        return 'f';
       case 'Grandchild':
-        return 'n'
+        return 'n';
       default:
-        return 'm'
+        return 'm';
     }
   }
 
   private randomNextRelation(current: string) {
     let n = '';
     if (current === 'You') {
-      return randomElement(possibleRelations)
+      return randomElement(possibleRelations);
     }
     if (!mapping[current]) {
       return undefined;
     }
     while (!n || !mapping[current][n]) {
-      n = randomElement(possibleRelations)
+      n = randomElement(possibleRelations);
     }
     return n;
   }
 
   private getNextRelation(depth: number, current: string) {
     if (this.relations.length <= depth) {
-      const nextRelation = this.randomNextRelation(current)
+      const nextRelation = this.randomNextRelation(current);
       if (nextRelation) {
-        this.relations.push(nextRelation)
+        this.relations.push(nextRelation);
       }
     }
-    return this.relations[depth]
+    return this.relations[depth];
   }
 
-  private createTree(maxDepth: number, node: Relative = new Relative('You'), depth = 0): Relative {
+  private createTree(
+    maxDepth: number,
+    node: Relative = new Relative('You'),
+    depth = 0
+  ): Relative {
     if (depth < maxDepth) {
-      const nextRelation = this.getNextRelation(depth, node.type)
+      const nextRelation = this.getNextRelation(depth, node.type);
       if (nextRelation) {
-        const nextRelatives = node.type === 'You' ? [nextRelation] : mapping[node.type][nextRelation]
+        const nextRelatives =
+          node.type === 'You'
+            ? [nextRelation]
+            : mapping[node.type][nextRelation];
         nextRelatives.forEach((r: string) => {
-          const nextNode = new Relative(r, node, nextRelation)
+          const nextNode = new Relative(r, node, nextRelation);
           if (!nextNode.isIncest()) {
-            this.createTree(maxDepth, nextNode, depth + 1)
+            this.createTree(maxDepth, nextNode, depth + 1);
           }
-        })
+        });
       }
     }
-    return node
+    return node;
   }
 
   public createRelationshipTree(difficulty: string): FindRelativeTask {
-    const maxDepth = difficulty === 'easy' ? 3 : difficulty === 'normal' ? 4 : 5
-    let tree: Relative
+    const maxDepth =
+      difficulty === 'easy' ? 3 : difficulty === 'normal' ? 4 : 5;
+    let tree: Relative;
     do {
-      this.relations = []
-      tree = this.createTree(maxDepth)
-    } while (tree.depth() < maxDepth)
-    const relationsRev = this.relations.reverse()
+      this.relations = [];
+      tree = this.createTree(maxDepth);
+    } while (tree.depth() < maxDepth);
+    const relationsRev = this.relations.reverse();
     return {
       queue: relationsRev,
-      solutions: [...new Set(tree.getLeaves().map(leaf => leaf.type))],
-      gender: this.getGender(relationsRev[0])
+      solutions: [...new Set(tree.getLeaves().map((leaf) => leaf.type))],
+      gender: this.getGender(relationsRev[0]),
     };
   }
-
 }

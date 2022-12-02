@@ -1,5 +1,5 @@
 <template>
-  <router-link class="nav-link active" :to="`${path}`"
+  <router-link class="nav-link active" :to="`${getPath()}`"
     ><slot></slot
   ></router-link>
 </template>

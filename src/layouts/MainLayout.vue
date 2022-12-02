@@ -133,7 +133,6 @@ onMounted(() => {
   leftDrawerOpen.value = false;
 });
 
-const route = useRoute();
 const i18n = useI18n();
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
