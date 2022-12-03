@@ -3,6 +3,7 @@
     <SpeechBubble
       :show="store.exercise.audioState.playingSequence"
       :text="store.exercise.audioState.tag"
+      :transparentText="!store.exercise.audioState.playing"
     />
     <div class="q-my-md">
       <WordDisplay

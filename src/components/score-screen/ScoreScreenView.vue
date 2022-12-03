@@ -105,9 +105,9 @@ const percentile = computed(() =>
 onBeforeMount(() => {
   // for debugging
   store.$patch((store) => {
-    store.exercise = newExercise('memory', 'hard', 10);
-    store.exercise.rating = 2;
-    store.exercise.score = 78;
+    store.exercise = newExercise('RememberNumbers', 'normal', 10);
+    store.exercise.rating = 4;
+    store.exercise.score = 50;
   });
 
   if (dailyTrainingActive.value && !hasNextDailyExercise()) {

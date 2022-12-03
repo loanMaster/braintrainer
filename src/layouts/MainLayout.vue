@@ -107,17 +107,7 @@
     </q-drawer>
 
     <q-page-container class="column flex-auto">
-      <router-view v-slot="{ Component }">
-        <transition
-          mode="out-in"
-          leave-active-class="animated fadeOut"
-          enter-active-class="animated fadeIn"
-          appear
-          :duration="{ leave: 300, enter: 300 }"
-        >
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>

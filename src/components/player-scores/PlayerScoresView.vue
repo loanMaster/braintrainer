@@ -1,100 +1,107 @@
 <template>
-  <div>
-    <h1 class="text-center mt-4">{{ $t('Your Scores') }}</h1>
-    <q-inner-loading :showing="!playerScores">
-      <q-spinner-gears size="4em" color="primary" />
-    </q-inner-loading>
-    <div v-if="playerScores">
-      <table class="table table-borderless">
-        <thead>
-          <tr>
-            <th scope="col">{{ $t('Game') }}</th>
-            <th scope="col">{{ $t('Difficulty') }}</th>
-            <th scope="col">{{ $t('Score') }}</th>
-            <th scope="col">{{ $t('Better than') }}</th>
-            <th scope="col">{{ $t('Rating') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="game in games" :key="game">
-            <td>{{ $t(game.name) }}</td>
-            <td>{{ $t(game.difficulty) }}</td>
-            <td>
-              {{ scores[game.name][game.difficulty] }}
-            </td>
-            <td>
-              {{ Math.floor(percentiles[game.name][game.difficulty] * 100) }}%
-            </td>
-            <td>
-              <StartRating :rating="getRating(game.name, game.difficulty)" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="gradient flex-1 column">
+    <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
+      <q-toolbar-title>Your scores</q-toolbar-title>
+    </q-toolbar>
+    <div class="flex-1 relative-position">
+      <LoadingIndicator :showing="rows.length === 0" />
+      <q-table
+        v-if="rows.length > 0"
+        class="q-ma-md"
+        :grid="$q.screen.xs"
+        :rows="rows"
+        column-sort-order="da"
+        table-header-class="bg-orange-2"
+        :columns="columns"
+        :pagination="{ rowsPerPage: 0 }"
+      >
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+            <q-card>
+              <q-card-section class="text-h6 bg-orange-2">
+                {{ props.row.nameOfTheGame }}
+              </q-card-section>
+              <q-separator />
+              <q-card-section class="column">
+                <div class="row justify-between">
+                  <div>Schwierigkeit</div>
+                  <div>{{ props.row.difficulty }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Bewertung</div>
+                  <div>{{ props.row.score }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Sterne</div>
+                  <div>{{ props.row.stars }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Deine Punkte</div>
+                  <div>{{ props.row.percentile }}</div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+      </q-table>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  PlayerPercentiles,
-  Scores,
-  ScoreService,
-} from 'src/shared-services/score.service';
-import { GAMES } from 'src/const/games';
-import StartRating from 'src/components/shared/StarsRating.vue';
-import { ref, Ref, onMounted, computed } from 'vue';
-import { useAppStore } from 'stores/app-store';
-import { useQuasar } from 'quasar';
+  import { GAMES } from 'src/const/games';
+  import {ScoreService} from 'src/shared-services/score.service';
+  import { ref, onMounted, Ref } from 'vue';
+  import { useQuasar } from 'quasar';
+  import {useI18n} from "vue-i18n";
+  import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 
-const playerScores: Ref<PlayerPercentiles | null> = ref(null);
-const $q = useQuasar();
+  const { t } = useI18n()
+  const rows: Ref<any[]> = ref([])
 
-onMounted(async () => {
-  playerScores.value = await new ScoreService().fetchPlayerScores();
-});
-
-const scores = computed(() => {
-  return (playerScores.value as PlayerPercentiles).scores;
-});
-
-const percentiles = computed(() => {
-  return (playerScores.value as PlayerPercentiles).percentiles;
-});
-
-function getRating(nameOfTheGame: string, difficulty: string): number {
-  return useAppStore().player.ratings[nameOfTheGame] &&
-    useAppStore().player.ratings[nameOfTheGame][difficulty]
-    ? useAppStore().player.ratings[nameOfTheGame][difficulty]
-    : 0;
-}
-
-const games = computed(() => {
-  const gamesAndScores = [];
-  for (const game of GAMES) {
-    if (Object.keys(scores).indexOf(game) > -1) {
-      for (const difficulty of ['easy', 'normal', 'hard']) {
-        if (
-          Object.keys(
-            (playerScores.value as PlayerPercentiles).scores[game]
-          ).indexOf(difficulty) > -1
-        ) {
-          gamesAndScores.push({
-            name: game,
+  onMounted(async () => {
+    const percentiles = await new ScoreService().fetchPlayerScores();
+    Object.keys(percentiles).filter(k => GAMES.indexOf(k) > -1).forEach(nameOfTheGame => {
+      ['easy', 'normal', 'hard'].forEach((difficulty: string) => {
+        const dto = percentiles[nameOfTheGame];
+        if (dto[difficulty as keyof typeof dto]) {
+          rows.value.push({
+            nameOfTheGame,
             difficulty,
-          });
+            ...dto[difficulty as keyof typeof dto]
+          })
         }
-      }
-    }
-  }
-  return gamesAndScores;
-});
+      })
+    })
+    rows.value.forEach(r => {
+      r.nameOfTheGame = t(r.nameOfTheGame)
+      r.difficulty = t(r.difficulty)
+      r.stars = Array(3).fill('★').join('') // TODO
+    })
+    rows.value.sort((a,b) => a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase()))
+  });
+
+  const columns = ref([
+    {
+      name: 'nameOfTheGame',
+      required: true,
+      label: 'Übung',
+      align: 'left',
+      field: 'nameOfTheGame',
+      sortable: true
+    },
+    { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
+    { name: 'score', label: 'Bewertung', field: 'score',  sortable: true },
+    { name: 'stars', label: 'Sterne', field: 'stars',  sortable: true },
+    { name: 'percentile', label: 'Besser als x%', field: 'percentile', format: (val: number) => `${val}%` }
+  ])
 </script>
 
-<style scoped>
-@media screen and (max-width: 992px) and (orientation: portrait) {
-  tr {
-    font-size: 0.75rem;
+<style>
+  .q-table__bottom {
+    display: none
   }
-}
+  .gradient {
+    background-image: linear-gradient(to bottom right, #FFFFAA55, #AAFFFF55);
+  }
 </style>

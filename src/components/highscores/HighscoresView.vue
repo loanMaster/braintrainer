@@ -1,86 +1,113 @@
 <template>
-  <div>
-    <h1 class="text-center mt-4">🎉 Highscores</h1>
-    <q-inner-loading :showing="!highscores">
-      <q-spinner-gears size="4em" color="primary" />
-    </q-inner-loading>
-    <div v-if="highscores">
-      <table class="table table-borderless g-max-width-100">
-        <thead>
-          <tr>
-            <th scope="col">{{ $t('Game') }}</th>
-            <th scope="col">{{ $t('Difficulty') }}</th>
-            <th scope="col">{{ $t('Player') }}</th>
-            <th scope="col">{{ $t('Score') }}</th>
-            <th scope="col">{{ $t('Your Score') }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="game in games" :key="game">
-            <td>{{ $t(game.name) }}</td>
-            <td>{{ $t(game.difficulty) }}</td>
-            <td
-              :class="
-                highscores[game.name][game.difficulty].isYou
-                  ? 'my-highlight'
-                  : ''
-              "
-            >
-              {{ highscores[game.name][game.difficulty].playerName }}
-            </td>
-            <td>{{ highscores[game.name][game.difficulty].score }}</td>
-            <td>
-              {{ highscores[game.name][game.difficulty].yourScore || '-' }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="gradient flex-1 column">
+    <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
+      <q-toolbar-title>🎉 Highscores</q-toolbar-title>
+    </q-toolbar>
+    <div class="flex-1 relative-position">
+      <LoadingIndicator :showing="rows.length === 0" />
+      <q-table
+        v-if="rows.length > 0"
+        class="q-ma-md"
+        :grid="$q.screen.xs"
+        :rows="rows"
+        column-sort-order="da"
+        table-header-class="bg-orange-2"
+        :columns="columns"
+        row-key="name"
+        :pagination="{ rowsPerPage: 0 }"
+      >
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+            <q-card>
+              <q-card-section class="text-h6 bg-orange-2">
+                {{ props.row.nameOfTheGame }}
+              </q-card-section>
+              <q-separator />
+              <q-card-section class="column">
+                <div class="row justify-between">
+                  <div>Schwierigkeit</div>
+                  <div>{{ props.row.difficulty }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>User</div>
+                  <div>{{ props.row.playerName }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Bewertung</div>
+                  <div>{{ props.row.score }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Datum</div>
+                  <div>{{ new Date(props.row.date).toDateString() }}</div>
+                </div>
+                <div class="row justify-between">
+                  <div>Deine Punkte</div>
+                  <div>{{ props.row.yourScore }}</div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
+        </template>
+      </q-table>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { GAMES } from 'src/const/games';
-import { HighScoresDto, ScoreService } from 'src/shared-services/score.service';
-import { ref, computed, onMounted, Ref } from 'vue';
+import {GameHighScoreDto, HighScoreDto, ScoreService} from 'src/shared-services/score.service';
+import { ref, onMounted, Ref } from 'vue';
 import { useQuasar } from 'quasar';
+import {useI18n} from "vue-i18n";
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 
-let highscores: Ref<HighScoresDto | null> = ref(null);
+const { t } = useI18n()
+const rows: Ref<any[]> = ref([])
 
 onMounted(async () => {
-  highscores.value = await new ScoreService().fetchHighscores();
+  const highscores = await new ScoreService().fetchHighscores();
+  Object.keys(highscores).filter(nameOfTheGame => GAMES.indexOf(nameOfTheGame) > -1).forEach(nameOfTheGame => {
+    const dto = (highscores![nameOfTheGame] as GameHighScoreDto);
+    ['easy', 'normal', 'hard'].forEach((difficulty: string) => {
+      if (dto[difficulty as keyof GameHighScoreDto]) {
+        rows.value.push({
+          nameOfTheGame,
+          difficulty,
+          ...dto[difficulty as keyof GameHighScoreDto]
+        })
+      }
+    })
+  })
+  rows.value.forEach(r => {
+    r.nameOfTheGame = t(r.nameOfTheGame)
+    r.nameOfTheGame = t(r.difficulty)
+  })
+  rows.value.sort((a,b) => a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase()))
 });
 
-const games = computed(() => {
-  const gamesAndScores = [];
-  for (const game of GAMES) {
-    if (Object.keys(highscores.value as HighScoresDto).indexOf(game) > -1) {
-      for (const difficulty of ['easy', 'normal', 'hard']) {
-        if (
-          Object.keys((highscores.value as HighScoresDto)[game]).indexOf(
-            difficulty
-          ) > -1
-        ) {
-          gamesAndScores.push({
-            name: game,
-            difficulty,
-          });
-        }
-      }
-    }
-  }
-  return gamesAndScores;
-});
+const columns = ref([
+  {
+    nameOfTheGame: 'nameOfTheGame',
+    required: true,
+    label: 'Übung',
+    align: 'left',
+    field: 'nameOfTheGame',
+    sortable: true
+  },
+  { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
+  { name: 'playerName', label: 'Spieler', field: 'playerName', sortable: true },
+  { name: 'score', label: 'Bewertung', field: 'score' },
+  { name: 'date', label: 'Datum', field: 'date', format: (val: number) => `${new Date(val).toDateString()}` },
+  { name: 'yourScore', label: 'Deine Bewertung', field: 'yourScore', format: (val: number | undefined) => val || '-' },
+])
+
 </script>
 
-<style scoped>
-.c-highlight {
-  font-weight: bolder;
-  color: blue;
-}
-@media screen and (max-width: 992px) and (orientation: portrait) {
-  tr {
-    font-size: 0.75rem;
+<style>
+  .q-table__bottom {
+    display: none
   }
-}
+  .gradient {
+    background-image: linear-gradient(to bottom right, #FFFFAA55, #AAFFFF55);
+  }
 </style>

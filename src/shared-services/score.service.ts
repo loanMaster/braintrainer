@@ -11,10 +11,18 @@ export interface Scores {
 }
 
 export interface PlayerPercentiles {
-  id: string;
-  name: string;
-  scores: Scores;
-  percentiles: Scores;
+  [key: string]: Percentiles;
+}
+
+export interface Percentiles {
+  easy: Percentile;
+  normal: Percentile;
+  hard: Percentile;
+}
+
+export interface Percentile {
+  score: number;
+  percentile: number;
 }
 
 export interface HighScoreDto {

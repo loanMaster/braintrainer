@@ -84,7 +84,6 @@ onMounted(async () => {
 });
 
 async function nextQuestion() {
-  currentIndex = 0;
   if (
     !(await exerciseUtils.prepareNewQuestion({
       inputDisabled,
