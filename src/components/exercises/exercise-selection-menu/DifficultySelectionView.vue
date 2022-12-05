@@ -65,9 +65,11 @@ function getStars(difficulty: string): number {
 }
 
 onMounted(() => {
-  showLoadingIndicator.value = true
-  new ScoreService().fetchPlayerScores()
-  showLoadingIndicator.value = false
+  if (store.currentPlayerId) {
+    showLoadingIndicator.value = true
+    new ScoreService().fetchPlayerScores()
+    showLoadingIndicator.value = false
+  }
 })
 
 async function selectDifficulty(difficulty: string) {
