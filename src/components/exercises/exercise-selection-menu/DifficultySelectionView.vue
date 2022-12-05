@@ -1,26 +1,27 @@
 <template>
-  <div class="flex-auto column justify-center items-center q-pa-md full-width text-center">
-    <h4>{{ $t('Select difficulty') }}</h4>
-    <LoadingIndicator :show="showLoadingIndicator"/>
-    <div class="row q-col-gutter-lg" v-if="!showLoadingIndicator">
-      <div
-        class="col-4 column"
-        v-for="difficulty in difficulties"
-        :key="difficulty"
-        @click="selectDifficulty(difficulty)"
-      >
-        <q-card class="flex-1 cursor-pointer zoom-on-hover">
-          <q-card-section class="text-bold"
-            :class="{ 'bg-amber-1': difficulty === 'easy', 'bg-amber-2': difficulty === 'normal', 'bg-amber-3': difficulty === 'hard' }">
-            {{ t(difficulty) }}
-          </q-card-section>
-          <q-card-section>
-            Lösen Sie Aufgaben im Kopf
-            <StarsRating :rating="getStars(difficulty)" class="text-h4 q-ml-xs" />
-          </q-card-section>
-        </q-card>
+  <div class="full-width flex-1 column items-center">
+    <div class="q-py-md column flex-1 items-center content">
+      <LoadingIndicator :show="showLoadingIndicator"/>
+      <div class="row-sm column-xs q-col-gutter-lg" v-if="!showLoadingIndicator">
+        <div
+          class="col-4 column"
+          v-for="difficulty in difficulties"
+          :key="difficulty"
+          @click="selectDifficulty(difficulty)"
+        >
+          <q-card class="flex-1 cursor-pointer zoom-on-hover text-center">
+            <q-card-section class="text-bold"
+              :class="{ 'bg-amber-1': difficulty === 'easy', 'bg-amber-2': difficulty === 'normal', 'bg-amber-3': difficulty === 'hard' }">
+              {{ t(difficulty) }}
+            </q-card-section>
+            <q-card-section>
+              Lösen Sie Aufgaben im Kopf
+              <StarsRating :rating="getStars(difficulty)" class="text-h4 q-ml-xs" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
-      <div class="full-width q-mx-auto">
+      <div class="q-mt-md">
         <q-btn color="secondary" @click="back">Zurück</q-btn>
       </div>
     </div>

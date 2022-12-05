@@ -21,3 +21,21 @@
 .zoom-on-hover {
   transition-duration: 1s;
 }
+
+
+.max-width-sm {
+  max-width: $breakpoint-sm;
+}
+
+.max-width-md{
+  max-width: $breakpoint-md;
+}
+
+.content {
+  max-width: $breakpoint-sm;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+}

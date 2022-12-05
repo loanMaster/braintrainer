@@ -1,74 +1,76 @@
 <template>
-  <div class="flex-auto column justify-center items-center q-ma-lg">
-    <q-card class="exercise-block">
-      <div class="exercise-title">Sprache</div>
-      <div class="row q-col-gutter-lg">
-        <div
-          class="col-3 column"
-          v-for="exercise in languageExercises"
-          :key="exercise"
-        >
-          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-            <q-card-section class="bg-blue-2 text-bold">
-              {{ t(exercise) }}
-            </q-card-section>
-            <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
-          </q-card>
+  <div class="full-width flex-1 column items-center">
+    <div class="q-py-md content q-mx-auto text-center">
+      <q-card class="exercise-block">
+        <div class="exercise-title">Sprache</div>
+        <div class="row-sm column-xs q-col-gutter-lg">
+          <div
+            class="col-3 column"
+            v-for="exercise in languageExercises"
+            :key="exercise"
+          >
+            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+              <q-card-section class="bg-blue-2 text-bold">
+                {{ t(exercise) }}
+              </q-card-section>
+              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+            </q-card>
+          </div>
         </div>
-      </div>
-    </q-card>
-    <q-card class="exercise-block">
-      <div class="exercise-title">Rechnen</div>
-      <div class="row q-col-gutter-lg">
-        <div
-          class="col-3 column"
-          v-for="exercise in mathExercises"
-          :key="exercise"
-        >
-          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-            <q-card-section class="bg-green-2 text-bold">
-              {{ t(exercise) }}
-            </q-card-section>
-            <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
-          </q-card>
+      </q-card>
+      <q-card class="exercise-block">
+        <div class="exercise-title">Rechnen</div>
+        <div class="row-sm column-xs q-col-gutter-lg">
+          <div
+            class="col-3 column"
+            v-for="exercise in mathExercises"
+            :key="exercise"
+          >
+            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+              <q-card-section class="bg-green-2 text-bold">
+                {{ t(exercise) }}
+              </q-card-section>
+              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+            </q-card>
+          </div>
         </div>
-      </div>
-    </q-card>
-    <q-card class="exercise-block">
-      <div class="exercise-title">Gedächtnis</div>
-      <div class="row q-col-gutter-lg q-mb-lg">
-        <div
-          class="col-4 column"
-          v-for="exercise in [
-            'RememberWords',
-            'RememberNumbers',
-            'RememberNames',
-          ]"
-          :key="exercise"
-        >
-          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-            <q-card-section class="bg-orange-2 text-bold">
-              {{ t(exercise) }}
-            </q-card-section>
-            <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
-          </q-card>
+      </q-card>
+      <q-card class="exercise-block">
+        <div class="exercise-title">Gedächtnis</div>
+        <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
+          <div
+            class="col-4 column"
+            v-for="exercise in [
+              'RememberWords',
+              'RememberNumbers',
+              'RememberNames',
+            ]"
+            :key="exercise"
+          >
+            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+              <q-card-section class="bg-orange-2 text-bold">
+                {{ t(exercise) }}
+              </q-card-section>
+              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+            </q-card>
+          </div>
         </div>
-      </div>
-      <div class="row q-col-gutter-lg">
-        <div
-          class="col-6 column"
-          v-for="exercise in ['AudioMemoryAnimals', 'AudioMemory']"
-          :key="exercise"
-        >
-          <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-            <q-card-section class="bg-orange-2 text-bold">
-              {{ t(exercise) }}
-            </q-card-section>
-            <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
-          </q-card>
+        <div class="row-sm column-xs q-col-gutter-lg">
+          <div
+            class="col-6 column"
+            v-for="exercise in ['AudioMemoryAnimals', 'AudioMemory']"
+            :key="exercise"
+          >
+            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+              <q-card-section class="bg-orange-2 text-bold">
+                {{ t(exercise) }}
+              </q-card-section>
+              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+            </q-card>
+          </div>
         </div>
-      </div>
-    </q-card>
+      </q-card>
+    </div>
   </div>
 </template>
 

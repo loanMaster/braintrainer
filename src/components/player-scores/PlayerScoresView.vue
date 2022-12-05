@@ -1,9 +1,8 @@
 <template>
-  <div class="flex-1 relative-position">
+  <div class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg">
     <LoadingIndicator :showing="showLoadingIndicator" />
     <q-table
       v-if="!showLoadingIndicator"
-      class="q-ma-md"
       :grid="$q.screen.xs"
       :rows="rows"
       column-sort-order="da"
@@ -42,8 +41,12 @@
       <template v-slot:item="props">
         <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
           <q-card>
-            <q-card-section class="text-h6 bg-orange-2">
+            <q-card-section class="text-h6 bg-orange-2 row justify-between">
               {{ props.row.nameOfTheGame }}
+              <div class="row">
+                <q-btn size="md" color="primary" dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
+                <q-btn size="md" color="primary"  dense @click="showProgress(props)" :icon="'assessment'" class="q-ml-sm"/>
+              </div>
             </q-card-section>
             <q-separator />
             <q-card-section class="column">

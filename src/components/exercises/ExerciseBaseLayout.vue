@@ -4,7 +4,7 @@
     :style="{ 'overflow-x': overflow }"
   >
     <MovingColorsBackground/>
-    <ExerciseHeader />
+    <ExerciseHeader/>
     <router-view v-slot="{ Component }">
       <transition
         mode="out-in"

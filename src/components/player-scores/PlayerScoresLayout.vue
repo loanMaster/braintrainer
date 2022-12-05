@@ -3,7 +3,7 @@
     <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
       <q-toolbar-title>Your scores</q-toolbar-title>
     </q-toolbar>
-    <div :style="{ 'overflow-x': overflow }" class="column flex-1">
+    <div :style="{ 'overflow-x': overflow }" class="column flex-1 items-center">
       <router-view v-slot="{ Component }">
         <transition
           mode="out-in"

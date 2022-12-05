@@ -1,13 +1,12 @@
 <template>
-  <div class="gradient flex-1 column">
+  <div class="gradient flex-1 column items-center">
     <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
       <q-toolbar-title>🎉 Highscores</q-toolbar-title>
     </q-toolbar>
-    <div class="flex-1 relative-position">
+    <div class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg">
       <LoadingIndicator :showing="rows.length === 0" />
       <q-table
         v-if="rows.length > 0"
-        class="q-ma-md"
         :grid="$q.screen.xs"
         :rows="rows"
         column-sort-order="da"
@@ -45,9 +44,10 @@
 
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
-            <q-card>
-              <q-card-section class="text-h6 bg-orange-2">
+            <q-card class="non-selectable">
+              <q-card-section class="text-h6 bg-orange-2 row justify-between">
                 {{ props.row.nameOfTheGame }}
+                <q-btn size="md" color="primary" dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
               </q-card-section>
               <q-separator />
               <q-card-section class="column">

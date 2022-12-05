@@ -1,6 +1,6 @@
 <template>
-  <div class="column flex-auto relative-position">
-    <ExerciseHUD />
+  <div class="column flex-auto relative-position full-width items-center">
+    <ExerciseHUD class="self-stretch"/>
     <div
       ref="instructionsWrapper"
       class="column justify-center flex-auto content-center"
@@ -9,7 +9,7 @@
         <ExerciseInstructions @confirm="start" />
       </div>
     </div>
-    <div ref="exercise" class="column justify-center flex-auto content-center">
+    <div ref="exercise" class="column justify-center flex-auto content">
       <router-view></router-view>
     </div>
     <ExerciseFooter />

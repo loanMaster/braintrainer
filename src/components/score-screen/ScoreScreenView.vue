@@ -112,12 +112,13 @@ const percentile = computed(() =>
 );
 
 onBeforeMount(() => {
-  // for debugging
-  store.$patch((store) => {
-    store.exercise = newExercise('rememberNumbers', 'normal', 10);
-    store.exercise.rating = 4;
-    store.exercise.score = 50;
-  });
+  if (!store.exercise || !store.exercise.rating) {
+    store.$patch((store) => {   // TODO for debugging
+      store.exercise = newExercise('rememberNumbers', 'normal', 10);
+      store.exercise.rating = 4;
+      store.exercise.score = 50;
+    });
+  }
 
   if (dailyTrainingActive.value && !hasNextDailyExercise()) {
     $q.dialog({
