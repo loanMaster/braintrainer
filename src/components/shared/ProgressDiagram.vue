@@ -1,6 +1,6 @@
 <template>
   <div class="row flex-center relative-position flex-1">
-    <canvas ref="chart"></canvas>
+    <canvas ref="chart" style="max-width: 100%;"></canvas>
   </div>
 </template>
 
@@ -14,8 +14,8 @@
     LinearScaleOptions,
     registerables
   } from 'chart.js'
-  import { onMounted, ref, Ref } from 'vue'
-  import {PlayerPercentiles, ScoreService} from "src/shared-services/score.service";
+  import { onMounted, ref } from 'vue'
+  import { Score, ScoreService } from "src/shared-services/score.service";
   import {IAppState, useAppStore} from "stores/app-store";
   import {SubscriptionCallbackMutationPatchObject} from "pinia";
   import {useI18n} from "vue-i18n";
@@ -27,29 +27,34 @@
 
   const props = defineProps({
     nameOfTheGame: String,
-    difficulty: String
+    difficulty: String,
+    showLegend: Boolean
   })
 
   onMounted(async() => {
     showLoadingIndicator.value = true
-    const scores = await new ScoreService().fetchPlayerScores()
+    const scores = await new ScoreService().fetchPlayerScoreHistory()
     showLoadingIndicator.value = false
     createChart(scores)
   })
 
   useAppStore().$subscribe((mutation, state) => {
     const patch = mutation as SubscriptionCallbackMutationPatchObject<IAppState>
-    if (patch.payload && patch.payload.playerScore) {
-      createChart(state.playerScore!)
+    if (patch.payload && patch.payload.scoreHistory) {
+      createChart(state.scoreHistory!)
     }
   })
 
-  function createChart (values: PlayerPercentiles) {
+  function createChart (values: Score[]) {
     if (chartJs) {
       chartJs.destroy()
     }
-    const labels = values.scoreHistory.map(h => new Date(h.date).toLocaleDateString())
-    const data = values.scoreHistory.map(h => h.score)
+    const labels = values
+      .filter(h => h.nameOfTheGame === props.nameOfTheGame && h.difficulty === props.difficulty)
+      .map(h => new Date(h.date).toLocaleDateString())
+    const data = values
+      .filter(h => h.nameOfTheGame === props.nameOfTheGame && h.difficulty === props.difficulty)
+      .map(h => h.score)
     Chart.register(...registerables);
     chartJs = new Chart(chart.value, {
       type: 'bar',
@@ -62,9 +67,11 @@
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
-            display: true
+            display: props.showLegend
           },
           tooltip: {
             enabled: false

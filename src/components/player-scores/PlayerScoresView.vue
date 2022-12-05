@@ -7,12 +7,11 @@
       :grid="$q.screen.xs"
       :rows="rows"
       column-sort-order="da"
-      table-header-class="bg-orange-2"
       :columns="columns"
       :pagination="{ rowsPerPage: 0 }"
     >
       <template v-slot:header="props">
-        <q-tr :props="props">
+        <q-tr :props="props" class="bg-orange-2">
           <q-th auto-width />
           <q-th
             v-for="col in props.cols"
@@ -87,9 +86,9 @@
 
   onMounted(async () => {
     showLoadingIndicator.value = true
-    const percentiles = await new ScoreService().fetchPlayerScores();
+    const percentiles = await new ScoreService().fetchPlayerScorePercentiles();
     showLoadingIndicator.value = false
-    percentiles.scores.forEach(s => {
+    percentiles.forEach(s => {
       rows.value.push({
         difficultyOri: s.difficulty,
         nameOfTheGameOri: s.nameOfTheGame,

@@ -1,18 +1,13 @@
-import { Exercise } from 'stores/app-store';
-
-export const calculateRating = (exerciseResult: Exercise) => {
-  const percentageCorrect =
-    exerciseResult.correctAnswers / exerciseResult.totalQuestions;
-  const numberOfErrors = exerciseResult.strikes;
-  const errorQuote = exerciseResult.strikes / exerciseResult.totalQuestions;
-  if (errorQuote <= 0.1 && percentageCorrect === 1.0) {
+export const mapScoreToRating = (score: number) => {
+  if (score > 90) {
+    return 5
+  } else if (score > 80) {
+    return 4;
+  } else if (score > 70) {
     return 3;
-  } else if (
-    percentageCorrect === 1 &&
-    (numberOfErrors < 3 || errorQuote <= 0.2)
-  ) {
+  } else if (score > 50) {
     return 2;
-  } else if (percentageCorrect > 0.5) {
+  } else if (score > 30) {
     return 1;
   }
   return 0;

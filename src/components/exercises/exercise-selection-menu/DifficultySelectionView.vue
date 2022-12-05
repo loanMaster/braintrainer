@@ -1,7 +1,8 @@
 <template>
   <div class="flex-auto column justify-center items-center q-pa-md full-width text-center">
     <h4>{{ $t('Select difficulty') }}</h4>
-    <div class="row q-col-gutter-lg">
+    <LoadingIndicator :show="showLoadingIndicator"/>
+    <div class="row q-col-gutter-lg" v-if="!showLoadingIndicator">
       <div
         class="col-4 column"
         v-for="difficulty in difficulties"
@@ -29,13 +30,16 @@
 <script setup lang="ts">
 import { getNameOfTheGame } from 'src/util/game.name.helper';
 import StarsRating from 'src/components/shared/StarsRating.vue';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { NavService } from 'src/router/nav.service';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { showEnterUsernameDialog } from 'src/util/show-enter-username-dialog';
+import {ScoreService} from "src/shared-services/score.service";
+import {mapScoreToRating} from "src/util/calculate-rating";
 
 const selectedDifficulty = ref('');
 const difficulties = ref(['easy', 'normal', 'hard']);
@@ -44,13 +48,27 @@ const $q = useQuasar();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const store = useAppStore();
+const showLoadingIndicator = ref(false)
+
 const nameOfTheGame = computed(() =>
   getNameOfTheGame(route.params.game as string)
 );
 
 function getStars(difficulty: string): number {
-  return useAppStore().player.ratings[nameOfTheGame.value as string]?.[difficulty] || 0;
+  if (store.playerScores) {
+    const matching = store.playerScores!.scores.find(p => p.nameOfTheGame === nameOfTheGame.value && difficulty === p.difficulty)
+    return matching ? mapScoreToRating(matching.score) : 0;
+  } else {
+    return 0
+  }
 }
+
+onMounted(() => {
+  showLoadingIndicator.value = true
+  new ScoreService().fetchPlayerScores()
+  showLoadingIndicator.value = false
+})
 
 async function selectDifficulty(difficulty: string) {
   selectedDifficulty.value = difficulty;

@@ -12,7 +12,7 @@
         <div>Die Lösung ist</div>
         <div class="text-bold q-my-sm">{{ solution }}</div>
         <template v-slot:action>
-          <div class="text-center q-ma-auto">
+          <div class="full-width text-center">
             <q-btn color="white" outline label="Weiter" @click="onClicked" />
           </div>
         </template>

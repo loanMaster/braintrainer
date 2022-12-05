@@ -21,15 +21,12 @@ export interface PercentileScore {
   percentile: number;
 }
 
-export interface PlayerPercentiles {
-  scores: PercentileScore[];
-  scoreHistory: Score[];
+export interface ScoreHistory {
+  scores: Score[];
 }
 
-export interface Score {
-  easy: number;
-  normal: number;
-  hard: number;
+export interface PlayerScores {
+  scores: PercentileScore[];
 }
 
 export interface HighScoreDto {
@@ -97,8 +94,9 @@ export class ScoreService {
     return response.json();
   }
 
-  async fetchPlayerScores(): Promise<PlayerPercentiles> {
-    if (!this.store.playerScore) {
+
+  async fetchPlayerScorePercentiles(): Promise<PercentileScore[]> {
+    if (!this.store.playerScores || !this.store.playerScores!.hasPercentiles) {
       const response = await fetch(
         this.serverPath + `/player/${this.store.player.id}/score-percentiles`,
         {
@@ -106,9 +104,39 @@ export class ScoreService {
           method: 'GET',
         }
       );
-      const playerScore = await response.json();
-      this.store.$patch({ playerScore })
+      const scores = (await response.json()).scores;
+      this.store.$patch({ playerScores: { hasPercentiles: true, scores } })
     }
-    return this.store.playerScore!
+    return this.store.playerScores!.scores
+  }
+
+  async fetchPlayerScores(): Promise<Score[]> {
+    if (!this.store.playerScores) {
+      const response = await fetch(
+        this.serverPath + `/player/${this.store.player.id}/scores`,
+        {
+          ...this.getStandardRequestInit(),
+          method: 'GET',
+        }
+      );
+      const scores = (await response.json()).scores;
+      this.store.$patch({ playerScores: { hasPercentiles: false, scores } })
+    }
+    return this.store.playerScores!.scores
+  }
+
+  async fetchPlayerScoreHistory(): Promise<Score[]> {
+    if (this.store.scoreHistory === undefined) {
+      const response = await fetch(
+        this.serverPath + `/player/${this.store.player.id}/score-history`,
+        {
+          ...this.getStandardRequestInit(),
+          method: 'GET',
+        }
+      );
+      const scoreHistory = (await response.json()).scores;
+      this.store.$patch({ scoreHistory })
+    }
+    return this.store.scoreHistory!
   }
 }

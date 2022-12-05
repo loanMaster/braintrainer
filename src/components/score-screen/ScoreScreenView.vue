@@ -4,11 +4,14 @@
   >
     <div
       class="bg-white shadow-5 rounded-borders text-center q-ma-lg q-pa-lg overflow-hidden"
-      style="width: 66%"
+      style="width: 80%"
     >
-      <div class="text-h4 q-mb-sm">{{ $t('Exercise finished') }}</div>
+      <div class="text-h4 q-mb-sd">{{ $t('Exercise finished') }}</div>
+      <div class="text-h4 q-mb-lg">
+        <StarsRating :rating="3"></StarsRating>
+      </div>
       <div class="row justify-center no-wrap q-mx-lg" style="min-height: 40vh">
-        <div class="column flex-1">
+        <div class="column col-4 flex-1">
           <div class="text-h5">Auswertung</div>
           <div class="column q-mt-lg">
             <div class="row justify-between">
@@ -30,7 +33,7 @@
           <div class="q-mt-sm">
             <div class="text-left">
               <div v-if="updateScoreResponse" class="q-mb-sm">
-                Besser als 64% der Spieler
+                Besser als {{ percentile }}% der Spieler
               </div>
               <div
                 class="text-center animated text-h6 animate bounceIn"
@@ -42,7 +45,7 @@
             </div>
           </div>
         </div>
-        <div class="column flex-1">
+        <div class="column col-4 flex-1">
           <div class="text-h5">Bewertung</div>
           <div ref="knob" class="full-width flex-auto column">
             <q-knob
@@ -59,6 +62,10 @@
               class="text-lime q-ma-md flex-auto full-width no-pointer-events"
             />
           </div>
+        </div>
+        <div class="column col-4 flex-1">
+          <div class="text-h5">Fortschritt</div>
+          <ProgressDiagram :difficulty="difficulty" :nameOfTheGame="nameOfTheGame"/>
         </div>
       </div>
       <div class="row justify-center">
@@ -78,6 +85,8 @@ import {
   ScoreService,
   UpdateScoreResponse,
 } from 'src/shared-services/score.service';
+import StarsRating from 'src/components/shared/StarsRating.vue'
+import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue'
 import { SoundService } from 'src/shared-services/sound.service';
 import { DailyTrainingService } from 'src/shared-services/daily-training.service';
 import { TweenService } from 'src/shared-services/tween.service';
@@ -105,7 +114,7 @@ const percentile = computed(() =>
 onBeforeMount(() => {
   // for debugging
   store.$patch((store) => {
-    store.exercise = newExercise('RememberNumbers', 'normal', 10);
+    store.exercise = newExercise('rememberNumbers', 'normal', 10);
     store.exercise.rating = 4;
     store.exercise.score = 50;
   });
@@ -133,6 +142,7 @@ onMounted(async () => {
       name: store.player.name,
       id: store.player.id,
     });
+    store.updatePlayerScores(updateScoreResponse.value.percentile)
   } else {
     updateScoreResponse.value = {
       percentile: 3,
@@ -178,4 +188,8 @@ function continueDailyTraining() {
     difficulty,
   });
 }
+
+const nameOfTheGame = computed(() => store.exercise.nameOfTheGame)
+const difficulty = computed(() => store.exercise.difficulty)
+
 </script>

@@ -11,11 +11,38 @@
         :grid="$q.screen.xs"
         :rows="rows"
         column-sort-order="da"
-        table-header-class="bg-orange-2"
         :columns="columns"
         row-key="name"
         :pagination="{ rowsPerPage: 0 }"
       >
+        <template v-slot:header="props">
+          <q-tr :props="props" class="bg-orange-2">
+            <q-th auto-width />
+            <q-th
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.label }}
+            </q-th>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td auto-width>
+              <q-btn size="md" color="primary" dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
+            </q-td>
+            <q-td
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.value }}
+            </q-td>
+          </q-tr>
+        </template>
+
         <template v-slot:item="props">
           <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
             <q-card>
@@ -38,7 +65,7 @@
                 </div>
                 <div class="row justify-between">
                   <div>Datum</div>
-                  <div>{{ new Date(props.row.date).toDateString() }}</div>
+                  <div>{{ new Date(props.row.date).toLocaleDateString() }}</div>
                 </div>
                 <div class="row justify-between">
                   <div>Deine Punkte</div>
@@ -60,10 +87,12 @@ import { ref, onMounted, Ref } from 'vue';
 import { useQuasar } from 'quasar';
 import {useI18n} from "vue-i18n";
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import { useRouter } from 'vue-router';
 
 
 const { t } = useI18n()
 const rows: Ref<any[]> = ref([])
+const router = useRouter()
 
 onMounted(async () => {
   const highscores = await new ScoreService().fetchHighscores();
@@ -71,6 +100,8 @@ onMounted(async () => {
     rows.value.push({
       nameOfTheGame: t(s.nameOfTheGame),
       difficulty: t(s.difficulty),
+      nameOfTheGameOri: s.nameOfTheGame,
+      difficultyOri: s.difficulty,
       score: s.score,
       date: s.date,
       yourScore: s.yourScore,
@@ -101,6 +132,10 @@ const columns = ref([
   { name: 'date', label: 'Datum', field: 'date', format: (val: number) => `${new Date(val).toDateString()}` },
   { name: 'yourScore', label: 'Deine Bewertung', field: 'yourScore', format: (val: number | undefined) => val || '-' },
 ])
+
+function play (props: any) {
+  router.push({ name: props.row.nameOfTheGameOri, params: { game: props.row.nameOfTheGameOri, difficulty: props.row.difficultyOri } })
+}
 
 </script>
 

@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
-import { PlayerPercentiles} from 'src/shared-services/score.service';
+import {PercentileScore, Score} from 'src/shared-services/score.service';
+import {mapScoreToRating} from "src/util/calculate-rating";
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -58,12 +59,8 @@ export interface Ratings {
 export interface Player {
   id: string;
   name: string;
-  xp: number;
-  level: number;
-  ratings: Ratings;
   averageRatings: Ratings;
   exerciseHistory: string[];
-
 }
 
 export interface Players {
@@ -88,7 +85,8 @@ export interface IAppState {
   machineId: string;
   dailyTraining: DailyTraining;
   _language: string;
-  playerScore?: PlayerPercentiles;
+  playerScores?: { scores: PercentileScore[], hasPercentiles: boolean }
+  scoreHistory?: Score[],
 }
 
 const getBrowserLanguage = (): string => {
@@ -124,23 +122,6 @@ const newPlayer = () => {
   };
 };
 
-const calculateRating = (exercise: Exercise) => {
-  const percentageCorrect = exercise.correctAnswers / exercise.totalQuestions;
-  const numberOfErrors = exercise.strikes;
-  const errorQuote = exercise.strikes / exercise.totalQuestions;
-  if (errorQuote <= 0.1 && percentageCorrect === 1.0) {
-    return 3;
-  } else if (
-    percentageCorrect === 1 &&
-    (numberOfErrors < 3 || errorQuote <= 0.2)
-  ) {
-    return 2;
-  } else if (percentageCorrect > 0.5) {
-    return 1;
-  }
-  return 0;
-};
-
 export const useAppStore = defineStore('main', {
   state: (): IAppState => {
     if (!new PersistenceService().fetch('machineId')) {
@@ -163,7 +144,8 @@ export const useAppStore = defineStore('main', {
       dailyTraining: { active: false, results: [] as Exercise[] },
       exercise: newExercise('rememberNumbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
-      playerScore: undefined
+      playerScores: undefined,
+      scoreHistory: undefined
     } as IAppState;
   },
   getters: {
@@ -185,36 +167,6 @@ export const useAppStore = defineStore('main', {
       this.players[this.currentPlayerId].name = name;
       storePlayers();
     },
-    updateRating({
-      nameOfTheGame,
-      difficulty,
-      rating,
-    }: {
-      nameOfTheGame: string;
-      difficulty: string;
-      rating: number;
-    }) {
-      const gameRating =
-        this.players[this.currentPlayerId].ratings?.[nameOfTheGame]?.[
-          difficulty
-        ] || -1;
-      if (gameRating < rating) {
-        this.players[this.currentPlayerId].ratings[nameOfTheGame] =
-          this.players[this.currentPlayerId].ratings[nameOfTheGame] || {};
-        this.players[this.currentPlayerId].ratings[nameOfTheGame][difficulty] =
-          rating;
-      }
-      const averageRating =
-        this.players[this.currentPlayerId].averageRatings[nameOfTheGame] || {};
-      if (!averageRating[difficulty]) {
-        averageRating[difficulty] = rating;
-      } else {
-        averageRating[difficulty] =
-          0.3 * rating + 0.7 * averageRating[difficulty];
-      }
-      this.players[this.currentPlayerId].averageRatings[nameOfTheGame] =
-        averageRating;
-    },
     startDailyTraining() {
       this.dailyTraining.active = true;
       this.dailyTraining.results = [];
@@ -222,21 +174,6 @@ export const useAppStore = defineStore('main', {
     finishDailyTraining() {
       this.dailyTraining.active = false;
       this.dailyTraining.results = [];
-    },
-    async exerciseFinished(exercise: Exercise) {
-      const rating = calculateRating(exercise);
-      await this.updateRating({
-        nameOfTheGame: exercise.nameOfTheGame,
-        difficulty: exercise.difficulty,
-        rating,
-      });
-      if (this.dailyTraining) {
-        this.exercise = exercise;
-        this.dailyTraining.results.push(exercise);
-      }
-      this.exercise = exercise;
-      this.player.exerciseHistory.push(exercise.nameOfTheGame);
-      storePlayers();
     },
     setLanguage(i18n: Composer<any>, lang: string) {
       i18n.locale.value = lang;
@@ -284,7 +221,34 @@ export const useAppStore = defineStore('main', {
       this.exercise.duration = Date.now() - this.exercise.beginTimeStamp;
       this.exercise.state = 'finished';
       this.exercise.score = calculateScore(this.exercise);
-      this.exercise.rating = calculateRating(this.exercise);
+      this.exercise.rating = mapScoreToRating(this.exercise.score);
+      if (this.scoreHistory !== undefined) {
+        this.scoreHistory.push({
+          difficulty: this.exercise.difficulty,
+          nameOfTheGame: this.exercise.nameOfTheGame,
+          score: this.exercise.score,
+          date: Date.now()
+        })
+      }
+    },
+    updatePlayerScores (percentile: number) {
+      if (this.playerScores !== undefined) {
+        const matchingScore = this.playerScores.scores.find(
+          s => s.nameOfTheGame === this.exercise.nameOfTheGame && s.difficulty === this.exercise.difficulty)
+        if (!matchingScore) {
+          this.playerScores.scores.push({
+            nameOfTheGame: this.exercise.nameOfTheGame,
+            percentile: percentile,
+            difficulty: this.exercise.difficulty,
+            score: this.exercise.score!,
+            date: Date.now()
+          })
+        } else if (matchingScore.score < this.exercise.score!) {
+          matchingScore.score = this.exercise.score!
+          matchingScore.percentile = percentile
+          matchingScore.date = Date.now()
+        }
+      }
     },
     pause(): boolean {
       if (this.exercise.state === 'started') {
@@ -313,7 +277,7 @@ export const useAppStore = defineStore('main', {
     finishedPlayingSound(tag: string): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.tag = tag;
-    },
+    }
   },
 });
 
