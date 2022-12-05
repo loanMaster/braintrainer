@@ -1,5 +1,5 @@
 <template>
-  <div ref="buttons" class="row q-gutter-sm justify-center">
+  <div ref="buttons" class="row q-gutter-sm justify-center max-width-xs">
     <div
       v-for="(_, idx) in Array.from(
         Array(store.exercise.totalQuestions * 2).keys()

@@ -11,14 +11,14 @@
       <div class="text-h5 q-mb-md row justify-center">
         {{ whoIs }}
       </div>
-      <div ref="buttons" class="row q-gutter-sm justify-center">
-        <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
+      <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm">
+        <div v-for="(option, idx) in buttonOptions" v-bind:key="idx" class="row">
           <q-btn
             color="primary"
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             class="transition-duration-md"
-            >{{ $t(label) }}</q-btn
+            >{{ $t('findRelatives.my_' + option) }}</q-btn
           >
         </div>
       </div>
@@ -41,6 +41,7 @@ import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useAppStore } from 'stores/app-store';
 import { RelativesService } from 'components/exercises/service/relatives.service';
+import {randomElement, shuffle} from "src/util/array.utils";
 
 const {
   soundService,
@@ -86,9 +87,7 @@ const relations = [
   'Nephew',
   'Grandchild',
 ];
-let buttonLabels: Ref<string[]> = ref(
-  relations.map((v) => 'findRelatives.my_' + v)
-);
+let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
 const character = ref(male_names[0]);
 
@@ -134,6 +133,15 @@ async function nextQuestion() {
   }
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
+  buttonOptions.value = [...task.solutions]
+  while (buttonOptions.value.length < 8) {
+    const randomRelative = randomElement(relations)
+    if (buttonOptions.value.indexOf(randomRelative) === -1) {
+      buttonOptions.value.push(randomRelative)
+    }
+  }
+  shuffle(buttonOptions.value)
+
   const audio = texts.map((text) => {
     return {
       src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
@@ -164,7 +172,7 @@ async function playAudio() {
 
 function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
-  if (currentTask.value!.solutions.indexOf(relations[idx]) > -1) {
+  if (currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1) {
     inputDisabled.value = true;
     store.$patch((store) => store.exercise.correctAnswers++);
     new TweenService().fadeOut(coreExercise.value);

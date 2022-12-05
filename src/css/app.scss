@@ -31,6 +31,10 @@
   max-width: $breakpoint-md;
 }
 
+.max-width-xs {
+  max-width: $breakpoint-xs;
+}
+
 .content {
   max-width: $breakpoint-sm;
   display: flex;

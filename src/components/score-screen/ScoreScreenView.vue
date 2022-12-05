@@ -1,16 +1,18 @@
 <template>
   <div
-    class="column items-center justify-center bg-primary q-ma-md non-selectable"
+    class="column items-center justify-center non-selectable q-ma-sm-lg q-ma-xs-none"
   >
-    <div
-      class="bg-white shadow-5 rounded-borders text-center q-ma-lg q-pa-lg overflow-hidden"
-      style="width: 80%"
-    >
-      <div class="text-h4 q-mb-sd">{{ $t('Exercise finished') }}</div>
-      <div class="text-h4 q-mb-lg">
-        <StarsRating :rating="3"></StarsRating>
-      </div>
-      <div class="row justify-center no-wrap q-mx-lg" style="min-height: 40vh">
+    <MovingColorsBackground/>
+    <q-card class="exercise-block max-width-sm q-pa-lg full-width text-center" style="background-color: #FFFFFF77;">
+      <q-card-section>
+        <div class="text-h4">{{ $t('Exercise finished') }}</div>
+      </q-card-section>
+      <q-card-section>
+        <div class="text-h3">
+          <StarsRating :rating="3"></StarsRating>
+        </div>
+      </q-card-section>
+      <div class="row-sm column-xs justify-center no-wrap">
         <div class="column col-4 flex-1">
           <div class="text-h5">Auswertung</div>
           <div class="column q-mt-lg">
@@ -30,7 +32,7 @@
               <span>{{ store.exercise.duration }} Sekunden</span>
             </div>
           </div>
-          <div class="q-mt-sm">
+          <div class="q-mt-sm" >
             <div class="text-left">
               <div v-if="updateScoreResponse" class="q-mb-sm">
                 Besser als {{ percentile }}% der Spieler
@@ -45,7 +47,8 @@
             </div>
           </div>
         </div>
-        <div class="column col-4 flex-1">
+        <q-separator class="mobile-only q-mb-md"></q-separator>
+        <div class="column col-4 flex-1" style="min-height: 40vh">
           <div class="text-h5">Bewertung</div>
           <div ref="knob" class="full-width flex-auto column">
             <q-knob
@@ -63,20 +66,23 @@
             />
           </div>
         </div>
-        <div class="column col-4 flex-1">
+        <q-separator class="mobile-only q-mb-md"></q-separator>
+        <div class="column col-4 flex-1" style="min-height: 40vh">
           <div class="text-h5">Fortschritt</div>
-          <ProgressDiagram :difficulty="difficulty" :nameOfTheGame="nameOfTheGame"/>
+          <ProgressDiagram :difficulty="store.exercise.difficulty" :nameOfTheGame="store.exercise.nameOfTheGame"/>
         </div>
       </div>
-      <div class="row justify-center">
-        <q-btn
-          v-if="dailyTrainingActive && hasNextDailyExercise()"
-          @click="continueDailyTraining"
-          >{{ $t('Continue daily training') }}</q-btn
-        >
-        <q-btn @click="playAgain">{{ $t('Play again') }}</q-btn>
-      </div>
-    </div>
+      <q-card-section>
+        <div class="row justify-center">
+          <q-btn
+            v-if="dailyTrainingActive && hasNextDailyExercise()"
+            @click="continueDailyTraining"
+            >{{ $t('Continue daily training') }}</q-btn
+          >
+          <q-btn @click="playAgain">{{ $t('Play again') }}</q-btn>
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -85,6 +91,7 @@ import {
   ScoreService,
   UpdateScoreResponse,
 } from 'src/shared-services/score.service';
+import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
 import StarsRating from 'src/components/shared/StarsRating.vue'
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue'
 import { SoundService } from 'src/shared-services/sound.service';
@@ -189,8 +196,4 @@ function continueDailyTraining() {
     difficulty,
   });
 }
-
-const nameOfTheGame = computed(() => store.exercise.nameOfTheGame)
-const difficulty = computed(() => store.exercise.difficulty)
-
 </script>

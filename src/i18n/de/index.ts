@@ -177,7 +177,7 @@ export default {
     my_Father: 'mein Vater',
     my_Son: 'mein Sohn',
     my_Child: 'mein Kind',
-    my_Daughter: 'meine Tochte',
+    my_Daughter: 'meine Tochter',
     my_Cousin: 'meine Cousine',
     my_Nephew: 'mein Neffe',
     my_Niece: 'meine Nichte',

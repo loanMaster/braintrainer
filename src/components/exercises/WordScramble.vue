@@ -15,7 +15,7 @@
     <div>
       <LetterButtons
         ref="letterButtons"
-        :numberOfButtons="20"
+        :numberOfButtons="12"
         @letter-selected="onLetterEntered"
       />
     </div>

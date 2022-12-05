@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { NavService } from 'src/router/nav.service';
 import { DailyTrainingService } from 'src/shared-services/daily-training.service';
