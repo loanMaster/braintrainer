@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
+import { PlayerPercentiles} from 'src/shared-services/score.service';
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -62,6 +63,7 @@ export interface Player {
   ratings: Ratings;
   averageRatings: Ratings;
   exerciseHistory: string[];
+
 }
 
 export interface Players {
@@ -86,6 +88,7 @@ export interface IAppState {
   machineId: string;
   dailyTraining: DailyTraining;
   _language: string;
+  playerScore?: PlayerPercentiles;
 }
 
 const getBrowserLanguage = (): string => {
@@ -160,6 +163,7 @@ export const useAppStore = defineStore('main', {
       dailyTraining: { active: false, results: [] as Exercise[] },
       exercise: newExercise('rememberNumbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
+      playerScore: undefined
     } as IAppState;
   },
   getters: {

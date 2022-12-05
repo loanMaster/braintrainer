@@ -55,39 +55,40 @@
 
 <script setup lang="ts">
 import { GAMES } from 'src/const/games';
-import {GameHighScoreDto, HighScoreDto, ScoreService} from 'src/shared-services/score.service';
+import {GameHighScoreDto, ScoreService} from 'src/shared-services/score.service';
 import { ref, onMounted, Ref } from 'vue';
 import { useQuasar } from 'quasar';
 import {useI18n} from "vue-i18n";
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+
 
 const { t } = useI18n()
 const rows: Ref<any[]> = ref([])
 
 onMounted(async () => {
   const highscores = await new ScoreService().fetchHighscores();
-  Object.keys(highscores).filter(nameOfTheGame => GAMES.indexOf(nameOfTheGame) > -1).forEach(nameOfTheGame => {
-    const dto = (highscores![nameOfTheGame] as GameHighScoreDto);
-    ['easy', 'normal', 'hard'].forEach((difficulty: string) => {
-      if (dto[difficulty as keyof GameHighScoreDto]) {
-        rows.value.push({
-          nameOfTheGame,
-          difficulty,
-          ...dto[difficulty as keyof GameHighScoreDto]
-        })
-      }
+  highscores.scores.forEach(s => {
+    rows.value.push({
+      nameOfTheGame: t(s.nameOfTheGame),
+      difficulty: t(s.difficulty),
+      score: s.score,
+      date: s.date,
+      yourScore: s.yourScore,
+      playerName: s.playerName,
+      isYou: s.isYou,
+      sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty)
     })
   })
-  rows.value.forEach(r => {
-    r.nameOfTheGame = t(r.nameOfTheGame)
-    r.nameOfTheGame = t(r.difficulty)
+  rows.value.sort((a,b) => {
+    const byName = a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase())
+    const byDiff = a.sortDiff < b.sortDiff ? -1 : 1
+    return byName !== 0 ? byName : byDiff
   })
-  rows.value.sort((a,b) => a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase()))
 });
 
 const columns = ref([
   {
-    nameOfTheGame: 'nameOfTheGame',
+    name: 'nameOfTheGame',
     required: true,
     label: 'Übung',
     align: 'left',

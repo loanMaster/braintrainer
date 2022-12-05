@@ -1,84 +1,112 @@
 <template>
-  <div class="gradient flex-1 column">
-    <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
-      <q-toolbar-title>Your scores</q-toolbar-title>
-    </q-toolbar>
-    <div class="flex-1 relative-position">
-      <LoadingIndicator :showing="rows.length === 0" />
-      <q-table
-        v-if="rows.length > 0"
-        class="q-ma-md"
-        :grid="$q.screen.xs"
-        :rows="rows"
-        column-sort-order="da"
-        table-header-class="bg-orange-2"
-        :columns="columns"
-        :pagination="{ rowsPerPage: 0 }"
-      >
-        <template v-slot:item="props">
-          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
-            <q-card>
-              <q-card-section class="text-h6 bg-orange-2">
-                {{ props.row.nameOfTheGame }}
-              </q-card-section>
-              <q-separator />
-              <q-card-section class="column">
-                <div class="row justify-between">
-                  <div>Schwierigkeit</div>
-                  <div>{{ props.row.difficulty }}</div>
-                </div>
-                <div class="row justify-between">
-                  <div>Bewertung</div>
-                  <div>{{ props.row.score }}</div>
-                </div>
-                <div class="row justify-between">
-                  <div>Sterne</div>
-                  <div>{{ props.row.stars }}</div>
-                </div>
-                <div class="row justify-between">
-                  <div>Deine Punkte</div>
-                  <div>{{ props.row.percentile }}</div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </div>
-        </template>
-      </q-table>
-    </div>
+  <div class="flex-1 relative-position">
+    <LoadingIndicator :showing="showLoadingIndicator" />
+    <q-table
+      v-if="!showLoadingIndicator"
+      class="q-ma-md"
+      :grid="$q.screen.xs"
+      :rows="rows"
+      column-sort-order="da"
+      table-header-class="bg-orange-2"
+      :columns="columns"
+      :pagination="{ rowsPerPage: 0 }"
+    >
+      <template v-slot:header="props">
+        <q-tr :props="props">
+          <q-th auto-width />
+          <q-th
+            v-for="col in props.cols"
+            :key="col.name"
+            :props="props"
+          >
+            {{ col.label }}
+          </q-th>
+        </q-tr>
+      </template>
+
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td auto-width>
+            <q-btn size="md" color="primary"  dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
+            <q-btn size="md" color="primary"  dense @click="showProgress(props)" :icon="'assessment'" class="q-ml-sm"/>
+          </q-td>
+          <q-td
+            v-for="col in props.cols"
+            :key="col.name"
+            :props="props"
+          >
+            {{ col.value }}
+          </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+          <q-card>
+            <q-card-section class="text-h6 bg-orange-2">
+              {{ props.row.nameOfTheGame }}
+            </q-card-section>
+            <q-separator />
+            <q-card-section class="column">
+              <div class="row justify-between">
+                <div>Schwierigkeit</div>
+                <div>{{ props.row.difficulty }}</div>
+              </div>
+              <div class="row justify-between">
+                <div>Bewertung</div>
+                <div>{{ props.row.score }}</div>
+              </div>
+              <div class="row justify-between">
+                <div>Sterne</div>
+                <div>{{ props.row.stars }}</div>
+              </div>
+              <div class="row justify-between">
+                <div>Deine Punkte</div>
+                <div>{{ props.row.percentile }}</div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+      </template>
+    </q-table>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { GAMES } from 'src/const/games';
   import {ScoreService} from 'src/shared-services/score.service';
   import { ref, onMounted, Ref } from 'vue';
   import { useQuasar } from 'quasar';
   import {useI18n} from "vue-i18n";
   import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+  import {useRouter} from "vue-router";
 
   const { t } = useI18n()
   const rows: Ref<any[]> = ref([])
+  const showLoadingIndicator = ref(false)
+  const router = useRouter()
 
   onMounted(async () => {
+    showLoadingIndicator.value = true
     const percentiles = await new ScoreService().fetchPlayerScores();
-    Object.keys(percentiles).filter(k => GAMES.indexOf(k) > -1).forEach(nameOfTheGame => {
-      ['easy', 'normal', 'hard'].forEach((difficulty: string) => {
-        const dto = percentiles[nameOfTheGame];
-        if (dto[difficulty as keyof typeof dto]) {
-          rows.value.push({
-            nameOfTheGame,
-            difficulty,
-            ...dto[difficulty as keyof typeof dto]
-          })
-        }
+    showLoadingIndicator.value = false
+    percentiles.scores.forEach(s => {
+      rows.value.push({
+        difficultyOri: s.difficulty,
+        nameOfTheGameOri: s.nameOfTheGame,
+        nameOfTheGame: t(s.nameOfTheGame),
+        difficulty: t(s.difficulty),
+        score: s.score,
+        starts: Array(3).fill('★').join(''), // TODO
+        date: s.date,
+        percentile: s.percentile,
+        sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty)
       })
     })
-    rows.value.forEach(r => {
-      r.nameOfTheGame = t(r.nameOfTheGame)
-      r.difficulty = t(r.difficulty)
-      r.stars = Array(3).fill('★').join('') // TODO
+    rows.value.sort((a,b) => {
+      const byName = a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase())
+      const byDiff = a.sortDiff < b.sortDiff ? -1 : 1
+      return byName !== 0 ? byName : byDiff
     })
-    rows.value.sort((a,b) => a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase()))
   });
 
   const columns = ref([
@@ -93,8 +121,17 @@
     { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
     { name: 'score', label: 'Bewertung', field: 'score',  sortable: true },
     { name: 'stars', label: 'Sterne', field: 'stars',  sortable: true },
-    { name: 'percentile', label: 'Besser als x%', field: 'percentile', format: (val: number) => `${val}%` }
+    { name: 'percentile', label: 'Besser als % der User', field: 'percentile', format: (val: number) => `${val}%` }
   ])
+
+  function showProgress (props: any) {
+    router.push({ name: 'playerprogress', params: { game: props.row.nameOfTheGameOri, difficulty: props.row.difficultyOri } })
+  }
+
+  function play (props: any) {
+    router.push({ name: props.row.nameOfTheGameOri, params: { game: props.row.nameOfTheGameOri, difficulty: props.row.difficultyOri } })
+  }
+
 </script>
 
 <style>

@@ -17,6 +17,8 @@ import HighscoresView from 'src/components/highscores/HighscoresView.vue';
 import ExerciseView from 'src/components/exercises/ExerciseView.vue';
 import DocumentationView from 'src/components/documentation/DocumentationView.vue';
 import PlayerScoresView from 'src/components/player-scores/PlayerScoresView.vue';
+import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.vue';
+import PlayerProgressView from 'src/components/player-scores/PlayerProgressView.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
 
@@ -42,7 +44,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: ':game(remembernumbers)',
-                name: 'rememberNumbers',
+                name: 'RememberNumbers',
                 component: RememberNumbers,
               },
               {
@@ -67,7 +69,7 @@ const routes: RouteRecordRaw[] = [
               },
               {
                 path: ':game(spellbackwards)',
-                name: 'SpellBackwards',
+                name: 'spellbackwards',
                 component: SpellBackwards,
               },
               {
@@ -116,13 +118,25 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'documentation',
-        name: 'DocumentationView',
+        name: 'documentation',
         component: DocumentationView,
       },
       {
         path: 'player-scores',
-        name: 'PlayerScores',
-        component: PlayerScoresView,
+        name: '',
+        component: PlayerScoresLayout,
+        children: [
+          {
+            path: '',
+            name: 'playerscores',
+            component: PlayerScoresView,
+          },
+          {
+            path: ':game/:difficulty',
+            name: 'playerprogress',
+            component: PlayerProgressView,
+          }
+        ]
       },
     ],
   },

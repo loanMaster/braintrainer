@@ -1,46 +1,45 @@
 import { useAppStore } from 'stores/app-store';
 
+export interface Player {
+  name: string;
+  scores: Score[];
+  scoreHistory: Score[]
+}
+
+export interface Score {
+  nameOfTheGame: string;
+  difficulty: string;
+  date: number;
+  score: number;
+}
+
+export interface PercentileScore {
+  nameOfTheGame: string;
+  difficulty: string;
+  date: number;
+  score: number;
+  percentile: number;
+}
+
+export interface PlayerPercentiles {
+  scores: PercentileScore[];
+  scoreHistory: Score[];
+}
+
 export interface Score {
   easy: number;
   normal: number;
   hard: number;
 }
 
-export interface Scores {
-  [key: string]: Score;
-}
-
-export interface PlayerPercentiles {
-  [key: string]: Percentiles;
-}
-
-export interface Percentiles {
-  easy: Percentile;
-  normal: Percentile;
-  hard: Percentile;
-}
-
-export interface Percentile {
-  score: number;
-  percentile: number;
-}
-
 export interface HighScoreDto {
+  difficulty: string;
+  nameOfTheGame: string;
   playerName: string;
   score: number;
   date: number;
   isYou: boolean;
-  yourScore: number;
-}
-
-export interface GameHighScoreDto {
-  easy?: HighScoreDto;
-  normal?: HighScoreDto;
-  hard?: HighScoreDto;
-}
-
-export interface HighScoresDto {
-  [key: string]: GameHighScoreDto;
+  yourScore: number | undefined;
 }
 
 export interface ScoreUpdate {
@@ -89,7 +88,7 @@ export class ScoreService {
     return response.json();
   }
 
-  async fetchHighscores(): Promise<HighScoresDto> {
+  async fetchHighscores(): Promise<{ scores: HighScoreDto[] }> {
     const response = await fetch(this.serverPath + '/player/highscores', {
       ...this.getStandardRequestInit(),
       method: 'POST',
@@ -99,13 +98,17 @@ export class ScoreService {
   }
 
   async fetchPlayerScores(): Promise<PlayerPercentiles> {
-    const response = await fetch(
-      this.serverPath + `/player/${this.store.player.id}/score-percentiles`,
-      {
-        ...this.getStandardRequestInit(),
-        method: 'GET',
-      }
-    );
-    return response.json();
+    if (!this.store.playerScore) {
+      const response = await fetch(
+        this.serverPath + `/player/${this.store.player.id}/score-percentiles`,
+        {
+          ...this.getStandardRequestInit(),
+          method: 'GET',
+        }
+      );
+      const playerScore = await response.json();
+      this.store.$patch({ playerScore })
+    }
+    return this.store.playerScore!
   }
 }
