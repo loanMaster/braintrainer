@@ -7,8 +7,9 @@
         :text="store.exercise.audioState.tag || '...'"
       />
     </div>
+    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal"/>
     <div style="flex: 2">
-      <div class="text-h5 q-mb-md row justify-center">
+      <div class="text-h5 q-my-md row justify-center">
         {{ whoIs }}
       </div>
       <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm">
@@ -27,13 +28,14 @@
   <SolutionBanner
     :show="revealed"
     :solution="solution"
-    @click="containerClicked"
+    @confirmed="onSolutionConfirmed"
   />
 </template>
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
+import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
 import { Sound, SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
@@ -50,7 +52,7 @@ const {
   route,
   store,
   inputDisabled,
-  containerClicked,
+  onSolutionConfirmed,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
@@ -90,6 +92,7 @@ const relations = [
 let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
 const character = ref(male_names[0]);
+const countdownTimer = ref()
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -115,6 +118,8 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
+  countdownTimer.value.reset()
+
   const task = new RelativesService().createRelationshipTree(
     difficulty.value as string
   );
@@ -163,6 +168,7 @@ async function nextQuestion() {
 
   inputDisabled.value = false;
   await playAudio();
+  countdownTimer.value.start()
 }
 
 async function playAudio() {
@@ -174,6 +180,7 @@ function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
   if (currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1) {
     inputDisabled.value = true;
+    countdownTimer.value.stop()
     store.$patch((store) => store.exercise.correctAnswers++);
     new TweenService().fadeOut(coreExercise.value);
     new SoundService().playSuccess();
@@ -186,6 +193,7 @@ function selectWord(idx: number, $event: Event) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
+  countdownTimer.value.stop()
 }
 
 const whoIs = computed(() => {

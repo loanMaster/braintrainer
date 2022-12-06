@@ -1,17 +1,19 @@
 <template>
   <input :value="previousResult" disabled class="text-center text-h6" />
-  <div ref="numpad" class="column relative-position">
-    <NumPadWithDisplay
+  <div ref="numpadContainer" class="column relative-position">
+    <NumPadWithDisplay ref="numpad"
       :input-disabled="inputDisabled"
       :input-value="inputValue"
       @button-click="onNumberEntered"
+      :totalTime="10000"
+      @timeout="reveal"
     />
   </div>
   <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="expectedResult"
-    @click="containerClicked"
+    @confirmed="onSolutionConfirmed"
   />
 </template>
 
@@ -38,7 +40,7 @@ const {
   destroy,
   store,
   inputDisabled,
-  containerClicked,
+  onSolutionConfirmed,
   difficulty,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
@@ -48,6 +50,7 @@ const {
 
 const currentIndex = ref(0);
 const inputValue = ref('');
+const numpadContainer = ref();
 const numpad = ref();
 const showLoadingIndicator = ref(false);
 
@@ -91,7 +94,7 @@ onMounted(() => {
       onNumberEntered(number);
     }
   });
-  new TweenService().setDisplay(numpad.value, 'none');
+  new TweenService().setDisplay(numpadContainer.value, 'none');
 });
 
 async function fetchNextExercise(current?: number) {
@@ -118,8 +121,9 @@ async function nextQuestion() {
     return;
   }
   if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(numpad.value);
+    await new TweenService().fadeOut(numpadContainer.value);
   }
+  numpad.value.resetTimer()
   previousResult.value = expectedResult.value;
 
   showLoadingIndicator.value = true;
@@ -140,11 +144,12 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
 
   if (store.exercise.currentQuestion === 1) {
-    new TweenService().setDisplay(numpad.value, 'flex');
+    new TweenService().setDisplay(numpadContainer.value, 'flex');
   }
-  await new TweenService().fadeIn(numpad.value);
+  await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
   await playAudio();
+  numpad.value.startTimer()
 }
 
 async function playAudio() {
@@ -167,18 +172,20 @@ async function onNumberEntered(num: number) {
     );
     if (currentIndex.value === String(expectedResult.value).length) {
       inputDisabled.value = true;
+      numpad.value.stopTimer()
       store.$patch((store) => store.exercise.correctAnswers++);
       new SoundService().playSuccess();
       await exerciseUtils.wait(150);
       nextQuestion();
     }
   } else {
-    exerciseUtils.handleMistake(reveal, numpad);
+    exerciseUtils.handleMistake(reveal, numpadContainer);
   }
 }
 
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
+  numpad.value.stopTimer()
 }
 </script>

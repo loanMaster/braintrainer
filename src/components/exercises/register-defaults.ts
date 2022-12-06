@@ -57,7 +57,7 @@ export function createExerciseContext({
     });
   });
 
-  function containerClicked() {
+  function onSolutionConfirmed() {
     if (revealed.value) {
       nextQuestionCb();
     }
@@ -71,7 +71,7 @@ export function createExerciseContext({
     store,
     $q,
     route,
-    containerClicked,
+    onSolutionConfirmed,
     difficulty,
     t,
   };

@@ -5,6 +5,7 @@
       :text="store.exercise.audioState.tag"
       :transparentText="!store.exercise.audioState.playing"
     />
+    <CountdownTimer :totalTime="25000" ref="countdownTimer" @timeout="reveal" class="q-mt-md"/>
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -24,13 +25,14 @@
   <SolutionBanner
     :show="revealed"
     :solution="getMatchingAnagram()"
-    @click="containerClicked"
+    @confirmed="onSolutionConfirmed"
   />
 </template>
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
+import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
@@ -54,7 +56,7 @@ const {
   destroy,
   store,
   inputDisabled,
-  containerClicked,
+  onSolutionConfirmed,
   difficulty,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
@@ -66,6 +68,7 @@ const currentIndex = ref(0);
 const inputValue = ref('');
 const coreExercise = ref();
 const letterButtons = ref();
+const countdownTimer = ref()
 const showLoadingIndicator = ref(false);
 let nextAnagrams: ReplaySubject<string[]>;
 let anagrams: string[] = [];
@@ -107,6 +110,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
+  countdownTimer.value.reset()
   if (alphabet.length === 0) {
     alphabet = await loadAlphabet;
   }
@@ -129,6 +133,7 @@ async function nextQuestion() {
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
   await playAudio();
+  countdownTimer.value.start()
 }
 
 function isAnagram(permutation: string[]): boolean {
@@ -199,6 +204,7 @@ async function onLetterEntered(letter: string) {
     const anagram = getMatchingAnagram();
     if (currentIndex.value >= anagram.length) {
       inputDisabled.value = true;
+      countdownTimer.value.stop()
       new SoundService().playSuccess();
       store.$patch((store) => store.exercise.correctAnswers++);
       await exerciseUtils.wait(150);
@@ -234,6 +240,7 @@ function displayLetter(letter: string, hasError: boolean) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
+  countdownTimer.value.stop()
 }
 
 function getMatchingAnagram(): string {

@@ -28,8 +28,8 @@ defineProps({
   solution: [String, Number],
   show: Boolean,
 });
-const emits = defineEmits(['clicked']);
+const emits = defineEmits(['confirmed']);
 function onClicked() {
-  emits('clicked');
+  emits('confirmed');
 }
 </script>

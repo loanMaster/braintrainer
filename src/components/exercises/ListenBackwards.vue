@@ -14,7 +14,7 @@
   <SolutionBanner
     :show="revealed"
     :solution="solution"
-    @click="containerClicked"
+    @confirmed="onSolutionConfirmed"
   />
 </template>
 
@@ -41,7 +41,7 @@ const {
   destroy,
   store,
   inputDisabled,
-  containerClicked,
+  onSolutionConfirmed,
   route,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),

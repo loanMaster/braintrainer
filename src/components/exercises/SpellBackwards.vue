@@ -1,5 +1,6 @@
 <template>
-  <div ref="coreExercise" class="column">
+  <div ref="coreExercise" class="column items-center">
+    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal"/>
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -19,13 +20,14 @@
   <SolutionBanner
     :show="revealed"
     :solution="solution"
-    @click="containerClicked"
+    @confirmed="onSolutionConfirmed"
   />
 </template>
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
+import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
@@ -48,7 +50,7 @@ const {
   route,
   store,
   inputDisabled,
-  containerClicked,
+  onSolutionConfirmed,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
@@ -66,6 +68,7 @@ let currentAudio: Ref<HomophoneAudioResponse | undefined> = ref();
 
 const coreExercise = ref();
 const letterButtons = ref();
+const countdownTimer = ref();
 
 onBeforeMount(() => {
   const numberOfQuestions = difficulty.value === 'easy' ? 5 : 10;
@@ -107,6 +110,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
+  countdownTimer.value.reset()
   showLoadingIndicator.value = true;
   currentAudio.value = (await nextAudio
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
@@ -125,7 +129,8 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  playAudio();
+  await playAudio();
+  countdownTimer.value.start()
 }
 
 function updateButtonLabels() {
@@ -174,6 +179,7 @@ async function onLetterEntered(letter: string) {
     currentIndex--;
     if (currentIndex < 0) {
       inputDisabled.value = true;
+      countdownTimer.value.stop()
       new SoundService().playSuccess();
       await exerciseUtils.wait(150);
       store.$patch((store) => store.exercise.correctAnswers++);
@@ -209,6 +215,7 @@ function displayLetter(letter: string, hasError: boolean) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
+  countdownTimer.value.stop()
 }
 
 const solution = computed(() => {
