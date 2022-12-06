@@ -49,6 +49,12 @@
         />
         <q-space class="desktop-only" />
         <div>
+          <q-toggle
+            :modelValue="lightMode"
+            @update:modelValue="toggleDarkMode($event)"
+            checked-icon="light_mode"
+            unchecked-icon="dark_mode"
+          />
           <q-btn flat round dense icon="language" class="q-mr-xs" />
           <q-menu>
             <q-list dense style="min-width: 100px">
@@ -116,12 +122,23 @@
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
+import {colors, getCssVar, setCssVar, useQuasar} from 'quasar';
+import {setDarkMode} from "src/util/dark-model.toggle";
 const leftDrawerOpen = ref(false);
+
+const $q = useQuasar()
 
 onMounted(() => {
   leftDrawerOpen.value = false;
 });
+
+const lightMode = computed(() => {
+  return !$q.dark.isActive
+})
+
+function toggleDarkMode() {
+  setDarkMode($q, !$q.dark.isActive)
+}
 
 const i18n = useI18n();
 function toggleLeftDrawer() {
