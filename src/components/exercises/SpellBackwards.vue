@@ -5,7 +5,7 @@
       <WordDisplay
         :value="inputValue"
         :highlightIndex="currentIndex"
-        :highlightColor="highlightError ? 'red' : 'black'"
+        :highlightColor="highlightError ? 'red' : undefined"
       />
     </div>
     <div>

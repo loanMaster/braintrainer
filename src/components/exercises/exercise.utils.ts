@@ -1,10 +1,10 @@
 import { newExercise, useAppStore } from 'stores/app-store';
 import { getNameOfTheGame } from 'src/util/game.name.helper';
 import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
-import { NavService } from 'src/router/nav.service';
 import { SoundService } from 'src/shared-services/sound.service';
 import { Ref } from 'vue';
 import { TweenService } from 'src/shared-services/tween.service';
+import {router} from "src/router";
 
 export const exerciseUtils = {
   wait: (time: number) => new Promise((resolve) => setTimeout(resolve, time)),
@@ -14,9 +14,7 @@ export const exerciseUtils = {
     getNameOfTheGame(route.params.game as string),
   finishExercise: () => {
     useAppStore().finishExercise();
-    new NavService().navigateTo({
-      name: 'score-screen',
-    });
+    router.push({ name: 'score-screen' })
   },
   handleMistake: function (
     reveal: () => any,
@@ -57,9 +55,7 @@ export const exerciseUtils = {
     ) {
       await exerciseUtils.wait(200);
       await useAppStore().finishExercise();
-      new NavService().navigateTo({
-        name: 'score-screen',
-      });
+      await router.push({ name: 'score-screen' })
       return false;
     } else {
       useAppStore().$patch((store) => (store.exercise.strikes = 0));

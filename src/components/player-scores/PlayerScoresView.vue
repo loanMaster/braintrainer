@@ -10,7 +10,7 @@
       :pagination="{ rowsPerPage: 0 }"
     >
       <template v-slot:header="props">
-        <q-tr :props="props" class="bg-orange-2">
+        <q-tr :props="props">
           <q-th auto-width />
           <q-th
             v-for="col in props.cols"
@@ -81,11 +81,14 @@
   import {useI18n} from "vue-i18n";
   import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
   import {useRouter} from "vue-router";
+  import { formatScore } from 'src/util/format-number';
+  import {useAppStore} from "stores/app-store";
 
   const { t } = useI18n()
   const rows: Ref<any[]> = ref([])
   const showLoadingIndicator = ref(false)
   const router = useRouter()
+  const store = useAppStore()
 
   onMounted(async () => {
     showLoadingIndicator.value = true
@@ -121,9 +124,9 @@
       sortable: true
     },
     { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
-    { name: 'score', label: 'Bewertung', field: 'score',  sortable: true },
+    { name: 'score', label: 'Bewertung', field: 'score',  sortable: true, format: (val: number) => formatScore(val, store.language) },
     { name: 'stars', label: 'Sterne', field: 'stars',  sortable: true },
-    { name: 'percentile', label: 'Besser als % der User', field: 'percentile', format: (val: number) => `${val}%` }
+    { name: 'percentile', label: 'Top % der User', field: 'percentile', format: (val: number) => `${formatScore(val, store.language)}%` }
   ])
 
   function showProgress (props: any) {

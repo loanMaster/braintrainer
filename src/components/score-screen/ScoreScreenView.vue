@@ -9,7 +9,7 @@
       </q-card-section>
       <q-card-section>
         <div class="text-h3">
-          <StarsRating :rating="3"></StarsRating>
+          <StarsRating :rating="store.exercise.rating"></StarsRating>
         </div>
       </q-card-section>
       <div class="row-sm column-xs justify-center no-wrap">
@@ -29,13 +29,13 @@
             </div>
             <div class="row justify-between">
               <span>Benötigte Zeit</span>
-              <span>{{ store.exercise.duration }} Sekunden</span>
+              <span>{{ formatScore(store.exercise.duration, store.language) }} Sekunden</span>
             </div>
           </div>
           <div class="q-mt-sm" >
             <div class="text-left">
               <div v-if="updateScoreResponse" class="q-mb-sm">
-                Besser als {{ percentile }}% der Spieler
+                Du bist unter den Top {{ percentile }}% der Spieler
               </div>
               <div
                 class="text-center animated text-h6 animate bounceIn"
@@ -54,22 +54,23 @@
             <q-knob
               ref="knob"
               :model-value="score"
-              show-value
               readonly
+              show-value
               instant-feedback
               size="lg"
               :thickness="0.22"
-              color="lime"
+              color="amber-4"
               font-size="2rem"
-              track-color="lime-3"
-              class="text-lime q-ma-md flex-auto full-width no-pointer-events"
-            />
+              track-color="amber-1"
+              class="text-amber-4 q-ma-md flex-auto full-width no-pointer-events"
+            ><span class="pink-text-shadow">{{ formatScore(score, store.language) }}</span></q-knob>
           </div>
         </div>
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
           <div class="text-h5">Fortschritt</div>
-          <ProgressDiagram :difficulty="store.exercise.difficulty" :nameOfTheGame="store.exercise.nameOfTheGame"/>
+          <q-skeleton square class="flex-1" v-if="showLoadingIndicator"/>
+          <ProgressDiagram v-if="!showLoadingIndicator" :difficulty="store.exercise.difficulty" :nameOfTheGame="store.exercise.nameOfTheGame"/>
         </div>
       </div>
       <q-card-section>
@@ -97,24 +98,27 @@ import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue'
 import { SoundService } from 'src/shared-services/sound.service';
 import { DailyTrainingService } from 'src/shared-services/daily-training.service';
 import { TweenService } from 'src/shared-services/tween.service';
-import { NavService } from 'src/router/nav.service';
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
 import { newExercise, useAppStore } from 'src/stores/app-store';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
+import {formatScore} from "src/util/format-number";
+import {useRouter} from "vue-router";
 
 const store = useAppStore();
 const $q = useQuasar();
+const router = useRouter()
 const { t } = useI18n();
 const knob = ref();
 const score = ref(0);
 const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null);
+const showLoadingIndicator = ref(true)
 
 const percentile = computed(() =>
   updateScoreResponse.value
-    ? Math.floor(updateScoreResponse.value.percentile * 100)
+    ? formatScore(updateScoreResponse.value.percentile * 100, store.language)
     : 0
 );
 
@@ -157,6 +161,7 @@ onMounted(async () => {
       isNewHighScore: false,
     };
   }
+  showLoadingIndicator.value = false
   const stop = new Subject<void>();
   setTimeout(() => {
     interval(20)
@@ -174,11 +179,13 @@ onMounted(async () => {
 });
 
 function playAgain() {
-  new NavService().navigateTo({
-    name: 'play',
-    nameOfTheGame: store.exercise.nameOfTheGame.toLowerCase(),
-    difficulty: store.exercise.difficulty,
-  });
+  router.push({
+    name: store.exercise.nameOfTheGame.toLowerCase(),
+    params: {
+      game: store.exercise.nameOfTheGame.toLowerCase(),
+      difficulty: store.exercise.difficulty,
+    }
+  })
 }
 
 const dailyTrainingActive = computed(() => store.dailyTraining.active);
@@ -186,14 +193,10 @@ const dailyTrainingActive = computed(() => store.dailyTraining.active);
 function hasNextDailyExercise() {
   return new DailyTrainingService().hasNext();
 }
-
-function continueDailyTraining() {
-  const { nameOfTheGame, difficulty } =
-    new DailyTrainingService().getNextExercise();
-  new NavService().navigateTo({
-    name: 'play',
-    nameOfTheGame: nameOfTheGame.toLowerCase(),
-    difficulty,
-  });
-}
 </script>
+
+<style scoped>
+  .pink-text-shadow {
+    text-shadow: 1px 1px 2px pink;
+  }
+</style>

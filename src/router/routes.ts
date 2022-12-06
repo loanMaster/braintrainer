@@ -44,7 +44,7 @@ const routes: RouteRecordRaw[] = [
             children: [
               {
                 path: ':game(remembernumbers)',
-                name: 'RememberNumbers',
+                name: 'remembernumbers',
                 component: RememberNumbers,
               },
               {
@@ -108,7 +108,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'score-screen',
-        name: 'scorescreen',
+        name: 'score-screen',
         component: ScoreScreenView,
       },
       {

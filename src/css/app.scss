@@ -1,4 +1,6 @@
 // app global css in SCSS form
+
+
 .flex-auto {
   flex: auto;
 }
@@ -43,3 +45,15 @@
   justify-content: center;
   align-items: center;
 }
+
+th {
+  background-color: $orange-2;
+}
+
+
+.body--dark {
+  th {
+    background-color: $blue-grey-10;
+  }
+}
+

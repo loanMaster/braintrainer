@@ -11,7 +11,7 @@
         >
           <q-card class="flex-1 cursor-pointer zoom-on-hover text-center">
             <q-card-section class="text-bold"
-              :class="{ 'bg-amber-1': difficulty === 'easy', 'bg-amber-2': difficulty === 'normal', 'bg-amber-3': difficulty === 'hard' }">
+              :class="{ 'bg-easy': difficulty === 'easy', 'bg-normal': difficulty === 'normal', 'bg-hard': difficulty === 'hard' }">
               {{ t(difficulty) }}
             </q-card-section>
             <q-card-section>
@@ -32,7 +32,6 @@
 import { getNameOfTheGame } from 'src/util/game.name.helper';
 import StarsRating from 'src/components/shared/StarsRating.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import { NavService } from 'src/router/nav.service';
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
@@ -87,16 +86,40 @@ async function selectDifficulty(difficulty: string) {
 }
 
 function startGame() {
-  new NavService().navigateTo({
-    name: 'play',
-    nameOfTheGame: route.params.game as string,
-    difficulty: selectedDifficulty.value,
+  router.push({
+    name: route.params.game as string,
+    params: {
+      game: route.params.game as string,
+      difficulty: selectedDifficulty.value,
+    }
   });
 }
 
 function back() {
-    new NavService().navigateTo({
-      name: 'play'
-    });
+  router.push({ name: 'select-exercise' })
 }
 </script>
+
+<style scoped lang="scss">
+  .bg-easy {
+    background-color: $amber-1
+  }
+  .bg-normal {
+    background-color: $amber-2
+  }
+  .bg-hard {
+    background-color: $amber-3
+  }
+
+  .body--dark {
+    .bg-easy {
+      background-color: $blue-grey-6
+    }
+    .bg-normal {
+      background-color: $blue-grey-8
+    }
+    .bg-hard {
+      background-color: $blue-grey-9
+    }
+  }
+</style>

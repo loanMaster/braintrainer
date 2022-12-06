@@ -71,7 +71,7 @@ import {
   IntroductionResponse,
 } from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
-import { padNumber } from 'src/util/padNumber';
+import { padNumber } from 'src/util/format-number';
 
 const {
   soundService,

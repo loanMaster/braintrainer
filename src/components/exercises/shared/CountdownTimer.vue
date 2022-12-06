@@ -20,7 +20,7 @@
   import {filter, takeUntil} from "rxjs/operators";
   import {useAppStore} from "stores/app-store";
   import {formatNumber} from "chart.js/helpers";
-  import {padNumber} from "src/util/padNumber";
+  import {padNumber} from "src/util/format-number";
 
   const destroy = new Subject<void>();
   const store = useAppStore()

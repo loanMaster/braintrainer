@@ -10,7 +10,7 @@
             :key="exercise"
           >
             <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-              <q-card-section class="bg-blue-2 text-bold">
+              <q-card-section class="words-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
               <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
@@ -27,7 +27,7 @@
             :key="exercise"
           >
             <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-              <q-card-section class="bg-green-2 text-bold">
+              <q-card-section class="math-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
               <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
@@ -48,7 +48,7 @@
             :key="exercise"
           >
             <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-              <q-card-section class="bg-orange-2 text-bold">
+              <q-card-section class="memory-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
               <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
@@ -62,7 +62,7 @@
             :key="exercise"
           >
             <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
-              <q-card-section class="bg-orange-2 text-bold">
+              <q-card-section class="memory-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
               <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
@@ -77,15 +77,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
-import { NavService } from 'src/router/nav.service';
-import { DailyTrainingService } from 'src/shared-services/daily-training.service';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { showEnterUsernameDialog } from 'src/util/show-enter-username-dialog';
+import {useRouter} from "vue-router";
 
-const showEnterNameModal = ref(false);
 const $q = useQuasar();
 const { t } = useI18n();
+const router = useRouter()
 
 onMounted(() => useAppStore().finishDailyTraining());
 
@@ -103,56 +101,39 @@ const mathExercises = ref([
 ]);
 
 function selectExercise(game: string) {
-  new NavService().navigateTo({
+  router.push({
     name: 'select-difficulty',
-    nameOfTheGame: game.toLowerCase(),
-  });
-}
-
-function getMedals(game: string): number {
-  let medals = 0;
-  for (const diff of ['easy', 'normal', 'hard']) {
-    if (useAppStore().player.ratings[game]?.[diff] === 3) {
-      medals++;
+    params: {
+      game: game.toLowerCase(),
     }
-  }
-  return medals;
-}
-
-function startDailyTrainingNow() {
-  useAppStore().startDailyTraining();
-  const { nameOfTheGame, difficulty } =
-    new DailyTrainingService().getNextExercise();
-  new NavService().navigateTo({
-    name: 'play',
-    nameOfTheGame: nameOfTheGame.toLowerCase(),
-    difficulty,
   });
-}
-
-async function startDailyTraining() {
-  if (useAppStore().player.name === '') {
-    const name = await showEnterUsernameDialog($q, t);
-    if (name) {
-      useAppStore().addUser(name);
-      startDailyTrainingNow();
-    }
-  } else {
-    startDailyTrainingNow();
-  }
-}
-
-function onNameEntered(name: string) {
-  if (name) {
-    useAppStore().setName(name);
-    showEnterNameModal.value = false;
-    startDailyTraining();
-  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'node_modules/quasar/dist/quasar.sass';
+
+.math-bg {
+  background-color: $green-2;
+}
+.words-bg {
+  background-color: $blue-2;
+}
+.memory-bg {
+  background-color: $orange-2;
+}
+
+.body--dark {
+  .math-bg {
+    background-color: $brown-10;
+  }
+  .words-bg {
+    background-color: $indigo-10;
+  }
+  .memory-bg {
+    background-color: $pink-10;
+  }
+}
 
 .exercise-block {
   @extend .q-pa-md;

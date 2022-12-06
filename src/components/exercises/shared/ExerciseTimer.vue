@@ -7,7 +7,7 @@
 import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useAppStore } from 'src/stores/app-store';
 import { Subject, takeUntil, interval } from 'rxjs';
-import { padNumber } from 'src/util/padNumber';
+import { padNumber } from 'src/util/format-number';
 
 const store = useAppStore();
 const destroy = new Subject<void>();

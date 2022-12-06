@@ -4,9 +4,8 @@
       <q-toolbar-title>🎉 Highscores</q-toolbar-title>
     </q-toolbar>
     <div class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg">
-      <LoadingIndicator :showing="rows.length === 0" />
       <q-table
-        v-if="rows.length > 0"
+        v-if="!showLoadingIndicator"
         :grid="$q.screen.xs"
         :rows="rows"
         column-sort-order="da"
@@ -15,7 +14,7 @@
         :pagination="{ rowsPerPage: 0 }"
       >
         <template v-slot:header="props">
-          <q-tr :props="props" class="bg-orange-2">
+          <q-tr :props="props">
             <q-th auto-width />
             <q-th
               v-for="col in props.cols"
@@ -76,6 +75,7 @@
           </div>
         </template>
       </q-table>
+      <LoadingIndicator :showing="showLoadingIndicator" />
     </div>
   </div>
 </template>
@@ -88,11 +88,15 @@ import { useQuasar } from 'quasar';
 import {useI18n} from "vue-i18n";
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { useRouter } from 'vue-router';
+import {formatScore} from "src/util/format-number";
+import {useAppStore} from "stores/app-store";
 
 
 const { t } = useI18n()
 const rows: Ref<any[]> = ref([])
 const router = useRouter()
+const store = useAppStore()
+const showLoadingIndicator = ref(true)
 
 onMounted(async () => {
   const highscores = await new ScoreService().fetchHighscores();
@@ -115,6 +119,7 @@ onMounted(async () => {
     const byDiff = a.sortDiff < b.sortDiff ? -1 : 1
     return byName !== 0 ? byName : byDiff
   })
+  showLoadingIndicator.value = false
 });
 
 const columns = ref([
@@ -128,9 +133,9 @@ const columns = ref([
   },
   { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
   { name: 'playerName', label: 'Spieler', field: 'playerName', sortable: true },
-  { name: 'score', label: 'Bewertung', field: 'score' },
+  { name: 'score', label: 'Bewertung', field: 'score', format: (val: number) => formatScore(val, store.language) },
   { name: 'date', label: 'Datum', field: 'date', format: (val: number) => `${new Date(val).toDateString()}` },
-  { name: 'yourScore', label: 'Deine Bewertung', field: 'yourScore', format: (val: number | undefined) => val || '-' },
+  { name: 'yourScore', label: 'Deine Bewertung', field: 'yourScore', format: (val: number | undefined) => val === undefined ? '-' : formatScore(val, store.language) },
 ])
 
 function play (props: any) {

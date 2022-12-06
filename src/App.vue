@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar';
+import { useQuasar, setCssVar } from 'quasar';
 import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { NavigationGuardNext, useRoute, useRouter } from 'vue-router';
@@ -53,6 +53,8 @@ store.$onAction(({ name, after }) => {
         );
       }
     }
+
+    $q.dark.set(true)
 
     if (name === 'pause' && store.isPaused) {
       $q.dialog({

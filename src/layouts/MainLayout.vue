@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf" class="column">
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-primary">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title class="non-selectable">
