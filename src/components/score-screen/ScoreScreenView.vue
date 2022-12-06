@@ -3,7 +3,7 @@
     class="column items-center justify-center non-selectable q-ma-sm-lg q-ma-xs-none"
   >
     <MovingColorsBackground/>
-    <q-card class="exercise-block max-width-sm q-pa-lg full-width text-center" style="background-color: #FFFFFF77;">
+    <q-card class="max-width-sm q-pa-lg full-width text-center semi-transparent-background">
       <q-card-section>
         <div class="text-h4">{{ $t('Exercise finished') }}</div>
       </q-card-section>
@@ -199,4 +199,13 @@ function hasNextDailyExercise() {
   .pink-text-shadow {
     text-shadow: 1px 1px 2px pink;
   }
+
+  .semi-transparent-background {
+    background-color: #FFFFFF77;
+  }
+
+  .body--dark .semi-transparent-background {
+    background-color: #FFFFFF11;
+  }
 </style>
+

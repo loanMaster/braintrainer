@@ -3,16 +3,25 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar, setCssVar } from 'quasar';
+import { useQuasar, setCssVar, colors, getCssVar } from 'quasar';
 import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { NavigationGuardNext, useRoute, useRouter } from 'vue-router';
+import { onBeforeMount } from 'vue'
 
 const $q = useQuasar();
 const store = useAppStore();
 const i18n = useI18n();
 const router = useRouter();
 const route = useRoute();
+
+onBeforeMount(() => {
+  $q.dark.set(true)
+  const { lighten } = colors
+  setCssVar('primary', lighten(getCssVar('primary')!, -50))
+  setCssVar('secondary', lighten(getCssVar('secondary')!, -50))
+  setCssVar('accent', lighten(getCssVar('accent')!, -60))
+})
 
 const removeTrailingSlash = (path: string) => {
   return path.length > 1 && path.endsWith('/')
@@ -54,7 +63,6 @@ store.$onAction(({ name, after }) => {
       }
     }
 
-    $q.dark.set(true)
 
     if (name === 'pause' && store.isPaused) {
       $q.dialog({

@@ -1,6 +1,6 @@
 <template>
   <div class="gradient flex-1 column items-center">
-    <q-toolbar class="bg-accent text-white no-pointer-events non-selectable">
+    <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
       <q-toolbar-title>🎉 Highscores</q-toolbar-title>
     </q-toolbar>
     <div class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg">
@@ -150,5 +150,8 @@ function play (props: any) {
   }
   .gradient {
     background-image: linear-gradient(to bottom right, #FFFFAA55, #AAFFFF55);
+  }
+  .body--dark .gradient {
+    background-image: none;
   }
 </style>

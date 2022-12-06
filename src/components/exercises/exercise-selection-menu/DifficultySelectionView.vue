@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="q-mt-md">
-        <q-btn color="secondary" @click="back">Zurück</q-btn>
+        <q-btn color="accent" @click="back">Zurück</q-btn>
       </div>
     </div>
   </div>

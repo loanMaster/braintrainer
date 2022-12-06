@@ -1,5 +1,5 @@
 <template>
-  <q-footer class="bg-accent text-white no-pointer-events">
+  <q-footer class="bg-secondary text-white no-pointer-events">
     <q-toolbar class="justify-center">
       <ExerciseTimer />
     </q-toolbar>

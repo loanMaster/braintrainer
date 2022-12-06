@@ -19,11 +19,13 @@
   import {IAppState, useAppStore} from "stores/app-store";
   import {SubscriptionCallbackMutationPatchObject} from "pinia";
   import {useI18n} from "vue-i18n";
+  import {useQuasar} from "quasar";
   const showLoadingIndicator = ref(false)
 
   const chart = ref()
   let chartJs: Chart
   const { t } = useI18n()
+  const $q = useQuasar();
 
   const props = defineProps({
     nameOfTheGame: String,
@@ -56,6 +58,8 @@
       .filter(h => h.nameOfTheGame === props.nameOfTheGame && h.difficulty === props.difficulty)
       .map(h => h.score)
     Chart.register(...registerables);
+    const color = $q.dark.isActive ? 'white' : undefined;
+    Chart.defaults.color = color;
     chartJs = new Chart(chart.value, {
       type: 'bar',
       data: {
@@ -71,7 +75,7 @@
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            display: props.showLegend
+            display: props.showLegend,
           },
           tooltip: {
             enabled: false
@@ -81,14 +85,18 @@
           y: {
             beginAtZero: true,
             grid: {
-              display: false
+              drawOnChartArea: false,
+              display: true,
+              color: color,
             },
             max: 100,
             min: 0
           },
           x: {
             grid: {
-              display: false
+              drawOnChartArea: false,
+              display: true,
+              color: color,
             }
           }
         }

@@ -8,7 +8,7 @@
       class="my-button-wrapper"
     >
       <q-btn
-        :color="isSelected(idx) ? 'accent' : 'primary'"
+        :color="isSelected(idx) ? 'secondary' : 'primary'"
         class="transition-duration-md text-h5"
         :class="{ invisible: isSolved(idx) }"
         @click="buttonClick(idx, $event)"

@@ -146,4 +146,7 @@
   .gradient {
     background-image: linear-gradient(to bottom right, #FFFFAA55, #AAFFFF55);
   }
+  .body--dark .gradient {
+    background-image: none;
+  }
 </style>

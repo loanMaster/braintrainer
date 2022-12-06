@@ -15,7 +15,7 @@
             :style="{
               color: !store.exercise.audioState.playing
                 ? 'transparent'
-                : 'black',
+                : undefined,
             }"
             class="transition-duration-sm"
           >
