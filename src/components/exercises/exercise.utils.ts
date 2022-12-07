@@ -14,7 +14,7 @@ export const exerciseUtils = {
     getNameOfTheGame(route.params.game as string),
   finishExercise: () => {
     useAppStore().finishExercise();
-    router.push({ name: 'score-screen' })
+    router.push({ name: 'score-screen', params: { language: useAppStore().language } })
   },
   handleMistake: function (
     reveal: () => any,
@@ -55,7 +55,7 @@ export const exerciseUtils = {
     ) {
       await exerciseUtils.wait(200);
       await useAppStore().finishExercise();
-      await router.push({ name: 'score-screen' })
+      await router.push({ name: 'score-screen', params: { language: useAppStore().language } })
       return false;
     } else {
       useAppStore().$patch((store) => (store.exercise.strikes = 0));

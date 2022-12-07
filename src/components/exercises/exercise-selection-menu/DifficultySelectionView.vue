@@ -96,7 +96,7 @@ function startGame() {
 }
 
 function back() {
-  router.push({ name: 'select-exercise' })
+  router.push({ name: 'select-exercise', params: { language: useAppStore().language } })
 }
 </script>
 

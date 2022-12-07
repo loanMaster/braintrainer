@@ -96,7 +96,6 @@ import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackg
 import StarsRating from 'src/components/shared/StarsRating.vue'
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue'
 import { SoundService } from 'src/shared-services/sound.service';
-import { DailyTrainingService } from 'src/shared-services/daily-training.service';
 import { TweenService } from 'src/shared-services/tween.service';
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
 import { newExercise, useAppStore } from 'src/stores/app-store';
@@ -129,13 +128,6 @@ onBeforeMount(() => {
       store.exercise.rating = 4;
       store.exercise.score = 50;
     });
-  }
-
-  if (dailyTrainingActive.value && !hasNextDailyExercise()) {
-    $q.dialog({
-      title: '🎉 ' + t('Daily training finished'),
-    });
-    store.finishDailyTraining(); // show modal
   }
 });
 
@@ -184,15 +176,11 @@ function playAgain() {
     params: {
       game: store.exercise.nameOfTheGame.toLowerCase(),
       difficulty: store.exercise.difficulty,
+      language: useAppStore().language
     }
   })
 }
 
-const dailyTrainingActive = computed(() => store.dailyTraining.active);
-
-function hasNextDailyExercise() {
-  return new DailyTrainingService().hasNext();
-}
 </script>
 
 <style scoped>

@@ -59,8 +59,7 @@ export interface Ratings {
 export interface Player {
   id: string;
   name: string;
-  averageRatings: Ratings;
-  exerciseHistory: string[];
+  preferredTheme: string;
 }
 
 export interface Players {
@@ -119,6 +118,7 @@ const newPlayer = () => {
     averageRatings: {},
     ratings: {},
     exerciseHistory: [],
+    preferredTheme: 'light' // TODO use value from current mode
   };
 };
 
@@ -277,6 +277,12 @@ export const useAppStore = defineStore('main', {
     finishedPlayingSound(tag: string): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.tag = tag;
+    },
+    setThemePreference(theme: 'light' | 'dark') {
+      if (this.currentPlayerId) {
+        this.players[this.currentPlayerId].preferredTheme = theme;
+        storePlayers()
+      }
     }
   },
 });

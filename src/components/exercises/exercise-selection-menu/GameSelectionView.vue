@@ -105,6 +105,7 @@ function selectExercise(game: string) {
     name: 'select-difficulty',
     params: {
       game: game.toLowerCase(),
+      language: useAppStore().language
     }
   });
 }

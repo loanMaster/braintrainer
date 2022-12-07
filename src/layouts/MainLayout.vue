@@ -11,48 +11,49 @@
         </q-toolbar-title>
         <q-space class="desktop-only" />
 
-        <q-btn
-          flat
-          dense
-          no-wrap
-          no-caps
-          :label="$t('Play')"
-          :to="`${langPrefix}/play`"
-          class="q-ml-sm q-px-md desktop-only"
-        />
-        <q-btn
-          flat
-          dense
-          no-wrap
-          no-caps
-          :label="$t('Your Scores')"
-          :to="`${langPrefix}/player-scores`"
-          class="q-ml-sm q-px-md desktop-only"
-        />
-        <q-btn
-          flat
-          dense
-          no-wrap
-          no-caps
-          :label="$t('Documentation')"
-          :to="`${langPrefix}/documentation`"
-          class="q-ml-sm q-px-md desktop-only"
-        />
-        <q-btn
-          flat
-          dense
-          no-wrap
-          no-caps
-          :label="$t('Highscores')"
-          :to="`${langPrefix}/highscores`"
-          class="q-ml-sm q-px-md desktop-only"
-        />
+        <router-link :to="{ name: 'select-exercise', params: { language: store.language } }">
+          <q-btn flat dense no-wrap no-caps
+                :label="$t('Play')"
+                class="text-white q-px-sm"
+          />
+        </router-link>
+
+        <router-link :to="{ name: 'player-scores', params: { language: store.language } }">
+          <q-btn  flat dense no-wrap no-caps
+            :label="$t('Your Scores')"
+            class="text-white q-px-sm"
+          />
+        </router-link>
+
+        <router-link :to="{ name: 'documentation', params: { language: store.language } }">
+          <q-btn
+            flat
+            dense
+            no-wrap
+            no-caps
+            :label="$t('Documentation')"
+            class="text-white q-px-sm"
+          />
+        </router-link>
+
+        <router-link :to="{ name: 'highscores', params: { language: store.language } }">
+          <q-btn
+            flat
+            dense
+            no-wrap
+            no-caps
+            :label="$t('Highscores')"
+            class="text-white q-px-sm"
+          />
+        </router-link>
+
         <q-space class="desktop-only" />
         <div>
           <q-toggle
             :modelValue="lightMode"
             @update:modelValue="toggleDarkMode($event)"
             checked-icon="light_mode"
+            color="secondary"
             unchecked-icon="dark_mode"
           />
           <q-btn flat round dense icon="language" class="q-mr-xs" />
@@ -122,11 +123,12 @@
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
-import {colors, getCssVar, setCssVar, useQuasar} from 'quasar';
+import { colors, getCssVar, setCssVar, useQuasar } from 'quasar';
 import {setDarkMode} from "src/util/dark-model.toggle";
 const leftDrawerOpen = ref(false);
 
 const $q = useQuasar()
+const store = useAppStore()
 
 onMounted(() => {
   leftDrawerOpen.value = false;
@@ -138,6 +140,7 @@ const lightMode = computed(() => {
 
 function toggleDarkMode() {
   setDarkMode($q, !$q.dark.isActive)
+  store.setThemePreference($q.dark.isActive ? 'dark' : 'light')
 }
 
 const i18n = useI18n();
@@ -145,11 +148,11 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 function setLanguage(lang: string) {
-  useAppStore().setLanguage(i18n, lang);
+  store.setLanguage(i18n, lang);
 }
 
 const langPrefix = computed(() => {
-  return useAppStore().language === 'en' ? '' : '/' + useAppStore().language;
+  return '/' + useAppStore().language;
 });
 
 const links1 = ref([
@@ -169,3 +172,15 @@ const links2 = ref([
   { icon: 'fitness_center', text: 'Health ' },
 ]);
 </script>
+
+<style scoped lang="scss">
+  a {
+    text-decoration: none;
+  }
+
+  .router-link-active button {
+    text-decoration: underline;
+    text-underline-color: white;
+    text-decoration-width: 2px;
+  }
+</style>

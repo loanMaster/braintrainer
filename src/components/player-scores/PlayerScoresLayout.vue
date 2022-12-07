@@ -32,12 +32,12 @@
     overflow.value = 'hidden';
     if (
       to.name === 'playerprogress' &&
-      String(from.name) === 'playerscores'
+      String(from.name) === 'player-scores'
     ) {
       refEnterClass.value = 'slideInRight';
       refLeaveClass.value = 'slideOutLeft';
     } else if (
-      to.name === 'playerscores' &&
+      to.name === 'player-scores' &&
       String(from.name) === 'playerprogress'
     ) {
       refEnterClass.value = 'slideInLeft';

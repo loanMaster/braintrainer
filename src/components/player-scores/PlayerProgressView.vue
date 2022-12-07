@@ -15,12 +15,13 @@
   import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
   import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
   import {useRoute, useRouter} from "vue-router";
+  import {useAppStore} from "stores/app-store";
 
   const router = useRouter()
   const route = useRoute()
 
   function back () {
-    router.push({ name: 'playerscores' })
+    router.push({ name: 'player-scores', params: { language: useAppStore().language } })
   }
 
   const difficulty = computed(() => route.params.difficulty)

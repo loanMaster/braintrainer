@@ -33,6 +33,11 @@
     animation: 44s -27s move infinite ease-in-out alternate;
   }
 
+  .bg-abs .animated-bg::before, .bg-abs .animated-bg::after,
+  .bg-abs .animated-bg::before, .bg-abs .animated-bg::after {
+    position: absolute;
+  }
+
   .animated-bg::before {
     @include dots(40);
     animation-duration: 44s;

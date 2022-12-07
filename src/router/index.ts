@@ -8,6 +8,7 @@ export const router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 }),
   routes,
   linkActiveClass: 'router-link-active',
+  linkExactActiveClass: 'exact-active-link'
 });
 
 export default route(function (/* { store, ssrContext } */) {

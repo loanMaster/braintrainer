@@ -20,14 +20,15 @@ import PlayerScoresView from 'src/components/player-scores/PlayerScoresView.vue'
 import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.vue';
 import PlayerProgressView from 'src/components/player-scores/PlayerProgressView.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
+import StartScreen from 'src/components/start/StartScreen.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/:language(es|de)?',
+    path: '/:language(es|de|en)?',
     component: MainLayout,
     children: [
-      { path: '', component: GameSelectionView },
+      { path: '', component: StartScreen },
       {
         path: 'play',
         component: ExerciseBaseLayout,
@@ -128,7 +129,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            name: 'playerscores',
+            name: 'player-scores',
             component: PlayerScoresView,
           },
           {

@@ -139,7 +139,14 @@ const columns = ref([
 ])
 
 function play (props: any) {
-  router.push({ name: props.row.nameOfTheGameOri, params: { game: props.row.nameOfTheGameOri, difficulty: props.row.difficultyOri } })
+  router.push({
+    name: props.row.nameOfTheGameOri,
+    params: {
+      game: props.row.nameOfTheGameOri,
+      difficulty: props.row.difficultyOri,
+      language: useAppStore().language
+    }
+  })
 }
 
 </script>
