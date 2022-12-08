@@ -1,8 +1,11 @@
 <template>
   <div class="full-width flex-1 column items-center">
     <div class="q-py-md column flex-1 items-center content">
-      <LoadingIndicator :show="showLoadingIndicator"/>
-      <div class="row-sm column-xs q-col-gutter-lg" v-if="!showLoadingIndicator">
+      <LoadingIndicator :show="showLoadingIndicator" />
+      <div
+        class="row-sm column-xs q-col-gutter-lg"
+        v-if="!showLoadingIndicator"
+      >
         <div
           class="col-4 column"
           v-for="difficulty in difficulties"
@@ -10,13 +13,22 @@
           @click="selectDifficulty(difficulty)"
         >
           <q-card class="flex-1 cursor-pointer zoom-on-hover text-center">
-            <q-card-section class="text-bold"
-              :class="{ 'bg-easy': difficulty === 'easy', 'bg-normal': difficulty === 'normal', 'bg-hard': difficulty === 'hard' }">
+            <q-card-section
+              class="text-bold"
+              :class="{
+                'bg-easy': difficulty === 'easy',
+                'bg-normal': difficulty === 'normal',
+                'bg-hard': difficulty === 'hard',
+              }"
+            >
               {{ t(difficulty) }}
             </q-card-section>
             <q-card-section>
               Lösen Sie Aufgaben im Kopf
-              <StarsRating :rating="getStars(difficulty)" class="text-h4 q-ml-xs" />
+              <StarsRating
+                :rating="getStars(difficulty)"
+                class="text-h4 q-ml-xs"
+              />
             </q-card-section>
           </q-card>
         </div>
@@ -38,8 +50,8 @@ import { useAppStore } from 'stores/app-store';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { showEnterUsernameDialog } from 'src/util/show-enter-username-dialog';
-import {ScoreService} from "src/shared-services/score.service";
-import {mapScoreToRating} from "src/util/calculate-rating";
+import { ScoreService } from 'src/shared-services/score.service';
+import { mapScoreToRating } from 'src/util/calculate-rating';
 
 const selectedDifficulty = ref('');
 const difficulties = ref(['easy', 'normal', 'hard']);
@@ -49,7 +61,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const store = useAppStore();
-const showLoadingIndicator = ref(false)
+const showLoadingIndicator = ref(false);
 
 const nameOfTheGame = computed(() =>
   getNameOfTheGame(route.params.game as string)
@@ -57,20 +69,23 @@ const nameOfTheGame = computed(() =>
 
 function getStars(difficulty: string): number {
   if (store.playerScores) {
-    const matching = store.playerScores!.scores.find(p => p.nameOfTheGame === nameOfTheGame.value && difficulty === p.difficulty)
+    const matching = store.playerScores!.scores.find(
+      (p) =>
+        p.nameOfTheGame === nameOfTheGame.value && difficulty === p.difficulty
+    );
     return matching ? mapScoreToRating(matching.score) : 0;
   } else {
-    return 0
+    return 0;
   }
 }
 
 onMounted(() => {
   if (store.currentPlayerId) {
-    showLoadingIndicator.value = true
-    new ScoreService().fetchPlayerScores()
-    showLoadingIndicator.value = false
+    showLoadingIndicator.value = true;
+    new ScoreService().fetchPlayerScores();
+    showLoadingIndicator.value = false;
   }
-})
+});
 
 async function selectDifficulty(difficulty: string) {
   selectedDifficulty.value = difficulty;
@@ -91,35 +106,38 @@ function startGame() {
     params: {
       game: route.params.game as string,
       difficulty: selectedDifficulty.value,
-    }
+    },
   });
 }
 
 function back() {
-  router.push({ name: 'select-exercise', params: { language: useAppStore().language } })
+  router.push({
+    name: 'select-exercise',
+    params: { language: useAppStore().language },
+  });
 }
 </script>
 
 <style scoped lang="scss">
+.bg-easy {
+  background-color: $amber-1;
+}
+.bg-normal {
+  background-color: $amber-2;
+}
+.bg-hard {
+  background-color: $amber-3;
+}
+
+.body--dark {
   .bg-easy {
-    background-color: $amber-1
+    background-color: $blue-grey-6;
   }
   .bg-normal {
-    background-color: $amber-2
+    background-color: $blue-grey-8;
   }
   .bg-hard {
-    background-color: $amber-3
+    background-color: $blue-grey-9;
   }
-
-  .body--dark {
-    .bg-easy {
-      background-color: $blue-grey-6
-    }
-    .bg-normal {
-      background-color: $blue-grey-8
-    }
-    .bg-hard {
-      background-color: $blue-grey-9
-    }
-  }
+}
 </style>

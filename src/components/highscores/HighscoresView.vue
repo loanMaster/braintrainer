@@ -3,7 +3,9 @@
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
       <q-toolbar-title>🎉 Highscores</q-toolbar-title>
     </q-toolbar>
-    <div class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg">
+    <div
+      class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg"
+    >
       <q-table
         v-if="!showLoadingIndicator"
         :grid="$q.screen.xs"
@@ -16,11 +18,7 @@
         <template v-slot:header="props">
           <q-tr :props="props">
             <q-th auto-width />
-            <q-th
-              v-for="col in props.cols"
-              :key="col.name"
-              :props="props"
-            >
+            <q-th v-for="col in props.cols" :key="col.name" :props="props">
               {{ col.label }}
             </q-th>
           </q-tr>
@@ -29,13 +27,16 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td auto-width>
-              <q-btn size="md" color="primary" dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
+              <q-btn
+                size="md"
+                color="primary"
+                dense
+                @click="play(props)"
+                :icon="'play_arrow'"
+                class="q-mr-sm"
+              />
             </q-td>
-            <q-td
-              v-for="col in props.cols"
-              :key="col.name"
-              :props="props"
-            >
+            <q-td v-for="col in props.cols" :key="col.name" :props="props">
               {{ col.value }}
             </q-td>
           </q-tr>
@@ -46,7 +47,14 @@
             <q-card class="non-selectable">
               <q-card-section class="text-h6 bg-orange-2 row justify-between">
                 {{ props.row.nameOfTheGame }}
-                <q-btn size="md" color="primary" dense @click="play(props)" :icon="'play_arrow'" class="q-mr-sm"/>
+                <q-btn
+                  size="md"
+                  color="primary"
+                  dense
+                  @click="play(props)"
+                  :icon="'play_arrow'"
+                  class="q-mr-sm"
+                />
               </q-card-section>
               <q-separator />
               <q-card-section class="column">
@@ -82,25 +90,27 @@
 
 <script setup lang="ts">
 import { GAMES } from 'src/const/games';
-import {GameHighScoreDto, ScoreService} from 'src/shared-services/score.service';
+import {
+  GameHighScoreDto,
+  ScoreService,
+} from 'src/shared-services/score.service';
 import { ref, onMounted, Ref } from 'vue';
 import { useQuasar } from 'quasar';
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { useRouter } from 'vue-router';
-import {formatScore} from "src/util/format-number";
-import {useAppStore} from "stores/app-store";
+import { formatScore } from 'src/util/format-number';
+import { useAppStore } from 'stores/app-store';
 
-
-const { t } = useI18n()
-const rows: Ref<any[]> = ref([])
-const router = useRouter()
-const store = useAppStore()
-const showLoadingIndicator = ref(true)
+const { t } = useI18n();
+const rows: Ref<any[]> = ref([]);
+const router = useRouter();
+const store = useAppStore();
+const showLoadingIndicator = ref(true);
 
 onMounted(async () => {
   const highscores = await new ScoreService().fetchHighscores();
-  highscores.scores.forEach(s => {
+  highscores.scores.forEach((s) => {
     rows.value.push({
       nameOfTheGame: t(s.nameOfTheGame),
       difficulty: t(s.difficulty),
@@ -111,15 +121,17 @@ onMounted(async () => {
       yourScore: s.yourScore,
       playerName: s.playerName,
       isYou: s.isYou,
-      sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty)
-    })
-  })
-  rows.value.sort((a,b) => {
-    const byName = a.nameOfTheGame.toLowerCase().localeCompare(b.nameOfTheGame.toLowerCase())
-    const byDiff = a.sortDiff < b.sortDiff ? -1 : 1
-    return byName !== 0 ? byName : byDiff
-  })
-  showLoadingIndicator.value = false
+      sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty),
+    });
+  });
+  rows.value.sort((a, b) => {
+    const byName = a.nameOfTheGame
+      .toLowerCase()
+      .localeCompare(b.nameOfTheGame.toLowerCase());
+    const byDiff = a.sortDiff < b.sortDiff ? -1 : 1;
+    return byName !== 0 ? byName : byDiff;
+  });
+  showLoadingIndicator.value = false;
 });
 
 const columns = ref([
@@ -129,36 +141,57 @@ const columns = ref([
     label: 'Übung',
     align: 'left',
     field: 'nameOfTheGame',
-    sortable: true
+    sortable: true,
   },
-  { name: 'difficulty', align: 'left', label: 'Schwierigkeit', field: 'difficulty', sortable: true },
+  {
+    name: 'difficulty',
+    align: 'left',
+    label: 'Schwierigkeit',
+    field: 'difficulty',
+    sortable: true,
+  },
   { name: 'playerName', label: 'Spieler', field: 'playerName', sortable: true },
-  { name: 'score', label: 'Bewertung', field: 'score', format: (val: number) => formatScore(val, store.language) },
-  { name: 'date', label: 'Datum', field: 'date', format: (val: number) => `${new Date(val).toDateString()}` },
-  { name: 'yourScore', label: 'Deine Bewertung', field: 'yourScore', format: (val: number | undefined) => val === undefined ? '-' : formatScore(val, store.language) },
-])
+  {
+    name: 'score',
+    label: 'Bewertung',
+    field: 'score',
+    format: (val: number) => formatScore(val, store.language),
+  },
+  {
+    name: 'date',
+    label: 'Datum',
+    field: 'date',
+    format: (val: number) => `${new Date(val).toDateString()}`,
+  },
+  {
+    name: 'yourScore',
+    label: 'Deine Bewertung',
+    field: 'yourScore',
+    format: (val: number | undefined) =>
+      val === undefined ? '-' : formatScore(val, store.language),
+  },
+]);
 
-function play (props: any) {
+function play(props: any) {
   router.push({
     name: props.row.nameOfTheGameOri,
     params: {
       game: props.row.nameOfTheGameOri,
       difficulty: props.row.difficultyOri,
-      language: useAppStore().language
-    }
-  })
+      language: useAppStore().language,
+    },
+  });
 }
-
 </script>
 
 <style>
-  .q-table__bottom {
-    display: none
-  }
-  .gradient {
-    background-image: linear-gradient(to bottom right, #FFFFAA55, #AAFFFF55);
-  }
-  .body--dark .gradient {
-    background-image: none;
-  }
+.q-table__bottom {
+  display: none;
+}
+.gradient {
+  background-image: linear-gradient(to bottom right, #ffffaa55, #aaffff55);
+}
+.body--dark .gradient {
+  background-image: none;
+}
 </style>

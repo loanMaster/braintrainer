@@ -16,18 +16,17 @@
 }
 
 .zoom-on-hover:hover {
-  transform: scale(1.05) ;
+  transform: scale(1.05);
 }
 .zoom-on-hover {
   transition-duration: 1s;
 }
 
-
 .max-width-sm {
   max-width: $breakpoint-sm;
 }
 
-.max-width-md{
+.max-width-md {
   max-width: $breakpoint-md;
 }
 
@@ -48,10 +47,8 @@ th {
   background-color: $orange-2;
 }
 
-
 .body--dark {
   th {
     background-color: $blue-grey-10;
   }
 }
-

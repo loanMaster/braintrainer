@@ -20,33 +20,30 @@
 </template>
 
 <script setup lang="ts">
-  import {ref} from "vue";
-  import {useRouter} from "vue-router";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-  const refEnterClass = ref('fadeIn');
-  const refLeaveClass = ref('fadeIn');
-  const overflow = ref('hidden');
-  const router = useRouter()
+const refEnterClass = ref('fadeIn');
+const refLeaveClass = ref('fadeIn');
+const overflow = ref('hidden');
+const router = useRouter();
 
-  router.beforeEach((to, from) => {
-    overflow.value = 'hidden';
-    if (
-      to.name === 'playerprogress' &&
-      String(from.name) === 'player-scores'
-    ) {
-      refEnterClass.value = 'slideInRight';
-      refLeaveClass.value = 'slideOutLeft';
-    } else if (
-      to.name === 'player-scores' &&
-      String(from.name) === 'playerprogress'
-    ) {
-      refEnterClass.value = 'slideInLeft';
-      refLeaveClass.value = 'slideOutRight';
-    }
-  });
-  router.afterEach(() => {
-    setTimeout(() => {
-      overflow.value = 'visible';
-    }, 1000);
-  });
+router.beforeEach((to, from) => {
+  overflow.value = 'hidden';
+  if (to.name === 'playerprogress' && String(from.name) === 'player-scores') {
+    refEnterClass.value = 'slideInRight';
+    refLeaveClass.value = 'slideOutLeft';
+  } else if (
+    to.name === 'player-scores' &&
+    String(from.name) === 'playerprogress'
+  ) {
+    refEnterClass.value = 'slideInLeft';
+    refLeaveClass.value = 'slideOutRight';
+  }
+});
+router.afterEach(() => {
+  setTimeout(() => {
+    overflow.value = 'visible';
+  }, 1000);
+});
 </script>

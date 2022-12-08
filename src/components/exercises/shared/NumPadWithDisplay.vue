@@ -10,7 +10,11 @@
         <div class="flex-1 c-num-field text-center non-selectable q-mr-xs">
           {{ inputValue }}
         </div>
-        <CountdownTimer :totalTime="totalTime" ref="countdownTimer" @timeout="onTimeout"/>
+        <CountdownTimer
+          :totalTime="totalTime"
+          ref="countdownTimer"
+          @timeout="onTimeout"
+        />
       </div>
     </q-card-section>
   </q-card>
@@ -25,35 +29,35 @@ const emits = defineEmits(['button-click', 'timeout']);
 const props = defineProps({
   inputValue: String,
   inputDisabled: Boolean,
-  totalTime: Number
+  totalTime: Number,
 });
-const countdownTimer = ref()
+const countdownTimer = ref();
 
 function onNumberEntered(num: number) {
   emits('button-click', num);
 }
 
-function stopTimer () {
-  countdownTimer.value.stop()
+function stopTimer() {
+  countdownTimer.value.stop();
 }
 
-function resetTimer () {
-  countdownTimer.value.reset()
+function resetTimer() {
+  countdownTimer.value.reset();
 }
 
-function startTimer () {
-  countdownTimer.value.start()
+function startTimer() {
+  countdownTimer.value.start();
 }
 
-function onTimeout () {
-  emits('timeout')
+function onTimeout() {
+  emits('timeout');
 }
 
 defineExpose({
   stopTimer,
   startTimer,
-  resetTimer
-})
+  resetTimer,
+});
 </script>
 
 <style scoped>

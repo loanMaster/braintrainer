@@ -11,21 +11,38 @@
         </q-toolbar-title>
         <q-space class="desktop-only" />
 
-        <router-link :to="{ name: 'select-exercise', params: { language: store.language } }">
-          <q-btn flat dense no-wrap no-caps
-                :label="$t('Play')"
-                class="text-white q-px-sm"
+        <router-link
+          :to="{
+            name: 'select-exercise',
+            params: { language: store.language },
+          }"
+        >
+          <q-btn
+            flat
+            dense
+            no-wrap
+            no-caps
+            :label="$t('Play')"
+            class="text-white q-px-sm"
           />
         </router-link>
 
-        <router-link :to="{ name: 'player-scores', params: { language: store.language } }">
-          <q-btn  flat dense no-wrap no-caps
+        <router-link
+          :to="{ name: 'player-scores', params: { language: store.language } }"
+        >
+          <q-btn
+            flat
+            dense
+            no-wrap
+            no-caps
             :label="$t('Your Scores')"
             class="text-white q-px-sm"
           />
         </router-link>
 
-        <router-link :to="{ name: 'documentation', params: { language: store.language } }">
+        <router-link
+          :to="{ name: 'documentation', params: { language: store.language } }"
+        >
           <q-btn
             flat
             dense
@@ -36,7 +53,9 @@
           />
         </router-link>
 
-        <router-link :to="{ name: 'highscores', params: { language: store.language } }">
+        <router-link
+          :to="{ name: 'highscores', params: { language: store.language } }"
+        >
           <q-btn
             flat
             dense
@@ -114,7 +133,7 @@
     </q-drawer>
 
     <q-page-container class="column flex-auto">
-      <router-view/>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
@@ -124,23 +143,23 @@ import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { colors, getCssVar, setCssVar, useQuasar } from 'quasar';
-import {setDarkMode} from "src/util/dark-model.toggle";
+import { setDarkMode } from 'src/util/dark-model.toggle';
 const leftDrawerOpen = ref(false);
 
-const $q = useQuasar()
-const store = useAppStore()
+const $q = useQuasar();
+const store = useAppStore();
 
 onMounted(() => {
   leftDrawerOpen.value = false;
 });
 
 const lightMode = computed(() => {
-  return !$q.dark.isActive
-})
+  return !$q.dark.isActive;
+});
 
 function toggleDarkMode() {
-  setDarkMode($q, !$q.dark.isActive)
-  store.setThemePreference($q.dark.isActive ? 'dark' : 'light')
+  setDarkMode($q, !$q.dark.isActive);
+  store.setThemePreference($q.dark.isActive ? 'dark' : 'light');
 }
 
 const i18n = useI18n();
@@ -174,13 +193,13 @@ const links2 = ref([
 </script>
 
 <style scoped lang="scss">
-  a {
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+}
 
-  .router-link-active button {
-    text-decoration: underline;
-    text-underline-color: white;
-    text-decoration-width: 2px;
-  }
+.router-link-active button {
+  text-decoration: underline;
+  text-underline-color: white;
+  text-decoration-width: 2px;
+}
 </style>

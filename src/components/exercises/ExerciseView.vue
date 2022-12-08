@@ -1,6 +1,6 @@
 <template>
   <div class="column flex-auto relative-position full-width items-center">
-    <ExerciseHUD class="self-stretch"/>
+    <ExerciseHUD class="self-stretch" />
     <div
       ref="instructionsWrapper"
       class="column justify-center flex-auto content-center"

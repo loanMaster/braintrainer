@@ -7,13 +7,20 @@
         :text="store.exercise.audioState.tag || '...'"
       />
     </div>
-    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal"/>
+    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal" />
     <div style="flex: 2">
       <div class="text-h5 q-my-md row justify-center">
         {{ whoIs }}
       </div>
-      <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm">
-        <div v-for="(option, idx) in buttonOptions" v-bind:key="idx" class="row">
+      <div
+        ref="buttons"
+        class="max-width-xs row wrap justify-center q-gutter-sm"
+      >
+        <div
+          v-for="(option, idx) in buttonOptions"
+          v-bind:key="idx"
+          class="row"
+        >
           <q-btn
             color="primary"
             @click="selectWord(idx, $event)"
@@ -43,7 +50,7 @@ import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useAppStore } from 'stores/app-store';
 import { RelativesService } from 'components/exercises/service/relatives.service';
-import {randomElement, shuffle} from "src/util/array.utils";
+import { randomElement, shuffle } from 'src/util/array.utils';
 
 const {
   soundService,
@@ -92,7 +99,7 @@ const relations = [
 let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
 const character = ref(male_names[0]);
-const countdownTimer = ref()
+const countdownTimer = ref();
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -118,7 +125,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value.reset()
+  countdownTimer.value.reset();
 
   const task = new RelativesService().createRelationshipTree(
     difficulty.value as string
@@ -138,14 +145,14 @@ async function nextQuestion() {
   }
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
-  buttonOptions.value = [...task.solutions]
+  buttonOptions.value = [...task.solutions];
   while (buttonOptions.value.length < 8) {
-    const randomRelative = randomElement(relations)
+    const randomRelative = randomElement(relations);
     if (buttonOptions.value.indexOf(randomRelative) === -1) {
-      buttonOptions.value.push(randomRelative)
+      buttonOptions.value.push(randomRelative);
     }
   }
-  shuffle(buttonOptions.value)
+  shuffle(buttonOptions.value);
 
   const audio = texts.map((text) => {
     return {
@@ -168,7 +175,7 @@ async function nextQuestion() {
 
   inputDisabled.value = false;
   await playAudio();
-  countdownTimer.value.start()
+  countdownTimer.value.start();
 }
 
 async function playAudio() {
@@ -180,7 +187,7 @@ function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
   if (currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1) {
     inputDisabled.value = true;
-    countdownTimer.value.stop()
+    countdownTimer.value.stop();
     store.$patch((store) => store.exercise.correctAnswers++);
     new TweenService().fadeOut(coreExercise.value);
     new SoundService().playSuccess();
@@ -193,7 +200,7 @@ function selectWord(idx: number, $event: Event) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value.stop()
+  countdownTimer.value.stop();
 }
 
 const whoIs = computed(() => {

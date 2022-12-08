@@ -1,6 +1,6 @@
 export const mapScoreToRating = (score: number) => {
   if (score > 90) {
-    return 5
+    return 5;
   } else if (score > 80) {
     return 4;
   } else if (score > 70) {

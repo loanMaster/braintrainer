@@ -1,9 +1,11 @@
 <template>
   <div class="non-selectable text-h3 text-center">
     <span class="g-medium-font">{{ firstPart }}</span>
-    <span class="g-medium-font" :style="{ color: highlightColor || undefined }">{{
-      highlight
-    }}</span>
+    <span
+      class="g-medium-font"
+      :style="{ color: highlightColor || undefined }"
+      >{{ highlight }}</span
+    >
     <span class="g-medium-font">{{ lastPart }}</span>
   </div>
 </template>

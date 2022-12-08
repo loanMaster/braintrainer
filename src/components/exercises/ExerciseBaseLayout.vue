@@ -3,8 +3,8 @@
     class="column flex-auto relative-position"
     :style="{ 'overflow-x': overflow }"
   >
-    <MovingColorsBackground/>
-    <ExerciseHeader/>
+    <MovingColorsBackground />
+    <ExerciseHeader />
     <router-view v-slot="{ Component }">
       <transition
         mode="out-in"
@@ -17,7 +17,6 @@
       </transition>
     </router-view>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -60,4 +59,3 @@ router.afterEach(() => {
   }, 1000);
 });
 </script>
-

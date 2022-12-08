@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
-import {PercentileScore, Score} from 'src/shared-services/score.service';
-import {mapScoreToRating} from "src/util/calculate-rating";
+import { PercentileScore, Score } from 'src/shared-services/score.service';
+import { mapScoreToRating } from 'src/util/calculate-rating';
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -84,8 +84,8 @@ export interface IAppState {
   machineId: string;
   dailyTraining: DailyTraining;
   _language: string;
-  playerScores?: { scores: PercentileScore[], hasPercentiles: boolean }
-  scoreHistory?: Score[],
+  playerScores?: { scores: PercentileScore[]; hasPercentiles: boolean };
+  scoreHistory?: Score[];
 }
 
 const getBrowserLanguage = (): string => {
@@ -118,7 +118,7 @@ const newPlayer = () => {
     averageRatings: {},
     ratings: {},
     exerciseHistory: [],
-    preferredTheme: 'light' // TODO use value from current mode
+    preferredTheme: 'light', // TODO use value from current mode
   };
 };
 
@@ -145,7 +145,7 @@ export const useAppStore = defineStore('main', {
       exercise: newExercise('rememberNumbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
       playerScores: undefined,
-      scoreHistory: undefined
+      scoreHistory: undefined,
     } as IAppState;
   },
   getters: {
@@ -227,26 +227,29 @@ export const useAppStore = defineStore('main', {
           difficulty: this.exercise.difficulty,
           nameOfTheGame: this.exercise.nameOfTheGame,
           score: this.exercise.score,
-          date: Date.now()
-        })
+          date: Date.now(),
+        });
       }
     },
-    updatePlayerScores (percentile: number) {
+    updatePlayerScores(percentile: number) {
       if (this.playerScores !== undefined) {
         const matchingScore = this.playerScores.scores.find(
-          s => s.nameOfTheGame === this.exercise.nameOfTheGame && s.difficulty === this.exercise.difficulty)
+          (s) =>
+            s.nameOfTheGame === this.exercise.nameOfTheGame &&
+            s.difficulty === this.exercise.difficulty
+        );
         if (!matchingScore) {
           this.playerScores.scores.push({
             nameOfTheGame: this.exercise.nameOfTheGame,
             percentile: percentile,
             difficulty: this.exercise.difficulty,
             score: this.exercise.score!,
-            date: Date.now()
-          })
+            date: Date.now(),
+          });
         } else if (matchingScore.score < this.exercise.score!) {
-          matchingScore.score = this.exercise.score!
-          matchingScore.percentile = percentile
-          matchingScore.date = Date.now()
+          matchingScore.score = this.exercise.score!;
+          matchingScore.percentile = percentile;
+          matchingScore.date = Date.now();
         }
       }
     },
@@ -281,9 +284,9 @@ export const useAppStore = defineStore('main', {
     setThemePreference(theme: 'light' | 'dark') {
       if (this.currentPlayerId) {
         this.players[this.currentPlayerId].preferredTheme = theme;
-        storePlayers()
+        storePlayers();
       }
-    }
+    },
   },
 });
 

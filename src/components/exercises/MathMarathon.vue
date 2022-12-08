@@ -1,7 +1,8 @@
 <template>
   <input :value="previousResult" disabled class="text-center text-h6" />
   <div ref="numpadContainer" class="column relative-position">
-    <NumPadWithDisplay ref="numpad"
+    <NumPadWithDisplay
+      ref="numpad"
       :input-disabled="inputDisabled"
       :input-value="inputValue"
       @button-click="onNumberEntered"
@@ -123,7 +124,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(numpadContainer.value);
   }
-  numpad.value.resetTimer()
+  numpad.value.resetTimer();
   previousResult.value = expectedResult.value;
 
   showLoadingIndicator.value = true;
@@ -149,7 +150,7 @@ async function nextQuestion() {
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
   await playAudio();
-  numpad.value.startTimer()
+  numpad.value.startTimer();
 }
 
 async function playAudio() {
@@ -172,7 +173,7 @@ async function onNumberEntered(num: number) {
     );
     if (currentIndex.value === String(expectedResult.value).length) {
       inputDisabled.value = true;
-      numpad.value.stopTimer()
+      numpad.value.stopTimer();
       store.$patch((store) => store.exercise.correctAnswers++);
       new SoundService().playSuccess();
       await exerciseUtils.wait(150);
@@ -186,6 +187,6 @@ async function onNumberEntered(num: number) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  numpad.value.stopTimer()
+  numpad.value.stopTimer();
 }
 </script>

@@ -2,8 +2,10 @@
   <div
     class="column items-center justify-center non-selectable q-ma-sm-lg q-ma-xs-none"
   >
-    <MovingColorsBackground/>
-    <q-card class="max-width-sm q-pa-lg full-width text-center semi-transparent-background">
+    <MovingColorsBackground />
+    <q-card
+      class="max-width-sm q-pa-lg full-width text-center semi-transparent-background"
+    >
       <q-card-section>
         <div class="text-h4">{{ $t('Exercise finished') }}</div>
       </q-card-section>
@@ -29,10 +31,15 @@
             </div>
             <div class="row justify-between">
               <span>Benötigte Zeit</span>
-              <span>{{ formatScore(store.exercise.duration, store.language) }} Sekunden</span>
+              <span
+                >{{
+                  formatScore(store.exercise.duration, store.language)
+                }}
+                Sekunden</span
+              >
             </div>
           </div>
-          <div class="q-mt-sm" >
+          <div class="q-mt-sm">
             <div class="text-left">
               <div v-if="updateScoreResponse" class="q-mb-sm">
                 Du bist unter den Top {{ percentile }}% der Spieler
@@ -63,14 +70,21 @@
               font-size="2rem"
               track-color="amber-1"
               class="text-amber-4 q-ma-md flex-auto full-width no-pointer-events"
-            ><span class="pink-text-shadow">{{ formatScore(score, store.language) }}</span></q-knob>
+              ><span class="pink-text-shadow">{{
+                formatScore(score, store.language)
+              }}</span></q-knob
+            >
           </div>
         </div>
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
           <div class="text-h5">Fortschritt</div>
-          <q-skeleton square class="flex-1" v-if="showLoadingIndicator"/>
-          <ProgressDiagram v-if="!showLoadingIndicator" :difficulty="store.exercise.difficulty" :nameOfTheGame="store.exercise.nameOfTheGame"/>
+          <q-skeleton square class="flex-1" v-if="showLoadingIndicator" />
+          <ProgressDiagram
+            v-if="!showLoadingIndicator"
+            :difficulty="store.exercise.difficulty"
+            :nameOfTheGame="store.exercise.nameOfTheGame"
+          />
         </div>
       </div>
       <q-card-section>
@@ -93,8 +107,8 @@ import {
   UpdateScoreResponse,
 } from 'src/shared-services/score.service';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
-import StarsRating from 'src/components/shared/StarsRating.vue'
-import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue'
+import StarsRating from 'src/components/shared/StarsRating.vue';
+import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { TweenService } from 'src/shared-services/tween.service';
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
@@ -103,17 +117,17 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
-import {formatScore} from "src/util/format-number";
-import {useRouter} from "vue-router";
+import { formatScore } from 'src/util/format-number';
+import { useRouter } from 'vue-router';
 
 const store = useAppStore();
 const $q = useQuasar();
-const router = useRouter()
+const router = useRouter();
 const { t } = useI18n();
 const knob = ref();
 const score = ref(0);
 const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null);
-const showLoadingIndicator = ref(true)
+const showLoadingIndicator = ref(true);
 
 const percentile = computed(() =>
   updateScoreResponse.value
@@ -123,7 +137,8 @@ const percentile = computed(() =>
 
 onBeforeMount(() => {
   if (!store.exercise || !store.exercise.rating) {
-    store.$patch((store) => {   // TODO for debugging
+    store.$patch((store) => {
+      // TODO for debugging
       store.exercise = newExercise('rememberNumbers', 'normal', 10);
       store.exercise.rating = 4;
       store.exercise.score = 50;
@@ -146,14 +161,14 @@ onMounted(async () => {
       name: store.player.name,
       id: store.player.id,
     });
-    store.updatePlayerScores(updateScoreResponse.value.percentile)
+    store.updatePlayerScores(updateScoreResponse.value.percentile);
   } else {
     updateScoreResponse.value = {
       percentile: 3,
       isNewHighScore: false,
     };
   }
-  showLoadingIndicator.value = false
+  showLoadingIndicator.value = false;
   const stop = new Subject<void>();
   setTimeout(() => {
     interval(20)
@@ -176,24 +191,22 @@ function playAgain() {
     params: {
       game: store.exercise.nameOfTheGame.toLowerCase(),
       difficulty: store.exercise.difficulty,
-      language: useAppStore().language
-    }
-  })
+      language: useAppStore().language,
+    },
+  });
 }
-
 </script>
 
 <style scoped>
-  .pink-text-shadow {
-    text-shadow: 1px 1px 2px pink;
-  }
+.pink-text-shadow {
+  text-shadow: 1px 1px 2px pink;
+}
 
-  .semi-transparent-background {
-    background-color: #FFFFFF77;
-  }
+.semi-transparent-background {
+  background-color: #ffffff77;
+}
 
-  .body--dark .semi-transparent-background {
-    background-color: #FFFFFF11;
-  }
+.body--dark .semi-transparent-background {
+  background-color: #ffffff11;
+}
 </style>
-

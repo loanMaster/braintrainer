@@ -9,7 +9,10 @@
             v-for="exercise in languageExercises"
             :key="exercise"
           >
-            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+            <q-card
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
               <q-card-section class="words-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
@@ -26,7 +29,10 @@
             v-for="exercise in mathExercises"
             :key="exercise"
           >
-            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+            <q-card
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
               <q-card-section class="math-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
@@ -47,7 +53,10 @@
             ]"
             :key="exercise"
           >
-            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+            <q-card
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
               <q-card-section class="memory-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
@@ -61,7 +70,10 @@
             v-for="exercise in ['AudioMemoryAnimals', 'AudioMemory']"
             :key="exercise"
           >
-            <q-card class="flex-1 cursor-pointer zoom-on-hover" @click="selectExercise(exercise)">
+            <q-card
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
               <q-card-section class="memory-bg text-bold">
                 {{ t(exercise) }}
               </q-card-section>
@@ -79,11 +91,11 @@ import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const $q = useQuasar();
 const { t } = useI18n();
-const router = useRouter()
+const router = useRouter();
 
 onMounted(() => useAppStore().finishDailyTraining());
 
@@ -105,8 +117,8 @@ function selectExercise(game: string) {
     name: 'select-difficulty',
     params: {
       game: game.toLowerCase(),
-      language: useAppStore().language
-    }
+      language: useAppStore().language,
+    },
   });
 }
 </script>
@@ -140,7 +152,7 @@ function selectExercise(game: string) {
   @extend .q-pa-md;
   @extend .q-mb-lg;
   @extend .full-width;
-  background-color: #FFFFFF00;
+  background-color: #ffffff00;
 }
 
 .exercise-title {

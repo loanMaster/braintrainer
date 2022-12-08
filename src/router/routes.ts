@@ -136,8 +136,8 @@ const routes: RouteRecordRaw[] = [
             path: ':game/:difficulty',
             name: 'playerprogress',
             component: PlayerProgressView,
-          }
-        ]
+          },
+        ],
       },
     ],
   },

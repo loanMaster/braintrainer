@@ -3,7 +3,7 @@ import { useAppStore } from 'stores/app-store';
 export interface Player {
   name: string;
   scores: Score[];
-  scoreHistory: Score[]
+  scoreHistory: Score[];
 }
 
 export interface Score {
@@ -94,7 +94,6 @@ export class ScoreService {
     return response.json();
   }
 
-
   async fetchPlayerScorePercentiles(): Promise<PercentileScore[]> {
     if (!this.store.playerScores || !this.store.playerScores!.hasPercentiles) {
       const response = await fetch(
@@ -105,9 +104,9 @@ export class ScoreService {
         }
       );
       const scores = (await response.json()).scores;
-      this.store.$patch({ playerScores: { hasPercentiles: true, scores } })
+      this.store.$patch({ playerScores: { hasPercentiles: true, scores } });
     }
-    return this.store.playerScores!.scores
+    return this.store.playerScores!.scores;
   }
 
   async fetchPlayerScores(): Promise<Score[]> {
@@ -120,9 +119,9 @@ export class ScoreService {
         }
       );
       const scores = (await response.json()).scores;
-      this.store.$patch({ playerScores: { hasPercentiles: false, scores } })
+      this.store.$patch({ playerScores: { hasPercentiles: false, scores } });
     }
-    return this.store.playerScores!.scores
+    return this.store.playerScores!.scores;
   }
 
   async fetchPlayerScoreHistory(): Promise<Score[]> {
@@ -135,8 +134,8 @@ export class ScoreService {
         }
       );
       const scoreHistory = (await response.json()).scores;
-      this.store.$patch({ scoreHistory })
+      this.store.$patch({ scoreHistory });
     }
-    return this.store.scoreHistory!
+    return this.store.scoreHistory!;
   }
 }
