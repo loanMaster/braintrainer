@@ -5,6 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 defineProps({ showing: Boolean });
 </script>

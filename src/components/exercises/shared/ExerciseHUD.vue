@@ -20,9 +20,6 @@
 <script setup lang="ts">
 import StrikeCounter from './StrikeCounter.vue';
 import QuestionNumberIndicator from './QuestionNumberIndicator.vue';
-import { computed } from 'vue';
-import { getNameOfTheGame } from 'src/util/game.name.helper';
-import { useRoute } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
 
 const store = useAppStore();
@@ -30,14 +27,6 @@ const store = useAppStore();
 function repeat() {
   store.repeatAudio();
 }
-
-const nameOfTheGame = computed(() =>
-  getNameOfTheGame(useRoute().params.game as string)
-);
-
-const difficulty = computed(() => {
-  return useRoute().params?.difficulty;
-});
 
 function pause() {
   store.pause();

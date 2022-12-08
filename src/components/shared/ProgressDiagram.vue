@@ -7,11 +7,6 @@
 <script setup lang="ts">
 import {
   Chart,
-  BarController,
-  BarControllerChartOptions,
-  LinearScale,
-  Legend,
-  LinearScaleOptions,
   registerables,
 } from 'chart.js';
 import { onMounted, ref } from 'vue';

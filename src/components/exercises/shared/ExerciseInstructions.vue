@@ -18,10 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from 'vue';
-import { useAppStore } from 'stores/app-store';
-
-const store = useAppStore();
 const emits = defineEmits(['confirm']);
 function confirm() {
   emits('confirm');

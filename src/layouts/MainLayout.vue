@@ -142,7 +142,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
-import { colors, getCssVar, setCssVar, useQuasar } from 'quasar';
+import { useQuasar } from 'quasar';
 import { setDarkMode } from 'src/util/dark-model.toggle';
 const leftDrawerOpen = ref(false);
 
@@ -169,10 +169,6 @@ function toggleLeftDrawer() {
 function setLanguage(lang: string) {
   store.setLanguage(i18n, lang);
 }
-
-const langPrefix = computed(() => {
-  return '/' + useAppStore().language;
-});
 
 const links1 = ref([
   { icon: 'web', text: 'Top stories' },

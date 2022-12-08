@@ -11,9 +11,6 @@
 import { computed } from 'vue';
 import { getNameOfTheGame } from 'src/util/game.name.helper';
 import { useRoute } from 'vue-router';
-import { useAppStore } from 'stores/app-store';
-
-const store = useAppStore();
 
 const nameOfTheGame = computed(() =>
   getNameOfTheGame(useRoute().params?.game as string)

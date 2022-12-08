@@ -159,7 +159,6 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
-import MovingStarsBackground from 'src/components/backgrounds/MovingStarsBackground.vue';
 
 const $q = useQuasar();
 

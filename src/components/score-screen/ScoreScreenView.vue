@@ -113,17 +113,13 @@ import { SoundService } from 'src/shared-services/sound.service';
 import { TweenService } from 'src/shared-services/tween.service';
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
 import { newExercise, useAppStore } from 'src/stores/app-store';
-import { useQuasar } from 'quasar';
-import { useI18n } from 'vue-i18n';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
 import { formatScore } from 'src/util/format-number';
 import { useRouter } from 'vue-router';
 
 const store = useAppStore();
-const $q = useQuasar();
 const router = useRouter();
-const { t } = useI18n();
 const knob = ref();
 const score = ref(0);
 const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null);

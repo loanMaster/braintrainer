@@ -106,6 +106,7 @@ function startGame() {
     params: {
       game: route.params.game as string,
       difficulty: selectedDifficulty.value,
+      language: store.language
     },
   });
 }

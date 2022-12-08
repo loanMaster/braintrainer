@@ -89,11 +89,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
-import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
-const $q = useQuasar();
 const { t } = useI18n();
 const router = useRouter();
 

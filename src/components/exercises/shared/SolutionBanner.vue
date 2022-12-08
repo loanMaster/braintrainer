@@ -22,8 +22,6 @@
 </template>
 
 <script setup ts="lang">
-import { defineProps, defineEmits } from 'vue';
-
 defineProps({
   solution: [String, Number],
   show: Boolean,

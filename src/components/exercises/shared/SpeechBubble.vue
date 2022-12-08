@@ -13,7 +13,6 @@
 </template>
 
 <script setup type="ts">
-import { defineProps } from 'vue'
 defineProps({
   show: Boolean,
   text: String,

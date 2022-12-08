@@ -10,9 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, computed } from 'vue';
-import { useQuasar } from 'quasar';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import { computed } from 'vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';

@@ -89,13 +89,10 @@
 </template>
 
 <script setup lang="ts">
-import { GAMES } from 'src/const/games';
 import {
-  GameHighScoreDto,
   ScoreService,
 } from 'src/shared-services/score.service';
 import { ref, onMounted, Ref } from 'vue';
-import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { useRouter } from 'vue-router';

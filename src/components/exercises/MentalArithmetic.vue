@@ -19,7 +19,6 @@
 
 <script setup lang="ts">
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import { takeUntil } from 'rxjs';

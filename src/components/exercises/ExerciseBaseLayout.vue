@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
-import BubblesBackground from 'src/components/backgrounds/BubblesBackground.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();

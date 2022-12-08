@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, Ref, defineEmits } from 'vue';
+import { ref, Ref } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { randomElement } from 'src/util/array.utils';
 

@@ -11,6 +11,7 @@
           {{ inputValue }}
         </div>
         <CountdownTimer
+          v-if="totalTime"
           :totalTime="totalTime"
           ref="countdownTimer"
           @timeout="onTimeout"
@@ -23,10 +24,10 @@
 <script setup lang="ts">
 import NumPad from 'src/components/exercises/shared/NumPad.vue';
 import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
-import { defineProps, defineEmits, ref, defineExpose } from 'vue';
+import { ref } from 'vue';
 
 const emits = defineEmits(['button-click', 'timeout']);
-const props = defineProps({
+defineProps({
   inputValue: String,
   inputDisabled: Boolean,
   totalTime: Number,
