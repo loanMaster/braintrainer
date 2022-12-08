@@ -7,19 +7,19 @@ import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { onBeforeMount } from 'vue';
 import { NavigationGuardNext, useRoute, useRouter } from 'vue-router';
-import {useQuasar} from "quasar";
+import { useQuasar } from 'quasar';
 
 const store = useAppStore();
 const i18n = useI18n();
 const router = useRouter();
 const route = useRoute();
-const $q = useQuasar()
+const $q = useQuasar();
 
 onBeforeMount(() => {
   if (store.player.preferredTheme === 'dark') {
-    $q.dark.set(true)
+    $q.dark.set(true);
   }
-})
+});
 
 const removeTrailingSlash = (path: string) => {
   return path.length > 1 && path.endsWith('/')
@@ -60,7 +60,6 @@ store.$onAction(({ name, after }) => {
         );
       }
     }
-
 
     if (name === 'pause' && store.isPaused) {
       $q.dialog({
