@@ -89,9 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ScoreService,
-} from 'src/shared-services/score.service';
+import { ScoreService } from 'src/shared-services/score.service';
 import { ref, onMounted, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';

@@ -50,12 +50,6 @@ export const newExercise = (
   audioState: { playing: false, tag: '', playingSequence: false },
 });
 
-export interface Ratings {
-  [key: string]: {
-    [key: string]: number;
-  };
-}
-
 export interface Player {
   id: string;
   name: string;

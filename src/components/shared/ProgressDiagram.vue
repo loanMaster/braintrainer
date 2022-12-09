@@ -5,10 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Chart,
-  registerables,
-} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { onMounted, ref } from 'vue';
 import { Score, ScoreService } from 'src/shared-services/score.service';
 import { IAppState, useAppStore } from 'stores/app-store';

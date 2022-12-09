@@ -14,12 +14,7 @@
   </q-circular-progress>
 </template>
 <script setup lang="ts">
-import {
-  ref,
-  onMounted,
-  computed,
-  onBeforeUnmount,
-} from 'vue';
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
 import { interval } from 'rxjs';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';

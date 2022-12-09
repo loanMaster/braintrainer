@@ -81,7 +81,7 @@
         <div class="text-h6 text-center">Years of experience</div>
         <div class="text-center">
           <q-rating
-            model-value="5"
+            :model-value="5"
             size="3.5em"
             class="no-pointer-events"
             color="yellow-12"

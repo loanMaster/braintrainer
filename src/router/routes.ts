@@ -21,18 +21,30 @@ import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.
 import PlayerProgressView from 'src/components/player-scores/PlayerProgressView.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
 import StartScreen from 'src/components/start/StartScreen.vue';
+import LoginView from 'src/components/auth/LoginView.vue';
+import SignUpView from 'src/components/auth/SignUpView.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
 
 const routes: RouteRecordRaw[] = [
-  { name: '', path: '', component: MainLayout,
-    children: [
-      { path: '', component: StartScreen, name: 'home' }
-    ]
-  },
   {
-    path: '/:language(es|de|en)',
+    path: '/:language(es|de|en)?',
     component: MainLayout,
     children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: LoginView,
+      },
+      {
+        path: 'signup',
+        name: 'signup',
+        component: SignUpView,
+      },
+      {
+        path: 'rest-password',
+        name: 'rest-password',
+        component: SignUpView,
+      },
       { path: '', component: StartScreen },
       {
         path: 'play',
