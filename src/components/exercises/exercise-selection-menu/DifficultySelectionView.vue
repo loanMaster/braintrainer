@@ -49,7 +49,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { showEnterUsernameDialog } from 'src/util/show-enter-username-dialog';
 import { ScoreService } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
 
@@ -80,24 +79,14 @@ function getStars(difficulty: string): number {
 }
 
 onMounted(() => {
-  if (store.currentPlayerId) {
-    showLoadingIndicator.value = true;
-    new ScoreService().fetchPlayerScores();
-    showLoadingIndicator.value = false;
-  }
+  showLoadingIndicator.value = true;
+  new ScoreService().fetchPlayerScores();
+  showLoadingIndicator.value = false;
 });
 
 async function selectDifficulty(difficulty: string) {
   selectedDifficulty.value = difficulty;
-  if (useAppStore().player.name === '') {
-    const name = await showEnterUsernameDialog($q, t);
-    if (name) {
-      useAppStore().setName(name);
-      startGame();
-    }
-  } else {
-    startGame();
-  }
+  startGame();
 }
 
 function startGame() {

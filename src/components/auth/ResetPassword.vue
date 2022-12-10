@@ -1,39 +1,37 @@
 <template>
-  <div class="full-width column justify-center items-center flex-1 q-px-sm">
+  <div
+    class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
+  >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit" v-if="showForm">
-      <div class="text-h5">Reset Password</div>
-      <div class="form-group">
-        <label>Email address</label>
-        <input
-          type="email"
-          test="reset-password-email"
-          class="form-control form-control-lg"
-          v-model="email"
-          required
-          v-my-focus
-        />
-      </div>
+      <q-form @submit="submit">
+        <div class="text-h5">Reset Password</div>
 
-      <button
-        type="submit"
-        test="reset-password-submit"
-        class="btn btn-dark btn-lg btn-block mt-2"
-        :disabled="isSending"
-      >
-        Reset password
-      </button>
-      <div
-        v-if="errormsg"
-        test="reset-password-error-msg"
-        class="invalid-feedback display-block"
-      >
-        {{ errormsg }}
-      </div>
+        <q-input
+          filled
+          class="q-my-md"
+          v-model="email"
+          test="reset-password-email"
+          label="Email address"
+          type="email"
+          autofocus
+          lazy-rules
+        />
+
+        <q-btn
+          color="primary"
+          type="submit"
+          test="reset-password-submit"
+          :disabled="isSending"
+        >
+          Reset password
+        </q-btn>
+        <div v-if="errormsg" test="reset-password-error-msg" class="text-red">
+          {{ errormsg }}
+        </div>
       </q-form>
-    <div v-if="submitted" test="reset-password-success-msg">
-      You will shortly receive an email with a link to reset your password.
-    </div>
+      <div v-if="submitted" test="reset-password-success-msg">
+        You will shortly receive an email with a link to reset your password.
+      </div>
     </q-card>
   </div>
 </template>

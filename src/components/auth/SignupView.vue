@@ -1,12 +1,14 @@
 <template>
-  <div class="full-width column justify-center items-center flex-1 q-px-sm">
+  <div
+    class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
+  >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit">
-        <div class="text-h5">Sign Up</div>
+        <div class="text-h5 q-mb-md">Sign Up</div>
 
-        <GoogleLoginButton :disable="submitting" />
+        <GoogleLoginButton class="q-my-md" :disable="submitting" />
 
-        <div class="text-h5 q-mt-md">Sign up with email</div>
+        <div class="text-h6 q-mt-md">Sign up with email</div>
         <q-input
           filled
           class="q-mb-sm"
@@ -89,6 +91,8 @@ async function submit() {
       method: 'password',
       email: email.value,
       password: password.value,
+      username: '',
+      image: '/images/avatars/default_avatar.png',
       redirect: false,
     });
     signedUp.value = true;

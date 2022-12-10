@@ -16,9 +16,7 @@ const route = useRoute();
 const $q = useQuasar();
 
 onBeforeMount(() => {
-  if (store.player.preferredTheme === 'dark') {
-    $q.dark.set(true);
-  }
+  $q.dark.set(store.themePreference === 'dark');
 });
 
 const removeTrailingSlash = (path: string) => {

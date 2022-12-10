@@ -1,4 +1,5 @@
 import { useAppStore } from 'stores/app-store';
+import { useAuthStore } from 'stores/auth-store';
 
 export interface Player {
   name: string;
@@ -33,6 +34,7 @@ export interface HighScoreDto {
   difficulty: string;
   nameOfTheGame: string;
   playerName: string;
+  image: string;
   score: number;
   date: number;
   isYou: boolean;
@@ -64,7 +66,8 @@ export class ScoreService {
       headers: {
         'Content-Type': 'application/json',
         'x-machine': this.store.machineId,
-        'x-player': this.store.player.id,
+        'x-player': useAuthStore().id || '',
+        Authorization: `Bearer ${useAuthStore().accessToken}`,
       },
     };
   }
@@ -89,7 +92,7 @@ export class ScoreService {
     const response = await fetch(this.serverPath + '/player/highscores', {
       ...this.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify({ id: this.store.player.id }),
+      body: JSON.stringify({ id: useAuthStore().id || '' }),
     });
     return response.json();
   }
@@ -97,7 +100,7 @@ export class ScoreService {
   async fetchPlayerScorePercentiles(): Promise<PercentileScore[]> {
     if (!this.store.playerScores || !this.store.playerScores!.hasPercentiles) {
       const response = await fetch(
-        this.serverPath + `/player/${this.store.player.id}/score-percentiles`,
+        this.serverPath + `/player/score-percentiles`,
         {
           ...this.getStandardRequestInit(),
           method: 'GET',
@@ -111,13 +114,10 @@ export class ScoreService {
 
   async fetchPlayerScores(): Promise<Score[]> {
     if (!this.store.playerScores) {
-      const response = await fetch(
-        this.serverPath + `/player/${this.store.player.id}/scores`,
-        {
-          ...this.getStandardRequestInit(),
-          method: 'GET',
-        }
-      );
+      const response = await fetch(this.serverPath + `/player/scores`, {
+        ...this.getStandardRequestInit(),
+        method: 'GET',
+      });
       const scores = (await response.json()).scores;
       this.store.$patch({ playerScores: { hasPercentiles: false, scores } });
     }
@@ -126,13 +126,10 @@ export class ScoreService {
 
   async fetchPlayerScoreHistory(): Promise<Score[]> {
     if (this.store.scoreHistory === undefined) {
-      const response = await fetch(
-        this.serverPath + `/player/${this.store.player.id}/score-history`,
-        {
-          ...this.getStandardRequestInit(),
-          method: 'GET',
-        }
-      );
+      const response = await fetch(this.serverPath + `/player/score-history`, {
+        ...this.getStandardRequestInit(),
+        method: 'GET',
+      });
       const scoreHistory = (await response.json()).scores;
       this.store.$patch({ scoreHistory });
     }

@@ -88,8 +88,8 @@ module.exports = configure(function (/* ctx */) {
       // https: true
       open: true, // opens browser window automatically
       watchOptions: {
-        poll: 1000
-      }
+        poll: 1000,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
@@ -108,7 +108,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Dialog', 'Loading'],
+      plugins: ['Dialog', 'Loading', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations

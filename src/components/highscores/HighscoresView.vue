@@ -37,7 +37,10 @@
               />
             </q-td>
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
-              {{ col.value }}
+              <q-avatar size="md" v-if="col.name === 'image'">
+                <img :src="col.value || '/images/avatars/default_avatar.png'" />
+              </q-avatar>
+              <span v-if="col.name !== 'image'">{{ col.value }}</span>
             </q-td>
           </q-tr>
         </template>
@@ -59,12 +62,21 @@
               <q-separator />
               <q-card-section class="column">
                 <div class="row justify-between">
-                  <div>Schwierigkeit</div>
-                  <div>{{ props.row.difficulty }}</div>
+                  <div>User</div>
+                  <div>
+                    <span>{{ props.row.playerName }}</span>
+                    <q-avatar size="sm" class="q-ml-sm">
+                      <img
+                        :src="
+                          props.row.image || '/images/avatars/avatar_00.jpg'
+                        "
+                      />
+                    </q-avatar>
+                  </div>
                 </div>
                 <div class="row justify-between">
-                  <div>User</div>
-                  <div>{{ props.row.playerName }}</div>
+                  <div>Schwierigkeit</div>
+                  <div>{{ props.row.difficulty }}</div>
                 </div>
                 <div class="row justify-between">
                   <div>Bewertung</div>
@@ -76,7 +88,7 @@
                 </div>
                 <div class="row justify-between">
                   <div>Deine Punkte</div>
-                  <div>{{ props.row.yourScore }}</div>
+                  <div>{{ props.row.yourScore || '-' }}</div>
                 </div>
               </q-card-section>
             </q-card>
@@ -115,6 +127,7 @@ onMounted(async () => {
       date: s.date,
       yourScore: s.yourScore,
       playerName: s.playerName,
+      image: s.image,
       isYou: s.isYou,
       sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty),
     });
@@ -146,6 +159,13 @@ const columns = ref([
     sortable: true,
   },
   { name: 'playerName', label: 'Spieler', field: 'playerName', sortable: true },
+  {
+    name: 'image',
+    label: 'Avatar',
+    field: 'image',
+    align: 'left',
+    sortable: true,
+  },
   {
     name: 'score',
     label: 'Bewertung',

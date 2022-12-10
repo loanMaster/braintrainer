@@ -1,5 +1,6 @@
 <template>
   <div class="full-width flex-1 column items-center">
+    <ContinueAsGuestDialog ref="continueAsGuestDialog"/>
     <div class="q-py-md content q-mx-auto text-center">
       <q-card class="exercise-block">
         <div class="exercise-title">Sprache</div>
@@ -87,15 +88,16 @@
 </template>
 
 <script setup lang="ts">
+import ContinueAsGuestDialog from 'src/components/shared/ContinueAsGuestDialog.vue';
 import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+import {useAuthStore} from "stores/auth-store";
 
 const { t } = useI18n();
 const router = useRouter();
-
-onMounted(() => useAppStore().finishDailyTraining());
+const continueAsGuestDialog = ref()
 
 const languageExercises = ref([
   'SpellBackwards',
@@ -109,6 +111,12 @@ const mathExercises = ref([
   'MathMarathon',
   'SolveEquation',
 ]);
+
+onMounted(() => {
+  if (!useAppStore().playingAsGuest && !useAuthStore().isLoggedIn && !useAuthStore().hasAccount) {
+    continueAsGuestDialog.value.showDialog()
+  }
+})
 
 function selectExercise(game: string) {
   router.push({

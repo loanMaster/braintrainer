@@ -6,6 +6,7 @@ import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
 import { PercentileScore, Score } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
+import { useAuthStore } from 'stores/auth-store';
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -50,21 +51,6 @@ export const newExercise = (
   audioState: { playing: false, tag: '', playingSequence: false },
 });
 
-export interface Player {
-  id: string;
-  name: string;
-  preferredTheme: string;
-}
-
-export interface Players {
-  [key: string]: Player;
-}
-
-export interface DailyTraining {
-  active: boolean;
-  results: Exercise[];
-}
-
 export interface AudioState {
   playing: boolean;
   tag: string;
@@ -72,14 +58,14 @@ export interface AudioState {
 }
 
 export interface IAppState {
-  currentPlayerId: string;
-  players: Players;
   exercise: Exercise;
   machineId: string;
-  dailyTraining: DailyTraining;
   _language: string;
+  _themePreference: string;
   playerScores?: { scores: PercentileScore[]; hasPercentiles: boolean };
   scoreHistory?: Score[];
+  _noOfTimesPlayedAsGuest: number;
+  playingAsGuest?: boolean;
 }
 
 const getBrowserLanguage = (): string => {
@@ -95,57 +81,26 @@ const getBrowserLanguage = (): string => {
   }
 };
 
-const storeMachineId = (machineId: string) => {
-  new PersistenceService().store('machineId', machineId);
-};
-
-const storeCurrentPlayerId = (playerId: string) => {
-  new PersistenceService().store('currentPlayerId', playerId);
-};
-
-const newPlayer = () => {
-  return {
-    name: '',
-    xp: 0,
-    level: 0,
-    id: uuidv4(),
-    averageRatings: {},
-    ratings: {},
-    exerciseHistory: [],
-    preferredTheme: 'light', // TODO use value from current mode
-  };
-};
-
 export const useAppStore = defineStore('main', {
   state: (): IAppState => {
-    if (!new PersistenceService().fetch('machineId')) {
-      storeMachineId(uuidv4());
-    }
-    let players = new PersistenceService().fetch('players');
-    let currentPlayerId = new PersistenceService().fetch('currentPlayerId');
-    if (!players || !currentPlayerId || !players[currentPlayerId]) {
-      const player = newPlayer();
-      storeCurrentPlayerId(player.id);
-      currentPlayerId = player.id;
-      players = {
-        [currentPlayerId]: player,
-      };
+    if (!localStorage.getItem('machineId')) {
+      localStorage.setItem('machineId', uuidv4());
     }
     return {
-      currentPlayerId: currentPlayerId,
-      machineId: new PersistenceService().fetch('machineId') || uuidv4(),
-      players: players,
+      machineId: localStorage.getItem('machineId') || uuidv4(),
       dailyTraining: { active: false, results: [] as Exercise[] },
       exercise: newExercise('rememberNumbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
+      _themePreference: localStorage.getItem('language') || 'dark',
+      _noOfTimesPlayedAsGuest: Number(
+        localStorage.getItem('noOfTimesPlayedAsGuest') || 0
+      ),
       playerScores: undefined,
       scoreHistory: undefined,
+      playingAsGuest: undefined
     } as IAppState;
   },
   getters: {
-    player(state: IAppState): Player {
-      return state.players[state.currentPlayerId];
-    },
     language(): string {
       return this._language;
     },
@@ -155,47 +110,18 @@ export const useAppStore = defineStore('main', {
     isPaused(): boolean {
       return this.exercise.state === 'paused';
     },
+    themePreference(): string {
+      return this._themePreference;
+    },
+    noOfGamesPlayedAsGuest(): number {
+      return this._noOfTimesPlayedAsGuest;
+    },
   },
   actions: {
-    setName(name: string) {
-      this.players[this.currentPlayerId].name = name;
-      storePlayers();
-    },
-    startDailyTraining() {
-      this.dailyTraining.active = true;
-      this.dailyTraining.results = [];
-    },
-    finishDailyTraining() {
-      this.dailyTraining.active = false;
-      this.dailyTraining.results = [];
-    },
     setLanguage(i18n: Composer<any>, lang: string) {
       i18n.locale.value = lang;
       this._language = lang;
       localStorage.setItem('language', lang);
-    },
-    async addUser(userName: string) {
-      const additionalPlayer = newPlayer();
-      additionalPlayer.name = userName;
-      this.players[additionalPlayer.id] = additionalPlayer;
-      storePlayers();
-      this.currentPlayerId = additionalPlayer.id;
-    },
-    async deleteUser(userId: string) {
-      if (userId === this.currentPlayerId) {
-        if (Object.keys(this.players).length === 1) {
-          this.addUser('noname');
-        }
-        this.currentPlayerId = Object.keys(this.players).find(
-          (id) => id !== userId
-        )!;
-      }
-      delete this.players[userId];
-      storePlayers();
-    },
-    setCurrentPlayerId(currentPlayerId: string) {
-      this.currentPlayerId = currentPlayerId;
-      storeCurrentPlayerId(this.currentPlayerId);
     },
     strike(): boolean {
       if (
@@ -263,6 +189,13 @@ export const useAppStore = defineStore('main', {
     },
     beginExercise() {
       this.exercise.state = 'started';
+      if (!useAuthStore().isLoggedIn || !useAuthStore().isConfirmed) {
+        this._noOfTimesPlayedAsGuest++;
+        localStorage.setItem(
+          'noOfTimesPlayedAsGuest',
+          String(this._noOfTimesPlayedAsGuest)
+        );
+      }
     },
     repeatAudio() {
       // noop
@@ -276,14 +209,8 @@ export const useAppStore = defineStore('main', {
       this.exercise.audioState.tag = tag;
     },
     setThemePreference(theme: 'light' | 'dark') {
-      if (this.currentPlayerId) {
-        this.players[this.currentPlayerId].preferredTheme = theme;
-        storePlayers();
-      }
+      this._themePreference = theme;
+      localStorage.setItem('themePreference', theme);
     },
   },
 });
-
-const storePlayers = (players?: Players) => {
-  new PersistenceService().store('players', players || useAppStore().players);
-};

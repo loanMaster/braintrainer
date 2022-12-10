@@ -52,3 +52,10 @@ th {
     background-color: $blue-grey-10;
   }
 }
+
+.bg-gradient {
+  background-image: linear-gradient(to bottom right, #ffffaa55, #aaffff55);
+}
+.body--dark .bg-gradient {
+  background-image: none;
+}

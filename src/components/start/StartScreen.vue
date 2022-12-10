@@ -12,7 +12,7 @@
       />
       <div class="text-h3 relative-position">BrianTrainer</div>
       <div class="column q-mt-xl">
-        <q-btn color="secondary" rounded size="xl" icon="double_arrow"
+        <q-btn color="secondary" rounded size="xl" icon="double_arrow" :to="{ name: 'select-exercise', params: { language: store.language } }"
           >Jetzt trainieren</q-btn
         >
       </div>
@@ -26,7 +26,7 @@
       >
         <div class="col-4 q-mb-xs-md">
           <q-card class="shadow-0">
-            <img src="/images/promo/promo5.png" />
+            <img src="/images/promo/promo5.jpg" />
           </q-card>
         </div>
         <div class="col-8 text-center">
@@ -50,7 +50,7 @@
         </div>
         <div class="col-4">
           <q-card class="shadow-0">
-            <img src="/images/promo/promo4.png" />
+            <img src="/images/promo/promo4.jpg" />
           </q-card>
         </div>
       </div>
@@ -64,7 +64,7 @@
       >
         <div class="col-4 q-mb-xs-md">
           <q-card class="shadow-0">
-            <img src="/images/promo/promo3.png" />
+            <img src="/images/promo/promo3.jpg" />
           </q-card>
         </div>
         <div class="col-8 text-center">
@@ -98,7 +98,7 @@
                 <div class="q-mt-md text-right">
                   <q-chip size="lg">
                     <q-avatar>
-                      <img src="/images/promo/avatar_1.png" />
+                      <img src="/images/avatars/avatar_20.jpg" />
                     </q-avatar>
                     Alice
                   </q-chip>
@@ -114,7 +114,7 @@
                 <div class="q-mt-md text-right">
                   <q-chip size="lg">
                     <q-avatar>
-                      <img src="/images/promo/avatar_2.png" />
+                      <img src="/images/avatars/avatar_10.jpg" />
                     </q-avatar>
                     John
                   </q-chip>
@@ -132,6 +132,7 @@
           size="xl"
           icon="double_arrow"
           class="q-mb-lg"
+          :to="{ name: 'select-exercise', params: { language: store.language } }"
           >Jetzt trainieren</q-btn
         >
         <q-btn color="accent" rounded size="xl" icon="menu_book"
@@ -144,11 +145,15 @@
     <div
       class="max-width-sm row-sm column-xs justify-between full-width text-center text-white"
     >
-      <q-btn flat no-caps class="col-3" @click="showLegalNotice">Privacy</q-btn>
-      <q-btn flat no-caps class="col-3" @click="showLegalNotice"
+      <q-btn flat no-caps class="col-3" @click="showPrivacyStatement"
+        >Privacy</q-btn
+      >
+      <q-btn flat no-caps class="col-3" @click="showTermsAndConditions"
         >Terms of service</q-btn
       >
-      <q-btn flat no-caps class="col-3" @click="showLegalNotice">Cookies</q-btn>
+      <q-btn flat no-caps class="col-3" @click="showCookiePolicy"
+        >Cookies</q-btn
+      >
       <q-btn flat no-caps class="col-3" @click="showLegalNotice"
         >Legal notice</q-btn
       >
@@ -159,13 +164,46 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
+import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
+import {useAppStore} from "stores/app-store";
 
 const $q = useQuasar();
+const { t } = useI18n();
+const store = useAppStore()
 
 function showLegalNotice() {
   $q.dialog({
-    message: 'Some imporant legal information',
-    ok: 'X',
+    message: t('LEGAL_NOTICE'),
+    ok: 'OK',
+    html: true,
+    persistent: true,
+  });
+}
+
+function showCookiePolicy() {
+  $q.dialog({
+    message: t('COOKIE_POLICY'),
+    ok: 'OK',
+    html: true,
+    persistent: true,
+  });
+}
+
+function showPrivacyStatement() {
+  $q.dialog({
+    message: t('PRIVACY_STATEMENT'),
+    ok: 'OK',
+    html: true,
+    persistent: true,
+  });
+}
+
+function showTermsAndConditions() {
+  $q.dialog({
+    message: t('TERMS_AND_CONDITIONS'),
+    ok: 'OK',
+    html: true,
     persistent: true,
   });
 }

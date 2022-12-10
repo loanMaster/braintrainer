@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title class="non-selectable">
           <q-avatar>
-            <q-icon name="psychology" size="2rem" />
+            <img src="/images/logo_small.png" />
           </q-avatar>
           Braintrainer
         </q-toolbar-title>
@@ -75,22 +75,51 @@
             color="secondary"
             unchecked-icon="dark_mode"
           />
-          <q-btn flat round dense icon="language" class="q-mr-xs" />
-          <q-menu>
-            <q-list dense style="min-width: 100px">
-              <q-item clickable v-close-popup @click="setLanguage('en')">
-                <q-item-section>English</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup @click="setLanguage('de')">
-                <q-item-section>deutsch</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup @click="setLanguage('es')">
-                <q-item-section>español</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
+          <q-btn flat round dense icon="language" class="q-mr-xs">
+            <q-menu>
+              <q-list dense style="min-width: 100px">
+                <q-item clickable v-close-popup @click="setLanguage('en')">
+                  <q-item-section>English</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="setLanguage('de')">
+                  <q-item-section>deutsch</q-item-section>
+                </q-item>
+                <q-item clickable v-close-popup @click="setLanguage('es')">
+                  <q-item-section>español</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+
+          <q-btn flat round>
+            <q-avatar @click="login">
+              <img :src="profileImage" />
+            </q-avatar>
+            <q-menu>
+              <q-list dense>
+                <q-item clickable v-close-popup v-if="isLoggedIn">
+                  <q-item-section
+                    ><router-link
+                      :to="{
+                        name: 'user-settings',
+                        params: { language: store.language },
+                      }"
+                      >Settings</router-link
+                    ></q-item-section
+                  >
+                </q-item>
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="logout"
+                  v-if="isLoggedIn"
+                >
+                  <q-item-section>Logout</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
         </div>
-        <q-btn flat round dense icon="group_add" />
       </q-toolbar>
     </q-header>
 
@@ -144,6 +173,8 @@ import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 import { setDarkMode } from 'src/util/dark-model.toggle';
+import { useAuthStore } from 'stores/auth-store';
+import { useRouter } from 'vue-router';
 const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
@@ -163,12 +194,31 @@ function toggleDarkMode() {
 }
 
 const i18n = useI18n();
+const authStore = useAuthStore();
+const router = useRouter();
+
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 function setLanguage(lang: string) {
   store.setLanguage(i18n, lang);
 }
+
+const isLoggedIn = computed(() => {
+  return authStore.isLoggedIn;
+});
+
+function logout() {
+  authStore.logout();
+}
+
+function login() {
+  if (!authStore.isLoggedIn) {
+    router.push({ name: 'login', params: { language: store.language } });
+  }
+}
+
+const profileImage = computed(() => authStore.image);
 
 const links1 = ref([
   { icon: 'web', text: 'Top stories' },
