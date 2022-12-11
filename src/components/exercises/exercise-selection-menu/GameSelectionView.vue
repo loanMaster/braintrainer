@@ -15,9 +15,9 @@
               @click="selectExercise(exercise)"
             >
               <q-card-section class="words-bg text-bold">
-                {{ t(exercise) }}
+                {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -35,9 +35,9 @@
               @click="selectExercise(exercise)"
             >
               <q-card-section class="math-bg text-bold">
-                {{ t(exercise) }}
+                {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -51,7 +51,7 @@
               'remember-words',
               'remember-numbers',
               'remember-names',
-              'remember-names',
+              'find-matching-person',
               'remember-words-rev',
               'remember-numbers-rev',
               'memory-animals',
@@ -64,9 +64,9 @@
               @click="selectExercise(exercise)"
             >
               <q-card-section class="memory-bg text-bold">
-                {{ t(exercise) }}
+                {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
+              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -91,7 +91,7 @@ const languageExercises = ref([
   'spell-backwards',
   'word-scramble',
   'listen-backwards',
-  'find-relative',
+  'find-relative'
 ]);
 const mathExercises = ref([
   'mental-arithmetic',

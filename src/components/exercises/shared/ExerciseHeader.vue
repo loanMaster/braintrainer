@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
     <q-toolbar-title>
-      {{ nameOfTheGame ? $t(nameOfTheGame) : 'Select an exercise' }}
+      {{ nameOfTheGame ? $t(nameOfTheGame + '.title') : 'Select an exercise' }}
       <span class="text-italic" v-if="difficulty">({{ $t(difficulty) }})</span>
     </q-toolbar-title>
   </q-toolbar>

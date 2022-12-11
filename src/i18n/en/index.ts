@@ -9,14 +9,86 @@ export default {
   keys: 'en',
   Yes: 'Yes',
   No: 'No',
-  'spell-backwards': 'Spell backwards',
-  'listen-backwards': 'Listen backwards',
-  'mental-arithmetic': 'Mental arithmetic',
-  'math-marathon': 'Math marathon',
-  'remember-words': 'Memorize words',
-  'remember-numbers': 'Memorize numbers',
-  memory: 'Memory',
-  'word-scramble': 'Word scramble',
+  'solve-equation': {
+    'title': 'Solve equations',
+    'description': 'Merke dir die Gleichungen und löse x auf.',
+    'hint': 'Merke dir die Gleichungen und löse x auf.'
+  },
+  'find-relative': {
+    'title': 'Find your relative',
+    'description': 'Die Übung beschreibt Verwandtschaften. Kannst du herausfinden, welche?',
+    'hint': 'Höre dir an, wie du mit einer Person verwandt bist. Wähle dann die passende Verwandtschaft aus.'
+  },
+  'word-scramble': {
+    'title': 'Word scramble',
+    'description': 'Bilde aus den vorgelesenen Buchstaben ein Wort.',
+    'hint': 'Bilde aus den vorgelesenen Buchstaben ein Wort.'
+  },
+  'memory-animals': {
+    'title': 'Memory - animals',
+    'description': 'Memory mit Audio anstatt mit Bildern.',
+    'hint': 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.'
+  },
+  'memory': {
+    'title': 'Memory - mixed',
+    'description': 'Memory mit Audio anstatt mit Bildern.',
+    'hint': 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.'
+  },
+  'find-matching-person': {
+    'title': 'Remember people (II)',
+    'description': 'Merke dir die Namen der angezeigten Person.',
+    'hint': 'Merke dir die Namen der angezeigten Person. Ordne danach jedem Namen der passenden Person zu.'
+  },
+  'remember-names': {
+    'title': 'Remember people (I)',
+    'description': 'Merke dir die Namen der angezeigten Person.',
+    'hint': 'Merke dir die Namen der angezeigten Person. Ordne danach jeder Person den passenden Namen zu.'
+  },
+  'remember-numbers-rev': {
+    'title': 'Memorize numbers (backwards)',
+    'description': 'Merke dir die Zahlen und gib sie in umgekehrter Rehenfolge wieder.',
+    'hint': 'Merke dir die Zahlen und gib sie in umgekehrter Rehenfolge wieder.'
+  },
+  'remember-numbers': {
+    'title': 'Memorize numbers',
+    'description': 'Merke dir die Zahlen und gib sie in der richtigen Rehenfolge wieder.',
+    'hint': 'Merke dir die Zahlen und gib sie in der richtigen Rehenfolge wieder.'
+  },
+  'remember-words-rev': {
+    'title': 'Memorize words (backwards)',
+    'description': 'Merke dir die Wörter und gib sie in umgekehrter Rehenfolge wieder.',
+    'hint': 'Merke dir die Wörter und gib sie in umgekehrter Rehenfolge wieder.'
+  },
+  'remember-words': {
+    'title': 'Memorize words',
+    'description': 'Merke dir die Wörter und gib sie in der richtigen Rehenfolge wieder',
+    'hint': 'Merke dir die Wörter und gib sie in der richtigen Rehenfolge wieder.'
+  },
+  'math-marathon': {
+    'title': 'Math marathon',
+    'description': 'Löse die Rechenaufgaben und merke dir das Zwischenergebnis',
+    'hint': 'Löse die Rechenaufgaben und merke dir das Zwischenergebnis.'
+  },
+  'mental-arithmetic-mul': {
+    'title': 'Mental arithmetic (*/÷)',
+    'description': 'Löse Aufgaben mit Multiplikation / Division im Kopf.',
+    'hint': 'Löse die Matheaufgaben. Benutze nur deinen Kopf.'
+  },
+  'mental-arithmetic': {
+    'title': 'Mental arithmetic (+/-)',
+    'description': 'Löse Aufgaben mit Addition / Subtraktion im Kopf.',
+    'hint': 'Löse die Matheaufgaben. Benutze nur deinen Kopf.'
+  },
+  'listen-backwards': {
+    'title': 'Listen backwards',
+    'description': 'Find heraus, welches Wort Rückwärts ausgeprochen wurde.',
+    'hint': 'Wähle das Wort aus, welches rückwärts ausgeprochen wurde.'
+  },
+  'spell-backwards': {
+    'title': 'Spell backwards',
+    'description': 'Buchstabiere rückwärts',
+    'hint': 'Buchstabiere rückwärts! Anstatt ‹ß› bitte ‹ss› verwenden.'
+  },
   SPELLING_WARNING: '! American English spelling is used !',
   Player: 'Player',
   Scores: 'Scores',

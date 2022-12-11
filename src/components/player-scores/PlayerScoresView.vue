@@ -119,7 +119,7 @@ onMounted(async () => {
     rows.value.push({
       difficultyOri: s.difficulty,
       nameOfTheGameOri: s.nameOfTheGame,
-      nameOfTheGame: t(s.nameOfTheGame),
+      nameOfTheGame: t(s.nameOfTheGame + '.title'),
       difficulty: t(s.difficulty),
       score: s.score,
       starts: Array(3).fill('★').join(''), // TODO

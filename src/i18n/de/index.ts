@@ -2,21 +2,92 @@ export default {
   APP_NAME: 'BrainTunes',
   'Play again': 'Nochmal spielen',
   Delete: 'Löschen',
-  'Create user': 'Benutzer anlegen',
-  Settings: 'Einstellungen',
-  Play: 'Spielen',
+  Exercise: 'Üben',
   LANGUAGE: 'Deutsch',
   keys: 'de',
   Yes: 'Ja',
   No: 'Nein',
-  'spell-backwards': 'Rückwärts schreiben',
-  'listen-backwards': 'Rückwärts gesprochen',
-  'mental-arithmetic': 'Kopfrechnen',
-  'math-marathon': 'Mathe-Marathon',
-  'remember-words': 'Wörter merken',
-  'remember-numbers': 'Zahlen merken',
-  memory: 'Memory',
-  'word-scramble': 'Wortsalat',
+  'solve-equation': {
+    'title': 'Gleichungen lösen',
+    'description': 'Merke dir die Gleichung und löse nach x auf.',
+    'hint': 'Merke dir die Gleichung und löse nach x auf.'
+  },
+  'find-relative': {
+    'title': 'Verwandtschaft bestimmen',
+    'description': 'Kannst du herausfinden, wie die beschriebene Person mit dir verwandt ist?',
+    'hint': 'Höre dir an, wie du mit einer Person verwandt bist. Wähle dann die passende Verwandtschaft aus.'
+  },
+  'word-scramble': {
+    'title': 'Wortsalat',
+    'description': 'Bilde aus den vorgelesenen Buchstaben ein Wort.',
+    'hint': 'Bilde aus den vorgelesenen Buchstaben ein Wort. Anstatt ‹ß› bitte ‹ss› verwenden.'
+  },
+  'memory-animals': {
+    'title': 'Memory - Tiere',
+    'description': 'Memory mit Audio anstatt mit Bildern. Es kommen ausschliesslich Tiere vor.',
+    'hint': 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.'
+  },
+  'memory': {
+    'title': 'Memory - gemischt',
+    'description': 'Memory mit Audio anstatt mit Bildern.',
+    'hint': 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.'
+  },
+  'find-matching-person': {
+    'title': 'Personen Merken (II)',
+    'description': 'Merke dir die Namen der angezeigten Personen und ordne den Namen ein Gesicht zu.',
+    'hint': 'Merke dir die Namen der angezeigten Person. Ordne danach jedem Namen der passenden Person zu.'
+  },
+  'remember-names': {
+    'title': 'Personen merken (I)',
+    'description': 'Merke dir die Namen der angezeigten Personen und ordne den Gesichtern einen Namen zu.',
+    'hint': 'Merke dir die Namen der angezeigten Person. Ordne danach jeder Person den passenden Namen zu.'
+  },
+  'remember-numbers-rev': {
+    'title': 'Zahlen merken (Rückwärts)',
+    'description': 'Merke dir die Zahlen und gib sie in umgekehrter Reihenfolge wieder.',
+    'hint': 'Merke dir die Zahlen und gib sie in umgekehrter Reihenfolge wieder.'
+  },
+  'remember-numbers': {
+    'title': 'Zahlen merken',
+    'description': 'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.',
+    'hint': 'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.'
+  },
+  'remember-words-rev': {
+    'title': 'Wörter merken (Rückwärts)',
+    'description': 'Merke dir die Wörter und gib sie in umgekehrter Reihenfolge wieder.',
+    'hint': 'Merke dir die Wörter und gib sie in umgekehrter Reihenfolge wieder.'
+  },
+  'remember-words': {
+    'title': 'Wörter merken',
+    'description': 'Merke dir die Wörter und gib sie in der richtigen Reihenfolge wieder',
+    'hint': 'Merke dir die Wörter und gib sie in der richtigen Reihenfolge wieder.'
+  },
+  'math-marathon': {
+    'title': 'Mathe-Marathon',
+    'description': 'Löse die Rechenaufgaben und merke dir jeweils das Zwischenergebnis.',
+    'hint': 'Löse die Rechenaufgaben und merke dir jeweils das Zwischenergebnis.'
+  },
+  'mental-arithmetic-mul': {
+    'title': 'Kopfrechnen (*/÷)',
+    'description': 'Löse Aufgaben mit Multiplikation / Division im Kopf.',
+    'hint': 'Löse die Matheaufgaben. Benutze nur deinen Kopf.'
+  },
+  'mental-arithmetic': {
+    'title': 'Kopfrechnen (+/-)',
+    'description': 'Löse Aufgaben mit Addition / Subtraktion im Kopf.',
+    'hint': 'Löse die Matheaufgaben. Benutze nur deinen Kopf.'
+  },
+  'listen-backwards': {
+    'title': 'Rückwärts gesprochen',
+    'description': 'Find heraus, welches Wort rückwärts ausgeprochen wurde.',
+    'hint': 'Wähle das Wort aus, welches rückwärts ausgeprochen wurde.'
+  },
+  'spell-backwards': {
+    'title': 'Rückwärts schreiben',
+    'description': 'Buchstabiere rückwärts',
+    'hint': 'Buchstabiere rückwärts! Anstatt ‹ß› bitte ‹ss› verwenden.'
+  },
+
   SPELLING_WARNING: '! Anstatt ‹ß› bitte ‹ss› verwenden !',
   Player: 'Spieler',
   Scores: 'Punkte',
@@ -91,43 +162,6 @@ export default {
   Documentation: 'Anleitung',
   'More apps': 'Weitere apps',
   Donate: 'Spenden',
-  'Learn to play blindfold chess': 'Lerne Blindschach zu spielen',
-  'A web application to encrypt, store and inherit private data (e.g. bitcoin keys)':
-    'Eine Website um private Daten zu verschlüsseln, zu speichern und zu vererben (z.B. bitcoin keys)',
-  'A more colorful version of BrianTrainer featuring cartoon characters and story line':
-    'Eine alternative Version des BrainTrainers, mit verschiedenen Charakteren und Animationen',
-  "A small jump'n'run game with pirates": "Ein jump'n'run Spiel mit Piraten",
-  'Daily training finished': 'Tägliches Training abgeschlossen',
-  'Well done. You finished your daily training.':
-    'Gut gemacht. Du hast das tägliche Training abgeschlossen.',
-  'Improve your visualization skills and short term memory':
-    'Verbessere dein Kurzzeitgedächtnis und Visualisierungsvermögen',
-  'Start your daily training': 'Starte dein tägliches Training',
-  'What is BrainTrainer?': 'Was ist BrainTrainer?',
-  'What is BrainTrainer?_answer':
-    'BrainTrainer ist die erste Gehirn-jogging App, bei der der Spieler Aufgaben via Audio gestellt bekommt. BrainTrainer hilft, Kurzzeitgedächtnis, Konzentrationsfähigkeit und Visualisierungsvermögen zu verbessern.',
-  'Why do we need another brain jogging app?':
-    'Warum braucht es noch eine Gehirn-jogging App?',
-  'Why do we need another brain jogging app?_answer':
-    'BrainTrainer unterscheidet sich von anderen Gehirn jogging Apps. Dort werden dem Benutzer die Aufgaben visuell präsentiert. BrainTrainer arbeitet mit Audio. Durch BrainTrainer werden andere Bereiche des Gehirns beansprucht, als bei anderen Brain-jogging Apps.',
-  'What skills can I improve using BrainTrainer?':
-    'Welche Fähigkeiten werden durch den BrainTrainer verbessert?',
-  'What skills can I improve using BrainTrainer?_answer':
-    'Um die Aufgaben zu lösen, muss sich der Spieler Wörter oder Zahlen visuell vorstellen. BrainTrainer verbessert die Visualisierungsfähigkeit und das auditorische Gedächtnis',
-  'Are these skills helpful in my every day life?':
-    'Helfen mir diese Fährigkeiten im Alltagsleben?',
-  'Are these skills helpful in my every day life?_answer':
-    'Ja. BrainTrainer bietet beispielsweise Aufgaben an, um Kopfrechnen zu üben.',
-  'What do the stars and medals mean?':
-    'Welche Bedeutung haben die Medaillen und Sterne?',
-  'What do the stars and medals mean?_answer':
-    'Wenn ein Spieler eine Aufgabe fehlerfrei abschliesst, bekommt er/sie 3 Sterne und eine Medaille',
-  'How does the daily training work?':
-    'Wie funktioniert das "tägliche Training"?',
-  'How does the daily training work?_answer':
-    'Die Anwendung wird für den Spieler jeden Tag Aufgaben mit passender Schwierigkeit aussuchen. Wenn das training täglich durchgeführt wird, wird der Spieler im Lösen sämtlicher Aufgaben besser werden',
-  'How can I report a bug?': 'Wo kann ich einen Fehler melden?',
-  'Continue daily training': 'Tägliches Training fortsetzen',
   'Application paused': 'Pause',
   LEGAL_NOTICE:
     'Rechtlicher Hinweis <br/><br/>' +

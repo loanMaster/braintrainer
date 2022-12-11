@@ -2,11 +2,10 @@
   <div>
     <q-card class="q-ma-sm">
       <q-card-section class="text-center">
-        Merken Sie sich die Ziffern und wiederholen Sie sie in der gleichen
-        Reihenfolge.
+        {{ $t(nameOfTheGame + '.hint') }}
       </q-card-section>
       <q-card-section class="text-center">
-        Klicken Sie auf "START" sobald Sie bereit sind.
+        Klicke auf "START" sobald Du bereit bist.
       </q-card-section>
       <q-separator dark />
 
@@ -18,8 +17,13 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from "vue";
+import {useRoute} from "vue-router";
+
 const emits = defineEmits(['confirm']);
+const route = useRoute()
 function confirm() {
   emits('confirm');
 }
+const nameOfTheGame = computed(() => route.params.game)
 </script>

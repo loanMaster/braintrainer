@@ -119,7 +119,7 @@ onMounted(async () => {
   const highscores = await new ScoreService().fetchHighscores();
   highscores.scores.forEach((s) => {
     rows.value.push({
-      nameOfTheGame: t(s.nameOfTheGame),
+      nameOfTheGame: t(s.nameOfTheGame + '.title'),
       difficulty: t(s.difficulty),
       nameOfTheGameOri: s.nameOfTheGame,
       difficultyOri: s.difficulty,
