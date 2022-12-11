@@ -3,7 +3,7 @@
     <ContinueAsGuestDialog ref="continueAsGuestDialog"/>
     <div class="q-py-md content q-mx-auto text-center">
       <q-card class="exercise-block">
-        <div class="exercise-title">Sprache</div>
+        <div class="exercise-title">{{ $t('Language') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg">
           <div
             class="col-3 column"
@@ -23,7 +23,7 @@
         </div>
       </q-card>
       <q-card class="exercise-block">
-        <div class="exercise-title">Rechnen</div>
+        <div class="exercise-title">{{ $t('Calculation') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg">
           <div
             class="col-3 column"
@@ -43,7 +43,7 @@
         </div>
       </q-card>
       <q-card class="exercise-block">
-        <div class="exercise-title">Gedächtnis</div>
+        <div class="exercise-title">{{ $t('Memory exercises') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
           <div
             class="col-3 column"

@@ -146,7 +146,7 @@ const columns = ref([
   {
     name: 'nameOfTheGame',
     required: true,
-    label: 'Übung',
+    label: t('Exercise'),
     align: 'left',
     field: 'nameOfTheGame',
     sortable: true,
@@ -154,7 +154,7 @@ const columns = ref([
   {
     name: 'difficulty',
     align: 'left',
-    label: 'Schwierigkeit',
+    label: t('Schwierigkeit'),
     field: 'difficulty',
     sortable: true,
   },

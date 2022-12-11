@@ -4,11 +4,11 @@
   >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" v-if="showForm">
-        <div class="text-h5 q-mb-md">Sign In</div>
+        <div class="text-h5 q-mb-md">{{ $('Sign In') }}</div>
 
         <GoogleLoginButton class="q-my-md" :disable="submitting" />
 
-        <div class="text-h6 q-mt-md">Sign in with email</div>
+        <div class="text-h6 q-mt-md">{{ $('Sign in with email') }}</div>
         <q-input
           filled
           class="q-mb-sm"
@@ -49,7 +49,7 @@
           :disabled="submitting"
           color="primary"
         >
-          Sign In
+          {{ $('Sign In') }}
         </q-btn>
 
         <q-btn
@@ -58,11 +58,11 @@
           type="button"
           color="secondary"
         >
-          No account? Sign up here!
+          {{ $t('No account? Sign up here!')}}
         </q-btn>
         <p class="forgot-password text-right">
           <router-link test="reset-password-link" to="/reset-password"
-            >Forgot password ?</router-link
+            >{{ $t('Forgot your password?') }}</router-link
           >
         </p>
       </q-form>

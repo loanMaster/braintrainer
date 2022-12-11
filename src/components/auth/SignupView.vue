@@ -4,11 +4,11 @@
   >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit">
-        <div class="text-h5 q-mb-md">Sign Up</div>
+        <div class="text-h5 q-mb-md">{{ $t('Sign up')}}</div>
 
         <GoogleLoginButton class="q-my-md" :disable="submitting" />
 
-        <div class="text-h6 q-mt-md">Sign up with email</div>
+        <div class="text-h6 q-mt-md">{{$t('Sign up with email') }}</div>
         <q-input
           filled
           class="q-mb-sm"
@@ -19,7 +19,7 @@
           lazy-rules
           autofocus
           error-message="Please enter a valid email xxx"
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         />
 
         <q-input
@@ -33,7 +33,7 @@
           required
           error-message="Please enter a valid password"
           :rules="[
-            (val) => (val && val.length >= 8) || 'At least 8 characters',
+            (val) => (val && val.length >= 8) || $t('At least 8 characters'),
           ]"
         >
           <template v-slot:append>
@@ -57,13 +57,12 @@
           {{ errormsg }}
         </div>
         <div class="text-right">
-          Already registered
-          <router-link :to="{ name: 'login' }">sign in?</router-link>
+          {{ $t('Already registered?') }}
+          <router-link :to="{ name: 'login' }">{{ $t('Sign in here') }}</router-link>
         </div>
       </q-form>
       <div v-if="signedUp" test="signup-success-msg">
-        Thank you for signing up. To activate your account click on the link in
-        the verification email you will receive shortly.
+        {{ $t('Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.') }}
       </div>
     </q-card>
   </div>

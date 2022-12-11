@@ -29,7 +29,7 @@
       <div class="flex-1 column justify-center items-center q-mb-md">
         <div class="text-h5 non-selectable q-pa-sm text-center">
           <div>
-            {{ 'Wer ist diese Person?' }}
+            {{ $t('Who is this person?')  }}
           </div>
         </div>
         <q-card class="transition-duration-md">

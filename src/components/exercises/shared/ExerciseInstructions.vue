@@ -5,12 +5,12 @@
         {{ $t(nameOfTheGame + '.hint') }}
       </q-card-section>
       <q-card-section class="text-center">
-        Klicke auf "START" sobald Du bereit bist.
+        {{ $t('Press \"START\" when you are ready') }}
       </q-card-section>
       <q-separator dark />
 
       <q-card-actions class="justify-center">
-        <q-btn color="primary" @click="confirm">START</q-btn>
+        <q-btn color="primary" @click="confirm">{{ $t('START') }}</q-btn>
       </q-card-actions>
     </q-card>
   </div>

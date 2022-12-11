@@ -24,7 +24,6 @@
               {{ t(difficulty) }}
             </q-card-section>
             <q-card-section>
-              Lösen Sie Aufgaben im Kopf
               <StarsRating
                 :rating="getStars(difficulty)"
                 class="text-h4 q-ml-xs"
@@ -34,14 +33,13 @@
         </div>
       </div>
       <div class="q-mt-md">
-        <q-btn color="accent" @click="back">Zurück</q-btn>
+        <q-btn color="accent" @click="back">{{ $t('Back') }}</q-btn>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getNameOfTheGame } from 'src/util/game.name.helper';
 import StarsRating from 'src/components/shared/StarsRating.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { ref, computed, onMounted } from 'vue';

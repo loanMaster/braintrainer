@@ -29,7 +29,7 @@
       <q-card>
         <div class="text-h5 non-selectable text-center q-mt-sm q-mx-sm">
           <div>
-            {{ 'Finde die passende Person' }}
+            {{ $t('Find the matching person') }}
           </div>
         </div>
         <div class="q-pa-sm relative-position">

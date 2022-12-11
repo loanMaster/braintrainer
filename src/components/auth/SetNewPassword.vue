@@ -2,7 +2,7 @@
   <div class="full-width column justify-center items-center flex-1 q-px-sm">
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit">
-        <div class="text-h5 q-mb-lg">Set new Password</div>
+        <div class="text-h5 q-mb-lg">{{ $t('Set new Password') }}</div>
 
         <q-input
           filled
@@ -14,7 +14,7 @@
           :type="showPassword ? 'text' : 'password'"
           autocomplete="off"
           required
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         >
           <template v-slot:append>
             <q-icon
@@ -35,13 +35,13 @@
           type="password"
           autocomplete="off"
           required
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         >
         </q-input>
 
-        <q-btn color="primary" type="submit"> Reset password </q-btn>
+        <q-btn color="primary" type="submit">{{ $t('Reset password') }} </q-btn>
       </q-form>
-      <div v-if="passwordReset">Password changed</div>
+      <div v-if="passwordReset">{{ $t('Password changed') }}</div>
     </q-card>
   </div>
 </template>

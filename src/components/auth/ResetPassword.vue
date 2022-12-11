@@ -4,7 +4,7 @@
   >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit">
-        <div class="text-h5">Reset Password</div>
+        <div class="text-h5">{{ $t('Reset Password') }}</div>
 
         <q-input
           filled
@@ -30,7 +30,7 @@
         </div>
       </q-form>
       <div v-if="submitted" test="reset-password-success-msg">
-        You will shortly receive an email with a link to reset your password.
+        {{ $t('You will shortly receive an email with a link to reset your password.') }}
       </div>
     </q-card>
   </div>

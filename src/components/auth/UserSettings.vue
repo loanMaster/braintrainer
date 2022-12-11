@@ -3,9 +3,9 @@
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
-      <div class="text-h5 col-6">Profile</div>
+      <div class="text-h5 col-6">{{ $t('Profile') }}</div>
       <div class="col-6">
-        <div class="text-h6 col-6">Picture</div>
+        <div class="text-h6 col-6">{{ $t('Picture') }}</div>
         <q-btn-dropdown color="primary" size="xl" class="text-h1">
           <template v-slot:label>
             <q-avatar size="5rem">
@@ -42,20 +42,20 @@
           />
           <div class="col-6 q-mt-sm">
             <q-btn color="primary" type="submit" :disable="isSending"
-              >Save changes</q-btn
+              >{{ $t('Save changes') }}</q-btn
             >
           </div>
         </q-form>
       </div>
 
       <div class="row justify-around full-width max-width-xs q-mt-lg">
-        <div class="text-h5 col-6">Password</div>
+        <div class="text-h5 col-6">{{ $t('Password')}}</div>
         <div class="col-6">
           <q-btn
             color="primary"
             :disable="isSending || submitted"
             @click="resetPassword"
-            >Reset password</q-btn
+            >{{ $t('Reset password')}}</q-btn
           >
         </div>
       </div>

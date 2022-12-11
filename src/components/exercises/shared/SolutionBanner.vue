@@ -9,12 +9,12 @@
         class="text-white bg-red text-center non-selectable"
         v-if="show"
       >
-        <div>Die Lösung ist</div>
+        <div>{{ $t('The solution is') }}</div>
         <div class="text-bold q-my-sm">{{ solution }}</div>
         <slot></slot>
         <template v-slot:action>
           <div class="full-width text-center">
-            <q-btn color="white" outline label="Weiter" @click="onClicked" />
+            <q-btn color="white" outline :label="$t('Continue')" @click="onClicked" />
           </div>
         </template>
       </q-banner>
