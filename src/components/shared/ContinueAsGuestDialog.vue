@@ -17,7 +17,7 @@
         <div class="flex-1 column">
           <q-btn @click="playAsGuest" label="Continue as guest" class="self-center q-mb-md"></q-btn>
           <div class="text-justify">
-            Try up to three exercises of braintrainer before creating an account. Your results will not be stored.
+            Try up to three exercises of {{ $t('APP_NAME') }} before creating an account. Your results will not be stored.
             You will not be able to set new highscores.
           </div>
         </div>

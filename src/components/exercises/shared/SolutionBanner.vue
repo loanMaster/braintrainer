@@ -11,6 +11,7 @@
       >
         <div>Die Lösung ist</div>
         <div class="text-bold q-my-sm">{{ solution }}</div>
+        <slot></slot>
         <template v-slot:action>
           <div class="full-width text-center">
             <q-btn color="white" outline label="Weiter" @click="onClicked" />

@@ -89,7 +89,7 @@ export const useAppStore = defineStore('main', {
     return {
       machineId: localStorage.getItem('machineId') || uuidv4(),
       dailyTraining: { active: false, results: [] as Exercise[] },
-      exercise: newExercise('rememberNumbers', 'easy', 5),
+      exercise: newExercise('remember-numbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
       _themePreference: localStorage.getItem('language') || 'dark',
       _noOfTimesPlayedAsGuest: Number(

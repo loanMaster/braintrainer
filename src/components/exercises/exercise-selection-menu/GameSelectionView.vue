@@ -46,29 +46,17 @@
         <div class="exercise-title">Gedächtnis</div>
         <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
           <div
-            class="col-4 column"
+            class="col-3 column"
             v-for="exercise in [
-              'RememberWords',
-              'RememberNumbers',
-              'RememberNames',
+              'remember-words',
+              'remember-numbers',
+              'remember-names',
+              'remember-names',
+              'remember-words-rev',
+              'remember-numbers-rev',
+              'memory-animals',
+              'memory'
             ]"
-            :key="exercise"
-          >
-            <q-card
-              class="flex-1 cursor-pointer zoom-on-hover"
-              @click="selectExercise(exercise)"
-            >
-              <q-card-section class="memory-bg text-bold">
-                {{ t(exercise) }}
-              </q-card-section>
-              <q-card-section>Lösen Sie Aufgaben im Kopf </q-card-section>
-            </q-card>
-          </div>
-        </div>
-        <div class="row-sm column-xs q-col-gutter-lg">
-          <div
-            class="col-6 column"
-            v-for="exercise in ['AudioMemoryAnimals', 'AudioMemory']"
             :key="exercise"
           >
             <q-card
@@ -100,16 +88,16 @@ const router = useRouter();
 const continueAsGuestDialog = ref()
 
 const languageExercises = ref([
-  'SpellBackwards',
-  'WordScramble',
-  'ListenBackwards',
-  'FindRelative',
+  'spell-backwards',
+  'word-scramble',
+  'listen-backwards',
+  'find-relative',
 ]);
 const mathExercises = ref([
-  'MentalArithmetic',
-  'MentalArithmeticMulDiv',
-  'MathMarathon',
-  'SolveEquation',
+  'mental-arithmetic',
+  'mental-arithmetic-mul',
+  'math-marathon',
+  'solve-equation',
 ]);
 
 onMounted(() => {

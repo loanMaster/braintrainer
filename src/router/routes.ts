@@ -10,6 +10,7 @@ import MathMarathon from 'src/components/exercises/MathMarathon.vue';
 import RememberWords from 'src/components/exercises/RememberWords.vue';
 import FindRelative from 'src/components/exercises/FindRelative.vue';
 import RememberNames from 'src/components/exercises/RememberNames.vue';
+import FindMatchingPerson from 'src/components/exercises/FindMatchingPerson.vue';
 import AudioMemory from 'src/components/exercises/AudioMemory.vue';
 import SpellBackwards from 'src/components/exercises/SpellBackwards.vue';
 import ListenBackwards from 'src/components/exercises/ListenBackwards.vue';
@@ -19,7 +20,6 @@ import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue';
 import GameSelectionView from 'src/components/exercises/exercise-selection-menu/GameSelectionView.vue';
 import HighscoresView from 'src/components/highscores/HighscoresView.vue';
 import ExerciseView from 'src/components/exercises/ExerciseView.vue';
-import DocumentationView from 'src/components/documentation/DocumentationView.vue';
 import PlayerScoresView from 'src/components/player-scores/PlayerScoresView.vue';
 import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.vue';
 import PlayerProgressView from 'src/components/player-scores/PlayerProgressView.vue';
@@ -141,33 +141,48 @@ const routes: RouteRecordRaw[] = [
             name: 'exercise',
             children: [
               {
-                path: ':game(remembernumbers)',
-                name: 'remembernumbers',
+                path: ':game(remember-numbers)',
+                name: 'remember-numbers',
                 component: RememberNumbers,
               },
               {
-                path: ':game(mentalarithmetic)',
-                name: 'mentalarithmetic',
+                path: ':game(remember-numbers-rev)',
+                name: 'remember-numbers-rev',
+                component: RememberNumbers,
+              },
+              {
+                path: ':game(mental-arithmetic)',
+                name: 'mental-arithmetic',
                 component: MentalArithmetic,
               },
               {
-                path: ':game(solveequation)',
-                name: 'solveequation',
+                path: ':game(mental-arithmetic-mul)',
+                name: 'mental-arithmetic-mul',
+                component: MentalArithmetic,
+              },
+              {
+                path: ':game(solve-equation)',
+                name: 'solve-equation',
                 component: SolveEquation,
               },
               {
-                path: ':game(listenbackwards)',
-                name: 'listenbackwards',
+                path: ':game(listen-backwards)',
+                name: 'listen-backwards',
                 component: ListenBackwards,
               },
               {
-                path: ':game(rememberwords)',
-                name: 'rememberwords',
+                path: ':game(remember-words)',
+                name: 'remember-words',
                 component: RememberWords,
               },
               {
-                path: ':game(spellbackwards)',
-                name: 'spellbackwards',
+                path: ':game(remember-words-rev)',
+                name: 'remember-words-rev',
+                component: RememberWords,
+              },
+              {
+                path: ':game(spell-backwards)',
+                name: 'spell-backwards',
                 component: SpellBackwards,
               },
               {
@@ -176,24 +191,34 @@ const routes: RouteRecordRaw[] = [
                 component: AudioMemory,
               },
               {
-                path: ':game(wordscramble)',
-                name: 'wordscramble',
+                path: ':game(memory-animals)',
+                name: 'memory-animals',
+                component: AudioMemory,
+              },
+              {
+                path: ':game(word-scramble)',
+                name: 'word-scramble',
                 component: WordScramble,
               },
               {
-                path: ':game(mathmarathon)',
-                name: 'mathmarathon',
+                path: ':game(math-marathon)',
+                name: 'math-marathon',
                 component: MathMarathon,
               },
               {
-                path: ':game(findrelative)',
-                name: 'findrelative',
+                path: ':game(find-relative)',
+                name: 'find-relative',
                 component: FindRelative,
               },
               {
-                path: ':game(remembernames)',
-                name: 'remembernames',
+                path: ':game(remember-names)',
+                name: 'remember-names',
                 component: RememberNames,
+              },
+              {
+                path: ':game(find-matching-person)',
+                name: 'find-matching-person',
+                component: FindMatchingPerson,
               },
             ],
           },
@@ -213,11 +238,6 @@ const routes: RouteRecordRaw[] = [
         path: 'highscores',
         name: 'highscores',
         component: HighscoresView,
-      },
-      {
-        path: 'documentation',
-        name: 'documentation',
-        component: DocumentationView,
       },
       {
         path: 'player-scores',

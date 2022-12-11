@@ -10,7 +10,7 @@
         src="/images/logo_transparent.png"
         spinner-color="white"
       />
-      <div class="text-h3 relative-position">BrianTrainer</div>
+      <div class="text-h3 relative-position">{{ $t('APP_NAME') }}</div>
       <div class="column q-mt-xl">
         <q-btn color="secondary" rounded size="xl" icon="double_arrow" :to="{ name: 'select-exercise', params: { language: store.language } }"
           >Jetzt trainieren</q-btn
@@ -31,10 +31,10 @@
         </div>
         <div class="col-8 text-center">
           <div class="q-ma-lg">
-            <div class="text-h4">Was ist Audio trainer?</div>
-            <div class="text-h6 text-justify">TODO ist eine Gehirnjogging app mit Audio-Gehirnjoggingübungen, um Ihre geistige Leistungsfähigkeit zu verbessern.
+            <div class="text-h4">Was ist {{ $t('APP_NAME') }}?</div>
+            <div class="text-h6 text-justify">{{ $t('APP_NAME') }} ist eine Gehirnjogging app mit Audio-Übungen, um Deine geistige Leistungsfähigkeit zu verbessern.
             Mit verschiedenen Übungen und Herausforderungen und persönlichen Fortschrittsberichten bleibst Du motiviert und auf Kurs.
-                 Probiere es jetzt aus und verbessere Deine Gehirnleistung mit Gehirnjogging via Audio!</div>
+                 Probiere es jetzt aus und verbessere Deine Gehirnleistung!</div>
           </div>
         </div>
       </div>
@@ -79,10 +79,10 @@
         </div>
         <div class="col-8 text-center">
           <div class="q-ma-lg">
-            <div class="text-h4">Wie funktioniert der Audiotrainer?</div>
+            <div class="text-h4">Wie funktioniert {{ $t('APP_NAME') }}?</div>
             <div class="text-h6 text-justify">
-              Der Audiotrainer bietet eine vielzahl unterschiedlicher Übungen an, Dein Gehirn zu trainieren.
-              Registriere Dich via email oder web3 oder teste den Audiotrainer als Gast.
+              {{ $t('APP_NAME') }} bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren.
+              Suche eine Übung aus und wähle einen Schwierigkeitsgrad. Du kannst als Gast üben oder dich mit deiner E-Mail Adresse oder web3 wallet registrieren.
             </div>
           </div>
         </div>
@@ -97,9 +97,6 @@
           class="q-mb-lg"
           :to="{ name: 'select-exercise', params: { language: store.language } }"
           >Jetzt trainieren</q-btn
-        >
-        <q-btn color="accent" rounded size="xl" icon="menu_book"
-          >Anleitung</q-btn
         >
       </div>
     </div>

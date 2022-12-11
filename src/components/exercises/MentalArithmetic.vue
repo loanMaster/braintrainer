@@ -128,12 +128,21 @@ async function playAudio() {
 
 async function fetchNextExercise() {
   const difficulty = store.exercise.difficulty;
-  nextExercise.next(
-    await new MathExerciseService().fetchMatMulExercise({
-      difficulty,
-      lang: store.language,
-    })
-  );
+  if (store.exercise.nameOfTheGame === 'mental-arithmetic') {
+    nextExercise.next(
+      await new MathExerciseService().fetchAddSubExercise({
+        difficulty,
+        lang: store.language,
+      })
+    );
+  } else {
+    nextExercise.next(
+      await new MathExerciseService().fetchMatMulExercise({
+        difficulty,
+        lang: store.language,
+      })
+    );
+  }
 }
 
 async function onNumberEntered(num: number) {

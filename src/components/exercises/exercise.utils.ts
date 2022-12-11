@@ -10,8 +10,7 @@ export const exerciseUtils = {
   wait: (time: number) => new Promise((resolve) => setTimeout(resolve, time)),
   difficulty: (route: RouteLocationNormalizedLoaded) =>
     route.params.difficulty as string,
-  nameOfTheGame: (route: RouteLocationNormalizedLoaded) =>
-    getNameOfTheGame(route.params.game as string),
+  nameOfTheGame: (route: RouteLocationNormalizedLoaded) => route.params.game as string,
   finishExercise: () => {
     useAppStore().finishExercise();
     router.push({
@@ -34,7 +33,7 @@ export const exerciseUtils = {
   createExercise: (numberOfQuestions: number) => {
     useAppStore().$patch((store) => {
       store.exercise = newExercise(
-        getNameOfTheGame(useRoute().params.game as string)!,
+        useRoute().params.game as string,
         useRoute().params.difficulty as string,
         numberOfQuestions
       );

@@ -42,6 +42,8 @@ let currentIndex = 0;
 const inputValue = ref('');
 
 const currentAudio: Ref<{ src: string; val: number }[]> = ref([]);
+const sequence: Ref<number[]> = ref([])
+const reverse = ref(false)
 
 const numpad = ref();
 
@@ -59,6 +61,8 @@ onBeforeMount(() => {
 });
 
 onMounted(async () => {
+  reverse.value = store.exercise.nameOfTheGame.indexOf('-rev') > -1
+
   keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
     if (revealed.value) {
       nextQuestion();
@@ -106,6 +110,10 @@ function createTask() {
       val: nextNumber,
     });
   }
+  sequence.value = currentAudio.value.map(v => v.val)
+  if (reverse.value) {
+    sequence.value = sequence.value.reverse()
+  }
 }
 
 function playAudio() {
@@ -119,9 +127,9 @@ async function onNumberEntered(num: number) {
   if (inputDisabled.value) {
     return;
   }
-  if (num === currentAudio.value[currentIndex].val) {
+  if (num === sequence.value[currentIndex]) {
     inputValue.value =
-      inputValue.value + String(currentAudio.value[currentIndex].val);
+      inputValue.value + String(sequence.value[currentIndex]);
     currentIndex++;
     if (currentIndex === sequenceLength.value) {
       inputDisabled.value = true;
@@ -143,7 +151,7 @@ function reveal() {
 const solution = computed(() => {
   let temp = inputValue.value;
   for (let i = temp.length; i < sequenceLength.value; i++) {
-    temp += String(currentAudio.value[i]?.val);
+    temp += String(sequence.value[i]);
   }
   return temp;
 });

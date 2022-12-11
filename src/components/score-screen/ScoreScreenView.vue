@@ -89,11 +89,6 @@
       </div>
       <q-card-section>
         <div class="row justify-center">
-          <q-btn
-            v-if="dailyTrainingActive && hasNextDailyExercise()"
-            @click="continueDailyTraining"
-            >{{ $t('Continue daily training') }}</q-btn
-          >
           <q-btn @click="playAgain">{{ $t('Play again') }}</q-btn>
         </div>
       </q-card-section>
@@ -135,7 +130,7 @@ onBeforeMount(() => {
   if (!store.exercise || !store.exercise.rating) {
     store.$patch((store) => {
       // TODO for debugging
-      store.exercise = newExercise('rememberNumbers', 'normal', 10);
+      store.exercise = newExercise('remember-numbers', 'normal', 10);
       store.exercise.rating = 4;
       store.exercise.score = 50;
     });
@@ -149,21 +144,13 @@ onMounted(async () => {
     new SoundService().playLevelFinished();
   }
 
-  if (store.player.name !== 'tester007') {
-    updateScoreResponse.value = await new ScoreService().updateScore({
-      score: store.exercise.score!,
-      nameOfTheGame: store.exercise.nameOfTheGame,
-      difficulty: store.exercise.difficulty,
-      name: store.player.name,
-      id: store.player.id,
-    });
-    store.updatePlayerScores(updateScoreResponse.value.percentile);
-  } else {
-    updateScoreResponse.value = {
-      percentile: 3,
-      isNewHighScore: false,
-    };
-  }
+  updateScoreResponse.value = await new ScoreService().updateScore({
+    score: store.exercise.score!,
+    nameOfTheGame: store.exercise.nameOfTheGame,
+    difficulty: store.exercise.difficulty,
+  });
+  store.updatePlayerScores(updateScoreResponse.value.percentile);
+
   showLoadingIndicator.value = false;
   const stop = new Subject<void>();
   setTimeout(() => {

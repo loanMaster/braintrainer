@@ -45,8 +45,6 @@ export interface ScoreUpdate {
   nameOfTheGame: string;
   difficulty: string;
   score: number;
-  id: string;
-  name: string;
 }
 
 export interface UpdateScoreResponse {

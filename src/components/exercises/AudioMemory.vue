@@ -110,7 +110,7 @@ async function loadAudio(): Promise<void> {
       maxLength: 14,
       lang: store.language,
       number: store.exercise.totalQuestions,
-      category: 'ANIMALS',
+      category: store.exercise.nameOfTheGame === 'memory-animals' ? 'ANIMALS' : undefined,
     })
   );
 }

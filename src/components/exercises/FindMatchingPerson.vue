@@ -26,35 +26,38 @@
       </q-card>
     </div>
     <div ref="coreExercise" class="column justify-center">
-      <div class="flex-1 column justify-center items-center q-mb-md">
-        <div class="text-h5 non-selectable q-pa-sm text-center">
+      <q-card>
+        <div class="text-h5 non-selectable text-center q-mt-sm q-mx-sm">
           <div>
-            {{ 'Wer ist diese Person?' }}
+            {{ 'Finde die passende Person' }}
           </div>
         </div>
-        <q-card class="transition-duration-md">
-          <img :src="currentImage" class="q-pa-sm" ref="imageToGuess" />
-        </q-card>
-      </div>
-      <div ref="buttons" class="row q-gutter-sm justify-center">
-        <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
-          <q-btn
-            color="primary"
-            @click="selectWord(idx, $event)"
-            :disabled="inputDisabled"
-            class="transition-duration-md"
-            >{{ label }}</q-btn
-          >
+        <div class="q-pa-sm relative-position">
+            <q-carousel
+              swipeable
+              animated
+              v-model="slide"
+              thumbnails
+              infinite
+            >
+              <q-carousel-slide v-for="person in options" :name="person" :key="person" :img-src="person">
+              </q-carousel-slide>
+            </q-carousel>
         </div>
-      </div>
+        <div class="q-mx-auto text-center">
+          <q-btn color="primary" @click="onImageSelected" :disable="inputDisabled">Weiter</q-btn>
+        </div>
+      </q-card>
     </div>
   </div>
   <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
-    :solution="solution"
-    @confirmed="onSolutionConfirmed"
-  />
+    @confirmed="onSolutionConfirmed">
+      <q-avatar>
+        <img :src="solution"/>
+      </q-avatar>
+  </SolutionBanner>
 </template>
 
 <script setup lang="ts">
@@ -88,9 +91,9 @@ const {
 
 const currentTask: Ref<IntroductionResponse | undefined> = ref();
 const personToGuess: Ref<Introduction | undefined> = ref();
-let buttonLabels: Ref<string[]> = ref([]);
+let options: Ref<string[]> = ref([]);
+const slide = ref('')
 const coreExercise = ref();
-const imageToGuess = ref();
 const showLoadingIndicator = ref(false);
 let loadAudio: Promise<IntroductionResponse>;
 const nameToImageMapping: { [key: string]: string } = {};
@@ -150,38 +153,43 @@ async function nextQuestion() {
     return;
   }
   if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(imageToGuess.value);
+    await new TweenService().fadeOut(coreExercise.value);
   }
 
   personToGuess.value =
     currentTask.value!.introductions[store.exercise.currentQuestion - 1];
-  buttonLabels.value =
-    personToGuess.value.gender === 'FEMALE'
-      ? currentTask.value!.optionalNames['FEMALE'].sort((a, b) =>
-          a.localeCompare(b)
-        )
-      : currentTask.value!.optionalNames['MALE'].sort((a, b) =>
-          a.localeCompare(b)
-        );
+  options.value = [nameToImageMapping[personToGuess.value.name]]
+  options.value.push(...currentTask.value!.introductions
+    .filter(i => i.gender === personToGuess.value!.gender)
+    .map(i => nameToImageMapping[i.name]))
+  options.value = [...new Set(options.value)].splice(0, 4)
+  while (options.value.length < 4) {
+    const randomIdx = Math.floor(Math.random() * 20)
+    const randomImage = `/images/${personToGuess.value.gender === 'FEMALE' ? 'w' : 'm'}_${padNumber(randomIdx, 2)}.jpg`
+    if (options.value.indexOf(randomImage) === -1) {
+      options.value.push(randomImage)
+    }
+  }
+  options.value = shuffle(options.value)
+  slide.value = options.value[0]
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
-    await new TweenService().fadeIn(coreExercise.value);
-  } else {
-    await new TweenService().fadeIn(imageToGuess.value);
   }
+  await new TweenService().fadeIn(coreExercise.value);
 
   inputDisabled.value = false;
   await playAudio();
 }
 
 async function playAudio() {
-  // no-op
+  if (personToGuess.value && personToGuess.value.audio) {
+    return soundService.play({ audio: personToGuess.value.audio.name })
+  }
 }
 
-function selectWord(idx: number, $event: Event) {
-  $event.stopPropagation();
-  if (personToGuess.value!.name === buttonLabels.value[idx]) {
+function onImageSelected() {
+  if (nameToImageMapping[personToGuess.value!.name] === slide.value) {
     inputDisabled.value = true;
     store.$patch((store) => store.exercise.correctAnswers++);
     new SoundService().playSuccess();
@@ -196,5 +204,5 @@ function reveal() {
   revealed.value = true;
 }
 
-const solution = computed(() => personToGuess?.value?.name || '');
+const solution = computed(() => nameToImageMapping[personToGuess?.value?.name || '']);
 </script>

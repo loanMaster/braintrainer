@@ -62,9 +62,7 @@ const router = useRouter();
 const store = useAppStore();
 const showLoadingIndicator = ref(false);
 
-const nameOfTheGame = computed(() =>
-  getNameOfTheGame(route.params.game as string)
-);
+const nameOfTheGame = computed(() => route.params.game as string);
 
 function getStars(difficulty: string): number {
   if (store.playerScores) {

@@ -9,7 +9,7 @@
               <q-avatar>
                 <img src="/images/logo_small.png" />
               </q-avatar>
-              Braintrainer
+              {{ $t('APP_NAME') }}
             </router-link>
           </q-toolbar-title>
         </div>
@@ -53,19 +53,6 @@
               no-wrap
               no-caps
               :label="'Benutzerprofil'"
-              class="text-white q-px-sm"
-            />
-          </router-link>
-
-          <router-link
-            :to="{ name: 'documentation', params: { language: store.language } }"
-          >
-            <q-btn
-              flat
-              dense
-              no-wrap
-              no-caps
-              :label="$t('Documentation')"
               class="text-white q-px-sm"
             />
           </router-link>
@@ -227,8 +214,7 @@ const links1 = ref([
   { icon: 'fitness_center', text: 'Üben', to: 'select-exercise' },
   { icon: 'bar_chart', text: 'Fortschritt', to: 'player-scores' },
   { icon: 'person', text: 'Benutzerprofil', to: 'user-settings' },
-  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' },
-  { icon: 'menu_book', text: 'Documentation', to: 'documentation' },
+  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' }
 ]);
 </script>
 
