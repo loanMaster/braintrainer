@@ -1,72 +1,89 @@
 <template>
   <q-layout view="hHh lpR fFf" class="column">
     <q-header elevated class="bg-primary">
-      <q-toolbar>
-        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
-        <q-toolbar-title class="non-selectable">
-          <q-avatar>
-            <img src="/images/logo_small.png" />
-          </q-avatar>
-          Braintrainer
-        </q-toolbar-title>
-        <q-space class="desktop-only" />
+      <q-toolbar class="justify-between">
+        <div class="row">
+          <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="mobile-only"/>
+          <q-toolbar-title class="non-selectable">
+            <router-link :to="{ name: 'home', params: { language: store.language }}" class="text-white">
+              <q-avatar>
+                <img src="/images/logo_small.png" />
+              </q-avatar>
+              Braintrainer
+            </router-link>
+          </q-toolbar-title>
+        </div>
 
-        <router-link
-          :to="{
-            name: 'select-exercise',
-            params: { language: store.language },
-          }"
-        >
-          <q-btn
-            flat
-            dense
-            no-wrap
-            no-caps
-            :label="$t('Play')"
-            class="text-white q-px-sm"
-          />
-        </router-link>
+        <div class="desktop-only" style="{ flex: 1 0 auto }">
+          <router-link
+            :to="{
+              name: 'select-exercise',
+              params: { language: store.language },
+            }"
+          >
+            <q-btn
+              flat
+              dense
+              no-wrap
+              no-caps
+              :label="'Trainieren'"
+              class="text-white q-px-sm"
+            />
+          </router-link>
 
-        <router-link
-          :to="{ name: 'player-scores', params: { language: store.language } }"
-        >
-          <q-btn
-            flat
-            dense
-            no-wrap
-            no-caps
-            :label="$t('Your Scores')"
-            class="text-white q-px-sm"
-          />
-        </router-link>
+          <router-link
+            :to="{ name: 'player-scores', params: { language: store.language } }"
+          >
+            <q-btn
+              flat
+              dense
+              no-wrap
+              no-caps
+              :label="'Fortschritt'"
+              class="text-white q-px-sm"
+            />
+          </router-link>
 
-        <router-link
-          :to="{ name: 'documentation', params: { language: store.language } }"
-        >
-          <q-btn
-            flat
-            dense
-            no-wrap
-            no-caps
-            :label="$t('Documentation')"
-            class="text-white q-px-sm"
-          />
-        </router-link>
+          <router-link
+            :to="{ name: 'user-settings', params: { language: store.language } }"
+          >
+            <q-btn
+              flat
+              dense
+              no-wrap
+              no-caps
+              :label="'Benutzerprofil'"
+              class="text-white q-px-sm"
+            />
+          </router-link>
 
-        <router-link
-          :to="{ name: 'highscores', params: { language: store.language } }"
-        >
-          <q-btn
-            flat
-            dense
-            no-wrap
-            no-caps
-            :label="$t('Highscores')"
-            class="text-white q-px-sm"
-          />
-        </router-link>
+          <router-link
+            :to="{ name: 'documentation', params: { language: store.language } }"
+          >
+            <q-btn
+              flat
+              dense
+              no-wrap
+              no-caps
+              :label="$t('Documentation')"
+              class="text-white q-px-sm"
+            />
+          </router-link>
 
-        <q-space class="desktop-only" />
+          <router-link
+            :to="{ name: 'highscores', params: { language: store.language } }"
+          >
+            <q-btn
+              flat
+              dense
+              no-wrap
+              no-caps
+              :label="$t('Highscores')"
+              class="text-white q-px-sm"
+            />
+          </router-link>
+        </div>
+
         <div>
           <q-toggle
             :modelValue="lightMode"
@@ -104,7 +121,7 @@
                         name: 'user-settings',
                         params: { language: store.language },
                       }"
-                      >Settings</router-link
+                      >Benutzerprofil</router-link
                     ></q-item-section
                   >
                 </q-item>
@@ -123,7 +140,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="mobile-only">
       <q-scroll-area class="fit">
         <q-list padding class="text-grey-8">
           <q-item
@@ -133,29 +150,14 @@
             :key="link.text"
             clickable
           >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator inset class="q-my-sm" />
-
-          <q-item
-            class="GNL__drawer-item"
-            v-ripple
-            v-for="link in links2"
-            :key="link.text"
-            clickable
-          >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
+            <router-link class=" row" :to="{ name: link.to, params: { language: store.language }}">
+              <q-item-section avatar>
+                <q-icon :name="link.icon" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ link.text }}</q-item-label>
+              </q-item-section>
+            </router-link>
           </q-item>
         </q-list>
       </q-scroll-area>
@@ -221,26 +223,19 @@ function login() {
 const profileImage = computed(() => authStore.image);
 
 const links1 = ref([
-  { icon: 'web', text: 'Top stories' },
-  { icon: 'person', text: 'For you' },
-  { icon: 'star_border', text: 'Favourites' },
-  { icon: 'search', text: 'Saved searches' },
-]);
-
-const links2 = ref([
-  { icon: 'flag', text: 'Canada' },
-  { icon: 'place', text: 'Local' },
-  { icon: 'domain', text: 'Business' },
-  { icon: 'memory', text: 'Technology' },
-  { icon: 'local_movies', text: 'Entertainment' },
-  { icon: 'directions_bike', text: 'Sports' },
-  { icon: 'fitness_center', text: 'Health ' },
+  { icon: 'home', text: 'Startseite', to: 'home' },
+  { icon: 'fitness_center', text: 'Üben', to: 'select-exercise' },
+  { icon: 'bar_chart', text: 'Fortschritt', to: 'player-scores' },
+  { icon: 'person', text: 'Benutzerprofil', to: 'user-settings' },
+  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' },
+  { icon: 'menu_book', text: 'Documentation', to: 'documentation' },
 ]);
 </script>
 
 <style scoped lang="scss">
 a {
   text-decoration: none;
+  color: unset;
 }
 
 .router-link-active button {

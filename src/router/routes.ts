@@ -122,7 +122,7 @@ const routes: RouteRecordRaw[] = [
         component: UserSettings,
         beforeEnter: loginGuard,
       },
-      { path: '', component: StartScreen },
+      { path: '', component: StartScreen, name: 'home' },
       {
         path: 'play',
         component: ExerciseBaseLayout,
