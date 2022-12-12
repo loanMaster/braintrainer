@@ -4,6 +4,7 @@ export default {
   Practise: 'Trainieren',
   Progress: 'Fortschritt',
   'User profile': 'Benutzerprofil',
+  Username: 'Benutzername',
   LANGUAGE: 'Deutsch',
   keys: 'de',
   Yes: 'Ja',

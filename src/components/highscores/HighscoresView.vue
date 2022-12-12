@@ -83,7 +83,7 @@
                 </div>
                 <div class="row justify-between">
                   <div>{{ $t('Date') }}</div>
-                  <div>{{ new Date(props.row.date).toLocaleDateString() }}</div>
+                  <div>{{ new Date(props.row.date).toLocaleDateString(store.language) }}</div>
                 </div>
                 <div class="row justify-between">
                   <div>{{ $t('Your rating') }}</div>
@@ -175,7 +175,7 @@ const columns = ref([
     name: 'date',
     label: t('Date'),
     field: 'date',
-    format: (val: number) => `${new Date(val).toDateString()}`,
+    format: (val: number) => `${new Date(val).toLocaleDateString(store.language)}`,
   },
   {
     name: 'yourScore',

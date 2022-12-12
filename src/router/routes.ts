@@ -124,7 +124,7 @@ const routes: RouteRecordRaw[] = [
       },
       { path: '', component: StartScreen, name: 'home' },
       {
-        path: 'play',
+        path: 'train',
         component: ExerciseBaseLayout,
         beforeEnter: guestMaxPlayGuard,
         children: [

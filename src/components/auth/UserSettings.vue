@@ -33,11 +33,11 @@
             filled
             class="q-mt-lg"
             v-model="username"
-            label="Username"
+            :label="$t('Username')"
             type="text"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
+              (val) => (val && val.length > 0) || $t('Please type something'),
             ]"
           />
           <div class="col-6 q-mt-sm">
