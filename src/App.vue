@@ -5,9 +5,10 @@
 <script setup lang="ts">
 import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { NavigationGuardNext, useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
+import {SoundService} from "src/shared-services/sound.service";
 
 const store = useAppStore();
 const i18n = useI18n();
@@ -18,6 +19,10 @@ const $q = useQuasar();
 onBeforeMount(() => {
   $q.dark.set(store.themePreference === 'dark');
 });
+
+onMounted(() => {
+  new SoundService().preCacheSounds()
+})
 
 const removeTrailingSlash = (path: string) => {
   return path.length > 1 && path.endsWith('/')

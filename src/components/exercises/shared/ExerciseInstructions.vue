@@ -17,11 +17,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRoute } from 'vue-router';
+import {keyInput} from "src/util/key.input";
+import {filter, take, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 const emits = defineEmits(['confirm']);
 const route = useRoute();
+const destroy = new Subject<void>()
+
+onMounted(() => {
+  keyInput.pipe(filter(k => k.key === 'Enter'), take(1), takeUntil(destroy)).subscribe(() => {
+    confirm()
+  });
+})
+
+onBeforeUnmount(() => {
+  destroy.next()
+  destroy.complete()
+})
+
 function confirm() {
   emits('confirm');
 }

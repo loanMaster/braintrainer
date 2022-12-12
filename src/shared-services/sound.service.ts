@@ -2,6 +2,7 @@ import { Howl } from 'howler';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
+import {preloadAudio} from "src/util/preload-images";
 
 export interface Sound {
   audio?: string;
@@ -32,22 +33,11 @@ export class SoundService {
   private soundsToPreload: { [key: string]: string } = {
     success: '/sounds/Menu1A.ogg',
     error: '/sounds/negative_2.ogg',
-    fail: '/sounds/game_over_bad_chest.ogg',
-    finished: '/sounds/fuck2.ogg',
+    finished: '/sounds/finished.ogg',
   };
 
-  constructor() {
-    this.tryPreloadSounds();
-  }
-
-  tryPreloadSounds() {
-    if (this.isAudioContextRunning()) {
-      Object.keys(this.soundsToPreload).forEach((k) => {
-        if (!loadedSounds[k]) {
-          loadedSounds[k] = preload(this.soundsToPreload[k]);
-        }
-      });
-    }
+  preCacheSounds() {
+    return preloadAudio(Object.values(this.soundsToPreload))
   }
 
   private getSound(sound: string) {
@@ -55,14 +45,6 @@ export class SoundService {
       loadedSounds[sound] = preload(this.soundsToPreload[sound]);
     }
     return loadedSounds[sound];
-  }
-
-  isAudioContextRunning() {
-    try {
-      return new AudioContext().state === 'running';
-    } catch (e) {
-      return false;
-    }
   }
 
   async play(sound: Sound): Promise<void> {
@@ -83,13 +65,9 @@ export class SoundService {
       loop: sound.loop || false,
       html5: true,
     });
-    if (sound.tag) {
-      useAppStore().startedPlayingSound(sound.tag!);
-    }
+    useAppStore().startedPlayingSound(sound.tag);
     await this.playHowl(howl);
-    if (sound.tag) {
-      useAppStore().finishedPlayingSound(sound.tag!);
-    }
+    useAppStore().finishedPlayingSound(sound.tag);
   }
 
   private playHowl(howl: Howl, loop = false): Promise<void> {
@@ -157,15 +135,11 @@ export class SoundService {
   }
 
   playSuccess() {
-    return this.playHowl(this.getSound('success'));
+    return this.getSound('success').play();
   }
 
   playLevelFinished() {
     return this.getSound('finished').play();
-  }
-
-  playFail() {
-    return this.getSound('fail').play();
   }
 
   playError() {

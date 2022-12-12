@@ -1,5 +1,4 @@
 import { newExercise, useAppStore } from 'stores/app-store';
-import { getNameOfTheGame } from 'src/util/game.name.helper';
 import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
 import { SoundService } from 'src/shared-services/sound.service';
 import { Ref } from 'vue';

@@ -77,6 +77,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { padNumber } from 'src/util/format-number';
+import {preloadImages} from "src/util/preload-images";
 
 const {
   soundService,
@@ -131,17 +132,19 @@ async function start() {
         ? '/images/w_' + padNumber(women.pop()!, 2)
         : '/images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
   });
+  await preloadImages(Object.values(nameToImageMapping))
+  await exerciseUtils.wait(1000);
   showLoadingIndicator.value = false;
   shuffle(currentTask.value.introductions);
-  await soundService.playAll(audio, 250);
-  await exerciseUtils.wait(100);
+  await soundService.playAll(audio, 350);
+  await exerciseUtils.wait(150);
   nextQuestion();
 }
 
 const currentImage = computed(() =>
   personToGuess?.value?.name
     ? nameToImageMapping[personToGuess.value.name]
-    : nameToImageMapping[store.exercise.audioState.tag] || ''
+    : nameToImageMapping[store.exercise.audioState.tag as strng] || ''
 );
 
 async function nextQuestion() {

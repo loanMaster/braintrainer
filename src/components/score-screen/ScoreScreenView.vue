@@ -33,7 +33,7 @@
               <span>{{ $t('Time required') }}</span>
               <span
                 >{{
-                  formatScore(store.exercise.duration, store.language)
+                  formatScore(store.exercise.duration / 1000, store.language)
                 }}
                 s</span
               >
@@ -41,7 +41,7 @@
           </div>
           <div class="q-mt-sm">
             <div class="text-left">
-              <div v-if="updateScoreResponse" class="q-mb-sm">
+              <div v-if="updateScoreResponse && !updateScoreResponse.isNewHighScore" class="q-mb-sm">
                 {{ $t('You are in the top { percentile }% of users', { percentile } ) }}
               </div>
               <div
@@ -49,7 +49,7 @@
                 style="--animate-duration: 2s"
                 v-if="updateScoreResponse?.isNewHighScore"
               >
-                {{ $t('🎉 Neuer highscore 🎉') }}
+                {{ $t('New highscore') }}
               </div>
             </div>
           </div>
@@ -127,22 +127,17 @@ const percentile = computed(() =>
 );
 
 onBeforeMount(() => {
-  if (!store.exercise || !store.exercise.rating) {
+  if (!store.exercise) {
     store.$patch((store) => {
       // TODO for debugging
       store.exercise = newExercise('remember-numbers', 'normal', 10);
-      store.exercise.rating = 4;
       store.exercise.score = 50;
     });
   }
 });
 
 onMounted(async () => {
-  if (store.exercise.fail) {
-    new SoundService().playFail();
-  } else {
-    new SoundService().playLevelFinished();
-  }
+  new SoundService().playLevelFinished();
 
   updateScoreResponse.value = await new ScoreService().updateScore({
     score: store.exercise.score!,
@@ -160,6 +155,7 @@ onMounted(async () => {
         if (score.value < store.exercise.score!) {
           score.value++;
         } else {
+          score.value = store.exercise.score!
           new TweenService().animateCSS(knob.value, 'pulse', 1);
           stop.next();
           stop.complete();

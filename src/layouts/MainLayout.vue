@@ -131,14 +131,14 @@
             <q-menu>
               <q-list dense>
                 <q-item clickable v-close-popup v-if="isLoggedIn">
-                  <q-item-sections class="column justify-center"
+                  <q-item-section class="column justify-center"
                     ><router-link
                       :to="{
                         name: 'user-settings',
                         params: { language: store.language },
                       }"
                       >{{ $t('User profile') }}</router-link
-                    ></q-item-sections
+                    ></q-item-section
                   >
                 </q-item>
                 <q-item

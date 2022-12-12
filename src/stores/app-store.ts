@@ -16,7 +16,6 @@ export interface Exercise {
   totalQuestions: number;
   strikes: number;
   duration: number;
-  fail: boolean;
   difficulty: string;
   nameOfTheGame: string;
   state: 'created' | 'paused' | 'started' | 'finished';
@@ -28,6 +27,7 @@ export interface Exercise {
   rating?: number;
   score?: number;
   audioState: AudioState;
+  totalAudioDuration: number;
 }
 
 export const newExercise = (
@@ -39,7 +39,6 @@ export const newExercise = (
   totalQuestions,
   strikes: 0,
   duration: 10,
-  fail: false,
   difficulty,
   nameOfTheGame,
   state: 'created',
@@ -48,12 +47,13 @@ export const newExercise = (
   lastSuccessfulStrike: 0,
   lastStrike: 0,
   currentQuestion: 0,
+  totalAudioDuration: 0,
   audioState: { playing: false, tag: '', playingSequence: false },
 });
 
 export interface AudioState {
   playing: boolean;
-  tag: string;
+  tag?: string;
   playingSequence: boolean;
 }
 
@@ -80,6 +80,10 @@ const getBrowserLanguage = (): string => {
       return 'en';
   }
 };
+
+const tmp = {
+  soundStart: 0
+}
 
 export const useAppStore = defineStore('main', {
   state: (): IAppState => {
@@ -200,13 +204,15 @@ export const useAppStore = defineStore('main', {
     repeatAudio() {
       // noop
     },
-    startedPlayingSound(tag: string): void {
+    startedPlayingSound(tag?: string): void {
       this.exercise.audioState.playing = true;
       this.exercise.audioState.tag = tag;
+      tmp.soundStart = Date.now()
     },
-    finishedPlayingSound(tag: string): void {
+    finishedPlayingSound(tag?: string): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.tag = tag;
+      this.exercise.totalAudioDuration += (Date.now() - tmp.soundStart)
     },
     setThemePreference(theme: 'light' | 'dark') {
       this._themePreference = theme;
