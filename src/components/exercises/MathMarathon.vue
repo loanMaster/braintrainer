@@ -1,6 +1,6 @@
 <template>
-  <input :value="previousResult" disabled class="text-center text-h6" />
   <div ref="numpadContainer" class="column relative-position">
+    <input :value="previousResult" disabled class="text-center text-h6" />
     <NumPadWithDisplay
       ref="numpad"
       :input-disabled="inputDisabled"

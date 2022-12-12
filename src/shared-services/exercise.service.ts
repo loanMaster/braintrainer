@@ -30,6 +30,7 @@ export interface RandomWord {
   number: number;
   category?: string;
   gender?: string;
+  exclude?: string[];
 }
 
 export interface HomophoneAudioResponse {

@@ -72,7 +72,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { padNumber } from 'src/util/format-number';
-import {preloadImages} from "src/util/preload-images";
+import {preloadAssets} from "src/util/preload-assets";
 
 const {
   soundService,
@@ -127,7 +127,7 @@ async function start() {
         ? '/images/w_' + padNumber(women.pop()!, 2)
         : '/images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
   });
-  await preloadImages(Object.values(nameToImageMapping))
+  await preloadAssets(Object.values(nameToImageMapping))
   showLoadingIndicator.value = false;
   shuffle(currentTask.value.introductions);
   await exerciseUtils.wait(1000);

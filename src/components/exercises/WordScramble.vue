@@ -22,6 +22,7 @@
       <LetterButtons
         ref="letterButtons"
         :numberOfButtons="12"
+        :disabled="inputDisabled"
         @letter-selected="onLetterEntered"
       />
     </div>
@@ -86,9 +87,13 @@ onBeforeMount(() => {
   const numberOfQuestions = 10;
   exerciseUtils.createExercise(numberOfQuestions);
   nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
+  const exclude: string[] = []
   nextAnagrams
     .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe(() => loadNextAnagram());
+    .subscribe((result) => {
+      result.forEach(v => exclude.push(v))
+      loadNextAnagram(exclude)
+    });
   loadNextAnagram();
   loadAlphabet = startLoadAlphabet();
 });
@@ -171,7 +176,7 @@ async function startLoadAlphabet(): Promise<AudioResponse[]> {
   });
 }
 
-async function loadNextAnagram(): Promise<void> {
+async function loadNextAnagram(exclude?: string[]): Promise<void> {
   nextAnagrams.next(
     (
       await new ExerciseService().fetchAnagram({
@@ -189,6 +194,7 @@ async function loadNextAnagram(): Promise<void> {
             : 7,
         lang: store.language,
         number: 1,
+        exclude
       })
     ).words
   );

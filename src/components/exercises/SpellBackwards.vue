@@ -74,9 +74,13 @@ onBeforeMount(() => {
   const numberOfQuestions = difficulty.value === 'easy' ? 5 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
   nextAudio = new ReplaySubject<HomophoneAudioResponse>(numberOfQuestions);
+  const exclude: string[] = []
   nextAudio
     .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe(() => loadNextAudio());
+    .subscribe((result) => {
+      result.val.forEach(v => exclude.push(v))
+      loadNextAudio(exclude)
+    });
   loadNextAudio();
 });
 
@@ -115,6 +119,7 @@ async function nextQuestion() {
   currentAudio.value = (await nextAudio
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
     .toPromise()) as HomophoneAudioResponse;
+
   showLoadingIndicator.value = false;
 
   homophones = (currentAudio.value as HomophoneAudioResponse).val.map((value) =>
@@ -149,7 +154,7 @@ async function playAudio() {
   await soundService.play(currentAudio.value!);
 }
 
-async function loadNextAudio(): Promise<void> {
+async function loadNextAudio(exclude?: string[]): Promise<void> {
   nextAudio.next(
     await new ExerciseService().fetchHomophone({
       minLength:
@@ -162,6 +167,7 @@ async function loadNextAudio(): Promise<void> {
           : 16,
       lang: store.language,
       number: 1,
+      exclude
     })
   );
 }

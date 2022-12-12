@@ -1,4 +1,4 @@
-export const preloadImages = (images: string[]): Promise<void> => {
+export const preloadAssets = (images: string[]): Promise<void> => {
   return new Promise((resolve) => {
     let toGo = images.length;
     for (let i = 0; i < images.length; i++) {
