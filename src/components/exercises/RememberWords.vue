@@ -54,8 +54,8 @@ let currentIndex = ref(0);
 let permutation: Ref<number[]> = ref([]);
 let nextAudio: Subject<AudioResponse[]>;
 let currentAudio: Ref<AudioResponse[]> = ref([]);
-const sequence: Ref<string[]> = ref([])
-const reverse = ref(false)
+const sequence: Ref<string[]> = ref([]);
+const reverse = ref(false);
 let buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
 const textTransparent = ref(false);
@@ -74,7 +74,7 @@ onBeforeMount(() => {
 const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
-  reverse.value = store.exercise.nameOfTheGame.indexOf('-rev') > -1
+  reverse.value = store.exercise.nameOfTheGame.indexOf('-rev') > -1;
 
   new TweenService().setDisplay(buttons.value, 'none');
   for (let idx = 0; idx < sequenceLength.value; idx++) {
@@ -109,16 +109,16 @@ async function nextQuestion() {
   currentAudio.value = (await nextAudio
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
     .toPromise()) as AudioResponse[];
-  sequence.value = currentAudio.value.map(v => v.val as string)
+  sequence.value = currentAudio.value.map((v) => v.val as string);
   if (reverse.value) {
-    sequence.value = sequence.value.reverse()
+    sequence.value = sequence.value.reverse();
   }
   showLoadingIndicator.value = false;
 
   permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()));
 
   for (let idx = 0; idx < sequenceLength.value; idx++) {
-    buttonLabels.value[permutation.value[idx]] = sequence.value[idx]
+    buttonLabels.value[permutation.value[idx]] = sequence.value[idx];
   }
 
   if (store.exercise.currentQuestion === 1) {

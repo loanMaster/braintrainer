@@ -16,47 +16,47 @@
       </q-card-section>
       <div class="row-sm column-xs justify-center no-wrap">
         <div class="column col-4 flex-1">
-          <div class="text-h5">Auswertung</div>
+          <div class="text-h5">{{ $t('Evaluation') }}</div>
           <div class="column q-mt-lg">
             <div class="row justify-between">
-              <span>Gelöst</span>
+              <span>{{ $t('Solved') }}</span>
               <span
                 >{{ store.exercise.correctAnswers }} /
                 {{ store.exercise.totalQuestions }}</span
               >
             </div>
             <div class="row justify-between">
-              <span>Fehler</span>
+              <span>{{ $t('Mistakes') }}</span>
               <span>{{ store.exercise.totalStrikeCount }}</span>
             </div>
             <div class="row justify-between">
-              <span>Benötigte Zeit</span>
+              <span>{{ $t('Time required') }}</span>
               <span
                 >{{
                   formatScore(store.exercise.duration, store.language)
                 }}
-                Sekunden</span
+                s</span
               >
             </div>
           </div>
           <div class="q-mt-sm">
             <div class="text-left">
               <div v-if="updateScoreResponse" class="q-mb-sm">
-                Du bist unter den Top {{ percentile }}% der Spieler
+                {{ $t('You are in the top { percentile }% of users', { percentile } ) }}
               </div>
               <div
                 class="text-center animated text-h6 animate bounceIn"
                 style="--animate-duration: 2s"
                 v-if="updateScoreResponse?.isNewHighScore"
               >
-                🎉 Neuer highscore 🎉
+                {{ $t('🎉 Neuer highscore 🎉') }}
               </div>
             </div>
           </div>
         </div>
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
-          <div class="text-h5">Bewertung</div>
+          <div class="text-h5">{{ $t('Rating') }}</div>
           <div ref="knob" class="full-width flex-auto column">
             <q-knob
               ref="knob"
@@ -89,7 +89,7 @@
       </div>
       <q-card-section>
         <div class="row justify-center">
-          <q-btn @click="playAgain">{{ $t('Play again') }}</q-btn>
+          <q-btn @click="playAgain">{{ $t('Train again') }}</q-btn>
         </div>
       </q-card-section>
     </q-card>

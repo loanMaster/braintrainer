@@ -5,7 +5,7 @@
         {{ $t(nameOfTheGame + '.hint') }}
       </q-card-section>
       <q-card-section class="text-center">
-        {{ $t('Press \"START\" when you are ready') }}
+        {{ $t('Press "START" when you are ready') }}
       </q-card-section>
       <q-separator dark />
 
@@ -17,13 +17,13 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
-import {useRoute} from "vue-router";
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 const emits = defineEmits(['confirm']);
-const route = useRoute()
+const route = useRoute();
 function confirm() {
   emits('confirm');
 }
-const nameOfTheGame = computed(() => route.params.game)
+const nameOfTheGame = computed(() => route.params.game);
 </script>

@@ -97,7 +97,7 @@ export const useAppStore = defineStore('main', {
       ),
       playerScores: undefined,
       scoreHistory: undefined,
-      playingAsGuest: undefined
+      playingAsGuest: undefined,
     } as IAppState;
   },
   getters: {

@@ -3,7 +3,7 @@
     <div class="max-width-sm full-width column items-center flex-1">
       <ProgressDiagram :difficulty="difficulty" :nameOfTheGame="game" />
       <div class="q-mx-auto text-center">
-        <q-btn color="secondary" @click="back()">Zurück</q-btn>
+        <q-btn color="secondary" @click="back()">{{ $t('Back') }}</q-btn>
       </div>
     </div>
   </div>

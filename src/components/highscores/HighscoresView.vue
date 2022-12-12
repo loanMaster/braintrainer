@@ -1,5 +1,5 @@
 <template>
-  <div class="gradient flex-1 column items-center">
+  <div class="bg-gradient flex-1 column items-center">
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
       <q-toolbar-title>🎉 Highscores</q-toolbar-title>
     </q-toolbar>
@@ -56,13 +56,12 @@
                   dense
                   @click="play(props)"
                   :icon="'play_arrow'"
-                  class="q-mr-sm"
                 />
               </q-card-section>
               <q-separator />
               <q-card-section class="column">
                 <div class="row justify-between">
-                  <div>User</div>
+                  <div>{{ $t('User') }}</div>
                   <div>
                     <span>{{ props.row.playerName }}</span>
                     <q-avatar size="sm" class="q-ml-sm">
@@ -75,19 +74,19 @@
                   </div>
                 </div>
                 <div class="row justify-between">
-                  <div>Schwierigkeit</div>
+                  <div>{{ $t('Difficulty') }}</div>
                   <div>{{ props.row.difficulty }}</div>
                 </div>
                 <div class="row justify-between">
-                  <div>Bewertung</div>
+                  <div>{{ $t('Rating') }}</div>
                   <div>{{ props.row.score }}</div>
                 </div>
                 <div class="row justify-between">
-                  <div>Datum</div>
+                  <div>{{ $t('Date') }}</div>
                   <div>{{ new Date(props.row.date).toLocaleDateString() }}</div>
                 </div>
                 <div class="row justify-between">
-                  <div>Deine Punkte</div>
+                  <div>{{ $t('Your rating') }}</div>
                   <div>{{ props.row.yourScore || '-' }}</div>
                 </div>
               </q-card-section>
@@ -154,33 +153,33 @@ const columns = ref([
   {
     name: 'difficulty',
     align: 'left',
-    label: t('Schwierigkeit'),
+    label: t('Difficulty'),
     field: 'difficulty',
     sortable: true,
   },
-  { name: 'playerName', label: 'Spieler', field: 'playerName', sortable: true },
+  { name: 'playerName', label: t('User'), field: 'playerName', sortable: true },
   {
     name: 'image',
-    label: 'Avatar',
+    label: t('Avatar'),
     field: 'image',
     align: 'left',
     sortable: true,
   },
   {
     name: 'score',
-    label: 'Bewertung',
+    label: t('Rating'),
     field: 'score',
     format: (val: number) => formatScore(val, store.language),
   },
   {
     name: 'date',
-    label: 'Datum',
+    label: t('Date'),
     field: 'date',
     format: (val: number) => `${new Date(val).toDateString()}`,
   },
   {
     name: 'yourScore',
-    label: 'Deine Bewertung',
+    label: t('Your rating'),
     field: 'yourScore',
     format: (val: number | undefined) =>
       val === undefined ? '-' : formatScore(val, store.language),
@@ -202,11 +201,5 @@ function play(props: any) {
 <style>
 .q-table__bottom {
   display: none;
-}
-.gradient {
-  background-image: linear-gradient(to bottom right, #ffffaa55, #aaffff55);
-}
-.body--dark .gradient {
-  background-image: none;
 }
 </style>

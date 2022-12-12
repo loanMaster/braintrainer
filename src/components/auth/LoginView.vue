@@ -4,21 +4,21 @@
   >
     <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" v-if="showForm">
-        <div class="text-h5 q-mb-md">{{ $('Sign In') }}</div>
+        <div class="text-h5 q-mb-md">{{ $t('Sign In') }}</div>
 
         <GoogleLoginButton class="q-my-md" :disable="submitting" />
 
-        <div class="text-h6 q-mt-md">{{ $('Sign in with email') }}</div>
+        <div class="text-h6 q-mt-md">{{ $t('Sign in with email') }}</div>
         <q-input
           filled
           class="q-mb-sm"
           v-model="email"
           test="login-email"
-          label="Email address"
+          :label="$t('Email address')"
           type="email"
           autofocus
           lazy-rules
-          error-message="Please enter a valid email"
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         />
 
         <q-input
@@ -26,13 +26,12 @@
           class="q-mb-sm"
           v-model="password"
           test="login-password"
-          label="Password"
+          :label="$t('Password')"
           lazy-rules
           :type="showPassword ? 'test' : 'password'"
           autocomplete="on"
           required
-          error-message="Please enter a valid email"
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         >
           <template v-slot:append>
             <q-icon
@@ -49,7 +48,7 @@
           :disabled="submitting"
           color="primary"
         >
-          {{ $('Sign In') }}
+          {{ $t('Sign In') }}
         </q-btn>
 
         <q-btn
@@ -58,12 +57,12 @@
           type="button"
           color="secondary"
         >
-          {{ $t('No account? Sign up here!')}}
+          {{ $t('No account? Sign up here!') }}
         </q-btn>
         <p class="forgot-password text-right">
-          <router-link test="reset-password-link" to="/reset-password"
-            >{{ $t('Forgot your password?') }}</router-link
-          >
+          <router-link test="reset-password-link" to="/reset-password">{{
+            $t('Forgot your password?')
+          }}</router-link>
         </p>
       </q-form>
     </q-card>
@@ -76,7 +75,7 @@ import { useRoute } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import { useQuasar } from 'quasar';
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 const $q = useQuasar();
 const email = ref('');
@@ -115,8 +114,8 @@ onBeforeMount(async () => {
 });
 
 const language = computed(() => {
-  return useAppStore().language
-})
+  return useAppStore().language;
+});
 
 async function submit() {
   try {

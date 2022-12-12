@@ -41,21 +41,21 @@
             ]"
           />
           <div class="col-6 q-mt-sm">
-            <q-btn color="primary" type="submit" :disable="isSending"
-              >{{ $t('Save changes') }}</q-btn
-            >
+            <q-btn color="primary" type="submit" :disable="isSending">{{
+              $t('Save changes')
+            }}</q-btn>
           </div>
         </q-form>
       </div>
 
       <div class="row justify-around full-width max-width-xs q-mt-lg">
-        <div class="text-h5 col-6">{{ $t('Password')}}</div>
+        <div class="text-h5 col-6">{{ $t('Password') }}</div>
         <div class="col-6">
           <q-btn
             color="primary"
             :disable="isSending || submitted"
             @click="resetPassword"
-            >{{ $t('Reset password')}}</q-btn
+            >{{ $t('Reset password') }}</q-btn
           >
         </div>
       </div>

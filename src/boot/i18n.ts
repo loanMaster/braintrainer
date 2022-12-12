@@ -24,6 +24,7 @@ export const i18n = createI18n({
   locale: useAppStore().language,
   fallbackLocale: 'en',
   legacy: false,
+  warnHtmlMessage: false,
   messages,
 });
 

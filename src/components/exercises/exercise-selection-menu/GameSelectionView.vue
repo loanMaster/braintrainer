@@ -1,6 +1,6 @@
 <template>
   <div class="full-width flex-1 column items-center">
-    <ContinueAsGuestDialog ref="continueAsGuestDialog"/>
+    <ContinueAsGuestDialog ref="continueAsGuestDialog" />
     <div class="q-py-md content q-mx-auto text-center">
       <q-card class="exercise-block">
         <div class="exercise-title">{{ $t('Language') }}</div>
@@ -17,7 +17,9 @@
               <q-card-section class="words-bg text-bold">
                 {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
+              <q-card-section>{{
+                t(exercise + '.description')
+              }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -37,7 +39,9 @@
               <q-card-section class="math-bg text-bold">
                 {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
+              <q-card-section>{{
+                t(exercise + '.description')
+              }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -55,7 +59,7 @@
               'remember-words-rev',
               'remember-numbers-rev',
               'memory-animals',
-              'memory'
+              'memory',
             ]"
             :key="exercise"
           >
@@ -66,7 +70,9 @@
               <q-card-section class="memory-bg text-bold">
                 {{ t(exercise + '.title') }}
               </q-card-section>
-              <q-card-section>{{ t(exercise + '.description') }}</q-card-section>
+              <q-card-section>{{
+                t(exercise + '.description')
+              }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -81,17 +87,17 @@ import { ref, onMounted } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import {useAuthStore} from "stores/auth-store";
+import { useAuthStore } from 'stores/auth-store';
 
 const { t } = useI18n();
 const router = useRouter();
-const continueAsGuestDialog = ref()
+const continueAsGuestDialog = ref();
 
 const languageExercises = ref([
   'spell-backwards',
   'word-scramble',
   'listen-backwards',
-  'find-relative'
+  'find-relative',
 ]);
 const mathExercises = ref([
   'mental-arithmetic',
@@ -101,10 +107,14 @@ const mathExercises = ref([
 ]);
 
 onMounted(() => {
-  if (!useAppStore().playingAsGuest && !useAuthStore().isLoggedIn && !useAuthStore().hasAccount) {
-    continueAsGuestDialog.value.showDialog()
+  if (
+    !useAppStore().playingAsGuest &&
+    !useAuthStore().isLoggedIn &&
+    !useAuthStore().hasAccount
+  ) {
+    continueAsGuestDialog.value.showDialog();
   }
-})
+});
 
 function selectExercise(game: string) {
   router.push({

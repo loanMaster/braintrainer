@@ -11,10 +11,11 @@
           class="q-my-md"
           v-model="email"
           test="reset-password-email"
-          label="Email address"
+          :label="$t('Email address')"
           type="email"
           autofocus
           lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
         />
 
         <q-btn
@@ -23,14 +24,18 @@
           test="reset-password-submit"
           :disabled="isSending"
         >
-          Reset password
+          {{ $t('Reset Password') }}
         </q-btn>
         <div v-if="errormsg" test="reset-password-error-msg" class="text-red">
           {{ errormsg }}
         </div>
       </q-form>
       <div v-if="submitted" test="reset-password-success-msg">
-        {{ $t('You will shortly receive an email with a link to reset your password.') }}
+        {{
+          $t(
+            'You will shortly receive an email with a link to reset your password.'
+          )
+        }}
       </div>
     </q-card>
   </div>

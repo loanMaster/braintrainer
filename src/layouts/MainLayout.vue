@@ -3,9 +3,19 @@
     <q-header elevated class="bg-primary">
       <q-toolbar class="justify-between">
         <div class="row">
-          <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" class="mobile-only"/>
+          <q-btn
+            dense
+            flat
+            round
+            icon="menu"
+            @click="toggleLeftDrawer"
+            class="mobile-only"
+          />
           <q-toolbar-title class="non-selectable">
-            <router-link :to="{ name: 'home', params: { language: store.language }}" class="text-white">
+            <router-link
+              :to="{ name: 'home', params: { language: store.language } }"
+              class="text-white"
+            >
               <q-avatar>
                 <img src="/images/logo_small.png" />
               </q-avatar>
@@ -14,7 +24,14 @@
           </q-toolbar-title>
         </div>
 
-        <div class="desktop-only" style="{ flex: 1 0 auto }">
+        <div
+          class="desktop-only"
+          style="
+             {
+              flex: 1 0 auto;
+            }
+          "
+        >
           <router-link
             :to="{
               name: 'select-exercise',
@@ -26,33 +43,39 @@
               dense
               no-wrap
               no-caps
-              :label="'Trainieren'"
+              :label="$t('Practise')"
               class="text-white q-px-sm"
             />
           </router-link>
 
           <router-link
-            :to="{ name: 'player-scores', params: { language: store.language } }"
+            :to="{
+              name: 'player-scores',
+              params: { language: store.language },
+            }"
           >
             <q-btn
               flat
               dense
               no-wrap
               no-caps
-              :label="'Fortschritt'"
+              :label="$t('Progress')"
               class="text-white q-px-sm"
             />
           </router-link>
 
           <router-link
-            :to="{ name: 'user-settings', params: { language: store.language } }"
+            :to="{
+              name: 'user-settings',
+              params: { language: store.language },
+            }"
           >
             <q-btn
               flat
               dense
               no-wrap
               no-caps
-              :label="'Benutzerprofil'"
+              :label="$t('User profile')"
               class="text-white q-px-sm"
             />
           </router-link>
@@ -118,7 +141,7 @@
                   @click="logout"
                   v-if="isLoggedIn"
                 >
-                  <q-item-section>Logout</q-item-section>
+                  <q-item-section>{{ $t('Logout') }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -127,7 +150,13 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="mobile-only">
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      bordered
+      class="mobile-only"
+    >
       <q-scroll-area class="fit">
         <q-list padding class="text-grey-8">
           <q-item
@@ -137,7 +166,10 @@
             :key="link.text"
             clickable
           >
-            <router-link class=" row" :to="{ name: link.to, params: { language: store.language }}">
+            <router-link
+              class="row"
+              :to="{ name: link.to, params: { language: store.language } }"
+            >
               <q-item-section avatar>
                 <q-icon :name="link.icon" />
               </q-item-section>
@@ -214,7 +246,7 @@ const links1 = ref([
   { icon: 'fitness_center', text: 'Üben', to: 'select-exercise' },
   { icon: 'bar_chart', text: 'Fortschritt', to: 'player-scores' },
   { icon: 'person', text: 'Benutzerprofil', to: 'user-settings' },
-  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' }
+  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' },
 ]);
 </script>
 

@@ -2,7 +2,7 @@
   <q-card>
     <div>
       <h3>{{ $t('Email verification pending') }}</h3>
-      {{ $t('Thank you for signing up. To activate your account click on the link in the verification email which was sent to {{ email }}.', { email })}}
+      {{ $t('Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.', { email })}}
     </div>
     <q-btn
       color="primary"

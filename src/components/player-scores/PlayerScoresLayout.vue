@@ -1,7 +1,7 @@
 <template>
-  <div class="gradient flex-1 column">
+  <div class="bg-gradient flex-1 column">
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
-      <q-toolbar-title>Your scores</q-toolbar-title>
+      <q-toolbar-title>{{ $t('Your ratings') }}</q-toolbar-title>
     </q-toolbar>
     <div :style="{ 'overflow-x': overflow }" class="column flex-1 items-center">
       <router-view v-slot="{ Component }">

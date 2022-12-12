@@ -12,8 +12,16 @@
       />
       <div class="text-h3 relative-position">{{ $t('APP_NAME') }}</div>
       <div class="column q-mt-xl">
-        <q-btn color="secondary" rounded size="xl" icon="double_arrow" :to="{ name: 'select-exercise', params: { language: store.language } }"
-          >Jetzt trainieren</q-btn
+        <q-btn
+          color="secondary"
+          rounded
+          size="xl"
+          icon="double_arrow"
+          :to="{
+            name: 'select-exercise',
+            params: { language: store.language },
+          }"
+          >{{ $t('Train now') }}</q-btn
         >
       </div>
     </div>
@@ -31,10 +39,12 @@
         </div>
         <div class="col-8 text-center">
           <div class="q-ma-lg">
-            <div class="text-h4">Was ist {{ $t('APP_NAME') }}?</div>
-            <div class="text-h6 text-justify">{{ $t('APP_NAME') }} ist eine Gehirnjogging app mit Audio-Übungen, um Deine geistige Leistungsfähigkeit zu verbessern.
-            Mit verschiedenen Übungen und Herausforderungen und persönlichen Fortschrittsberichten bleibst Du motiviert und auf Kurs.
-                 Probiere es jetzt aus und verbessere Deine Gehirnleistung!</div>
+            <div class="text-h4">
+              {{ $t('What is { APP_NAME }?', { APP_NAME: $t('APP_NAME') }) }}
+            </div>
+            <div class="text-h6 text-justify">
+              {{ $t('What is_RESPONSE', { APP_NAME: $t('APP_NAME') }) }}
+            </div>
           </div>
         </div>
       </div>
@@ -50,16 +60,18 @@
       >
         <div class="col-8 text-center q-mb-xs-md">
           <div class="q-ma-lg">
-            <div class="text-h4">Welche Vorteile bietet Gerhinjogging mit Audio?</div>
+            <div class="text-h4">
+              Welche Vorteile bietet Gerhinjogging mit Audio?
+            </div>
             <div class="text-h6 text-justify">
-              -Es stärkt das Gedächtnis<br/>
-              -Die Übungen sind abwechslungsreich<br/>
-              -Die Übungen sind nützlich, da wir im Alltag häufig auf auditorische Information reagieren müssen (z.B. im Gespräch)
+              {{ $t('benefits_1') }}<br />
+              {{ $t('benefits_2') }}<br />
+              {{ $t('benefits_3') }}
             </div>
           </div>
         </div>
         <div class="col-4">
-          <q-card  class="border-box">
+          <q-card class="border-box">
             <img src="/images/promo/promo4.jpg" />
           </q-card>
         </div>
@@ -79,10 +91,13 @@
         </div>
         <div class="col-8 text-center">
           <div class="q-ma-lg">
-            <div class="text-h4">Wie funktioniert {{ $t('APP_NAME') }}?</div>
+            <div class="text-h4">
+              {{
+                $t('How does { APP_NAME } work?', { APP_NAME: $t('APP_NAME') })
+              }}
+            </div>
             <div class="text-h6 text-justify">
-              {{ $t('APP_NAME') }} bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren.
-              Suche eine Übung aus und wähle einen Schwierigkeitsgrad. Du kannst als Gast üben oder dich mit deiner E-Mail Adresse oder web3 wallet registrieren.
+              {{ $t('How does work_RESPONSE', { APP_NAME: $t('APP_NAME') }) }}
             </div>
           </div>
         </div>
@@ -95,8 +110,11 @@
           size="xl"
           icon="double_arrow"
           class="q-mb-lg"
-          :to="{ name: 'select-exercise', params: { language: store.language } }"
-          >Jetzt trainieren</q-btn
+          :to="{
+            name: 'select-exercise',
+            params: { language: store.language },
+          }"
+          >{{ $t('Train now') }}</q-btn
         >
       </div>
     </div>
@@ -105,17 +123,17 @@
     <div
       class="max-width-sm row-sm column-xs justify-between full-width text-center text-white"
     >
-      <q-btn flat no-caps class="col-3" @click="showPrivacyStatement"
-        >Privacy</q-btn
-      >
+      <q-btn flat no-caps class="col-3" @click="showPrivacyStatement">{{
+        $t('Privacy')
+      }}</q-btn>
       <q-btn flat no-caps class="col-3" @click="showTermsAndConditions"
-        >Terms of service</q-btn
+        >{{ $t('Terms of service') }}</q-btn
       >
       <q-btn flat no-caps class="col-3" @click="showCookiePolicy"
-        >Cookies</q-btn
+        >{{ $t('Cookies')}}</q-btn
       >
       <q-btn flat no-caps class="col-3" @click="showLegalNotice"
-        >Legal notice</q-btn
+        >{{ $t('Legal notice')}}</q-btn
       >
     </div>
   </div>
@@ -126,45 +144,41 @@ import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 const $q = useQuasar();
 const { t } = useI18n();
-const store = useAppStore()
+const store = useAppStore();
 
 function showLegalNotice() {
   $q.dialog({
     message: t('LEGAL_NOTICE'),
-    ok: 'OK',
-    html: true,
-    persistent: true,
+    ok: true,
+    html: true
   });
 }
 
 function showCookiePolicy() {
   $q.dialog({
     message: t('COOKIE_POLICY'),
-    ok: 'OK',
-    html: true,
-    persistent: true,
+    ok: true,
+    html: true
   });
 }
 
 function showPrivacyStatement() {
   $q.dialog({
     message: t('PRIVACY_STATEMENT'),
-    ok: 'OK',
+    ok: true,
     html: true,
-    persistent: true,
   });
 }
 
 function showTermsAndConditions() {
   $q.dialog({
     message: t('TERMS_AND_CONDITIONS'),
-    ok: 'OK',
+    ok: true,
     html: true,
-    persistent: true,
   });
 }
 </script>

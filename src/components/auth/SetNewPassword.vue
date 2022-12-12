@@ -14,7 +14,9 @@
           :type="showPassword ? 'text' : 'password'"
           autocomplete="off"
           required
-          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('Please type something'),
+          ]"
         >
           <template v-slot:append>
             <q-icon
@@ -35,7 +37,9 @@
           type="password"
           autocomplete="off"
           required
-          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('Please type something'),
+          ]"
         >
         </q-input>
 

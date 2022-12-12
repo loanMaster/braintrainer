@@ -14,7 +14,12 @@
         <slot></slot>
         <template v-slot:action>
           <div class="full-width text-center">
-            <q-btn color="white" outline :label="$t('Continue')" @click="onClicked" />
+            <q-btn
+              color="white"
+              outline
+              :label="$t('Continue')"
+              @click="onClicked"
+            />
           </div>
         </template>
       </q-banner>

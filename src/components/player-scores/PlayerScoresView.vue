@@ -73,19 +73,19 @@
             <q-separator />
             <q-card-section class="column">
               <div class="row justify-between">
-                <div>Schwierigkeit</div>
+                <div>{{ $t('Difficulty') }}</div>
                 <div>{{ props.row.difficulty }}</div>
               </div>
               <div class="row justify-between">
-                <div>Bewertung</div>
+                <div>{{ $t('Rating') }}</div>
                 <div>{{ props.row.score }}</div>
               </div>
               <div class="row justify-between">
-                <div>Sterne</div>
+                <div>{{ $t('Stars') }}</div>
                 <div>{{ props.row.stars }}</div>
               </div>
               <div class="row justify-between">
-                <div>Deine Punkte</div>
+                <div>{{ $t('Top % of users') }}</div>
                 <div>{{ props.row.percentile }}</div>
               </div>
             </q-card-section>
@@ -141,7 +141,7 @@ const columns = ref([
   {
     name: 'nameOfTheGame',
     required: true,
-    label: 'Übung',
+    label: t('Exercise'),
     align: 'left',
     field: 'nameOfTheGame',
     sortable: true,
@@ -149,13 +149,13 @@ const columns = ref([
   {
     name: 'difficulty',
     align: 'left',
-    label: 'Schwierigkeit',
+    label: t('Difficulty'),
     field: 'difficulty',
     sortable: true,
   },
   {
     name: 'score',
-    label: 'Bewertung',
+    label: t('Rating'),
     field: 'score',
     sortable: true,
     format: (val: number) => formatScore(val, store.language),
@@ -163,7 +163,7 @@ const columns = ref([
   { name: 'stars', label: 'Sterne', field: 'stars', sortable: true },
   {
     name: 'percentile',
-    label: 'Top % der User',
+    label: t('Top % of users'),
     field: 'percentile',
     format: (val: number) => `${formatScore(val, store.language)}%`,
   },
@@ -195,11 +195,5 @@ function play(props: any) {
 <style>
 .q-table__bottom {
   display: none;
-}
-.gradient {
-  background-image: linear-gradient(to bottom right, #ffffaa55, #aaffff55);
-}
-.body--dark .gradient {
-  background-image: none;
 }
 </style>
