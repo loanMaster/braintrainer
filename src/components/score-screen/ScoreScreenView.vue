@@ -78,7 +78,7 @@
         </div>
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
-          <div class="text-h5">Fortschritt</div>
+          <div class="text-h5">{{ $t('Progress') }}</div>
           <q-skeleton square class="flex-1" v-if="showLoadingIndicator" />
           <ProgressDiagram
             v-if="!showLoadingIndicator"

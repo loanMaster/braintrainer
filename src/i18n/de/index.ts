@@ -154,8 +154,8 @@ export default {
   Solved: 'Gelöst',
   Mistakes: 'Fehler',
   'Time required': 'Benötigte Zeit',
-  'You are in the top {{ percentile }}% of users':
-    'Du bist unter den Top {{ percentile }}% der Spieler',
+  'You are in the top { percentile }% of users':
+    'Du bist unter den Top { percentile }% der Spieler',
   'New highscore': '🎉 Neuer highscore 🎉',
   'Continue as guest': 'Weiter als Gast',
   'Try up to three exercises as guest before creating an account.':

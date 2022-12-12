@@ -94,7 +94,13 @@
           </router-link>
         </div>
 
-        <div>
+        <div class="row no-wrap">
+          <q-btn
+            flat
+            dense
+            @click="$q.fullscreen.toggle()"
+            :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+          />
           <q-toggle
             :modelValue="lightMode"
             @update:modelValue="toggleDarkMode($event)"
@@ -125,14 +131,14 @@
             <q-menu>
               <q-list dense>
                 <q-item clickable v-close-popup v-if="isLoggedIn">
-                  <q-item-section
+                  <q-item-sections class="column justify-center"
                     ><router-link
                       :to="{
                         name: 'user-settings',
                         params: { language: store.language },
                       }"
-                      >Benutzerprofil</router-link
-                    ></q-item-section
+                      >{{ $t('User profile') }}</router-link
+                    ></q-item-sections
                   >
                 </q-item>
                 <q-item
