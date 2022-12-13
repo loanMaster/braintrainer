@@ -4,7 +4,7 @@ import { isTokenValid } from 'stores/token.utils';
 
 export interface IAuth {
   id: string | undefined;
-  name: string | undefined;
+  username: string | undefined;
   image: string | undefined;
   _hasAccount: boolean;
 }
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
   state: (): IAuth => {
     return {
       id: undefined,
-      name: undefined,
+      username: undefined,
       image: undefined,
       _hasAccount: !!localStorage.getItem('hasAccount'),
     };
@@ -41,13 +41,13 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     updateUserInfo() {
       this.id = String(Userfront.user?.userId as number);
-      this.name = Userfront.user.name;
+      this.username = Userfront.user.username;
       this.image =
         ((Userfront.user?.data as any)?.image as string) ||
         '/images/avatars/default_avatar.png';
     },
-    async update(name: string, image: string): Promise<void> {
-      await Userfront.user.update!({ name, data: { image } });
+    async update(username: string, image: string): Promise<void> {
+      await Userfront.user.update!({ username, data: { image } });
       this.updateUserInfo();
     },
     async logout(options?: { redirect?: boolean }) {

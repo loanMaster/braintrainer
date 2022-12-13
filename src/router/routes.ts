@@ -196,7 +196,7 @@ const routes: RouteRecordRaw[] = [
               {
                 path: ':game(find-matching-person)',
                 name: 'find-matching-person',
-                component: () => import('src/components/exercises/RememberNames.vue'),
+                component: () => import('src/components/exercises/FindMatchingPerson.vue'),
               },
             ],
           },

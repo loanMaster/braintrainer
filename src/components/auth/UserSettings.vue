@@ -88,7 +88,7 @@ const avatars = ref(
 const isSending = ref(false);
 const submitted = ref(false);
 const currentAvatar = ref(authStore.image);
-const username = ref(authStore.name);
+const username = ref(authStore.username);
 
 function onItemClick(avatar: string) {
   currentAvatar.value = avatar;
@@ -112,7 +112,7 @@ async function resetPassword() {
     await authStore.sendResetLink(authStore.email!);
     $q.notify({
       group: 'reset-password',
-      message: t('auth.[\'You will shortly receive an email with a link to reset your password.\']'),
+      message: t('auth[\'You will shortly receive an email with a link to reset your password.\']'),
       color: 'green',
       timeout: 1000,
     });

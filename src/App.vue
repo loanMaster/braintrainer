@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
-import {getCurrentScope, inject, onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import {NavigationGuardNext, RouteLocationNormalized, useRoute, useRouter} from 'vue-router';
 import { useQuasar } from 'quasar';
 import { SoundService } from 'src/shared-services/sound.service';
@@ -54,7 +54,7 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
 router.beforeEach((to, from, next) => {
   if (to !== from) {
     $q.loading.show({
-      delay: 400 // ms
+      delay: 300 // ms
     })
   }
   next()

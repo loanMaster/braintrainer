@@ -107,6 +107,7 @@ export default {
   auth: {
     Logout: '_',
     Login: '_',
+    'There was an error during login. Please verify your e-mail address and password.': '_',
     'Email address': '_',
     'Sign in with email': '_',
     'Sign In': '_',

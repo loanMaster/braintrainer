@@ -134,7 +134,7 @@ async function submit() {
     $q.notify({
       group: 'set-new-password',
       message:
-        t('auth.There was an error during login. Please verify your e-mail address and password.'),
+        t('auth[\'There was an error during login. Please verify your e-mail address and password.\']'),
       color: 'red',
       timeout: 2000,
     });
