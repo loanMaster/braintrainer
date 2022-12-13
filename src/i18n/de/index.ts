@@ -146,6 +146,7 @@ export default {
       "Danke für's Registrieren. Bitte klicke auf den Link in der Bestätigungsemail die an {email} geschickt wurde.",
     'Resend verification email': 'Bestätigungsemail erneut versenden',
   },
+  'An error has occurred. Please refresh this site or try again later.': 'Leider ist ein Fehler aufgetreten. Bitte Laden Sie die Seite neu oder versuchen Sie es später noch einmal.',
   Exercise: 'Übung',
   Difficulty: 'Schwierigkeit',
   SPELLING_WARNING: '! Anstatt ‹ß› bitte ‹ss› verwenden !',

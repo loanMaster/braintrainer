@@ -20,13 +20,11 @@ export const preloadAudio = (urls: string[]): Promise<void> => {
     for (let i = 0; i < urls.length; i++) {
       const audio = new Audio();
       audio.onload = () => {
-        console.log(`onload ${audio.src}`);
         toGo--;
         if (toGo <= 0) {
           resolve();
         }
       };
-      console.log(`queueing ${urls[i]}`);
       audio.preload = 'auto';
       audio.src = urls[i];
     }

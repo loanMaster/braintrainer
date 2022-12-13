@@ -138,6 +138,7 @@ export default {
     'Resend verification email': '_',
     'An error occurred when sending the e-mail': '_'
   },
+  'An error has occurred. Please refresh this site or try again later.': '_',
   Exercise: '_',
   Difficulty: '_',
   SPELLING_WARNING: '! American English spelling is used !',
