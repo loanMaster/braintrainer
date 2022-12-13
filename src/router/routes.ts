@@ -20,9 +20,7 @@ import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue';
 import GameSelectionView from 'src/components/exercises/exercise-selection-menu/GameSelectionView.vue';
 import HighscoresView from 'src/components/highscores/HighscoresView.vue';
 import ExerciseView from 'src/components/exercises/ExerciseView.vue';
-import PlayerScoresView from 'src/components/player-scores/PlayerScoresView.vue';
 import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.vue';
-import PlayerProgressView from 'src/components/player-scores/PlayerProgressView.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
 import StartScreen from 'src/components/start/StartScreen.vue';
 import LoginView from 'src/components/auth/LoginView.vue';
@@ -241,21 +239,9 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'player-scores',
-        name: '',
+        name: 'player-scores',
         component: PlayerScoresLayout,
-        beforeEnter: loginGuard,
-        children: [
-          {
-            path: '',
-            name: 'player-scores',
-            component: PlayerScoresView,
-          },
-          {
-            path: ':game/:difficulty',
-            name: 'playerprogress',
-            component: PlayerProgressView,
-          },
-        ],
+        beforeEnter: loginGuard
       },
     ],
   },

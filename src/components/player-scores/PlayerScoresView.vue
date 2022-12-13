@@ -2,6 +2,14 @@
   <div
     class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg"
   >
+    <q-dialog v-model="showProgressDiagram">
+      <q-card class="full-width">
+        <div class="full-width q-pa-sm column no-wrap">
+          <div class="test-h5">{{ $t(nameOfTheGame + '.title') + ' (' + $t(difficulty) + ')' }}</div>
+          <ProgressDiagram :difficulty="difficulty" :nameOfTheGame="nameOfTheGame" class="diagram-min-height"/>
+        </div>
+      </q-card>
+    </q-dialog>
     <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
     <q-table
       v-if="!showLoadingIndicator"
@@ -54,7 +62,7 @@
       <template v-slot:item="props">
         <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
           <q-card>
-            <q-card-section class="text-h6 bg-orange-2 row justify-between">
+            <q-card-section class="text-h6 table-header row justify-between">
               {{ props.row.nameOfTheGame }}
               <div class="row">
                 <q-btn
@@ -107,6 +115,7 @@ import { ref, onMounted, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import StarsRating from 'src/components/shared/StarsRating.vue';
+import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { useRouter } from 'vue-router';
 import { formatScore } from 'src/util/format-number';
 import { useAppStore } from 'stores/app-store';
@@ -117,6 +126,9 @@ const rows: Ref<any[]> = ref([]);
 const showLoadingIndicator = ref(false);
 const router = useRouter();
 const store = useAppStore();
+const showProgressDiagram = ref(false)
+const nameOfTheGame = ref('')
+const difficulty = ref('easy')
 
 onMounted(async () => {
   showLoadingIndicator.value = true;
@@ -183,14 +195,17 @@ const columns = ref([
 ]);
 
 function showProgress(props: any) {
-  router.push({
+  difficulty.value = props.row.difficultyOri
+  nameOfTheGame.value = props.row.nameOfTheGameOri
+  showProgressDiagram.value = true
+  /*router.push({
     name: 'playerprogress',
     params: {
       game: props.row.nameOfTheGameOri,
       difficulty: props.row.difficultyOri,
       language: useAppStore().language,
     },
-  });
+  });*/
 }
 
 function play(props: any) {
@@ -208,5 +223,8 @@ function play(props: any) {
 <style>
 .q-table__bottom {
   display: none;
+}
+.diagram-min-height {
+  min-height: 40vh
 }
 </style>
