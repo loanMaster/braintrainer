@@ -105,7 +105,7 @@ export default {
   'Memory exercises': 'Memory',
   Language: '_',
   Logout: '_',
-  'Email address': "_",
+  'Email address': '_',
   'Sign in with email': '_',
   'Sign In': '_',
   'No account? Sign up here!': '_',
@@ -183,9 +183,9 @@ export default {
   Level: 'Level',
   Highscores: 'High scores',
   'Application paused': 'Application paused',
-  'Privacy': '_',
+  Privacy: '_',
   'Terms of service': '_',
-  'Cookies': '_',
+  Cookies: '_',
   'Legal notice': '_',
   LEGAL_NOTICE:
     `Legal Notice<br/> ` +

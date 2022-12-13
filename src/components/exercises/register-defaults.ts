@@ -5,8 +5,8 @@ import { ref, onBeforeUnmount, computed } from 'vue';
 import { Subject } from 'rxjs';
 import { useAppStore } from 'stores/app-store';
 import { useRoute } from 'vue-router';
-import {keyInput} from "src/util/key.input";
-import {filter, takeUntil} from "rxjs/operators";
+import { keyInput } from 'src/util/key.input';
+import { filter, takeUntil } from 'rxjs/operators';
 
 export function createExerciseContext({
   playAudioCb,
@@ -65,11 +65,16 @@ export function createExerciseContext({
     }
   }
 
-  keyInput.pipe(filter(k => k.key === 'Escape' || k.key === 'Enter'), takeUntil(destroy)).subscribe((key) => {
-    if (revealed.value) {
-      onSolutionConfirmed()
-    }
-  });
+  keyInput
+    .pipe(
+      filter((k) => k.key === 'Escape' || k.key === 'Enter'),
+      takeUntil(destroy)
+    )
+    .subscribe((key) => {
+      if (revealed.value) {
+        onSolutionConfirmed();
+      }
+    });
 
   return {
     soundService,

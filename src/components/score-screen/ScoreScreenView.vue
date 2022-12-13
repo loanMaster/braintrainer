@@ -41,8 +41,17 @@
           </div>
           <div class="q-mt-sm">
             <div class="text-left">
-              <div v-if="updateScoreResponse && !updateScoreResponse.isNewHighScore" class="q-mb-sm">
-                {{ $t('You are in the top { percentile }% of users', { percentile } ) }}
+              <div
+                v-if="
+                  updateScoreResponse && !updateScoreResponse.isNewHighScore
+                "
+                class="q-mb-sm"
+              >
+                {{
+                  $t('You are in the top { percentile }% of users', {
+                    percentile,
+                  })
+                }}
               </div>
               <div
                 class="text-center animated text-h6 animate bounceIn"
@@ -127,10 +136,10 @@ const percentile = computed(() =>
 );
 
 onBeforeMount(() => {
-  if (!store.exercise) {
+  if (!store.exercise || !store.exercise.score) {
     store.$patch((store) => {
       // TODO for debugging
-      store.exercise = newExercise('remember-numbers', 'normal', 10);
+      store.exercise = newExercise('mental-arithmetic', 'easy', 10);
       store.exercise.score = 50;
     });
   }
@@ -155,7 +164,7 @@ onMounted(async () => {
         if (score.value < store.exercise.score!) {
           score.value++;
         } else {
-          score.value = store.exercise.score!
+          score.value = store.exercise.score!;
           new TweenService().animateCSS(knob.value, 'pulse', 1);
           stop.next();
           stop.complete();

@@ -126,15 +126,15 @@
       <q-btn flat no-caps class="col-3" @click="showPrivacyStatement">{{
         $t('Privacy')
       }}</q-btn>
-      <q-btn flat no-caps class="col-3" @click="showTermsAndConditions"
-        >{{ $t('Terms of service') }}</q-btn
-      >
-      <q-btn flat no-caps class="col-3" @click="showCookiePolicy"
-        >{{ $t('Cookies')}}</q-btn
-      >
-      <q-btn flat no-caps class="col-3" @click="showLegalNotice"
-        >{{ $t('Legal notice')}}</q-btn
-      >
+      <q-btn flat no-caps class="col-3" @click="showTermsAndConditions">{{
+        $t('Terms of service')
+      }}</q-btn>
+      <q-btn flat no-caps class="col-3" @click="showCookiePolicy">{{
+        $t('Cookies')
+      }}</q-btn>
+      <q-btn flat no-caps class="col-3" @click="showLegalNotice">{{
+        $t('Legal notice')
+      }}</q-btn>
     </div>
   </div>
 </template>
@@ -154,7 +154,7 @@ function showLegalNotice() {
   $q.dialog({
     message: t('LEGAL_NOTICE'),
     ok: true,
-    html: true
+    html: true,
   });
 }
 
@@ -162,7 +162,7 @@ function showCookiePolicy() {
   $q.dialog({
     message: t('COOKIE_POLICY'),
     ok: true,
-    html: true
+    html: true,
   });
 }
 

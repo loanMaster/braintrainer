@@ -82,8 +82,8 @@ const getBrowserLanguage = (): string => {
 };
 
 const tmp = {
-  soundStart: 0
-}
+  soundStart: 0,
+};
 
 export const useAppStore = defineStore('main', {
   state: (): IAppState => {
@@ -207,12 +207,12 @@ export const useAppStore = defineStore('main', {
     startedPlayingSound(tag?: string): void {
       this.exercise.audioState.playing = true;
       this.exercise.audioState.tag = tag;
-      tmp.soundStart = Date.now()
+      tmp.soundStart = Date.now();
     },
     finishedPlayingSound(tag?: string): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.tag = tag;
-      this.exercise.totalAudioDuration += (Date.now() - tmp.soundStart)
+      this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
     },
     setThemePreference(theme: 'light' | 'dark') {
       this._themePreference = theme;

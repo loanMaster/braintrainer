@@ -87,12 +87,12 @@ onBeforeMount(() => {
   const numberOfQuestions = 10;
   exerciseUtils.createExercise(numberOfQuestions);
   nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
-  const exclude: string[] = []
+  const exclude: string[] = [];
   nextAnagrams
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((result) => {
-      result.forEach(v => exclude.push(v))
-      loadNextAnagram(exclude)
+      result.forEach((v) => exclude.push(v));
+      loadNextAnagram(exclude);
     });
   loadNextAnagram();
   loadAlphabet = startLoadAlphabet();
@@ -194,7 +194,7 @@ async function loadNextAnagram(exclude?: string[]): Promise<void> {
             : 7,
         lang: store.language,
         number: 1,
-        exclude
+        exclude,
       })
     ).words
   );

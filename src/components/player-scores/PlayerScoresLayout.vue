@@ -1,7 +1,12 @@
 <template>
   <div class="bg-gradient flex-1 column" style="max-width: 100vw">
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
-      <q-toolbar-title>{{ $t('Progress') + (nameOfTheGame ? ': ' + $t(nameOfTheGame + '.title') + ' (' + $t(difficulty) + ')' : '' ) }}</q-toolbar-title>
+      <q-toolbar-title>{{
+        $t('Progress') +
+        (nameOfTheGame
+          ? ': ' + $t(nameOfTheGame + '.title') + ' (' + $t(difficulty) + ')'
+          : '')
+      }}</q-toolbar-title>
     </q-toolbar>
     <div :style="{ 'overflow-x': overflow }" class="column flex-1 items-center">
       <router-view v-slot="{ Component }">
@@ -20,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref } from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const refEnterClass = ref('fadeIn');
 const refLeaveClass = ref('fadeIn');
@@ -48,7 +53,6 @@ router.afterEach(() => {
   }, 1000);
 });
 
-const nameOfTheGame = computed(() => route.params.game)
-const difficulty = computed(() => route.params.difficulty)
-
+const nameOfTheGame = computed(() => route.params.game);
+const difficulty = computed(() => route.params.difficulty);
 </script>

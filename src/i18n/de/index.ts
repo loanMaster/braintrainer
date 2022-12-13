@@ -110,7 +110,7 @@ export default {
   'Memory exercises': 'Gedächstnis',
   Language: 'Sprache',
   Logout: 'Ausloggen',
-  'Email address': "E-Mail Adresse",
+  'Email address': 'E-Mail Adresse',
   'Sign in with email': 'Mit E-Mail einloggen',
   'Sign In': 'Einloggen',
   'No account? Sign up here!': 'Kein Account? Jetzt registrieren!',
@@ -182,9 +182,9 @@ export default {
   LANGUAGE_CODE: 'de',
   Highscores: 'Highscores',
   'Application paused': 'Pause',
-  'Privacy': 'Datenschutz',
+  Privacy: 'Datenschutz',
   'Terms of service': 'Nutzungsbedingungen',
-  'Cookies': 'Verwendung von Cookies',
+  Cookies: 'Verwendung von Cookies',
   'Legal notice': 'Rechtlicher Hinweis',
   LEGAL_NOTICE:
     'Rechtlicher Hinweis <br/><br/>' +

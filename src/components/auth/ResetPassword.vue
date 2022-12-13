@@ -15,7 +15,9 @@
           type="email"
           autofocus
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('Please type something'),
+          ]"
         />
 
         <q-btn

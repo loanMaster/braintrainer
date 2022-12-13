@@ -18,7 +18,9 @@
           type="email"
           autofocus
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('Please type something'),
+          ]"
         />
 
         <q-input
@@ -31,7 +33,9 @@
           :type="showPassword ? 'test' : 'password'"
           autocomplete="on"
           required
-          :rules="[(val) => (val && val.length > 0) || $t('Please type something')]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('Please type something'),
+          ]"
         >
           <template v-slot:append>
             <q-icon

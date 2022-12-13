@@ -74,12 +74,12 @@ onBeforeMount(() => {
   const numberOfQuestions = difficulty.value === 'easy' ? 5 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
   nextAudio = new ReplaySubject<HomophoneAudioResponse>(numberOfQuestions);
-  const exclude: string[] = []
+  const exclude: string[] = [];
   nextAudio
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((result) => {
-      result.val.forEach(v => exclude.push(v))
-      loadNextAudio(exclude)
+      result.val.forEach((v) => exclude.push(v));
+      loadNextAudio(exclude);
     });
   loadNextAudio();
 });
@@ -167,7 +167,7 @@ async function loadNextAudio(exclude?: string[]): Promise<void> {
           : 16,
       lang: store.language,
       number: 1,
-      exclude
+      exclude,
     })
   );
 }

@@ -2,7 +2,7 @@
   <div
     class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg"
   >
-    <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1"/>
+    <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
     <q-table
       v-if="!showLoadingIndicator"
       :grid="$q.screen.xs"
@@ -42,7 +42,11 @@
           </q-td>
           <q-td v-for="col in props.cols" :key="col.name" :props="props">
             <span v-if="col.name !== 'stars'">{{ col.value }}</span>
-            <StarsRating class="text-h5" :rating="col.value" v-if="col.name === 'stars'"/>
+            <StarsRating
+              class="text-h5"
+              :rating="col.value"
+              v-if="col.name === 'stars'"
+            />
           </q-td>
         </q-tr>
       </template>
@@ -83,7 +87,7 @@
               </div>
               <div class="row justify-between">
                 <div>{{ $t('Stars') }}</div>
-                <StarsRating class="text-h5" :rating="props.row.stars"/>
+                <StarsRating class="text-h5" :rating="props.row.stars" />
               </div>
               <div class="row justify-between">
                 <div>{{ $t('Top % of users') }}</div>
@@ -106,7 +110,7 @@ import StarsRating from 'src/components/shared/StarsRating.vue';
 import { useRouter } from 'vue-router';
 import { formatScore } from 'src/util/format-number';
 import { useAppStore } from 'stores/app-store';
-import {mapScoreToRating} from "src/util/calculate-rating";
+import { mapScoreToRating } from 'src/util/calculate-rating';
 
 const { t } = useI18n();
 const rows: Ref<any[]> = ref([]);
@@ -163,7 +167,13 @@ const columns = ref([
     sortable: true,
     format: (val: number) => formatScore(val, store.language),
   },
-  { name: 'stars', label: 'Sterne', field: 'stars', align: 'center', sortable: true },
+  {
+    name: 'stars',
+    label: 'Sterne',
+    field: 'stars',
+    align: 'center',
+    sortable: true,
+  },
   {
     name: 'percentile',
     label: t('Top % of users'),

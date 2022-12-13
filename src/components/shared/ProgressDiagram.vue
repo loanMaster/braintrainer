@@ -66,7 +66,9 @@ function createChart(values: Score[]) {
       labels,
       datasets: [
         {
-          label: `${t(props.nameOfTheGame + '.title')} (${t(props.difficulty!)})`,
+          label: `${t(props.nameOfTheGame + '.title')} (${t(
+            props.difficulty!
+          )})`,
           data: data,
           borderWidth: 1,
         },

@@ -3,16 +3,16 @@ export const preloadAssets = (images: string[]): Promise<void> => {
     let toGo = images.length;
     for (let i = 0; i < images.length; i++) {
       const img = new Image();
-      img.onload = function() {
+      img.onload = function () {
         toGo--;
         if (toGo <= 0) {
-          resolve()
+          resolve();
         }
-      }
+      };
       img.src = images[i];
     }
-  })
-}
+  });
+};
 
 export const preloadAudio = (urls: string[]): Promise<void> => {
   return new Promise((resolve) => {
@@ -20,15 +20,15 @@ export const preloadAudio = (urls: string[]): Promise<void> => {
     for (let i = 0; i < urls.length; i++) {
       const audio = new Audio();
       audio.onload = () => {
-        console.log(`onload ${audio.src}`)
+        console.log(`onload ${audio.src}`);
         toGo--;
         if (toGo <= 0) {
-          resolve()
+          resolve();
         }
-      }
-      console.log(`queueing ${urls[i]}`)
+      };
+      console.log(`queueing ${urls[i]}`);
       audio.preload = 'auto';
       audio.src = urls[i];
     }
-  })
-}
+  });
+};

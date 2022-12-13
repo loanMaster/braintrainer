@@ -8,7 +8,7 @@ import { useI18n } from 'vue-i18n';
 import { onBeforeMount, onMounted } from 'vue';
 import { NavigationGuardNext, useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
-import {SoundService} from "src/shared-services/sound.service";
+import { SoundService } from 'src/shared-services/sound.service';
 
 const store = useAppStore();
 const i18n = useI18n();
@@ -21,8 +21,8 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  new SoundService().preCacheSounds()
-})
+  new SoundService().preCacheSounds();
+});
 
 const removeTrailingSlash = (path: string) => {
   return path.length > 1 && path.endsWith('/')
