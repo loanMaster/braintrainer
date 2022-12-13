@@ -49,6 +49,7 @@ import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { ScoreService } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
+import {useAuthStore} from "stores/auth-store";
 
 const selectedDifficulty = ref('');
 const difficulties = ref(['easy', 'normal', 'hard']);

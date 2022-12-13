@@ -1,12 +1,11 @@
 <template>
   <div class="full-width column justify-center items-center flex-1 q-px-sm">
-    <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit">
-        <div class="text-h5 q-mb-lg">{{ $t('Set new Password') }}</div>
+    <q-card class="q-pa-md max-width-xs full-width shadow-8">
+      <q-form @submit="submit" class="q-gutter-md">
+        <div class="text-h5">{{ $t('Set new Password') }}</div>
 
         <q-input
           filled
-          class="q-mb-sm"
           v-model="password"
           test="new-password"
           label="Password"
@@ -29,7 +28,6 @@
 
         <q-input
           filled
-          class="q-mb-sm"
           v-model="passwordVerify"
           test="new-password verify"
           label="Repeat new password"
@@ -44,8 +42,8 @@
         </q-input>
 
         <q-btn color="primary" type="submit">{{ $t('Reset password') }} </q-btn>
+        <div v-if="passwordReset">{{ $t('Password changed') }}</div>
       </q-form>
-      <div v-if="passwordReset">{{ $t('Password changed') }}</div>
     </q-card>
   </div>
 </template>

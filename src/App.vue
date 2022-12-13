@@ -49,8 +49,6 @@ router.beforeEach(async (to, from, next: NavigationGuardNext) => {
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
   if (to !== from) {
     $q.loading.show({
       delay: 400 // ms
@@ -59,24 +57,19 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach((to, from, next) => {
+router.afterEach((to, from) => {
   $q.loading.hide()
-  next()
 })
 
 store.$onAction(({ name, after }) => {
   after(() => {
     if (name == 'setLanguage') {
-      const language = route.params.language || 'en';
-      if (store.language !== language) {
+      const language = route.params.language;
+      if (!language || store.language !== language) {
         const withoutLangPath = (router.currentRoute.value.fullPath + '/')
           .replaceAll('//', '')
           .replace(`/${language}/`, '/');
-        router.push(
-          store.language === 'en'
-            ? removeTrailingSlash(withoutLangPath)
-            : removeTrailingSlash(`/${store.language}${withoutLangPath}`)
-        );
+        router.push(removeTrailingSlash(`/${store.language}${withoutLangPath}`));
       }
     }
 

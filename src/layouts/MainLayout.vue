@@ -124,13 +124,17 @@
             </q-menu>
           </q-btn>
 
-          <q-btn flat round>
-            <q-avatar @click="login">
+          <q-btn flat dense no-caps class="q-mr-xs" v-if="!isLoggedIn" @click="login">
+            {{ $t('auth.Login') }}
+          </q-btn>
+
+          <q-btn flat round v-if="isLoggedIn">
+            <q-avatar>
               <img :src="profileImage" />
             </q-avatar>
             <q-menu>
               <q-list dense>
-                <q-item clickable v-close-popup v-if="isLoggedIn">
+                <q-item clickable v-close-popup>
                   <q-item-section class="column justify-center"
                     ><router-link
                       :to="{
@@ -145,9 +149,8 @@
                   clickable
                   v-close-popup
                   @click="logout"
-                  v-if="isLoggedIn"
                 >
-                  <q-item-section>{{ $t('Logout') }}</q-item-section>
+                  <q-item-section>{{ $t('auth.Logout') }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>

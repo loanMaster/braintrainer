@@ -2,21 +2,20 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
-    <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit">
-        <div class="text-h5">{{ $t('Reset Password') }}</div>
+    <q-card class="q-pa-md max-width-xs full-width shadow-8">
+      <q-form @submit="submit" class="q-gutter-md">
+        <div class="text-h5">{{ $t('auth.Reset Password') }}</div>
 
         <q-input
           filled
-          class="q-my-md"
           v-model="email"
           test="reset-password-email"
-          :label="$t('Email address')"
+          :label="$t('auth.Email address')"
           type="email"
           autofocus
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+            (val) => (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 
@@ -26,7 +25,7 @@
           test="reset-password-submit"
           :disabled="isSending"
         >
-          {{ $t('Reset Password') }}
+          {{ $t('auth.Reset Password') }}
         </q-btn>
         <div v-if="errormsg" test="reset-password-error-msg" class="text-red">
           {{ errormsg }}
@@ -35,7 +34,7 @@
       <div v-if="submitted" test="reset-password-success-msg">
         {{
           $t(
-            'You will shortly receive an email with a link to reset your password.'
+            'auth.You will shortly receive an email with a link to reset your password.'
           )
         }}
       </div>

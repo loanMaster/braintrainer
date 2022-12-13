@@ -2,25 +2,23 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
-    <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit">
-        <div class="text-h5 q-mb-md">{{ $t('Sign up') }}</div>
+    <q-card class="q-pa-md max-width-xs full-width shadow-8">
+      <q-form @submit="submit" class="q-gutter-md">
+        <div class="text-h5">{{ $t('auth.Sign up') }}</div>
 
-        <GoogleLoginButton class="q-my-md" :disable="submitting" />
+        <GoogleLoginButton :disable="submitting" />
 
-        <div class="text-h6 q-mt-md">{{ $t('Sign up with email') }}</div>
+        <div class="text-h6">{{ $t('auth.Sign up with email') }}</div>
         <q-input
           filled
-          class="q-mb-sm"
           v-model="email"
           test="signup-email"
-          label="Email address"
+          :label="$t('auth.Email address')"
           type="email"
           lazy-rules
           autofocus
-          error-message="Please enter a valid email xxx"
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+            (val) => (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 
@@ -28,14 +26,13 @@
           filled
           v-model="password"
           test="login-password"
-          label="Password"
+          :label="$t('auth.Password')"
           lazy-rules
           :type="showPassword ? 'test' : 'password'"
           autocomplete="off"
           required
-          error-message="Please enter a valid password"
           :rules="[
-            (val) => (val && val.length >= 8) || $t('At least 8 characters'),
+            (val) => (val && val.length >= 8) || $t('auth.At least 8 characters'),
           ]"
         >
           <template v-slot:append>
@@ -53,33 +50,32 @@
           test="signup-submit"
           :disabled="submitting"
         >
-          Sign Up
+          {{ $t('auth.Sign up') }}
         </q-btn>
         <div v-if="errormsg" test="signup-error-msg" class="text-red">
           {{ errormsg }}
         </div>
         <div class="text-right">
-          {{ $t('Already registered?') }}
-          <router-link :to="{ name: 'login' }">{{
-            $t('Sign in here')
+          {{ $t('auth.Already registered?') }}
+          <router-link :to="{ name: 'login', params: { language } }">{{
+            $t('auth.Sign in here')
           }}</router-link>
         </div>
+        <div v-if="signedUp" test="signup-success-msg">
+          {{
+          $t('auth.Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.' )
+          }}
+        </div>
       </q-form>
-      <div v-if="signedUp" test="signup-success-msg">
-        {{
-          $t(
-            'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.'
-          )
-        }}
-      </div>
     </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
 import GoogleLoginButton from './GoogleLoginButton.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
+import {useAppStore} from "stores/app-store";
 
 const email = ref('');
 const password = ref('');
@@ -109,4 +105,6 @@ async function submit() {
     submitting.value = false;
   }
 }
+
+const language = computed(() => useAppStore().language)
 </script>

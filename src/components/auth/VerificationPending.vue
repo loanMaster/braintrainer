@@ -1,24 +1,28 @@
 <template>
-  <q-card>
-    <div>
-      <h3>{{ $t('Email verification pending') }}</h3>
-      {{
-        $t(
-          'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.',
-          { email }
-        )
-      }}
-    </div>
-    <q-btn
-      color="primary"
-      type="button"
-      @click="sendVerificationEmail"
-      test="send-verification-email"
-      :disabled="emailSent"
-    >
-      {{ $t('Resend verification email') }}
-    </q-btn>
-  </q-card>
+  <div
+    class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
+  >
+    <q-card class="q-pa-md max-width-xs full-width shadow-8 q-gutter-md">
+      <div class="text-h5">{{ $t('auth.Email verification pending') }}</div>
+      <div>
+        {{
+          $t(
+            'auth[\'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.\']',
+            { email }
+          )
+        }}
+      </div>
+      <q-btn
+        color="primary"
+        type="button"
+        @click="sendVerificationEmail"
+        test="send-verification-email"
+        :disabled="emailSent"
+      >
+        {{ $t('auth.Resend verification email') }}
+      </q-btn>
+    </q-card>
+  </div>
 </template>
 
 <script setup lang="ts">

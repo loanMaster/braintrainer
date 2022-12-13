@@ -2,39 +2,37 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
-    <q-card class="q-pa-sm-xl q-pa-xs-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit" v-if="showForm">
-        <div class="text-h5 q-mb-md">{{ $t('Sign In') }}</div>
+    <q-card class="q-pa-md max-width-xs full-width shadow-8">
+      <q-form @submit="submit" v-if="showForm" class="q-gutter-md">
+        <div class="text-h5">{{ $t('auth.Sign In') }}</div>
 
-        <GoogleLoginButton class="q-my-md" :disable="submitting" />
+        <GoogleLoginButton :disable="submitting" />
 
-        <div class="text-h6 q-mt-md">{{ $t('Sign in with email') }}</div>
+        <div class="text-h6">{{ $t('auth.Sign in with email') }}</div>
         <q-input
           filled
-          class="q-mb-sm"
           v-model="email"
           test="login-email"
-          :label="$t('Email address')"
+          :label="$t('auth.Email address')"
           type="email"
           autofocus
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+            (val) => (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 
         <q-input
           filled
-          class="q-mb-sm"
           v-model="password"
           test="login-password"
-          :label="$t('Password')"
+          :label="$t('auth.Password')"
           lazy-rules
           :type="showPassword ? 'test' : 'password'"
           autocomplete="on"
           required
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+            (val) => (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         >
           <template v-slot:append>
@@ -46,28 +44,29 @@
           </template>
         </q-input>
 
-        <q-btn
-          type="submit"
-          test="login-submit"
-          :disabled="submitting"
-          color="primary"
-        >
-          {{ $t('Sign In') }}
-        </q-btn>
+        <div class="row gap">
+          <q-btn
+            type="submit"
+            test="login-submit"
+            :disabled="submitting"
+            color="primary"
+          >
+            {{ $t('auth.Sign In') }}
+          </q-btn>
 
-        <q-btn
-          :to="{ name: 'signup', params: { language } }"
-          class="q-ml-sm"
-          type="button"
-          color="secondary"
-        >
-          {{ $t('No account? Sign up here!') }}
-        </q-btn>
-        <p class="forgot-password text-right">
-          <router-link test="reset-password-link" to="/reset-password">{{
-            $t('Forgot your password?')
+          <q-btn
+            :to="{ name: 'signup', params: { language } }"
+            type="button"
+            color="secondary"
+          >
+            {{ $t('auth.No account? Sign up here!') }}
+          </q-btn>
+        </div>
+        <div class="forgot-password text-right">
+          <router-link test="reset-password-link" :to="{ name: 'reset-password', params: { language } }">{{
+            $t('auth.Forgot your password?')
           }}</router-link>
-        </p>
+        </div>
       </q-form>
     </q-card>
   </div>
@@ -80,6 +79,7 @@ import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import { useQuasar } from 'quasar';
 import { useAppStore } from 'stores/app-store';
+import {useI18n} from "vue-i18n";
 
 const $q = useQuasar();
 const email = ref('');
@@ -88,6 +88,7 @@ const showForm = ref(true);
 const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);
+const { t } = useI18n()
 
 const route = useRoute();
 
@@ -133,7 +134,7 @@ async function submit() {
     $q.notify({
       group: 'set-new-password',
       message:
-        'Error when trying to login. Please verify your email address and password',
+        t('auth.There was an error during login. Please verify your e-mail address and password.'),
       color: 'red',
       timeout: 2000,
     });
@@ -141,3 +142,9 @@ async function submit() {
   }
 }
 </script>
+
+<style scoped lang="scss">
+  .gap {
+    gap: 5px
+  }
+</style>

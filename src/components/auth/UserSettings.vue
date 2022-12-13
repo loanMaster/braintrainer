@@ -3,9 +3,9 @@
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
-      <div class="text-h5 col-6">{{ $t('Profile') }}</div>
+      <div class="text-h5 col-6">{{ $t('auth.Profile') }}</div>
       <div class="col-6 q-gutter-sm">
-        <div class="text-h6 col-6">{{ $t('Picture') }}</div>
+        <div class="text-h6 col-6">{{ $t('auth.Picture') }}</div>
         <q-btn-dropdown color="primary" size="xl" class="text-h1">
           <template v-slot:label>
             <q-avatar size="5rem">
@@ -41,26 +41,26 @@
           />
           <div class="col-6 q-mt-sm">
             <q-btn color="primary" type="submit" :disable="isSending">{{
-              $t('Save changes')
+              $t('auth.Save changes')
             }}</q-btn>
           </div>
         </q-form>
       </div>
 
       <div class="row justify-around full-width max-width-xs q-mt-lg">
-        <div class="text-h5 col-6">{{ $t('Account') }}</div>
+        <div class="text-h5 col-6">{{ $t('auth.Account') }}</div>
         <div class="col-6 q-gutter-sm">
           <q-btn
             color="primary"
             :disable="isSending || submitted"
             @click="resetPassword"
-            >{{ $t('Reset password') }}</q-btn
+            >{{ $t('auth.Reset password') }}</q-btn
           >
           <q-btn
             color="negative"
             :disable="isSending"
             @click="deleteAccount"
-          >{{ $t('Delete account') }}</q-btn
+          >{{ $t('auth.Delete account') }}</q-btn
           >
         </div>
       </div>
@@ -112,7 +112,7 @@ async function resetPassword() {
     await authStore.sendResetLink(authStore.email!);
     $q.notify({
       group: 'reset-password',
-      message: 'Password reset link was sent',
+      message: t('auth.[\'You will shortly receive an email with a link to reset your password.\']'),
       color: 'green',
       timeout: 1000,
     });
@@ -120,7 +120,7 @@ async function resetPassword() {
   } catch (error: any) {
     $q.notify({
       group: 'reset-password',
-      message: 'Error sending password reset link',
+      message: t('auth.An error occurred when sending the e-mail'),
       color: 'red',
       timeout: 2000,
     });
@@ -130,7 +130,7 @@ async function resetPassword() {
 
 async function deleteAccount() {
   $q.dialog({
-    message: t('Are you sure that you want to delete your account? This action can not be undone.'),
+    message: t('auth[\'Are you sure that you want to delete your account? This action can not be undone.\']'),
     ok: {
       label: t('Yes')
     },
