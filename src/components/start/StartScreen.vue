@@ -34,7 +34,7 @@
       >
         <div class="col-4 q-mb-xs-md">
           <q-card class="border-box">
-            <img src="/images/promo/enlightd.png" />
+            <img src="/images/promo/promo11.jpg" />
           </q-card>
         </div>
         <div class="col-8 text-center">

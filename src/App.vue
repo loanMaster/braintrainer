@@ -48,6 +48,22 @@ router.beforeEach(async (to, from, next: NavigationGuardNext) => {
   }
 });
 
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  console.log(from)
+  if (to !== from) {
+    $q.loading.show({
+      delay: 400 // ms
+    })
+  }
+  next()
+})
+
+router.afterEach((to, from, next) => {
+  $q.loading.hide()
+  next()
+})
+
 store.$onAction(({ name, after }) => {
   after(() => {
     if (name == 'setLanguage') {

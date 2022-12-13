@@ -116,6 +116,8 @@ export default {
   'No account? Sign up here!': 'Kein Account? Jetzt registrieren!',
   'Forgot your password?': 'Passwort vergessen?',
   'Reset Password': 'Passwort zurücksetzen',
+  'Delete account': 'Benutzerkonto löschen',
+  'Are you sure that you want to delete your account? This action can not be undone.': 'Möchtest du dein Benutzerkonto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
   'You will shortly receive an email with a link to reset your password.':
     'Du erählt in Kürze eine E-Mail, um dein Passwort zurück zu setzen.',
   'Set new Password': 'Setze ein neues Passwort',
@@ -129,6 +131,7 @@ export default {
   'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
     "Danke für's Registrieren. Du erhälst in Kürze eine Bestätigungsemail um deinen Account zu aktivieren.",
   Profile: 'Profil',
+  Account: 'Benutzerkonto',
   Picture: 'Bild',
   'Save changes': 'Änderungen speichern',
   Password: 'Passwort',

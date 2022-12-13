@@ -4,7 +4,7 @@
   >
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
       <div class="text-h5 col-6">{{ $t('Profile') }}</div>
-      <div class="col-6">
+      <div class="col-6 q-gutter-sm">
         <div class="text-h6 col-6">{{ $t('Picture') }}</div>
         <q-btn-dropdown color="primary" size="xl" class="text-h1">
           <template v-slot:label>
@@ -31,7 +31,6 @@
         <q-form @submit="saveChanges">
           <q-input
             filled
-            class="q-mt-lg"
             v-model="username"
             :label="$t('Username')"
             type="text"
@@ -49,13 +48,19 @@
       </div>
 
       <div class="row justify-around full-width max-width-xs q-mt-lg">
-        <div class="text-h5 col-6">{{ $t('Password') }}</div>
-        <div class="col-6">
+        <div class="text-h5 col-6">{{ $t('Account') }}</div>
+        <div class="col-6 q-gutter-sm">
           <q-btn
             color="primary"
             :disable="isSending || submitted"
             @click="resetPassword"
             >{{ $t('Reset password') }}</q-btn
+          >
+          <q-btn
+            color="negative"
+            :disable="isSending"
+            @click="deleteAccount"
+          >{{ $t('Delete account') }}</q-btn
           >
         </div>
       </div>
@@ -68,9 +73,12 @@ import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { padNumber } from 'src/util/format-number';
 import { useQuasar } from 'quasar';
+import {AccountService} from "src/shared-services/account.service";
+import {useI18n} from "vue-i18n";
 
 const authStore = useAuthStore();
 const $q = useQuasar();
+const { t } = useI18n()
 
 const avatars = ref(
   Array.from(new Array(25).keys()).map(
@@ -118,5 +126,20 @@ async function resetPassword() {
     });
   }
   isSending.value = false;
+}
+
+async function deleteAccount() {
+  $q.dialog({
+    message: t('Are you sure that you want to delete your account? This action can not be undone.'),
+    ok: {
+      label: t('Yes')
+    },
+    cancel: {
+      label: t('No')
+    }
+  }).onOk(async () => {
+    await new AccountService().deleteAccount()
+    useAuthStore().logout({ redirect: true })
+  })
 }
 </script>

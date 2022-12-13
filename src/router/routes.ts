@@ -4,31 +4,11 @@ import {
   RouteRecordRaw,
 } from 'vue-router';
 import DifficultySelectionView from 'src/components/exercises/exercise-selection-menu/DifficultySelectionView.vue';
-import RememberNumbers from 'src/components/exercises/RememberNumbers.vue';
-import WordScramble from 'src/components/exercises/WordScramble.vue';
-import MathMarathon from 'src/components/exercises/MathMarathon.vue';
-import RememberWords from 'src/components/exercises/RememberWords.vue';
-import FindRelative from 'src/components/exercises/FindRelative.vue';
-import RememberNames from 'src/components/exercises/RememberNames.vue';
-import FindMatchingPerson from 'src/components/exercises/FindMatchingPerson.vue';
-import AudioMemory from 'src/components/exercises/AudioMemory.vue';
-import SpellBackwards from 'src/components/exercises/SpellBackwards.vue';
-import ListenBackwards from 'src/components/exercises/ListenBackwards.vue';
-import MentalArithmetic from 'src/components/exercises/MentalArithmetic.vue';
-import SolveEquation from 'src/components/exercises/SolveEquation.vue';
 import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue';
 import GameSelectionView from 'src/components/exercises/exercise-selection-menu/GameSelectionView.vue';
-import HighscoresView from 'src/components/highscores/HighscoresView.vue';
 import ExerciseView from 'src/components/exercises/ExerciseView.vue';
-import PlayerScoresLayout from 'src/components/player-scores/PlayerScoresLayout.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
 import StartScreen from 'src/components/start/StartScreen.vue';
-import LoginView from 'src/components/auth/LoginView.vue';
-import ResetPassword from 'src/components/auth/ResetPassword.vue';
-import VerificationPending from 'src/components/auth/VerificationPending.vue';
-import SetNewPassword from 'src/components/auth/SetNewPassword.vue';
-import SignUpView from 'src/components/auth/SignUpView.vue';
-import UserSettings from 'src/components/auth/UserSettings.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useAppStore } from 'stores/app-store';
@@ -73,7 +53,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'login',
         name: 'login',
-        component: LoginView,
+        component: () => import('src/components/auth/LoginView.vue'),
         beforeEnter: (
           to: RouteLocationNormalized,
           from: RouteLocationNormalized,
@@ -97,27 +77,27 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'signup',
         name: 'signup',
-        component: SignUpView,
+        component: () => import('src/components/auth/SignupView.vue'),
       },
       {
         path: 'reset-password',
         name: 'reset-password',
-        component: ResetPassword,
+        component: () => import('src/components/auth/ResetPassword.vue'),
       },
       {
         path: 'set-new-password',
         name: 'set-new-password',
-        component: SetNewPassword,
+        component: () => import('src/components/auth/SetNewPassword.vue'),
       },
       {
         path: 'verification-pending',
         name: 'verification-pending',
-        component: VerificationPending,
+        component: () => import('src/components/auth/VerificationPending.vue'),
       },
       {
         path: 'user-settings',
         name: 'user-settings',
-        component: UserSettings,
+        component: () => import('src/components/auth/UserSettings.vue'),
         beforeEnter: loginGuard,
       },
       { path: '', component: StartScreen, name: 'home' },
@@ -141,82 +121,82 @@ const routes: RouteRecordRaw[] = [
               {
                 path: ':game(remember-numbers)',
                 name: 'remember-numbers',
-                component: RememberNumbers,
+                component: () => import('src/components/exercises/RememberNumbers.vue'),
               },
               {
                 path: ':game(remember-numbers-rev)',
                 name: 'remember-numbers-rev',
-                component: RememberNumbers,
+                component: () => import('src/components/exercises/RememberNumbers.vue'),
               },
               {
                 path: ':game(mental-arithmetic)',
                 name: 'mental-arithmetic',
-                component: MentalArithmetic,
+                component: () => import('src/components/exercises/MentalArithmetic.vue'),
               },
               {
                 path: ':game(mental-arithmetic-mul)',
                 name: 'mental-arithmetic-mul',
-                component: MentalArithmetic,
+                component: () => import('src/components/exercises/MentalArithmetic.vue'),
               },
               {
                 path: ':game(solve-equation)',
                 name: 'solve-equation',
-                component: SolveEquation,
+                component: () => import('src/components/exercises/SolveEquation.vue'),
               },
               {
                 path: ':game(listen-backwards)',
                 name: 'listen-backwards',
-                component: ListenBackwards,
+                component: () => import('src/components/exercises/ListenBackwards.vue'),
               },
               {
                 path: ':game(remember-words)',
                 name: 'remember-words',
-                component: RememberWords,
+                component: () => import('src/components/exercises/RememberWords.vue'),
               },
               {
                 path: ':game(remember-words-rev)',
                 name: 'remember-words-rev',
-                component: RememberWords,
+                component: () => import('src/components/exercises/RememberWords.vue'),
               },
               {
                 path: ':game(spell-backwards)',
                 name: 'spell-backwards',
-                component: SpellBackwards,
+                component: () => import('src/components/exercises/SpellBackwards.vue'),
               },
               {
                 path: ':game(memory)',
                 name: 'memory',
-                component: AudioMemory,
+                component: () => import('src/components/exercises/AudioMemory.vue'),
               },
               {
                 path: ':game(memory-animals)',
                 name: 'memory-animals',
-                component: AudioMemory,
+                component: () => import('src/components/exercises/AudioMemory.vue'),
               },
               {
                 path: ':game(word-scramble)',
                 name: 'word-scramble',
-                component: WordScramble,
+                component: () => import('src/components/exercises/WordScramble.vue'),
               },
               {
                 path: ':game(math-marathon)',
                 name: 'math-marathon',
-                component: MathMarathon,
+                component: () => import('src/components/exercises/MathMarathon.vue'),
               },
               {
                 path: ':game(find-relative)',
                 name: 'find-relative',
-                component: FindRelative,
+                component: () => import('src/components/exercises/FindRelative.vue'),
               },
               {
                 path: ':game(remember-names)',
                 name: 'remember-names',
-                component: RememberNames,
+                component: () => import('src/components/exercises/RememberNames.vue'),
               },
               {
                 path: ':game(find-matching-person)',
                 name: 'find-matching-person',
-                component: FindMatchingPerson,
+                component: () => import('src/components/exercises/RememberNames.vue'),
               },
             ],
           },
@@ -235,12 +215,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'highscores',
         name: 'highscores',
-        component: HighscoresView,
+        component: () => import('src/components/highscores/HighscoresView.vue'),
       },
       {
         path: 'player-scores',
         name: 'player-scores',
-        component: PlayerScoresLayout,
+        component: () => import('src/components/player-scores/PlayerScoresLayout.vue'),
         beforeEnter: loginGuard
       },
     ],

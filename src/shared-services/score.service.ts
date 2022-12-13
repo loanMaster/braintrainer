@@ -1,5 +1,6 @@
 import { useAppStore } from 'stores/app-store';
 import { useAuthStore } from 'stores/auth-store';
+import { requestHelper } from './request.helper';
 
 export interface Player {
   name: string;
@@ -20,14 +21,6 @@ export interface PercentileScore {
   date: number;
   score: number;
   percentile: number;
-}
-
-export interface ScoreHistory {
-  scores: Score[];
-}
-
-export interface PlayerScores {
-  scores: PercentileScore[];
 }
 
 export interface HighScoreDto {
@@ -57,19 +50,6 @@ export class ScoreService {
     return useAppStore();
   }
 
-  private getStandardRequestInit(): RequestInit {
-    return {
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-machine': this.store.machineId,
-        'x-player': useAuthStore().id || '',
-        Authorization: `Bearer ${useAuthStore().accessToken}`,
-      },
-    };
-  }
-
   get serverPath() {
     return serverPath || '';
   }
@@ -79,7 +59,7 @@ export class ScoreService {
     const inverted = scoreAsDoubleBase64.split('').reverse().join('');
 
     const response = await fetch(this.serverPath + '/player/raw', {
-      ...this.getStandardRequestInit(),
+      ...requestHelper.getStandardRequestInit(),
       method: 'PUT',
       body: JSON.stringify({ v: inverted }),
     });
@@ -88,7 +68,7 @@ export class ScoreService {
 
   async fetchHighscores(): Promise<{ scores: HighScoreDto[] }> {
     const response = await fetch(this.serverPath + '/player/highscores', {
-      ...this.getStandardRequestInit(),
+      ...requestHelper.getStandardRequestInit(),
       method: 'POST',
       body: JSON.stringify({ id: useAuthStore().id || '' }),
     });
@@ -96,11 +76,14 @@ export class ScoreService {
   }
 
   async fetchPlayerScorePercentiles(): Promise<PercentileScore[]> {
+    if (!useAuthStore().isLoggedIn) {
+      return []
+    }
     if (!this.store.playerScores || !this.store.playerScores!.hasPercentiles) {
       const response = await fetch(
         this.serverPath + `/player/score-percentiles`,
         {
-          ...this.getStandardRequestInit(),
+          ...requestHelper.getStandardRequestInit(),
           method: 'GET',
         }
       );
@@ -111,9 +94,12 @@ export class ScoreService {
   }
 
   async fetchPlayerScores(): Promise<Score[]> {
+    if (!useAuthStore().isLoggedIn) {
+      return []
+    }
     if (!this.store.playerScores) {
       const response = await fetch(this.serverPath + `/player/scores`, {
-        ...this.getStandardRequestInit(),
+        ...requestHelper.getStandardRequestInit(),
         method: 'GET',
       });
       const scores = (await response.json()).scores;
@@ -123,9 +109,12 @@ export class ScoreService {
   }
 
   async fetchPlayerScoreHistory(): Promise<Score[]> {
+    if (!useAuthStore().isLoggedIn) {
+      return []
+    }
     if (this.store.scoreHistory === undefined) {
       const response = await fetch(this.serverPath + `/player/score-history`, {
-        ...this.getStandardRequestInit(),
+        ...requestHelper.getStandardRequestInit(),
         method: 'GET',
       });
       const scoreHistory = (await response.json()).scores;

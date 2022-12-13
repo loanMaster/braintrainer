@@ -111,6 +111,8 @@ export default {
   'No account? Sign up here!': '_',
   'Forgot your password?': '_',
   'Reset Password': '_',
+  'Delete account': '_',
+  'Are you sure that you want to delete your account? This action can not be undone.': '_',
   'You will shortly receive an email with a link to reset your password.': '_',
   'Set new Password': '_',
   'Please type something': '_',
@@ -123,6 +125,7 @@ export default {
   'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
     '_',
   Profile: '_',
+  Account: '_',
   Picture: '_',
   'Save changes': '_',
   Password: '_',
