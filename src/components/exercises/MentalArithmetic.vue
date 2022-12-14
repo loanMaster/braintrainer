@@ -34,6 +34,7 @@ import {
   MathExerciseResponse,
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -54,6 +55,7 @@ const inputValue = ref('');
 const numpad = ref();
 const numpadContainer = ref();
 const showLoadingIndicator = ref(false);
+const router = useRouter()
 
 let nextExercise: Subject<MathExerciseResponse>;
 let currentExercise: MathExerciseResponse;
@@ -76,9 +78,6 @@ onMounted(async () => {
   new TweenService().setDisplay(numpadContainer.value, 'none');
 
   keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
-    if (revealed.value) {
-      nextQuestion();
-    }
     const number = Number(key.key);
     if (!isNaN(number)) {
       onNumberEntered(number);
@@ -94,6 +93,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
@@ -146,10 +146,6 @@ async function fetchNextExercise() {
 }
 
 async function onNumberEntered(num: number) {
-  if (revealed.value) {
-    nextQuestion();
-    return;
-  }
   if (inputDisabled.value) {
     return;
   }

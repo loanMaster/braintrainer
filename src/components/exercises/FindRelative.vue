@@ -51,6 +51,7 @@ import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useAppStore } from 'stores/app-store';
 import { RelativesService } from 'components/exercises/service/relatives.service';
 import { randomElement, shuffle } from 'src/util/array.utils';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -100,6 +101,7 @@ let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
 const character = ref(male_names[0]);
 const countdownTimer = ref();
+const router = useRouter()
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -118,6 +120,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;

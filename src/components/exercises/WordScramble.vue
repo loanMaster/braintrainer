@@ -55,6 +55,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
 import { shuffle } from 'src/util/array.utils';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -82,6 +83,7 @@ let alphabet: AudioResponse[] = [];
 let loadAlphabet: Promise<AudioResponse[]>;
 let permutation: string[] = [];
 let highlightError = false;
+const router = useRouter()
 
 onBeforeMount(() => {
   const numberOfQuestions = 10;
@@ -113,6 +115,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
@@ -201,10 +204,6 @@ async function loadNextAnagram(exclude?: string[]): Promise<void> {
 }
 
 async function onLetterEntered(letter: string) {
-  if (revealed.value) {
-    nextQuestion();
-    return;
-  }
   if (inputDisabled.value) {
     return;
   }

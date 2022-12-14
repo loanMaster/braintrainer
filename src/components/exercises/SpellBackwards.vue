@@ -42,6 +42,7 @@ import {
   HomophoneAudioResponse,
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -65,7 +66,7 @@ const showLoadingIndicator = ref(false);
 
 let nextAudio: Subject<HomophoneAudioResponse>;
 let currentAudio: Ref<HomophoneAudioResponse | undefined> = ref();
-
+const router = useRouter()
 const coreExercise = ref();
 const letterButtons = ref();
 const countdownTimer = ref();
@@ -86,10 +87,6 @@ onBeforeMount(() => {
 
 onMounted(() => {
   keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
-    if (revealed.value) {
-      nextQuestion();
-      return;
-    }
     if (store.letters.indexOf(key.key.toUpperCase()) > -1) {
       onLetterEntered(key.key.toUpperCase());
     }
@@ -107,6 +104,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
@@ -173,9 +171,6 @@ async function loadNextAudio(exclude?: string[]): Promise<void> {
 }
 
 async function onLetterEntered(letter: string) {
-  if (revealed.value) {
-    nextQuestion();
-  }
   if (inputDisabled.value) {
     return;
   }

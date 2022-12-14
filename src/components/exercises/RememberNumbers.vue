@@ -23,6 +23,7 @@ import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -44,7 +45,7 @@ const inputValue = ref('');
 const currentAudio: Ref<{ src: string; val: number }[]> = ref([]);
 const sequence: Ref<number[]> = ref([]);
 const reverse = ref(false);
-
+const router = useRouter()
 const numpad = ref();
 
 const sequenceLength = computed(() => {
@@ -64,10 +65,6 @@ onMounted(async () => {
   reverse.value = store.exercise.nameOfTheGame.indexOf('-rev') > -1;
 
   keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
-    if (revealed.value) {
-      nextQuestion();
-      return;
-    }
     const number = Number(key.key);
     if (!isNaN(number)) {
       onNumberEntered(number);
@@ -92,6 +89,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
@@ -121,9 +119,6 @@ function playAudio() {
 }
 
 async function onNumberEntered(num: number) {
-  if (revealed.value) {
-    nextQuestion();
-  }
   if (inputDisabled.value) {
     return;
   }

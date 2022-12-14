@@ -1,9 +1,8 @@
 import { newExercise, useAppStore } from 'stores/app-store';
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import {RouteLocationNormalizedLoaded, Router, useRoute} from 'vue-router';
 import { SoundService } from 'src/shared-services/sound.service';
 import { Ref } from 'vue';
 import { TweenService } from 'src/shared-services/tween.service';
-import { router } from 'src/router';
 
 export const exerciseUtils = {
   wait: (time: number) => new Promise((resolve) => setTimeout(resolve, time)),
@@ -11,7 +10,7 @@ export const exerciseUtils = {
     route.params.difficulty as string,
   nameOfTheGame: (route: RouteLocationNormalizedLoaded) =>
     route.params.game as string,
-  finishExercise: () => {
+  finishExercise: (router: Router) => {
     useAppStore().finishExercise();
     router.push({
       name: 'score-screen',
@@ -43,10 +42,12 @@ export const exerciseUtils = {
     inputDisabled,
     soundService,
     revealed,
+    router
   }: {
     inputDisabled: Ref<boolean>;
     revealed: Ref<boolean>;
     soundService: SoundService;
+    router: Router
   }): Promise<boolean> => {
     inputDisabled.value = true;
     soundService.stop();
@@ -57,10 +58,12 @@ export const exerciseUtils = {
     ) {
       await exerciseUtils.wait(200);
       await useAppStore().finishExercise();
+      console.log(`router push score-screen`)
       await router.push({
         name: 'score-screen',
         params: { language: useAppStore().language },
       });
+      console.log(`router push score-screen finished`)
       return false;
     } else {
       useAppStore().$patch((store) => (store.exercise.strikes = 0));

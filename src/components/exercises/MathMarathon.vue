@@ -34,6 +34,7 @@ import {
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
 import { ReplaySubject, Subject } from 'rxjs';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -54,6 +55,7 @@ const inputValue = ref('');
 const numpadContainer = ref();
 const numpad = ref();
 const showLoadingIndicator = ref(false);
+const router = useRouter()
 
 let nextExercise: Subject<ContinuationExerciseResponse>;
 let currentExercise: ContinuationExerciseResponse;
@@ -87,9 +89,6 @@ onBeforeMount(() => {
 
 onMounted(() => {
   keyInput.pipe(takeUntil(destroy)).subscribe((key) => {
-    if (revealed.value) {
-      nextQuestion();
-    }
     const number = Number(key.key);
     if (!isNaN(number)) {
       onNumberEntered(number);
@@ -117,6 +116,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
@@ -159,9 +159,6 @@ async function playAudio() {
 }
 
 async function onNumberEntered(num: number) {
-  if (revealed.value) {
-    nextQuestion();
-  }
   if (inputDisabled.value) {
     return;
   }

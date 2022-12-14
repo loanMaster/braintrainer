@@ -34,6 +34,7 @@ import {
 import { skip, take, takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { shuffle } from 'src/util/array.utils';
+import {useRouter} from "vue-router";
 
 const {
   soundService,
@@ -60,6 +61,7 @@ let buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
 const textTransparent = ref(false);
 let showLoadingIndicator = ref(false);
+const router = useRouter()
 
 onBeforeMount(() => {
   const numberOfQuestions = 5;
@@ -98,6 +100,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
+      router
     }))
   ) {
     return;
