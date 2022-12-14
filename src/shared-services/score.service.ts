@@ -2,12 +2,6 @@ import { useAppStore } from 'stores/app-store';
 import { useAuthStore } from 'stores/auth-store';
 import { requestHelper } from './request.helper';
 
-export interface Player {
-  name: string;
-  scores: Score[];
-  scoreHistory: Score[];
-}
-
 export interface Score {
   nameOfTheGame: string;
   difficulty: string;
