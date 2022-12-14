@@ -18,7 +18,8 @@
           lazy-rules
           autofocus
           :rules="[
-            (val) => (val && val.length > 0) || $t('auth.Please type something'),
+            (val) =>
+              (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 
@@ -32,7 +33,8 @@
           autocomplete="off"
           required
           :rules="[
-            (val) => (val && val.length >= 8) || $t('auth.At least 8 characters'),
+            (val) =>
+              (val && val.length >= 8) || $t('auth.At least 8 characters'),
           ]"
         >
           <template v-slot:append>
@@ -63,7 +65,9 @@
         </div>
         <div v-if="signedUp" test="signup-success-msg">
           {{
-          $t('auth.Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.' )
+            $t(
+              'auth.Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.'
+            )
           }}
         </div>
       </q-form>
@@ -75,7 +79,7 @@
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import { ref, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 const email = ref('');
 const password = ref('');
@@ -106,5 +110,5 @@ async function submit() {
   }
 }
 
-const language = computed(() => useAppStore().language)
+const language = computed(() => useAppStore().language);
 </script>

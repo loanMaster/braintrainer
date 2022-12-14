@@ -15,7 +15,8 @@
           autofocus
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || $t('auth.Please type something'),
+            (val) =>
+              (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 

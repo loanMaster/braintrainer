@@ -1,6 +1,6 @@
 <template>
   <div class="row flex-center relative-position flex-1">
-    <LoadingIndicator :showing="showLoadingIndicator"/>
+    <LoadingIndicator :showing="showLoadingIndicator" />
     <canvas ref="chart" style="max-width: 100%"></canvas>
   </div>
 </template>
@@ -9,7 +9,7 @@ LoadingIndicator
 import { Chart, registerables } from 'chart.js';
 import { onMounted, ref } from 'vue';
 import { Score, ScoreService } from 'src/shared-services/score.service';
-import LoadingIndicator from './LoadingIndicator.vue'
+import LoadingIndicator from './LoadingIndicator.vue';
 import { IAppState, useAppStore } from 'stores/app-store';
 import { SubscriptionCallbackMutationPatchObject } from 'pinia';
 import { useI18n } from 'vue-i18n';

@@ -112,7 +112,8 @@ export default {
   auth: {
     Logout: 'Abmelden',
     Login: 'Anmelden',
-    'There was an error during login. Please verify your e-mail address and password.': 'Bei der Anmeldung ist ein Fehler aufgetreten. Bitte überprüfe Benutzername und Password',
+    'There was an error during login. Please verify your e-mail address and password.':
+      'Bei der Anmeldung ist ein Fehler aufgetreten. Bitte überprüfe Benutzername und Password',
     'Email address': 'E-Mail Adresse',
     'Sign in with email': 'Mit E-Mail anmelden',
     'Sign In': 'Anmelden',
@@ -120,7 +121,8 @@ export default {
     'Forgot your password?': 'Passwort vergessen?',
     'Reset Password': 'Passwort zurücksetzen',
     'Delete account': 'Benutzerkonto löschen',
-    'Are you sure that you want to delete your account? This action can not be undone.': 'Möchtest du dein Benutzerkonto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
+    'Are you sure that you want to delete your account? This action can not be undone.':
+      'Möchtest du dein Benutzerkonto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
     'You will shortly receive an email with a link to reset your password.':
       'Du erählt in Kürze eine E-Mail, um dein Passwort zurück zu setzen.',
     'Set new Password': 'Setze ein neues Passwort',
@@ -133,7 +135,8 @@ export default {
     'Sign in here': 'Hier anmelden',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
       "Danke für's Registrieren. Du erhälst in Kürze eine Bestätigungsemail um dein Benutzerkonto zu aktivieren.",
-    'An error occurred when sending the e-mail': 'Beim Verschicken der Bestätigungsemail ist ein Fehler aufgetreten.',
+    'An error occurred when sending the e-mail':
+      'Beim Verschicken der Bestätigungsemail ist ein Fehler aufgetreten.',
     Profile: 'Profil',
     Account: 'Benutzerkonto',
     Picture: 'Bild',
@@ -146,7 +149,8 @@ export default {
       "Danke für's Registrieren. Bitte klicke auf den Link in der Bestätigungsemail die an {email} geschickt wurde.",
     'Resend verification email': 'Bestätigungsemail erneut versenden',
   },
-  'An error has occurred. Please refresh this site or try again later.': 'Leider ist ein Fehler aufgetreten. Bitte Laden Sie die Seite neu oder versuchen Sie es später noch einmal.',
+  'An error has occurred. Please refresh this site or try again later.':
+    'Leider ist ein Fehler aufgetreten. Bitte Laden Sie die Seite neu oder versuchen Sie es später noch einmal.',
   Exercise: 'Übung',
   Difficulty: 'Schwierigkeit',
   SPELLING_WARNING: '! Anstatt ‹ß› bitte ‹ss› verwenden !',

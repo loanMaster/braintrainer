@@ -45,16 +45,13 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
-import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { ScoreService } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
-import {useAuthStore} from "stores/auth-store";
 
 const selectedDifficulty = ref('');
 const difficulties = ref(['easy', 'normal', 'hard']);
 
-const $q = useQuasar();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();

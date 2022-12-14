@@ -143,7 +143,6 @@
 import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
 import { useAppStore } from 'stores/app-store';
 
 const $q = useQuasar();

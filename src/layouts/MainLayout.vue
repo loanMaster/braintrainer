@@ -124,7 +124,14 @@
             </q-menu>
           </q-btn>
 
-          <q-btn flat dense no-caps class="q-mr-xs" v-if="!isLoggedIn" @click="login">
+          <q-btn
+            flat
+            dense
+            no-caps
+            class="q-mr-xs"
+            v-if="!isLoggedIn"
+            @click="login"
+          >
             {{ $t('auth.Login') }}
           </q-btn>
 
@@ -145,11 +152,7 @@
                     ></q-item-section
                   >
                 </q-item>
-                <q-item
-                  clickable
-                  v-close-popup
-                  @click="logout"
-                >
+                <q-item clickable v-close-popup @click="logout">
                   <q-item-section>{{ $t('auth.Logout') }}</q-item-section>
                 </q-item>
               </q-list>

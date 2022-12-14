@@ -43,12 +43,14 @@
   align-items: center;
 }
 
-th, .table-header {
+th,
+.table-header {
   background-color: $orange-2;
 }
 
 .body--dark {
-  th, .table-header {
+  th,
+  .table-header {
     background-color: $blue-grey-10;
   }
 }

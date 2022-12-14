@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { PersistenceService } from 'src/shared-services/persistence.service';
 import { v4 as uuidv4 } from 'uuid';
 import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';

@@ -5,8 +5,14 @@
     <q-dialog v-model="showProgressDiagram">
       <q-card class="full-width">
         <div class="full-width q-pa-sm column no-wrap">
-          <div class="test-h5">{{ $t(nameOfTheGame + '.title') + ' (' + $t(difficulty) + ')' }}</div>
-          <ProgressDiagram :difficulty="difficulty" :nameOfTheGame="nameOfTheGame" class="diagram-min-height"/>
+          <div class="test-h5">
+            {{ $t(nameOfTheGame + '.title') + ' (' + $t(difficulty) + ')' }}
+          </div>
+          <ProgressDiagram
+            :difficulty="difficulty"
+            :nameOfTheGame="nameOfTheGame"
+            class="diagram-min-height"
+          />
         </div>
       </q-card>
     </q-dialog>
@@ -126,9 +132,9 @@ const rows: Ref<any[]> = ref([]);
 const showLoadingIndicator = ref(false);
 const router = useRouter();
 const store = useAppStore();
-const showProgressDiagram = ref(false)
-const nameOfTheGame = ref('')
-const difficulty = ref('easy')
+const showProgressDiagram = ref(false);
+const nameOfTheGame = ref('');
+const difficulty = ref('easy');
 
 onMounted(async () => {
   showLoadingIndicator.value = true;
@@ -195,9 +201,9 @@ const columns = ref([
 ]);
 
 function showProgress(props: any) {
-  difficulty.value = props.row.difficultyOri
-  nameOfTheGame.value = props.row.nameOfTheGameOri
-  showProgressDiagram.value = true
+  difficulty.value = props.row.difficultyOri;
+  nameOfTheGame.value = props.row.nameOfTheGameOri;
+  showProgressDiagram.value = true;
   /*router.push({
     name: 'playerprogress',
     params: {
@@ -225,6 +231,6 @@ function play(props: any) {
   display: none;
 }
 .diagram-min-height {
-  min-height: 40vh
+  min-height: 40vh;
 }
 </style>

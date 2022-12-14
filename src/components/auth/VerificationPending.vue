@@ -7,7 +7,7 @@
       <div>
         {{
           $t(
-            'auth[\'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.\']',
+            "auth['Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.']",
             { email }
           )
         }}

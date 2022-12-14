@@ -56,12 +56,9 @@
             @click="resetPassword"
             >{{ $t('auth.Reset password') }}</q-btn
           >
-          <q-btn
-            color="negative"
-            :disable="isSending"
-            @click="deleteAccount"
-          >{{ $t('auth.Delete account') }}</q-btn
-          >
+          <q-btn color="negative" :disable="isSending" @click="deleteAccount">{{
+            $t('auth.Delete account')
+          }}</q-btn>
         </div>
       </div>
     </q-card>
@@ -73,12 +70,12 @@ import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { padNumber } from 'src/util/format-number';
 import { useQuasar } from 'quasar';
-import {AccountService} from "src/shared-services/account.service";
-import {useI18n} from "vue-i18n";
+import { AccountService } from 'src/shared-services/account.service';
+import { useI18n } from 'vue-i18n';
 
 const authStore = useAuthStore();
 const $q = useQuasar();
-const { t } = useI18n()
+const { t } = useI18n();
 
 const avatars = ref(
   Array.from(new Array(25).keys()).map(
@@ -112,7 +109,9 @@ async function resetPassword() {
     await authStore.sendResetLink(authStore.email!);
     $q.notify({
       group: 'reset-password',
-      message: t('auth[\'You will shortly receive an email with a link to reset your password.\']'),
+      message: t(
+        "auth['You will shortly receive an email with a link to reset your password.']"
+      ),
       color: 'green',
       timeout: 1000,
     });
@@ -130,16 +129,18 @@ async function resetPassword() {
 
 async function deleteAccount() {
   $q.dialog({
-    message: t('auth[\'Are you sure that you want to delete your account? This action can not be undone.\']'),
+    message: t(
+      "auth['Are you sure that you want to delete your account? This action can not be undone.']"
+    ),
     ok: {
-      label: t('Yes')
+      label: t('Yes'),
     },
     cancel: {
-      label: t('No')
-    }
+      label: t('No'),
+    },
   }).onOk(async () => {
-    await new AccountService().deleteAccount()
-    useAuthStore().logout({ redirect: true })
-  })
+    await new AccountService().deleteAccount();
+    useAuthStore().logout({ redirect: true });
+  });
 }
 </script>

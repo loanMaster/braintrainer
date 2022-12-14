@@ -121,82 +121,98 @@ const routes: RouteRecordRaw[] = [
               {
                 path: ':game(remember-numbers)',
                 name: 'remember-numbers',
-                component: () => import('src/components/exercises/RememberNumbers.vue'),
+                component: () =>
+                  import('src/components/exercises/RememberNumbers.vue'),
               },
               {
                 path: ':game(remember-numbers-rev)',
                 name: 'remember-numbers-rev',
-                component: () => import('src/components/exercises/RememberNumbers.vue'),
+                component: () =>
+                  import('src/components/exercises/RememberNumbers.vue'),
               },
               {
                 path: ':game(mental-arithmetic)',
                 name: 'mental-arithmetic',
-                component: () => import('src/components/exercises/MentalArithmetic.vue'),
+                component: () =>
+                  import('src/components/exercises/MentalArithmetic.vue'),
               },
               {
                 path: ':game(mental-arithmetic-mul)',
                 name: 'mental-arithmetic-mul',
-                component: () => import('src/components/exercises/MentalArithmetic.vue'),
+                component: () =>
+                  import('src/components/exercises/MentalArithmetic.vue'),
               },
               {
                 path: ':game(solve-equation)',
                 name: 'solve-equation',
-                component: () => import('src/components/exercises/SolveEquation.vue'),
+                component: () =>
+                  import('src/components/exercises/SolveEquation.vue'),
               },
               {
                 path: ':game(listen-backwards)',
                 name: 'listen-backwards',
-                component: () => import('src/components/exercises/ListenBackwards.vue'),
+                component: () =>
+                  import('src/components/exercises/ListenBackwards.vue'),
               },
               {
                 path: ':game(remember-words)',
                 name: 'remember-words',
-                component: () => import('src/components/exercises/RememberWords.vue'),
+                component: () =>
+                  import('src/components/exercises/RememberWords.vue'),
               },
               {
                 path: ':game(remember-words-rev)',
                 name: 'remember-words-rev',
-                component: () => import('src/components/exercises/RememberWords.vue'),
+                component: () =>
+                  import('src/components/exercises/RememberWords.vue'),
               },
               {
                 path: ':game(spell-backwards)',
                 name: 'spell-backwards',
-                component: () => import('src/components/exercises/SpellBackwards.vue'),
+                component: () =>
+                  import('src/components/exercises/SpellBackwards.vue'),
               },
               {
                 path: ':game(memory)',
                 name: 'memory',
-                component: () => import('src/components/exercises/AudioMemory.vue'),
+                component: () =>
+                  import('src/components/exercises/AudioMemory.vue'),
               },
               {
                 path: ':game(memory-animals)',
                 name: 'memory-animals',
-                component: () => import('src/components/exercises/AudioMemory.vue'),
+                component: () =>
+                  import('src/components/exercises/AudioMemory.vue'),
               },
               {
                 path: ':game(word-scramble)',
                 name: 'word-scramble',
-                component: () => import('src/components/exercises/WordScramble.vue'),
+                component: () =>
+                  import('src/components/exercises/WordScramble.vue'),
               },
               {
                 path: ':game(math-marathon)',
                 name: 'math-marathon',
-                component: () => import('src/components/exercises/MathMarathon.vue'),
+                component: () =>
+                  import('src/components/exercises/MathMarathon.vue'),
               },
               {
                 path: ':game(find-relative)',
                 name: 'find-relative',
-                component: () => import('src/components/exercises/FindRelative.vue'),
+                component: () =>
+                  import('src/components/exercises/FindRelative.vue'),
               },
               {
                 path: ':game(remember-names)',
                 name: 'remember-names',
-                component: () => import('src/components/exercises/RememberNames.vue'),
+                component: () =>
+                  import('src/components/exercises/RememberNames.vue'),
               },
               {
                 path: ':game(find-matching-person)',
                 name: 'find-matching-person',
-                component: () => import('src/components/exercises/FindMatchingPerson.vue'),
+                component: () =>
+                  import('src/components/exercises/FindMatchingPerson.vue'),
               },
             ],
           },
@@ -220,8 +236,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'player-scores',
         name: 'player-scores',
-        component: () => import('src/components/player-scores/PlayerScoresLayout.vue'),
-        beforeEnter: loginGuard
+        component: () =>
+          import('src/components/player-scores/PlayerScoresLayout.vue'),
+        beforeEnter: loginGuard,
       },
     ],
   },

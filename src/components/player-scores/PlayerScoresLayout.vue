@@ -3,10 +3,10 @@
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
       <q-toolbar-title>{{ $t('Progress') }}</q-toolbar-title>
     </q-toolbar>
-    <PlayerScoresView class="max-width-sm"/>
+    <PlayerScoresView class="max-width-sm" />
   </div>
 </template>
 
 <script setup lang="ts">
-import PlayerScoresView from './PlayerScoresView.vue'
+import PlayerScoresView from './PlayerScoresView.vue';
 </script>

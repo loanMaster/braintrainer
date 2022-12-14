@@ -18,7 +18,8 @@
           autofocus
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || $t('auth.Please type something'),
+            (val) =>
+              (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         />
 
@@ -32,7 +33,8 @@
           autocomplete="on"
           required
           :rules="[
-            (val) => (val && val.length > 0) || $t('auth.Please type something'),
+            (val) =>
+              (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         >
           <template v-slot:append>
@@ -63,9 +65,11 @@
           </q-btn>
         </div>
         <div class="forgot-password text-right">
-          <router-link test="reset-password-link" :to="{ name: 'reset-password', params: { language } }">{{
-            $t('auth.Forgot your password?')
-          }}</router-link>
+          <router-link
+            test="reset-password-link"
+            :to="{ name: 'reset-password', params: { language } }"
+            >{{ $t('auth.Forgot your password?') }}</router-link
+          >
         </div>
       </q-form>
     </q-card>
@@ -79,7 +83,7 @@ import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import { useQuasar } from 'quasar';
 import { useAppStore } from 'stores/app-store';
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 
 const $q = useQuasar();
 const email = ref('');
@@ -88,7 +92,7 @@ const showForm = ref(true);
 const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);
-const { t } = useI18n()
+const { t } = useI18n();
 
 const route = useRoute();
 
@@ -133,8 +137,9 @@ async function submit() {
   } catch (error: any) {
     $q.notify({
       group: 'set-new-password',
-      message:
-        t('auth[\'There was an error during login. Please verify your e-mail address and password.\']'),
+      message: t(
+        "auth['There was an error during login. Please verify your e-mail address and password.']"
+      ),
       color: 'red',
       timeout: 2000,
     });
@@ -144,7 +149,7 @@ async function submit() {
 </script>
 
 <style scoped lang="scss">
-  .gap {
-    gap: 5px
-  }
+.gap {
+  gap: 5px;
+}
 </style>

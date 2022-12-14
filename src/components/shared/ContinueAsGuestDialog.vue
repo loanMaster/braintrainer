@@ -44,10 +44,8 @@
 <script setup lang="ts">
 import { useAppStore } from '../../stores/app-store';
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 const store = useAppStore();
-const router = useRouter();
 const show = ref(false);
 
 function playAsGuest() {

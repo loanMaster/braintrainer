@@ -6,8 +6,16 @@ export const calculateScore = (exercise: Exercise) => {
   const minTime = exercise.totalAudioDuration;
   const maxScore = percentageCorrect * 100;
   const errorPenalty = 5 * exercise.totalStrikeCount;
-  const time_divisor = exercise.difficulty === 'easy' ? 6_000 : exercise.difficulty === 'normal' ? 9_000 : 12_000
-  const timePenalty = Math.min(50, (exercise.duration - minTime) / time_divisor);
+  const time_divisor =
+    exercise.difficulty === 'easy'
+      ? 6_000
+      : exercise.difficulty === 'normal'
+      ? 9_000
+      : 12_000;
+  const timePenalty = Math.min(
+    50,
+    (exercise.duration - minTime) / time_divisor
+  );
 
   console.log(
     `TODO minTime ${minTime}. time penalty ${timePenalty}. strikes ${exercise.totalStrikeCount} error penalty ${errorPenalty}`

@@ -6,17 +6,22 @@
 import { useAppStore } from './stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { onBeforeMount, onMounted } from 'vue';
-import {NavigationGuardNext, RouteLocationNormalized, useRoute, useRouter} from 'vue-router';
+import {
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  useRoute,
+  useRouter,
+} from 'vue-router';
 import { useQuasar } from 'quasar';
 import { SoundService } from 'src/shared-services/sound.service';
-import { getCurrentInstance } from 'vue'
+import { getCurrentInstance } from 'vue';
 
 const store = useAppStore();
 const i18n = useI18n();
 const router = useRouter();
 const route = useRoute();
 const $q = useQuasar();
-const { t } = useI18n()
+const { t } = useI18n();
 
 onBeforeMount(() => {
   $q.dark.set(store.themePreference === 'dark');
@@ -24,8 +29,10 @@ onBeforeMount(() => {
     console.error(err);
     $q.dialog({
       persistent: true,
-      message: t('An error has occurred. Please refresh this site or try again later.')
-    }).onOk(() => location.reload())
+      message: t(
+        'An error has occurred. Please refresh this site or try again later.'
+      ),
+    }).onOk(() => location.reload());
   };
 });
 
@@ -39,30 +46,39 @@ const removeTrailingSlash = (path: string) => {
     : path;
 };
 
-router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
-  const language = to.params.language;
-  if (!language) {
-    next({ name: to.name as string, params: { ...to.params, language: language || store.language }})
-  } else {
-    if (language && useAppStore().language !== language) {
-      useAppStore().setLanguage(i18n, language as string);
+router.beforeEach(
+  async (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    const language = to.params.language;
+    if (!language) {
+      next({
+        name: to.name as string,
+        params: { ...to.params, language: language || store.language },
+      });
+    } else {
+      if (language && useAppStore().language !== language) {
+        useAppStore().setLanguage(i18n, language as string);
+      }
+      next();
     }
-    next();
   }
-});
+);
 
 router.beforeEach((to, from, next) => {
   if (to !== from) {
     $q.loading.show({
-      delay: 300 // ms
-    })
+      delay: 300, // ms
+    });
   }
-  next()
-})
+  next();
+});
 
-router.afterEach((to, from) => {
-  $q.loading.hide()
-})
+router.afterEach(() => {
+  $q.loading.hide();
+});
 
 store.$onAction(({ name, after }) => {
   after(() => {
@@ -72,7 +88,9 @@ store.$onAction(({ name, after }) => {
         const withoutLangPath = (router.currentRoute.value.fullPath + '/')
           .replaceAll('//', '')
           .replace(`/${language}/`, '/');
-        router.push(removeTrailingSlash(`/${store.language}${withoutLangPath}`));
+        router.push(
+          removeTrailingSlash(`/${store.language}${withoutLangPath}`)
+        );
       }
     }
 

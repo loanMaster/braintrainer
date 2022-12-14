@@ -107,7 +107,8 @@ export default {
   auth: {
     Logout: '_',
     Login: '_',
-    'There was an error during login. Please verify your e-mail address and password.': '_',
+    'There was an error during login. Please verify your e-mail address and password.':
+      '_',
     'Email address': '_',
     'Sign in with email': '_',
     'Sign In': '_',
@@ -115,8 +116,10 @@ export default {
     'Forgot your password?': '_',
     'Reset Password': '_',
     'Delete account': '_',
-    'Are you sure that you want to delete your account? This action can not be undone.': '_',
-    'You will shortly receive an email with a link to reset your password.': '_',
+    'Are you sure that you want to delete your account? This action can not be undone.':
+      '_',
+    'You will shortly receive an email with a link to reset your password.':
+      '_',
     'Set new Password': '_',
     'Please type something': '_',
     'Password changed': '_',
@@ -137,7 +140,7 @@ export default {
     'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':
       '_',
     'Resend verification email': '_',
-    'An error occurred when sending the e-mail': '_'
+    'An error occurred when sending the e-mail': '_',
   },
   'An error has occurred. Please refresh this site or try again later.': '_',
   Exercise: '_',
