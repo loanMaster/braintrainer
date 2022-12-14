@@ -252,11 +252,11 @@ export class RelativesService {
     do {
       this.relations = [];
       tree = this.createTree(maxDepth);
-    } while (tree.depth() < maxDepth);
+    } while (tree.depth() < maxDepth || tree.getLeaves().filter(l => !l.isIncest()).length === 0)
     const relationsRev = this.relations.reverse();
     return {
       queue: relationsRev,
-      solutions: [...new Set(tree.getLeaves().map((leaf) => leaf.type))],
+      solutions: [...new Set(tree.getLeaves().filter(l => !l.isIncest()).map((leaf) => leaf.type))],
       gender: this.getGender(relationsRev[0]),
     };
   }
