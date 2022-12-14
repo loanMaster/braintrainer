@@ -144,7 +144,7 @@ async function start() {
 const currentImage = computed(() =>
   personToGuess?.value?.name
     ? nameToImageMapping[personToGuess.value.name]
-    : nameToImageMapping[store.exercise.audioState.tag as strng] || ''
+    : nameToImageMapping[store.exercise.audioState.tag as string] || ''
 );
 
 async function nextQuestion() {

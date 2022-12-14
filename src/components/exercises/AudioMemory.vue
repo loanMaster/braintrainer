@@ -110,6 +110,7 @@ async function loadAudio(): Promise<void> {
       maxLength: 14,
       lang: store.language,
       number: store.exercise.totalQuestions,
+      gender: 'FEMALE',
       category:
         store.exercise.nameOfTheGame === 'memory-animals'
           ? 'ANIMALS'
@@ -152,7 +153,9 @@ async function buttonClick(idx: number, $event: Event) {
     });
     solved.value.push(selectedButtonIdx.value);
     solved.value.push(idx);
+    console.log(`${store.exercise.totalQuestions} - ${store.exercise.correctAnswers}`)
     if (store.exercise.totalQuestions === store.exercise.correctAnswers) {
+      console.log('finish exercise')
       await exerciseUtils.wait(150);
       await exerciseUtils.finishExercise();
     }

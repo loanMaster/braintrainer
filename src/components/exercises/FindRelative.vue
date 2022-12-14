@@ -125,9 +125,10 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value.reset();
+  countdownTimer.value?.reset();
 
-  const task = new RelativesService().createRelationshipTree(
+  const relativesService = new RelativesService();
+  const task = relativesService.createRelationshipTree(
     difficulty.value as string
   );
   character.value =
@@ -146,9 +147,10 @@ async function nextQuestion() {
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
   buttonOptions.value = [...task.solutions];
-  while (buttonOptions.value.length < 8) {
+  while (buttonOptions.value.length < 5) {
     const randomRelative = randomElement(relations);
-    if (buttonOptions.value.indexOf(randomRelative) === -1) {
+    if (buttonOptions.value.indexOf(randomRelative) === -1 &&
+      (relativesService.getGender(randomRelative) === 'n' || relativesService.getGender(randomRelative) === task.gender)) {
       buttonOptions.value.push(randomRelative);
     }
   }
@@ -175,7 +177,7 @@ async function nextQuestion() {
 
   inputDisabled.value = false;
   await playAudio();
-  countdownTimer.value.start();
+  countdownTimer.value?.start();
 }
 
 async function playAudio() {
@@ -187,7 +189,7 @@ function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
   if (currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1) {
     inputDisabled.value = true;
-    countdownTimer.value.stop();
+    countdownTimer.value?.stop();
     store.$patch((store) => store.exercise.correctAnswers++);
     new TweenService().fadeOut(coreExercise.value);
     new SoundService().playSuccess();
@@ -200,7 +202,7 @@ function selectWord(idx: number, $event: Event) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value.stop();
+  countdownTimer.value?.stop();
 }
 
 const whoIs = computed(() => {

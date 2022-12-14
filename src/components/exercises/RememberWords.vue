@@ -142,7 +142,6 @@ async function loadNextAudio(): Promise<void> {
       maxLength: 12,
       lang: store.language,
       number: sequenceLength.value,
-      category: 'ANIMALS',
       gender: 'FEMALE',
     })
   );

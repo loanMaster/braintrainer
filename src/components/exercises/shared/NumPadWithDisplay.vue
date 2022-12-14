@@ -39,15 +39,15 @@ function onNumberEntered(num: number) {
 }
 
 function stopTimer() {
-  countdownTimer.value.stop();
+  countdownTimer.value?.stop();
 }
 
 function resetTimer() {
-  countdownTimer.value.reset();
+  countdownTimer.value?.reset();
 }
 
 function startTimer() {
-  countdownTimer.value.start();
+  countdownTimer.value?.start();
 }
 
 function onTimeout() {

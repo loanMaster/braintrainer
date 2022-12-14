@@ -99,7 +99,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(numpadContainer.value);
   }
-  numpad.value.resetTimer();
+  numpad.value?.resetTimer();
   inputValue.value = 'x=';
   showLoadingIndicator.value = true;
   currentExercise.value = (await nextExercise
@@ -113,7 +113,7 @@ async function nextQuestion() {
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
   await playAudio();
-  numpad.value.startTimer();
+  numpad.value?.startTimer();
 }
 
 async function playAudio() {
@@ -144,7 +144,7 @@ async function onNumberEntered(num: number) {
       'x=' + String(currentExercise?.value?.result).substring(0, currentIndex);
     if (currentIndex === String(currentExercise?.value?.result).length) {
       inputDisabled.value = true;
-      numpad.value.stopTimer();
+      numpad.value?.stopTimer();
       new SoundService().playSuccess();
       await exerciseUtils.wait(200);
       store.$patch((store) => store.exercise.correctAnswers++);
@@ -159,6 +159,6 @@ async function onNumberEntered(num: number) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  numpad.value.stopTimer();
+  numpad.value?.stopTimer();
 }
 </script>

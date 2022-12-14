@@ -107,7 +107,7 @@ export default {
   'Who is this person?': 'Wer ist diese Person?',
   Back: 'Zurück',
   Calculation: 'Rechnen',
-  'Memory exercises': 'Gedächstnis',
+  'Memory exercises': 'Gedächtnis',
   Language: 'Sprache',
   auth: {
     Logout: 'Abmelden',

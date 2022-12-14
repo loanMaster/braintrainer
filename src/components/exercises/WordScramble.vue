@@ -120,7 +120,7 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value.reset();
+  countdownTimer.value?.reset();
   if (alphabet.length === 0) {
     alphabet = await loadAlphabet;
   }
@@ -143,7 +143,7 @@ async function nextQuestion() {
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
   await playAudio();
-  countdownTimer.value.start();
+  countdownTimer.value?.start();
 }
 
 function isAnagram(permutation: string[]): boolean {
@@ -215,7 +215,7 @@ async function onLetterEntered(letter: string) {
     const anagram = getMatchingAnagram();
     if (currentIndex.value >= anagram.length) {
       inputDisabled.value = true;
-      countdownTimer.value.stop();
+      countdownTimer.value?.stop();
       new SoundService().playSuccess();
       store.$patch((store) => store.exercise.correctAnswers++);
       await exerciseUtils.wait(150);
@@ -251,7 +251,7 @@ function displayLetter(letter: string, hasError: boolean) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value.stop();
+  countdownTimer.value?.stop();
 }
 
 function getMatchingAnagram(): string {
