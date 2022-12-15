@@ -35,7 +35,7 @@ import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const { soundService, revealed, store, inputDisabled, difficulty } =
   createExerciseContext({
@@ -55,7 +55,7 @@ let lastAudioPlayed: Sound;
 let selectedButtonIdx = ref(-1);
 let secondSelectedButtonIdx = ref(-1);
 const buttons = ref();
-const router = useRouter()
+const router = useRouter();
 
 onBeforeMount(() => {
   const numberOfQuestions =
@@ -75,7 +75,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -156,9 +156,11 @@ async function buttonClick(idx: number, $event: Event) {
     });
     solved.value.push(selectedButtonIdx.value);
     solved.value.push(idx);
-    console.log(`${store.exercise.totalQuestions} - ${store.exercise.correctAnswers}`)
+    console.log(
+      `${store.exercise.totalQuestions} - ${store.exercise.correctAnswers}`
+    );
     if (store.exercise.totalQuestions === store.exercise.correctAnswers) {
-      console.log('finish exercise')
+      console.log('finish exercise');
       await exerciseUtils.wait(150);
       await exerciseUtils.finishExercise(router);
     }

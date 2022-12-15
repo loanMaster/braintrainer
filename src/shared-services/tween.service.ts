@@ -40,7 +40,11 @@ export class TweenService {
     }
   }
 
-  async animateCSS(element: HTMLElement | undefined, animation: string, duration?: number) {
+  async animateCSS(
+    element: HTMLElement | undefined,
+    animation: string,
+    duration?: number
+  ) {
     if (element && element.isConnected) {
       await this._animateCSS(element, animation, duration);
       if (element.isConnected) {

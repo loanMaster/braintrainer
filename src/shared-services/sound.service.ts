@@ -11,7 +11,7 @@ export interface Sound {
   loop?: boolean;
   meta?: {
     [key: string]: string | boolean | number | undefined;
-  }
+  };
 }
 
 const preload = (src: string) => {
@@ -104,7 +104,7 @@ export class SoundService {
   }
 
   async playAll(sounds: Sound[], pauseTime = 0, measureTime = false) {
-    useAppStore().startedPlaySequence(measureTime)
+    useAppStore().startedPlaySequence(measureTime);
     this.queue = [];
     sounds.forEach((s) => this.queue.push(JSON.parse(JSON.stringify(s))));
     this.isPlayingSequence = true;
@@ -115,7 +115,7 @@ export class SoundService {
       }
     }
     this.isPlayingSequence = false;
-    useAppStore().finishedPlayingSequence(measureTime)
+    useAppStore().finishedPlayingSequence(measureTime);
   }
 
   isPlaying(): boolean {
