@@ -36,7 +36,7 @@ store.$onAction(({ name, after }) => {
     if (name === 'pause') {
       timeElapsed.value += Date.now() - lastTick;
     }
-    if (name === 'resume' || name === 'beginExercise') {
+    if (name === 'resume') {
       lastTick = Date.now();
     }
   });

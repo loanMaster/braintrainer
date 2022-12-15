@@ -1,5 +1,5 @@
 import { newExercise, useAppStore } from 'stores/app-store';
-import {RouteLocationNormalizedLoaded, Router, useRoute} from 'vue-router';
+import { RouteLocationNormalizedLoaded, Router, useRoute } from 'vue-router';
 import { SoundService } from 'src/shared-services/sound.service';
 import { Ref } from 'vue';
 import { TweenService } from 'src/shared-services/tween.service';
@@ -42,12 +42,12 @@ export const exerciseUtils = {
     inputDisabled,
     soundService,
     revealed,
-    router
+    router,
   }: {
     inputDisabled: Ref<boolean>;
     revealed: Ref<boolean>;
     soundService: SoundService;
-    router: Router
+    router: Router;
   }): Promise<boolean> => {
     inputDisabled.value = true;
     soundService.stop();
@@ -58,12 +58,12 @@ export const exerciseUtils = {
     ) {
       await exerciseUtils.wait(200);
       await useAppStore().finishExercise();
-      console.log(`router push score-screen`)
+      console.log(`router push score-screen`);
       await router.push({
         name: 'score-screen',
         params: { language: useAppStore().language },
       });
-      console.log(`router push score-screen finished`)
+      console.log(`router push score-screen finished`);
       return false;
     } else {
       useAppStore().$patch((store) => (store.exercise.strikes = 0));

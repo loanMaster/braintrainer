@@ -55,7 +55,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
 import { shuffle } from 'src/util/array.utils';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -83,7 +83,7 @@ let alphabet: AudioResponse[] = [];
 let loadAlphabet: Promise<AudioResponse[]>;
 let permutation: string[] = [];
 let highlightError = false;
-const router = useRouter()
+const router = useRouter();
 
 onBeforeMount(() => {
   const numberOfQuestions = 10;
@@ -115,7 +115,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -142,6 +142,7 @@ async function nextQuestion() {
   updateButtonLabels();
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
@@ -168,7 +169,7 @@ async function playAudio(measureTime = false) {
       (a) => (a.val as string).toUpperCase() === permutation[idx]
     );
     const letter = (matchingAudio as AudioResponse).val as string;
-    audio.push({ audio: matchingAudio!.audio, meta: { text: letter }});
+    audio.push({ audio: matchingAudio!.audio, meta: { text: letter } });
   }
   await soundService.playAll(audio, 100, measureTime);
 }

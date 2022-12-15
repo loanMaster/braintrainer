@@ -34,7 +34,7 @@ import {
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
 import { ReplaySubject, Subject } from 'rxjs';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -55,7 +55,7 @@ const inputValue = ref('');
 const numpadContainer = ref();
 const numpad = ref();
 const showLoadingIndicator = ref(false);
-const router = useRouter()
+const router = useRouter();
 
 let nextExercise: Subject<ContinuationExerciseResponse>;
 let currentExercise: ContinuationExerciseResponse;
@@ -116,7 +116,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -146,6 +146,7 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'flex');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;

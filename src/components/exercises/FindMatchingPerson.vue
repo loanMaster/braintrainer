@@ -78,7 +78,7 @@ import {
 import { shuffle } from 'src/util/array.utils';
 import { padNumber } from 'src/util/format-number';
 import { preloadAssets } from 'src/util/preload-assets';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -101,7 +101,7 @@ const coreExercise = ref();
 const showLoadingIndicator = ref(false);
 let loadAudio: Promise<IntroductionResponse>;
 const nameToImageMapping: { [key: string]: string } = {};
-const router = useRouter()
+const router = useRouter();
 
 onBeforeMount(() => {
   const numberOfQuestions =
@@ -155,7 +155,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -189,6 +189,7 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(coreExercise.value);
 

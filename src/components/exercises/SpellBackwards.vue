@@ -42,7 +42,7 @@ import {
   HomophoneAudioResponse,
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -66,7 +66,7 @@ const showLoadingIndicator = ref(false);
 
 let nextAudio: Subject<HomophoneAudioResponse>;
 let currentAudio: Ref<HomophoneAudioResponse | undefined> = ref();
-const router = useRouter()
+const router = useRouter();
 const coreExercise = ref();
 const letterButtons = ref();
 const countdownTimer = ref();
@@ -104,7 +104,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -129,6 +129,7 @@ async function nextQuestion() {
   updateButtonLabels();
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;

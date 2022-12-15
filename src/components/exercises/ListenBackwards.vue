@@ -34,7 +34,7 @@ import {
 import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { shuffle } from 'src/util/array.utils';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -54,7 +54,7 @@ let nextAudio: Subject<AudioResponse>;
 let currentAudio: Ref<AudioResponse | undefined> = ref(undefined);
 const buttons = ref();
 const showLoadingIndicator = ref(false);
-const router = useRouter()
+const router = useRouter();
 const buttonLabels: Ref<string[]> = ref([]);
 
 onBeforeMount(() => {
@@ -90,7 +90,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -113,13 +113,17 @@ async function nextQuestion() {
   inputDisabled.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(buttons.value, 'flex');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(buttons.value);
   playAudio(true);
 }
 
 async function playAudio(measureTime = false) {
-  await soundService.play({ ...currentAudio.value as AudioResponse, meta: { measureTime } });
+  await soundService.play({
+    ...(currentAudio.value as AudioResponse),
+    meta: { measureTime },
+  });
 }
 
 async function loadNextAudio(): Promise<void> {

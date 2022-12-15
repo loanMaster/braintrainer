@@ -34,7 +34,7 @@ import {
   EquationResponse,
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -55,7 +55,7 @@ const inputValue = ref('');
 const numpadContainer = ref();
 const numpad = ref();
 const showLoadingIndicator = ref(false);
-const router = useRouter()
+const router = useRouter();
 let nextExercise: Subject<EquationResponse>;
 let currentExercise: Ref<EquationResponse | undefined> = ref();
 
@@ -90,7 +90,7 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
@@ -108,10 +108,11 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'block');
+    store.beginExercise()
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
-  await playAudio(measureTime);
+  await playAudio(true);
   numpad.value?.startTimer();
 }
 

@@ -23,7 +23,7 @@ import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {useRouter} from "vue-router";
+import { useRouter } from 'vue-router';
 
 const {
   soundService,
@@ -45,7 +45,7 @@ const inputValue = ref('');
 const currentAudio: Ref<{ src: string; val: number }[]> = ref([]);
 const sequence: Ref<number[]> = ref([]);
 const reverse = ref(false);
-const router = useRouter()
+const router = useRouter();
 const numpad = ref();
 
 const sequenceLength = computed(() => {
@@ -89,12 +89,16 @@ async function nextQuestion() {
       inputDisabled,
       soundService,
       revealed,
-      router
+      router,
     }))
   ) {
     return;
   }
   createTask();
+
+  if (store.exercise.currentQuestion === 1) {
+    store.beginExercise()
+  }
   await playAudio(true);
   inputDisabled.value = false;
 }

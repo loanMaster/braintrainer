@@ -38,6 +38,6 @@ async function start() {
   await new TweenService().animateCSS(instructions.value, 'bounceOutUp', 1);
   new TweenService().setDisplay(instructionsWrapper.value, 'none');
   new TweenService().setDisplay(exercise.value, 'flex');
-  store.beginExercise();
+  store.playerReady();
 }
 </script>

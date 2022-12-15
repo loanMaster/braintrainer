@@ -43,7 +43,7 @@ export function createExerciseContext({
       if (name === 'pause' || name === 'resume') {
         soundService.pause(store.exercise.paused);
       }
-      if (name === 'beginExercise') {
+      if (name === 'playerReady') {
         startCb();
       }
       if (name === 'repeatAudio') {
