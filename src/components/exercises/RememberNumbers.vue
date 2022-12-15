@@ -97,7 +97,7 @@ async function nextQuestion() {
   createTask();
 
   if (store.exercise.currentQuestion === 1) {
-    store.beginExercise()
+    store.beginExercise();
   }
   await playAudio(true);
   inputDisabled.value = false;

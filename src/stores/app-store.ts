@@ -143,8 +143,7 @@ export const useAppStore = defineStore('main', {
     },
     finishExercise() {
       this.exercise.duration =
-        Date.now() -
-        Math.max(tmp.pauseEnd || this.exercise.beginTimeStamp);
+        Date.now() - Math.max(tmp.pauseEnd || this.exercise.beginTimeStamp);
       this.exercise.state = 'finished';
       this.exercise.score = calculateScore(this.exercise);
       this.exercise.rating = mapScoreToRating(this.exercise.score);
@@ -182,9 +181,10 @@ export const useAppStore = defineStore('main', {
     pause(): boolean {
       if (this.exercise.state === 'started') {
         this.exercise.paused = true;
-        this.exercise.duration += Date.now() - Math.max(this.exercise.beginTimeStamp, tmp.pauseEnd);
+        this.exercise.duration +=
+          Date.now() - Math.max(this.exercise.beginTimeStamp, tmp.pauseEnd);
         if (this.exercise.audioState.measuringTime) {
-          this.exercise.totalAudioDuration += Date.now() - tmp.soundStart
+          this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
         }
         return true;
       }
@@ -195,7 +195,7 @@ export const useAppStore = defineStore('main', {
         this.exercise.paused = false;
         tmp.pauseEnd = Date.now();
         if (this.exercise.audioState.measuringTime) {
-          tmp.soundStart = Date.now()
+          tmp.soundStart = Date.now();
         }
         return true;
       }
@@ -213,7 +213,7 @@ export const useAppStore = defineStore('main', {
         );
       }
       this.exercise.state = 'started';
-      this.exercise.beginTimeStamp = Date.now()
+      this.exercise.beginTimeStamp = Date.now();
     },
     repeatAudio() {
       // noop
@@ -225,7 +225,7 @@ export const useAppStore = defineStore('main', {
       this.exercise.audioState.meta = meta;
       if (meta['measureTime']) {
         tmp.soundStart = Date.now();
-        this.exercise.audioState.measuringTime = true
+        this.exercise.audioState.measuringTime = true;
       }
     },
     finishedPlayingSound(meta: {
@@ -235,7 +235,7 @@ export const useAppStore = defineStore('main', {
       this.exercise.audioState.meta = meta;
       if (meta['measureTime']) {
         this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
-        this.exercise.audioState.measuringTime = false
+        this.exercise.audioState.measuringTime = false;
       }
     },
     setThemePreference(theme: 'light' | 'dark') {
@@ -246,13 +246,13 @@ export const useAppStore = defineStore('main', {
       this.exercise.audioState.playingSequence = true;
       if (measureTime) {
         tmp.soundStart = Date.now();
-        this.exercise.audioState.measuringTime = true
+        this.exercise.audioState.measuringTime = true;
       }
     },
     finishedPlayingSequence(measureTime: boolean) {
       this.exercise.audioState.playingSequence = false;
       if (measureTime) {
-        this.exercise.audioState.measuringTime = false
+        this.exercise.audioState.measuringTime = false;
         this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
       }
     },

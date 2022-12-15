@@ -108,7 +108,7 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'block');
-    store.beginExercise()
+    store.beginExercise();
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;

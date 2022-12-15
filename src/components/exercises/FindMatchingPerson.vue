@@ -189,7 +189,7 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
-    store.beginExercise()
+    store.beginExercise();
   }
   await new TweenService().fadeIn(coreExercise.value);
 

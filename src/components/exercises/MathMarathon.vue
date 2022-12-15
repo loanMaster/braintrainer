@@ -146,7 +146,7 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'flex');
-    store.beginExercise()
+    store.beginExercise();
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
