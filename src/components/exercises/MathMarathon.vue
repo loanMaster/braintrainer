@@ -149,13 +149,13 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
-  await playAudio();
+  await playAudio(true);
   numpad.value?.startTimer();
 }
 
-async function playAudio() {
+async function playAudio(measureTime = false) {
   soundService.stop();
-  await soundService.playAll(question, 100);
+  await soundService.playAll(question, 100, measureTime);
 }
 
 async function onNumberEntered(num: number) {

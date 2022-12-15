@@ -95,7 +95,7 @@ async function nextQuestion() {
     return;
   }
   createTask();
-  await playAudio();
+  await playAudio(true);
   inputDisabled.value = false;
 }
 
@@ -114,8 +114,8 @@ function createTask() {
   }
 }
 
-function playAudio() {
-  return soundService.playAll(currentAudio.value, 100);
+function playAudio(measureTime = false) {
+  return soundService.playAll(currentAudio.value, 100, measureTime);
 }
 
 async function onNumberEntered(num: number) {

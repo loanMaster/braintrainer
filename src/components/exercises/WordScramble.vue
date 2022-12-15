@@ -2,7 +2,7 @@
   <div ref="coreExercise" class="column items-center">
     <SpeechBubble
       :show="store.exercise.audioState.playingSequence"
-      :text="store.exercise.audioState.tag"
+      :text="store.exercise.audioState.meta.text"
       :transparentText="!store.exercise.audioState.playing"
     />
     <CountdownTimer
@@ -145,7 +145,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  await playAudio();
+  await playAudio(true);
   countdownTimer.value?.start();
 }
 
@@ -161,16 +161,16 @@ function updateButtonLabels() {
   letterButtons.value.showAtLeast(letters);
 }
 
-async function playAudio() {
+async function playAudio(measureTime = false) {
   const audio = [];
   for (let idx = 0; idx < permutation.length; idx++) {
     const matchingAudio = alphabet.find(
       (a) => (a.val as string).toUpperCase() === permutation[idx]
     );
     const letter = (matchingAudio as AudioResponse).val as string;
-    audio.push({ audio: matchingAudio!.audio, tag: letter });
+    audio.push({ audio: matchingAudio!.audio, meta: { text: letter }});
   }
-  await soundService.playAll(audio, 100);
+  await soundService.playAll(audio, 100, measureTime);
 }
 
 async function startLoadAlphabet(): Promise<AudioResponse[]> {

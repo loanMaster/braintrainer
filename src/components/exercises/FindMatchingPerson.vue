@@ -19,7 +19,7 @@
             }"
             class="transition-duration-sm"
           >
-            {{ store.exercise.audioState.tag || '...' }}
+            {{ store.exercise.audioState.meta?.text || '...' }}
           </div>
         </div>
         <img :src="currentImage" class="q-pa-sm" />
@@ -124,7 +124,7 @@ async function start() {
   currentTask.value = await loadAudio;
   const audio = currentTask.value.introductions.map((i) => ({
     audio: i.audio.introduction,
-    tag: i.name,
+    meta: { text: i.name },
   }));
   const men = shuffle(Array.from(Array(20).keys()));
   const women = shuffle(Array.from(Array(20).keys()));
@@ -138,7 +138,7 @@ async function start() {
   await exerciseUtils.wait(1000);
   showLoadingIndicator.value = false;
   shuffle(currentTask.value.introductions);
-  await soundService.playAll(audio, 350);
+  await soundService.playAll(audio, 350, true);
   await exerciseUtils.wait(150);
   nextQuestion();
 }
@@ -146,7 +146,7 @@ async function start() {
 const currentImage = computed(() =>
   personToGuess?.value?.name
     ? nameToImageMapping[personToGuess.value.name]
-    : nameToImageMapping[store.exercise.audioState.tag as string] || ''
+    : nameToImageMapping[store.exercise.audioState.meta.text as string] || ''
 );
 
 async function nextQuestion() {

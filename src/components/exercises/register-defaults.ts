@@ -41,7 +41,7 @@ export function createExerciseContext({
   store.$onAction(({ name, after }) => {
     after(async () => {
       if (name === 'pause' || name === 'resume') {
-        soundService.pause(store.isPaused);
+        soundService.pause(store.exercise.paused);
       }
       if (name === 'beginExercise') {
         startCb();

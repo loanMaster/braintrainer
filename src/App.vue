@@ -94,7 +94,7 @@ store.$onAction(({ name, after }) => {
       }
     }
 
-    if (name === 'pause' && store.isPaused) {
+    if (name === 'pause' && store.exercise.paused) {
       $q.dialog({
         message: '😴💤' + i18n.t('Application paused'),
         ok: 'X',

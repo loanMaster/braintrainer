@@ -4,7 +4,7 @@
       <SpeechBubble
         :show="store.exercise.audioState.playingSequence"
         :transparentText="!store.exercise.audioState.playing"
-        :text="store.exercise.audioState.tag || '...'"
+        :text="store.exercise.audioState.meta.text || '...'"
       />
     </div>
     <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal" />
@@ -162,7 +162,7 @@ async function nextQuestion() {
   const audio = texts.map((text) => {
     return {
       src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
-      tag: text,
+      meta: { text },
     };
   });
 
@@ -185,7 +185,7 @@ async function nextQuestion() {
 
 async function playAudio() {
   soundService.stop();
-  await soundService.playAll(currentTask.value!.audio, 100);
+  await soundService.playAll(currentTask.value!.audio, 100, true);
 }
 
 function selectWord(idx: number, $event: Event) {

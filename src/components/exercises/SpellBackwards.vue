@@ -132,7 +132,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  await playAudio();
+  await playAudio(true);
   countdownTimer.value?.start();
 }
 
@@ -148,8 +148,8 @@ function updateButtonLabels() {
   letterButtons.value.showAtLeast([solution.value[currentIndex]]);
 }
 
-async function playAudio() {
-  await soundService.play(currentAudio.value!);
+async function playAudio(measureTime = false) {
+  await soundService.play({ ...currentAudio.value!, meta: { measureTime } });
 }
 
 async function loadNextAudio(exclude?: string[]): Promise<void> {

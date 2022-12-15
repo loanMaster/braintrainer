@@ -17,7 +17,8 @@ export interface Exercise {
   duration: number;
   difficulty: string;
   nameOfTheGame: string;
-  state: 'created' | 'paused' | 'started' | 'finished';
+  state: 'created' | 'started' | 'finished';
+  paused: boolean;
   beginTimeStamp: number;
   totalStrikeCount: number;
   lastStrike: number;
@@ -41,18 +42,19 @@ export const newExercise = (
   difficulty,
   nameOfTheGame,
   state: 'created',
+  paused: false,
   beginTimeStamp: Date.now(),
   totalStrikeCount: 0,
   lastSuccessfulStrike: 0,
   lastStrike: 0,
   currentQuestion: 0,
   totalAudioDuration: 0,
-  audioState: { playing: false, tag: '', playingSequence: false },
+  audioState: { playing: false, meta: {}, playingSequence: false },
 });
 
 export interface AudioState {
   playing: boolean;
-  tag?: string;
+  meta: { [key: string]: string | boolean | undefined | number };
   playingSequence: boolean;
 }
 
@@ -109,9 +111,6 @@ export const useAppStore = defineStore('main', {
     },
     letters(): string {
       return LETTERS[useAppStore().language as 'de' | 'en' | 'es'];
-    },
-    isPaused(): boolean {
-      return this.exercise.state === 'paused';
     },
     themePreference(): string {
       return this._themePreference;
@@ -178,14 +177,14 @@ export const useAppStore = defineStore('main', {
     },
     pause(): boolean {
       if (this.exercise.state === 'started') {
-        this.exercise.state = 'paused';
+        this.exercise.paused = true;
         return true;
       }
       return false;
     },
     resume(): boolean {
-      if (this.exercise.state === 'paused') {
-        this.exercise.state = 'started';
+      if (this.exercise.paused) {
+        this.exercise.paused = false;
         return true;
       }
       return false;
@@ -203,19 +202,35 @@ export const useAppStore = defineStore('main', {
     repeatAudio() {
       // noop
     },
-    startedPlayingSound(tag?: string): void {
+    startedPlayingSound(meta: { [key: string]: string | boolean | undefined | number }): void {
       this.exercise.audioState.playing = true;
-      this.exercise.audioState.tag = tag;
-      tmp.soundStart = Date.now();
+      this.exercise.audioState.meta = meta;
+      if (meta['measureTime']) {
+        tmp.soundStart = Date.now();
+      }
     },
-    finishedPlayingSound(tag?: string): void {
+    finishedPlayingSound(meta: { [key: string]: string | boolean | undefined | number }): void {
       this.exercise.audioState.playing = false;
-      this.exercise.audioState.tag = tag;
-      this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
+      this.exercise.audioState.meta = meta;
+      if (meta['measureTime']) {
+        this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
+      }
     },
     setThemePreference(theme: 'light' | 'dark') {
       this._themePreference = theme;
       localStorage.setItem('themePreference', theme);
     },
+    startedPlaySequence(measureTime: boolean) {
+      this.exercise.audioState.playingSequence = true
+      if (measureTime) {
+        tmp.soundStart = Date.now();
+      }
+    },
+    finishedPlayingSequence(measureTime: boolean) {
+      this.exercise.audioState.playingSequence = false
+      if (measureTime) {
+        this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
+      }
+    }
   },
 });

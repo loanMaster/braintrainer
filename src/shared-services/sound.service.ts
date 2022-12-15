@@ -9,7 +9,9 @@ export interface Sound {
   src?: string;
   skip?: boolean;
   loop?: boolean;
-  tag?: string;
+  meta?: {
+    [key: string]: string | boolean | number | undefined;
+  }
 }
 
 const preload = (src: string) => {
@@ -65,9 +67,13 @@ export class SoundService {
       loop: sound.loop || false,
       html5: true,
     });
-    useAppStore().startedPlayingSound(sound.tag);
+    if (sound.meta) {
+      useAppStore().startedPlayingSound(sound.meta);
+    }
     await this.playHowl(howl);
-    useAppStore().finishedPlayingSound(sound.tag);
+    if (sound.meta) {
+      useAppStore().finishedPlayingSound(sound.meta);
+    }
   }
 
   private playHowl(howl: Howl, loop = false): Promise<void> {
@@ -97,10 +103,8 @@ export class SoundService {
     this.pausing.next(pausing);
   }
 
-  async playAll(sounds: Sound[], pauseTime = 0) {
-    useAppStore().$patch(
-      (store) => (store.exercise.audioState.playingSequence = true)
-    );
+  async playAll(sounds: Sound[], pauseTime = 0, measureTime = false) {
+    useAppStore().startedPlaySequence(measureTime)
     this.queue = [];
     sounds.forEach((s) => this.queue.push(JSON.parse(JSON.stringify(s))));
     this.isPlayingSequence = true;
@@ -111,9 +115,7 @@ export class SoundService {
       }
     }
     this.isPlayingSequence = false;
-    useAppStore().$patch(
-      (store) => (store.exercise.audioState.playingSequence = false)
-    );
+    useAppStore().finishedPlayingSequence(measureTime)
   }
 
   isPlaying(): boolean {

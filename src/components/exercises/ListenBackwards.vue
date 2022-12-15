@@ -115,11 +115,11 @@ async function nextQuestion() {
     new TweenService().setDisplay(buttons.value, 'flex');
   }
   await new TweenService().fadeIn(buttons.value);
-  playAudio();
+  playAudio(true);
 }
 
-async function playAudio() {
-  await soundService.play(currentAudio.value as AudioResponse);
+async function playAudio(measureTime = false) {
+  await soundService.play({ ...currentAudio.value as AudioResponse, meta: { measureTime } });
 }
 
 async function loadNextAudio(): Promise<void> {

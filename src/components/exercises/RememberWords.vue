@@ -129,13 +129,13 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(buttons.value);
 
-  await playAudio();
+  await playAudio(true);
   textTransparent.value = false;
   inputDisabled.value = false;
 }
 
-async function playAudio() {
-  await soundService.playAll(currentAudio.value, 100);
+async function playAudio(measureTime = false) {
+  await soundService.playAll(currentAudio.value, 100, measureTime);
 }
 
 async function loadNextAudio(): Promise<void> {
