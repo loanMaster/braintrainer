@@ -59,7 +59,7 @@
         </div>
         <div class="text-right">
           {{ $t('auth.Already registered?') }}
-          <router-link :to="{ name: 'login', params: { language } }">{{
+          <router-link :to="{ name: 'signin', params: { language } }">{{
             $t('auth.Sign in here')
           }}</router-link>
         </div>

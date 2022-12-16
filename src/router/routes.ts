@@ -19,7 +19,7 @@ const loginGuard = (
   next: NavigationGuardNext
 ) => {
   if (!useAuthStore().isLoggedIn) {
-    next({ name: 'login', params: { language: useAppStore().language } });
+    next({ name: 'signin', params: { language: useAppStore().language } });
   } else if (!useAuthStore().isConfirmed) {
     next({
       name: 'verification-pending',
@@ -39,7 +39,7 @@ const guestMaxPlayGuard = (
     (useAppStore().noOfGamesPlayedAsGuest > 1 || useAuthStore().hasAccount) &&
     (!useAuthStore().isLoggedIn || !useAuthStore().isConfirmed)
   ) {
-    next({ name: 'login', params: { language: useAppStore().language } });
+    next({ name: 'signin', params: { language: useAppStore().language } });
   } else {
     next();
   }
@@ -47,12 +47,21 @@ const guestMaxPlayGuard = (
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '/login',
+    component: MainLayout,
+    children: [{
+      path: '',
+      name: 'login',
+      component: () => import('src/components/auth/ConfirmEmail.vue'),
+    }]
+  },
+  {
     path: '/:language(es|de|en)?',
     component: MainLayout,
     children: [
       {
-        path: 'login',
-        name: 'login',
+        path: 'signin',
+        name: 'signin',
         component: () => import('src/components/auth/LoginView.vue'),
         beforeEnter: (
           to: RouteLocationNormalized,

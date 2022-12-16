@@ -112,6 +112,8 @@ export default {
   auth: {
     Logout: 'Abmelden',
     Login: 'Anmelden',
+    'There was an error during login.':
+      'Bei der Anmeldung ist ein Fehler aufgetreten.',
     'There was an error during login. Please verify your e-mail address and password.':
       'Bei der Anmeldung ist ein Fehler aufgetreten. Bitte überprüfe Benutzername und Password',
     'Email address': 'E-Mail Adresse',

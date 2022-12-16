@@ -98,28 +98,6 @@ const route = useRoute();
 
 onBeforeMount(async () => {
   await authStore.redirectIfLoggedIn();
-  if (route.query.uuid && route.query.token) {
-    // clear all cookies and reload due to firefox bug.
-    if (document.cookie) {
-      document.cookie.split(';').forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, '')
-          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
-        location.reload();
-      });
-    } else {
-      showForm.value = false;
-      try {
-        await authStore.login({
-          method: 'link',
-          uuid: route.query.uuid as string,
-          token: route.query.token as string,
-        });
-      } catch (error) {
-        showForm.value = true;
-      }
-    }
-  }
 });
 
 const language = computed(() => {

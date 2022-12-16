@@ -18,7 +18,7 @@
             color="primary"
             :label="$t('Sign in')"
             class="self-center q-mb-md"
-            :to="{ name: 'login', params: { language } }"
+            :to="{ name: 'signin', params: { language } }"
           ></q-btn>
         </div>
         <q-separator></q-separator>

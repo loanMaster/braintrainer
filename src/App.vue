@@ -53,16 +53,20 @@ router.beforeEach(
     next: NavigationGuardNext
   ) => {
     const language = to.params.language;
-    if (!language) {
-      next({
-        name: to.name as string,
-        params: { ...to.params, language: language || store.language },
-      });
-    } else {
-      if (language && useAppStore().language !== language) {
-        useAppStore().setLanguage(i18n, language as string);
+    if (to.name !== 'login') {
+      if (!language) {
+        next({
+          name: to.name as string,
+          params: { ...to.params, language: language || store.language },
+        });
+      } else {
+        if (language && useAppStore().language !== language) {
+          useAppStore().setLanguage(i18n, language as string);
+        }
+        next();
       }
-      next();
+    } else {
+      next()
     }
   }
 );

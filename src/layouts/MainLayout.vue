@@ -247,7 +247,7 @@ function logout() {
 
 function login() {
   if (!authStore.isLoggedIn) {
-    router.push({ name: 'login', params: { language: store.language } });
+    router.push({ name: 'signin', params: { language: store.language } });
   }
 }
 
