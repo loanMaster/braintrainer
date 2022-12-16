@@ -10,14 +10,14 @@
       <q-separator dark />
 
       <q-card-actions class="justify-center">
-        <q-btn color="primary" @click="confirm">{{ $t('START') }}</q-btn>
+        <q-btn color="primary" @click="confirm" :disable="disabled">{{ $t('START') }}</q-btn>
       </q-card-actions>
     </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onBeforeUnmount } from 'vue';
+import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { keyInput } from 'src/util/key.input';
 import { filter, take, takeUntil } from 'rxjs/operators';
@@ -25,6 +25,7 @@ import { Subject } from 'rxjs';
 
 const emits = defineEmits(['confirm']);
 const route = useRoute();
+const disabled = ref(false)
 const destroy = new Subject<void>();
 
 onMounted(() => {
@@ -45,6 +46,7 @@ onBeforeUnmount(() => {
 });
 
 function confirm() {
+  disabled.value = true
   emits('confirm');
 }
 const nameOfTheGame = computed(() => route.params.game);

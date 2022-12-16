@@ -217,6 +217,8 @@ export class RelativesService {
       const nextRelation = this.randomNextRelation(current);
       if (nextRelation) {
         this.relations.push(nextRelation);
+      } else {
+        return undefined
       }
     }
     return this.relations[depth];
@@ -234,12 +236,14 @@ export class RelativesService {
           node.type === 'You'
             ? [nextRelation]
             : mapping[node.type][nextRelation];
-        nextRelatives.forEach((r: string) => {
-          const nextNode = new Relative(r, node, nextRelation);
-          if (!nextNode.isIncest()) {
-            this.createTree(maxDepth, nextNode, depth + 1);
-          }
-        });
+        if (nextRelatives) {
+          nextRelatives.forEach((r: string) => {
+            const nextNode = new Relative(r, node, nextRelation);
+            if (!nextNode.isIncest()) {
+              this.createTree(maxDepth, nextNode, depth + 1);
+            }
+          });
+        }
       }
     }
     return node;
