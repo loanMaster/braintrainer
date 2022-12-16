@@ -3,7 +3,7 @@
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit" class="q-gutter-md">
+      <q-form @submit="submit" class="q-gutter-md" v-if="!signedUp">
         <div class="text-h5">{{ $t('auth.Sign up') }}</div>
 
         <GoogleLoginButton :disable="submitting" />
@@ -63,14 +63,14 @@
             $t('auth.Sign in here')
           }}</router-link>
         </div>
-        <div v-if="signedUp" test="signup-success-msg">
-          {{
-            $t(
-              'auth.Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.'
-            )
-          }}
-        </div>
       </q-form>
+      <div v-if="signedUp" test="signup-success-msg">
+        {{
+        $t(
+        'auth[\'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.\']'
+        )
+        }}
+      </div>
     </q-card>
   </div>
 </template>

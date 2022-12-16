@@ -134,7 +134,7 @@ export default {
     'Already registered?': 'Bereits registriert?',
     'Sign in here': 'Hier anmelden',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
-      "Danke für's Registrieren. Du erhälst in Kürze eine Bestätigungsemail um dein Benutzerkonto zu aktivieren.",
+      "Danke für's Registrieren. Du erhälst in Kürze eine Bestätigungsemail, um dein Benutzerkonto zu aktivieren.",
     'An error occurred when sending the e-mail':
       'Beim Verschicken der Bestätigungsemail ist ein Fehler aufgetreten.',
     Profile: 'Profil',

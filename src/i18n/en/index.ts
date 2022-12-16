@@ -27,7 +27,7 @@ export default {
   },
   'memory-animals': {
     title: 'Memory - animals',
-    description: 'Memory with audio instead of pictures',
+    description: 'Memory with audio instead of pictures. Only animals',
     hint: 'Find pairs that contain the same words. The exercise works like ordinary memory - only with audio.',
   },
   memory: {

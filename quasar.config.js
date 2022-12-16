@@ -11,7 +11,7 @@
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 
-module.exports = configure(function (/* ctx */) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,
@@ -63,7 +63,11 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        serverPath: ctx.dev
+          ? 'http://localhost:3000'
+          : 'https://braintrainer.io'
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
