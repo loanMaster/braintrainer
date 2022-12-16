@@ -18,6 +18,10 @@ export const calculateScore = (exercise: Exercise) => {
   );
 
   console.log(
+    `exercise.totalAudioDuration ${exercise.totalAudioDuration}. exercise.duration ${exercise.duration}`
+  );
+
+  console.log(
     `TODO minTime ${minTime}. time penalty ${timePenalty}. strikes ${exercise.totalStrikeCount} error penalty ${errorPenalty}`
   );
   return (

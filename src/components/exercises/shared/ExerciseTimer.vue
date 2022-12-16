@@ -18,7 +18,7 @@ onMounted(() => {
   interval(200)
     .pipe(takeUntil(destroy))
     .subscribe(() => {
-      if (store.exercise.state === 'started') {
+      if (store.exercise.state === 'started' && !store.exercise.paused) {
         timeElapsed.value += Date.now() - lastTick;
         lastTick = Date.now();
       }
@@ -32,6 +32,9 @@ const elapsedTimeFormatted = computed(() => {
 });
 
 store.$onAction(({ name, after }) => {
+  if (name === 'beginExercise') {
+    lastTick = Date.now();
+  }
   after(() => {
     if (name === 'pause') {
       timeElapsed.value += Date.now() - lastTick;

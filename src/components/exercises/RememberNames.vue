@@ -133,6 +133,7 @@ async function start() {
   showLoadingIndicator.value = false;
   shuffle(currentTask.value.introductions);
   await exerciseUtils.wait(1000);
+  store.beginExercise();
   await soundService.playAll(audio, 350, true);
   await exerciseUtils.wait(150);
   nextQuestion();
@@ -172,7 +173,6 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
-    store.beginExercise();
     await new TweenService().fadeIn(coreExercise.value);
   } else {
     await new TweenService().fadeIn(imageToGuess.value);

@@ -37,7 +37,7 @@ onMounted(() => {
   interval(100)
     .pipe(
       filter(
-        () => state.value === 'STARTED' && store.exercise.state === 'started'
+        () => state.value === 'STARTED' && store.exercise.state === 'started' && !store.exercise.paused
       ),
       takeUntil(destroy)
     )

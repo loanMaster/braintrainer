@@ -138,6 +138,7 @@ async function start() {
   await exerciseUtils.wait(1000);
   showLoadingIndicator.value = false;
   shuffle(currentTask.value.introductions);
+  store.beginExercise();
   await soundService.playAll(audio, 350, true);
   await exerciseUtils.wait(150);
   nextQuestion();
@@ -189,7 +190,6 @@ async function nextQuestion() {
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
-    store.beginExercise();
   }
   await new TweenService().fadeIn(coreExercise.value);
 
