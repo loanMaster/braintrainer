@@ -7,7 +7,7 @@
         <div class="row-sm column-xs q-col-gutter-lg">
           <div
             class="col-3 column"
-            v-for="exercise in languageExercises"
+            v-for="exercise in languageEx"
             :key="exercise"
           >
             <q-card
@@ -25,11 +25,11 @@
         </div>
       </q-card>
       <q-card class="exercise-block">
-        <div class="exercise-title">{{ $t('Calculation') }}</div>
+        <div class="exercise-title">{{ $t('Maths') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg">
           <div
             class="col-3 column"
-            v-for="exercise in mathExercises"
+            v-for="exercise in mathEx"
             :key="exercise"
           >
             <q-card
@@ -51,16 +51,7 @@
         <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
           <div
             class="col-3 column"
-            v-for="exercise in [
-              'remember-words',
-              'remember-numbers',
-              'remember-names',
-              'find-matching-person',
-              'remember-words-rev',
-              'remember-numbers-rev',
-              'memory-animals',
-              'memory',
-            ]"
+            v-for="exercise in memoryEx"
             :key="exercise"
           >
             <q-card
@@ -88,23 +79,15 @@ import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
+import {languageExercises, mathExercises, memoryExercises} from "src/const/games";
 
 const { t } = useI18n();
 const router = useRouter();
 const continueAsGuestDialog = ref();
 
-const languageExercises = ref([
-  'spell-backwards',
-  'word-scramble',
-  'listen-backwards',
-  'find-relative',
-]);
-const mathExercises = ref([
-  'mental-arithmetic',
-  'mental-arithmetic-mul',
-  'math-marathon',
-  'solve-equation',
-]);
+const languageEx = ref(languageExercises);
+const mathEx = ref(mathExercises);
+const memoryEx = ref(memoryExercises);
 
 onMounted(() => {
   if (
@@ -129,26 +112,27 @@ function selectExercise(game: string) {
 
 <style lang="scss" scoped>
 @import 'node_modules/quasar/dist/quasar.sass';
+@import '../../../css/app';
 
 .math-bg {
-  background-color: $green-2;
+  background-color: $math-bg-color;
 }
 .words-bg {
-  background-color: $blue-2;
+  background-color: $words-bg-color;
 }
 .memory-bg {
-  background-color: $orange-2;
+  background-color: $memory-bg-color;
 }
 
 .body--dark {
   .math-bg {
-    background-color: $brown-10;
+    background-color: $math-bg-color-dark;
   }
   .words-bg {
-    background-color: $indigo-10;
+    background-color: $words-bg-color-dark;
   }
   .memory-bg {
-    background-color: $pink-10;
+    background-color: $memory-bg-color-dark;
   }
 }
 

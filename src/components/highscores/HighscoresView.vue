@@ -1,212 +1,63 @@
 <template>
   <div class="bg-gradient flex-1 column items-center">
+    <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
-      <q-toolbar-title>🎉 Highscores</q-toolbar-title>
+      <q-toolbar-title>🎉 {{ t('Highscores') }}</q-toolbar-title>
     </q-toolbar>
     <div
-      class="flex-1 relative-position max-width-sm full-width q-mx-sm q-my-xs-xs q-my-md-lg"
+      class="flex-1 relative-position max-width-sm full-width q-my-sm"
     >
-      <q-table
-        v-if="!showLoadingIndicator"
-        :grid="$q.screen.xs"
-        :rows="rows"
-        column-sort-order="da"
-        :columns="columns"
-        row-key="name"
-        :pagination="{ rowsPerPage: 0 }"
-      >
-        <template v-slot:header="props">
-          <q-tr :props="props">
-            <q-th auto-width />
-            <q-th v-for="col in props.cols" :key="col.name" :props="props">
-              {{ col.label }}
-            </q-th>
-          </q-tr>
-        </template>
+      <div class="words-table-header" v-if="languageHighscores.length > 0">
+        <div class="text-h5">{{ $t('Language') }}</div>
+        <HighscoresTable :scores="languageHighscores"/>
+      </div>
 
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td auto-width>
-              <q-btn
-                size="md"
-                color="primary"
-                dense
-                @click="play(props)"
-                :icon="'play_arrow'"
-                class="q-mr-sm"
-              />
-            </q-td>
-            <q-td v-for="col in props.cols" :key="col.name" :props="props">
-              <q-avatar size="md" v-if="col.name === 'image'">
-                <img :src="col.value || '/images/avatars/default_avatar.png'" />
-              </q-avatar>
-              <span v-if="col.name !== 'image'">{{ col.value }}</span>
-            </q-td>
-          </q-tr>
-        </template>
+      <div class="math-table-header q-mt-md" v-if="mathHighscores.length > 0">
+        <div class="text-h5">{{ $t('Maths') }}</div>
+        <HighscoresTable :scores="mathHighscores" color="math"/>
+      </div>
 
-        <template v-slot:item="props">
-          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
-            <q-card class="non-selectable">
-              <q-card-section class="text-h6 bg-orange-2 row justify-between">
-                {{ props.row.nameOfTheGame }}
-                <q-btn
-                  size="md"
-                  color="primary"
-                  dense
-                  @click="play(props)"
-                  :icon="'play_arrow'"
-                />
-              </q-card-section>
-              <q-separator />
-              <q-card-section class="column">
-                <div class="row justify-between">
-                  <div>{{ $t('User') }}</div>
-                  <div>
-                    <span>{{ props.row.playerName }}</span>
-                    <q-avatar size="sm" class="q-ml-sm">
-                      <img
-                        :src="
-                          props.row.image || '/images/avatars/avatar_00.jpg'
-                        "
-                      />
-                    </q-avatar>
-                  </div>
-                </div>
-                <div class="row justify-between">
-                  <div>{{ $t('Difficulty') }}</div>
-                  <div>{{ props.row.difficulty }}</div>
-                </div>
-                <div class="row justify-between">
-                  <div>{{ $t('Rating') }}</div>
-                  <div>{{ props.row.score }}</div>
-                </div>
-                <div class="row justify-between">
-                  <div>{{ $t('Date') }}</div>
-                  <div>
-                    {{
-                      new Date(props.row.date).toLocaleDateString(
-                        store.language
-                      )
-                    }}
-                  </div>
-                </div>
-                <div class="row justify-between">
-                  <div>{{ $t('Your rating') }}</div>
-                  <div>{{ props.row.yourScore || '-' }}</div>
-                </div>
-              </q-card-section>
-            </q-card>
-          </div>
-        </template>
-      </q-table>
-      <LoadingIndicator :showing="showLoadingIndicator" />
+      <div class="memory-table-header q-mt-md" v-if="memoryHighscores.length > 0">
+        <div class="text-h5">{{ $t('Memory exercises') }}</div>
+        <HighscoresTable :scores="memoryHighscores" color="memory"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ScoreService } from 'src/shared-services/score.service';
-import { ref, onMounted, Ref } from 'vue';
+  import {HighScoreDto, ScoreService} from 'src/shared-services/score.service';
+import { ref, onMounted, Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import HighscoresTable from './HighscoresTable.vue';
 import { useRouter } from 'vue-router';
-import { formatScore } from 'src/util/format-number';
 import { useAppStore } from 'stores/app-store';
+  import {languageExercises, mathExercises, memoryExercises} from "src/const/games";
 
 const { t } = useI18n();
 const rows: Ref<any[]> = ref([]);
 const router = useRouter();
 const store = useAppStore();
 const showLoadingIndicator = ref(true);
+const highscores: Ref<HighScoreDto[]> = ref([])
 
 onMounted(async () => {
-  const highscores = await new ScoreService().fetchHighscores();
-  highscores.scores.forEach((s) => {
-    rows.value.push({
-      nameOfTheGame: t(s.nameOfTheGame + '.title'),
-      difficulty: t(s.difficulty),
-      nameOfTheGameOri: s.nameOfTheGame,
-      difficultyOri: s.difficulty,
-      score: s.score,
-      date: s.date,
-      yourScore: s.yourScore,
-      playerName: s.playerName,
-      image: s.image,
-      isYou: s.isYou,
-      sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty),
-    });
-  });
-  rows.value.sort((a, b) => {
-    const byName = a.nameOfTheGame
-      .toLowerCase()
-      .localeCompare(b.nameOfTheGame.toLowerCase());
-    const byDiff = a.sortDiff < b.sortDiff ? -1 : 1;
-    return byName !== 0 ? byName : byDiff;
-  });
+  const dto = await new ScoreService().fetchHighscores();
+  highscores.value = dto.scores
   showLoadingIndicator.value = false;
 });
 
-const columns = ref([
-  {
-    name: 'nameOfTheGame',
-    required: true,
-    label: t('Exercise'),
-    align: 'left',
-    field: 'nameOfTheGame',
-    sortable: true,
-  },
-  {
-    name: 'difficulty',
-    align: 'left',
-    label: t('Difficulty'),
-    field: 'difficulty',
-    sortable: true,
-  },
-  { name: 'playerName', label: t('User'), field: 'playerName', sortable: true },
-  {
-    name: 'image',
-    label: t('Avatar'),
-    field: 'image',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    name: 'score',
-    label: t('Rating'),
-    field: 'score',
-    format: (val: number) => formatScore(val, store.language),
-  },
-  {
-    name: 'date',
-    label: t('Date'),
-    field: 'date',
-    format: (val: number) =>
-      `${new Date(val).toLocaleDateString(store.language)}`,
-  },
-  {
-    name: 'yourScore',
-    label: t('Your rating'),
-    field: 'yourScore',
-    format: (val: number | undefined) =>
-      val === undefined ? '-' : formatScore(val, store.language),
-  },
-]);
+const languageHighscores = computed(() => {
+  return highscores.value.filter(s => languageExercises.indexOf(s.nameOfTheGame) > -1)
+})
 
-function play(props: any) {
-  router.push({
-    name: props.row.nameOfTheGameOri,
-    params: {
-      game: props.row.nameOfTheGameOri,
-      difficulty: props.row.difficultyOri,
-      language: useAppStore().language,
-    },
-  });
-}
+const mathHighscores = computed(() => {
+  return highscores.value.filter(s => mathExercises.indexOf(s.nameOfTheGame) > -1)
+})
+
+const memoryHighscores = computed(() => {
+  return highscores.value.filter(s => memoryExercises.indexOf(s.nameOfTheGame) > -1)
+})
+
 </script>
-
-<style>
-.q-table__bottom {
-  display: none;
-}
-</style>

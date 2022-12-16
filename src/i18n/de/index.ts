@@ -106,7 +106,7 @@ export default {
   'Find the matching person': 'Finde die passende Person',
   'Who is this person?': 'Wer ist diese Person?',
   Back: 'Zurück',
-  Calculation: 'Rechnen',
+  Maths: 'Mathe',
   'Memory exercises': 'Gedächtnis',
   Language: 'Sprache',
   auth: {

@@ -11,88 +11,88 @@ export default {
   No: 'No',
   'solve-equation': {
     title: 'Solve equations',
-    description: 'Merke dir die Gleichungen und löse x auf.',
-    hint: 'Merke dir die Gleichungen und löse x auf.',
+    description: 'Memorize the equations and solve for x',
+    hint: 'Memorize the equations and solve for x.',
   },
   'find-relative': {
     title: 'Find your relative',
     description:
-      'Die Übung beschreibt Verwandtschaften. Kannst du herausfinden, welche?',
-    hint: 'Höre dir an, wie du mit einer Person verwandt bist. Wähle dann die passende Verwandtschaft aus.',
+      'The exercise describes relationships. Can you find out which one?',
+    hint: 'Listen to how you are related to a person. Then select the appropriate relationship.',
   },
   'word-scramble': {
     title: 'Word scramble',
-    description: 'Bilde aus den vorgelesenen Buchstaben ein Wort.',
-    hint: 'Bilde aus den vorgelesenen Buchstaben ein Wort.',
+    description: 'Form a word from the letters read',
+    hint: 'Form a word from the letters read.',
   },
   'memory-animals': {
     title: 'Memory - animals',
-    description: 'Memory mit Audio anstatt mit Bildern.',
-    hint: 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.',
+    description: 'Memory with audio instead of pictures',
+    hint: 'Find pairs that contain the same words. The exercise works like ordinary memory - only with audio.',
   },
   memory: {
     title: 'Memory - mixed',
-    description: 'Memory mit Audio anstatt mit Bildern.',
-    hint: 'Suche Paare unter denen sich die gleichen Wörter verstecken. Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.',
+    description: 'Memory with audio instead of pictures',
+    hint: 'Find pairs that contain the same words. The exercise works like ordinary memory - only with audio.',
   },
   'find-matching-person': {
     title: 'Remember people (II)',
-    description: 'Merke dir die Namen der angezeigten Person.',
-    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jedem Namen der passenden Person zu.',
+    description: 'Note the names of the person displayed',
+    hint: 'Note the names of the person displayed. Then match each name to the appropriate person.',
   },
   'remember-names': {
     title: 'Remember people (I)',
-    description: 'Merke dir die Namen der angezeigten Person.',
-    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jeder Person den passenden Namen zu.',
+    description: 'Note the names of the person displayed',
+    hint: 'Note the names of the person displayed. Then give each person the appropriate name.',
   },
   'remember-numbers-rev': {
     title: 'Memorize numbers (backwards)',
     description:
-      'Merke dir die Zahlen und gib sie in umgekehrter Rehenfolge wieder.',
-    hint: 'Merke dir die Zahlen und gib sie in umgekehrter Rehenfolge wieder.',
+      'Memorize the numbers and repeat them in reverse order',
+    hint: 'Memorize the numbers and repeat them in reverse order.',
   },
   'remember-numbers': {
     title: 'Memorize numbers',
     description:
-      'Merke dir die Zahlen und gib sie in der richtigen Rehenfolge wieder.',
-    hint: 'Merke dir die Zahlen und gib sie in der richtigen Rehenfolge wieder.',
+      'Memorize the numbers and put them in the correct order',
+    hint: 'Memorize the numbers and put them in the correct order.',
   },
   'remember-words-rev': {
     title: 'Memorize words (backwards)',
     description:
-      'Merke dir die Wörter und gib sie in umgekehrter Rehenfolge wieder.',
-    hint: 'Merke dir die Wörter und gib sie in umgekehrter Rehenfolge wieder.',
+      'Memorize the words and put them back in reverse order',
+    hint: 'Memorize the words and put them back in reverse order.',
   },
   'remember-words': {
     title: 'Memorize words',
     description:
-      'Merke dir die Wörter und gib sie in der richtigen Rehenfolge wieder',
-    hint: 'Merke dir die Wörter und gib sie in der richtigen Rehenfolge wieder.',
+      'Memorize the words and put them in the correct order',
+    hint: 'Memorize the words and put them in the correct order.',
   },
   'math-marathon': {
     title: 'Math marathon',
-    description: 'Löse die Rechenaufgaben und merke dir das Zwischenergebnis',
-    hint: 'Löse die Rechenaufgaben und merke dir das Zwischenergebnis.',
+    description: 'Solve the arithmetic problems and note the intermediate result',
+    hint: 'Solve the arithmetic problems and note the intermediate result.',
   },
   'mental-arithmetic-mul': {
     title: 'Mental arithmetic (*/÷)',
-    description: 'Löse Aufgaben mit Multiplikation / Division im Kopf.',
-    hint: 'Löse die Matheaufgaben. Benutze nur deinen Kopf.',
+    description: 'Solve problems with multiplication / division in your head',
+    hint: 'Solve problems with multiplication / division in your head.',
   },
   'mental-arithmetic': {
     title: 'Mental arithmetic (+/-)',
-    description: 'Löse Aufgaben mit Addition / Subtraktion im Kopf.',
-    hint: 'Löse die Matheaufgaben. Benutze nur deinen Kopf.',
+    description: 'Solve problems with addition / subtraction in your head',
+    hint: 'Solve problems with addition / subtraction in your head.',
   },
   'listen-backwards': {
     title: 'Listen backwards',
-    description: 'Find heraus, welches Wort Rückwärts ausgeprochen wurde.',
-    hint: 'Wähle das Wort aus, welches rückwärts ausgeprochen wurde.',
+    description: 'Find out which word was pronounced backwards',
+    hint: 'Find out which word was pronounced backwards.',
   },
   'spell-backwards': {
     title: 'Spell backwards',
-    description: 'Buchstabiere rückwärts',
-    hint: 'Buchstabiere rückwärts! Anstatt ‹ß› bitte ‹ss› verwenden.',
+    description: 'Spell backwards',
+    hint: 'Spell backwards!',
   },
   'Press "START" when you are ready': '_',
   START: '_',
@@ -101,7 +101,7 @@ export default {
   'Find the matching person': '_',
   'Who is this person?': '_',
   Back: '_',
-  Calculation: '_',
+  Maths: '_',
   'Memory exercises': 'Memory',
   Language: '_',
   auth: {
@@ -165,7 +165,7 @@ export default {
   'Try up to three exercises as guest before creating an account.': '_',
   'Train now': '_',
   'What is { APP_NAME }?': '_',
-  'What is_RESPONSE': `{ APP_NAME } is a brain-jogging app with audio exercises to improve your cognitive performance. With various exercises and challenges and personal progress reports, you will stay motivated and on track. Try it now and improve your brain power!`,
+  'What is_RESPONSE': '{ APP_NAME } is a brain-jogging app with audio exercises to improve your cognitive performance. With various exercises and challenges and personal progress reports, you will stay motivated and on track. Try it now and improve your brain power!',
   'What are the benefits of audio brain jogging?': '_',
   benefits_1: '-It strengthens memory',
   benefits_2: '-The exercises are varied',
@@ -200,7 +200,7 @@ export default {
   Cookies: '_',
   'Legal notice': '_',
   LEGAL_NOTICE:
-    `Legal Notice<br/> ` +
+    'Legal Notice<br/> ' +
     ' <br/> ' +
     'This website is provided on an "as is" and "as available" basis. The site owner makes no representations or warranties of any kind, express or implied, as to the operation of the site or the information, content, materials, or products included on the site. The site owner is not responsible for the accuracy, completeness, adequacy, or currency of the information contained on this site, and shall not be liable for any errors or omissions in the information, or for any damages arising from the use of this site.<br/>' +
     ' <br/> ' +
