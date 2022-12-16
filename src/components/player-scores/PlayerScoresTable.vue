@@ -165,7 +165,7 @@ const columns = ref([
   },
   {
     name: 'stars',
-    label: 'Sterne',
+    label: t('Stars'),
     field: 'stars',
     align: 'center',
     sortable: true,
