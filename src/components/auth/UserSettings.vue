@@ -5,7 +5,7 @@
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
       <div class="text-h5 col-6">{{ $t('auth.Profile') }}</div>
       <div class="col-6 q-gutter-sm">
-        <div class="text-h6 col-6">{{ $t('auth.Avatar') }}</div>
+        <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
         <q-btn-dropdown color="primary" size="xl" class="text-h1">
           <template v-slot:label>
             <q-avatar size="5rem">

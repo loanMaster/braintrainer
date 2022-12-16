@@ -142,7 +142,6 @@ export const useAppStore = defineStore('main', {
       return true;
     },
     finishExercise() {
-      console.log(`tmp.pauseEnd ${tmp.pauseEnd}, this.exercise.beginTimeStamp ${this.exercise.beginTimeStamp}`)
       this.exercise.duration +=
         Date.now() - Math.max(tmp.pauseEnd || this.exercise.beginTimeStamp);
       this.exercise.state = 'finished';

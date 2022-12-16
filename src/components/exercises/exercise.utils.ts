@@ -53,17 +53,15 @@ export const exerciseUtils = {
     soundService.stop();
     useAppStore().$patch((store) => store.exercise.currentQuestion++);
     if (
-      useAppStore().exercise.currentQuestion >
-      useAppStore().exercise.totalQuestions
+      useAppStore().exercise.currentQuestion ===
+      useAppStore().exercise.totalQuestions + 1
     ) {
       await exerciseUtils.wait(200);
       await useAppStore().finishExercise();
-      console.log(`router push score-screen`);
       await router.push({
         name: 'score-screen',
         params: { language: useAppStore().language },
       });
-      console.log(`router push score-screen finished`);
       return false;
     } else {
       useAppStore().$patch((store) => (store.exercise.strikes = 0));

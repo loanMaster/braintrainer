@@ -11,7 +11,7 @@
       </q-card-section>
       <q-card-section>
         <div class="text-h3">
-          <StarsRating :rating="store.exercise.rating"></StarsRating>
+          <StarsRating :rating="store.exercise.rating || 0"></StarsRating>
         </div>
       </q-card-section>
       <div class="row-sm column-xs justify-center no-wrap">
@@ -136,7 +136,7 @@ const percentile = computed(() =>
 );
 
 onBeforeMount(() => {
-  if (!store.exercise || !store.exercise.score) {
+  if (!store.exercise || store.exercise.score === undefined) {
     store.$patch((store) => {
       // TODO for debugging
       store.exercise = newExercise('mental-arithmetic', 'easy', 10);
