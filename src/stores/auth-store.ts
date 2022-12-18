@@ -82,13 +82,13 @@ export const useAuthStore = defineStore('auth', {
     async sendResetLink(email: string) {
       await Userfront.sendResetLink(email);
     },
-    async sentVerificationLink() {
+    sentVerificationLink(): Promise<any> {
       const payload = {
         email: Userfront.user.email,
         userId: Userfront.user.userId,
         tenantId: userFrontTenant,
       };
-      await fetch('https://api.userfront.com/v0/auth/verify/link', {
+      return fetch('https://api.userfront.com/v0/auth/verify/link', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

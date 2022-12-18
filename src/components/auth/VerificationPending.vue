@@ -29,20 +29,31 @@
 import { ref, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useQuasar } from 'quasar';
+import {useI18n} from "vue-i18n";
 
 const $q = useQuasar();
+const {t} = useI18n()
 const authStore = useAuthStore();
 const emailSent = ref(false);
 const email = computed(() => authStore.email);
 
 async function sendVerificationEmail() {
-  await authStore.sentVerificationLink();
-  emailSent.value = true;
-  $q.notify({
-    group: 'send-verification-email',
-    message: 'Verification email sent',
-    color: 'green',
-    timeout: 2000,
-  });
+  const result = await authStore.sentVerificationLink();
+  if (result.error) {
+    $q.notify({
+      group: 'send-verification-email',
+      message: t('auth.An error occurred when sending the e-mail'),
+      color: 'red',
+      timeout: 5000,
+    });
+  } else {
+    emailSent.value = true;
+    $q.notify({
+      group: 'send-verification-email',
+      message: 'Verification email sent',
+      color: 'green',
+      timeout: 2000,
+    });
+  }
 }
 </script>

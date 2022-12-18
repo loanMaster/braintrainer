@@ -2,6 +2,7 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
+    <LoadingIndicator :showing="submitting" style="z-index: 1"/>
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" v-if="showForm" class="q-gutter-md">
         <div class="text-h5">{{ $t('auth.Sign In') }}</div>
@@ -15,7 +16,6 @@
           test="login-email"
           :label="$t('auth.Email address')"
           type="email"
-          autofocus
           lazy-rules
           :rules="[
             (val) =>
@@ -81,6 +81,7 @@ import { ref, onBeforeMount, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { useQuasar } from 'quasar';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
