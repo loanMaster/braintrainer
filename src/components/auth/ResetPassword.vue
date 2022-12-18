@@ -29,9 +29,6 @@
         >
           {{ $t('auth.Reset Password') }}
         </q-btn>
-        <div v-if="errormsg" test="reset-password-error-msg" class="text-red">
-          {{ errormsg }}
-        </div>
       </q-form>
     </q-card>
   </div>
