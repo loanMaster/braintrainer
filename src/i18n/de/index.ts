@@ -190,7 +190,7 @@ export default {
   benefits_3:
     '-Die Übungen sind nützlich, da wir im Alltag häufig auf auditorische Information reagieren müssen (z.B. im Gespräch)',
   'How does { APP_NAME } work?': 'Wie funktioniert { APP_NAME }?',
-  'How does work_RESPONSE': `{ APP_NAME } bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren. Suche eine Übung aus und wähle einen Schwierigkeitsgrad. Du kannst als Gast üben oder dich mit deiner E-Mail Adresse oder web3 wallet registrieren.`,
+  'How does work_RESPONSE': `{ APP_NAME } bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren. Suche eine Übung aus und wähle einen Schwierigkeitsgrad. Du kannst als Gast üben oder dich mit deiner E-Mail Adresse registrieren.`,
   'Select an exercise': 'Wähle eine Übung',
   easy: 'Anfänger',
   normal: 'Fortgeschrittener',

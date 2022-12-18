@@ -178,7 +178,7 @@ export default {
     '-The exercises are useful because we often have to respond to auditory information in everyday life (e.g. in conversation)',
   'How does { APP_NAME } work?': '_',
   'How does work_RESPONSE':
-    '{ APP_NAME } offers a variety of different exercises to train your brain. Choose an exercise and select a difficulty level. You can practice as a guest or register with your email address or web3 wallet.',
+    '{ APP_NAME } offers a variety of different exercises to train your brain. Choose an exercise and select a difficulty level. You can practice as a guest or register with your email address.',
   'Select an exercise': '_',
   easy: 'Beginner',
   normal: 'Intermediate',
