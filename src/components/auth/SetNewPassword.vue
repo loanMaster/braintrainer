@@ -74,7 +74,7 @@ async function submit() {
   }
   try {
     await authStore.resetPassword({
-      password: password,
+      password: password.value,
       uuid: route.query.uuid,
       token: route.query.token,
       redirect: false,

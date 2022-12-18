@@ -1,7 +1,7 @@
 import { useAppStore } from 'stores/app-store';
 import { requestHelper } from 'src/shared-services/request.helper';
 
-export class AccountService {
+export class UserService {
   private get store() {
     return useAppStore();
   }
@@ -16,5 +16,13 @@ export class AccountService {
       method: 'DELETE',
     });
     return response.json();
+  }
+
+  activate(id: number, email: string): Promise<any> {
+    return fetch(this.serverPath + '/user', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify({ id, email, lang: this.store.language })
+    });
   }
 }

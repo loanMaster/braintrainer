@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import Userfront from '@userfront/core';
 import { isTokenValid } from 'stores/token.utils';
+import {UserService} from "src/shared-services/user.service";
 
 export interface IAuth {
   id: string | undefined;
@@ -24,6 +25,9 @@ export const useAuthStore = defineStore('auth', {
     },
     email(): string {
       return Userfront.user.email!;
+    },
+    userId(): number {
+      return Userfront.user.userId!;
     },
     isLoggedIn(): boolean {
       return (
@@ -92,19 +96,28 @@ export const useAuthStore = defineStore('auth', {
         body: JSON.stringify(payload),
       });
     },
-    async signup(options: {
+    async signupWithSSO(options: {
       method: string;
-      email?: string;
-      image?: string;
-      username?: string;
-      password?: string;
-      redirect?: boolean;
     }) {
       await Userfront.signup(options);
       if (!this._hasAccount) {
         this._hasAccount = true;
         localStorage.setItem('hasAccount', String(true));
       }
+    },
+    async signup(email: string, password: string): Promise<{ userId: number, error: any, message?: string }> {
+      const user = await fetch("https://api.userfront.com/v0/auth/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password, tenantId: userFrontTenant, data: { image: '/images/avatars/default_avatar.png' } })
+      });
+      if (!this._hasAccount) {
+        this._hasAccount = true;
+        localStorage.setItem('hasAccount', String(true));
+      }
+      return await user.json()
     },
     async refreshAccessToken() {
       try {

@@ -3,8 +3,9 @@
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
-      <div class="text-h5 col-6">{{ $t('auth.Profile') }}</div>
+      <div class="text-h5 col-6">{{ $t('auth[\'Your profile\']') }}</div>
       <div class="col-6 q-gutter-sm">
+        <div class="text-h6">{{ authStore.email }}</div>
         <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
         <q-btn-dropdown color="primary" size="xl" class="text-h1">
           <template v-slot:label>
@@ -70,7 +71,7 @@ import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { padNumber } from 'src/util/format-number';
 import { useQuasar } from 'quasar';
-import { AccountService } from 'src/shared-services/account.service';
+import { UserService } from 'src/shared-services/user.service';
 import { useI18n } from 'vue-i18n';
 
 const authStore = useAuthStore();
@@ -91,16 +92,30 @@ function onItemClick(avatar: string) {
   currentAvatar.value = avatar;
 }
 
-function saveChanges() {
+async function saveChanges() {
   isSending.value = true;
-  authStore.update(username.value!, currentAvatar.value!);
-  isSending.value = false;
-  $q.notify({
-    group: 'update-user',
-    message: 'Changes saved',
-    color: 'green',
-    timeout: 1000,
-  });
+  try {
+    await authStore.update(username.value!, currentAvatar.value!);
+    $q.notify({
+      group: 'update-user',
+      message: 'Changes saved',
+      color: 'green',
+      timeout: 1000,
+    });
+  } catch (error: any) {
+    if (error.response?.data?.message === 'Username exists') {
+      $q.notify({
+        group: 'update-user',
+        message: t('auth[\'error username exists\']'),
+        color: 'red',
+        timeout: 4000,
+      });
+    } else {
+      throw error
+    }
+  } finally {
+    isSending.value = false;
+  }
 }
 
 async function resetPassword() {
@@ -113,7 +128,7 @@ async function resetPassword() {
         "auth['You will shortly receive an email with a link to reset your password.']"
       ),
       color: 'green',
-      timeout: 1000,
+      timeout: 5000,
     });
     submitted.value = true;
   } catch (error: any) {
@@ -121,7 +136,7 @@ async function resetPassword() {
       group: 'reset-password',
       message: t('auth.An error occurred when sending the e-mail'),
       color: 'red',
-      timeout: 2000,
+      timeout: 5000,
     });
   }
   isSending.value = false;
@@ -139,7 +154,7 @@ async function deleteAccount() {
       label: t('No'),
     },
   }).onOk(async () => {
-    await new AccountService().deleteAccount();
+    await new UserService().deleteAccount();
     useAuthStore().logout({ redirect: true });
   });
 }

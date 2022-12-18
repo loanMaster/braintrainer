@@ -18,7 +18,6 @@ const router = useRouter()
 const { t } = useI18n()
 
 onBeforeMount(async () => {
-  await authStore.redirectIfLoggedIn();
   if (route.query.uuid && route.query.token) {
     // clear all cookies and reload due to firefox bug.
     if (document.cookie) {
@@ -34,7 +33,9 @@ onBeforeMount(async () => {
         method: 'link',
         uuid: route.query.uuid as string,
         token: route.query.token as string,
+        redirect: false
       });
+      router.push({ name: 'user-settings', params: { language: useAppStore().language }})
     } catch (error) {
       $q.notify({
         message: t(

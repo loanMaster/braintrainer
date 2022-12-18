@@ -6,7 +6,6 @@
   "author": "Incognito",
   "private": true,
   "scripts": {
-    "dev": "cross-env USER_FRONT_TENANT=demo1234 quasar dev",
     "lint": "eslint --fix --ext .js,.ts,.vue ./ ",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"

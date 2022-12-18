@@ -15,7 +15,7 @@ defineProps({
 });
 
 function login() {
-  authStore.signup({ method: 'google' });
+  authStore.signupWithSSO({ method: 'google' });
 }
 </script>
 

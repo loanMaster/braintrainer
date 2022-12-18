@@ -2,6 +2,7 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
+    <LoadingIndicator :showing="submitting" style="z-index: 1"/>
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" class="q-gutter-md" v-if="!signedUp">
         <div class="text-h5">{{ $t('auth.Sign up') }}</div>
@@ -54,12 +55,9 @@
         >
           {{ $t('auth.Sign up') }}
         </q-btn>
-        <div v-if="errormsg" test="signup-error-msg" class="text-red">
-          {{ errormsg }}
-        </div>
         <div class="text-right">
           {{ $t('auth.Already registered?') }}
-          <router-link :to="{ name: 'signin', params: { language } }">{{
+          <router-link :to="{ name: 'login', params: { language } }">{{
             $t('auth.Sign in here')
           }}</router-link>
         </div>
@@ -77,13 +75,18 @@
 
 <script setup lang="ts">
 import GoogleLoginButton from './GoogleLoginButton.vue';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { ref, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useAppStore } from 'stores/app-store';
+import {UserService} from "src/shared-services/user.service";
+import {useQuasar} from "quasar";
+import {useI18n} from "vue-i18n";
 
 const email = ref('');
+const $q = useQuasar()
+const {t} = useI18n()
 const password = ref('');
-const errormsg = ref('');
 const signedUp = ref(false);
 const submitting = ref(false);
 const showPassword = ref(false);
@@ -91,23 +94,39 @@ const showPassword = ref(false);
 const authStore = useAuthStore();
 
 async function submit() {
-  try {
-    errormsg.value = '';
     submitting.value = true;
-    await authStore.signup({
-      method: 'password',
-      email: email.value,
-      password: password.value,
-      username: '',
-      image: '/images/avatars/default_avatar.png',
-      redirect: false,
-    });
-    signedUp.value = true;
-  } catch (error: any) {
-    errormsg.value = error.message;
-  } finally {
-    submitting.value = false;
-  }
+    try {
+      const signUpResult = await authStore.signup(
+        email.value,
+        password.value,
+      );
+      if (signUpResult.error) {
+        throw signUpResult
+      }
+      const result = await new UserService().activate(signUpResult.userId, email.value)
+      if (!result.ok) {
+        throw result
+      }
+      signedUp.value = true;
+    } catch (error: any) {
+      if (error.message == 'Email exists') {
+        $q.notify({
+          group: 'signup',
+          message: t('auth[\'error email exists\']'),
+          color: 'red',
+          timeout: 4000,
+        });
+      } else {
+        $q.notify({
+          group: 'signup',
+          message: t('An error occurred'),
+          color: 'red',
+          timeout: 4000,
+        });
+      }
+    } finally {
+      submitting.value = false;
+    }
 }
 
 const language = computed(() => useAppStore().language);

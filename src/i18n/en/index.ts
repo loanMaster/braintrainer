@@ -1,4 +1,5 @@
 export default {
+  "An error occurred": "_",
   APP_NAME: 'BrainTunes',
   'Train again': '_',
   Practise: 'Train',
@@ -105,6 +106,8 @@ export default {
   'Memory exercises': 'Memory',
   Language: '_',
   auth: {
+    "error username exists": 'This usename is already taken',
+    "error email exists": "A user with this email address is already registered.",
     Logout: '_',
     Login: '_',
     'There was an error during login.':
@@ -132,7 +135,7 @@ export default {
     'Sign in here': '_',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
       '_',
-    Profile: '_',
+    'Your profile': '_',
     Account: '_',
     Picture: '_',
     'Save changes': '_',

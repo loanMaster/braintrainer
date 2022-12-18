@@ -32,13 +32,6 @@
           {{ errormsg }}
         </div>
       </q-form>
-      <div v-if="submitted" test="reset-password-success-msg">
-        {{
-          $t(
-            'auth.You will shortly receive an email with a link to reset your password.'
-          )
-        }}
-      </div>
     </q-card>
   </div>
 </template>
@@ -46,9 +39,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
+import {useQuasar} from "quasar";
+import {useI18n} from "vue-i18n";
 
 const authStore = useAuthStore();
 
+const $q = useQuasar()
+const { t } = useI18n()
 const email = ref('');
 const errormsg = ref('');
 const submitted = ref(false);
@@ -58,9 +55,23 @@ async function submit() {
   try {
     isSending.value = true;
     await authStore.sendResetLink(email.value);
+    $q.notify({
+      group: 'reset-password',
+      message: t(
+        "auth['You will shortly receive an email with a link to reset your password.']"
+      ),
+      color: 'green',
+      timeout: 5000,
+    });
     submitted.value = true;
   } catch (error: any) {
     isSending.value = false;
+    $q.notify({
+      group: 'reset-password',
+      message: t('auth.An error occurred when sending the e-mail'),
+      color: 'red',
+      timeout: 5000,
+    });
     errormsg.value = error.message;
   }
 }
