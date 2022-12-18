@@ -2,6 +2,7 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
+    <LoadingIndicator :showing="isSending" style="z-index: 1"/>
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
       <div class="text-h5 col-6">{{ $t('auth[\'Your profile\']') }}</div>
       <div class="col-6 q-gutter-sm">
@@ -73,6 +74,7 @@ import { padNumber } from 'src/util/format-number';
 import { useQuasar } from 'quasar';
 import { UserService } from 'src/shared-services/user.service';
 import { useI18n } from 'vue-i18n';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 
 const authStore = useAuthStore();
 const $q = useQuasar();
@@ -121,7 +123,10 @@ async function saveChanges() {
 async function resetPassword() {
   try {
     isSending.value = true;
-    await authStore.sendResetLink(authStore.email!);
+    const result = await new UserService().resetPassword(authStore.email)
+    if (!result.ok) {
+      throw result
+    }
     $q.notify({
       group: 'reset-password',
       message: t(

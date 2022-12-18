@@ -135,7 +135,7 @@ export default {
     'Password changed': 'Passwort geändert',
     'Sign up': 'Registrieren',
     'Sign up with email': 'Mit E-Mail registrieren',
-    'At least 8 characters': 'Mindestens 8 Buchstaben',
+    '16 characters OR at least 8 characters including a number and a letter': '16 Buchstaben oder mindestens 8 Buchstaben mit mindestens einer Ziffen',
     'Already registered?': 'Bereits registriert?',
     'Sign in here': 'Hier anmelden',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':

@@ -111,7 +111,12 @@ export const useAuthStore = defineStore('auth', {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email, password, tenantId: userFrontTenant, data: { image: '/images/avatars/default_avatar.png' } })
+        body: JSON.stringify({ email,
+          password,
+          options: { noSignupEmail: true },
+          tenantId: userFrontTenant,
+          data: { image: '/images/avatars/default_avatar.png' }
+        })
       });
       if (!this._hasAccount) {
         this._hasAccount = true;

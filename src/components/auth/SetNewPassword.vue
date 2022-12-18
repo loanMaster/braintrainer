@@ -1,7 +1,8 @@
 <template>
   <div class="full-width column justify-center items-center flex-1 q-px-sm">
+    <LoadingIndicator :showing="isSending" style="z-index: 1"/>
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit" class="q-gutter-md">
+      <q-form @submit="submit" class="q-gutter-md" v-if="!passwordReset">
         <div class="text-h5">{{ $t('Set new Password') }}</div>
 
         <q-input
@@ -14,7 +15,7 @@
           autocomplete="off"
           required
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+              (val && isValidPw(val)) || $t('auth.16 characters OR at least 8 characters including a number and a letter'),
           ]"
         >
           <template v-slot:append>
@@ -41,9 +42,16 @@
         >
         </q-input>
 
-        <q-btn color="primary" type="submit">{{ $t('Reset password') }} </q-btn>
-        <div v-if="passwordReset">{{ $t('Password changed') }}</div>
+        <q-btn color="primary" type="submit" :disable="isSending">{{ $t('Reset password') }} </q-btn>
       </q-form>
+
+      <div v-if="passwordReset" test="signup-success-msg" class="text-center">
+        {{
+        $t(
+        'auth[\'Password changed\']'
+        )
+        }}
+      </div>
     </q-card>
   </div>
 </template>
@@ -53,6 +61,7 @@ import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';
+import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 
 const $q = useQuasar();
 const password = ref('');
@@ -60,7 +69,17 @@ const passwordVerify = ref('');
 const passwordReset = ref(false);
 const authStore = useAuthStore();
 const route = useRoute();
+const isSending = ref(false)
 const showPassword = ref('');
+
+function isValidPw(pw: string) {
+  if (pw.length >= 16) {
+    return true;
+  } else if (pw.length < 8) {
+    return false
+  }
+  return (/\d/g).test(pw) && (/[a-zA-Z]/g).test(pw)
+}
 
 async function submit() {
   if (password.value !== passwordVerify.value) {
@@ -73,17 +92,12 @@ async function submit() {
     return;
   }
   try {
+    isSending.value = true
     await authStore.resetPassword({
       password: password.value,
       uuid: route.query.uuid,
       token: route.query.token,
       redirect: false,
-    });
-    $q.notify({
-      group: 'set-new-password',
-      message: 'Password was changed sucessfully',
-      color: 'green',
-      timeout: 2000,
     });
     passwordReset.value = true;
   } catch (error: any) {
@@ -94,5 +108,6 @@ async function submit() {
       timeout: 2000,
     });
   }
+  isSending.value = false
 }
 </script>

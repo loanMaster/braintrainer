@@ -130,7 +130,7 @@ export default {
     'Password changed': '_',
     'Sign up': '_',
     'Sign up with email': '_',
-    'At least 8 characters': '_',
+    '16 characters OR at least 8 characters including a number and a letter': '_',
     'Already registered?': '_',
     'Sign in here': '_',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':

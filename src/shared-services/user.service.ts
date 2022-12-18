@@ -18,11 +18,19 @@ export class UserService {
     return response.json();
   }
 
-  activate(id: number, email: string): Promise<any> {
+  activate(email: string): Promise<any> {
     return fetch(this.serverPath + '/user', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify({ id, email, lang: this.store.language })
+      body: JSON.stringify({ email, lang: this.store.language })
+    });
+  }
+
+  resetPassword(email: string): Promise<any> {
+    return fetch(this.serverPath + '/user/password-reset', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify({ email, lang: this.store.language })
     });
   }
 }

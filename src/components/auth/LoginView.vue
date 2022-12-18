@@ -4,7 +4,7 @@
   >
     <LoadingIndicator :showing="submitting" style="z-index: 1"/>
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
-      <q-form @submit="submit" v-if="showForm" class="q-gutter-md">
+      <q-form @submit="submit" class="q-gutter-md">
         <div class="text-h5">{{ $t('auth.Sign In') }}</div>
 
         <GoogleLoginButton :disable="submitting" />
@@ -89,7 +89,6 @@ import { useI18n } from 'vue-i18n';
 const $q = useQuasar();
 const email = ref('');
 const password = ref('');
-const showForm = ref(true);
 const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);

@@ -35,7 +35,7 @@
           required
           :rules="[
             (val) =>
-              (val && val.length >= 8) || $t('auth.At least 8 characters'),
+              (val && isValidPw(val)) || $t('auth.16 characters OR at least 8 characters including a number and a letter'),
           ]"
         >
           <template v-slot:append>
@@ -93,6 +93,15 @@ const showPassword = ref(false);
 
 const authStore = useAuthStore();
 
+function isValidPw(pw: string) {
+  if (pw.length >= 16) {
+    return true;
+  } else if (pw.length < 8) {
+    return false
+  }
+  return (/\d/g).test(pw) && (/[a-zA-Z]/g).test(pw)
+}
+
 async function submit() {
     submitting.value = true;
     try {
@@ -103,7 +112,7 @@ async function submit() {
       if (signUpResult.error) {
         throw signUpResult
       }
-      const result = await new UserService().activate(signUpResult.userId, email.value)
+      const result = await new UserService().activate(email.value)
       if (!result.ok) {
         throw result
       }
