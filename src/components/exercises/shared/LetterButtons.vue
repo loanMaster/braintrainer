@@ -2,6 +2,7 @@
   <div class="row q-gutter-sm justify-center">
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
       <q-btn
+        :data-test="'letter-button-' + label"
         color="primary"
         class="text-h5"
         @click="selectLetter(label, $event)"

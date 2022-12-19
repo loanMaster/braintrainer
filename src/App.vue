@@ -60,7 +60,7 @@ router.beforeEach(
       });
     } else {
       if (language && useAppStore().language !== language) {
-        useAppStore().setLanguage(i18n, language as string);
+        useAppStore().setLanguage(i18n, language as string, false);
       }
       next();
     }
@@ -80,9 +80,10 @@ router.afterEach(() => {
   $q.loading.hide();
 });
 
-store.$onAction(({ name, after }) => {
+store.$onAction(({ name, after, args }) => {
   after(() => {
-    if (name == 'setLanguage') {
+    console.log(args.join(', '))
+    if (name == 'setLanguage' && (args.length < 3 || args[2])) {
       const language = route.params.language;
       if (store.language !== language) {
         const withoutLangPath = (router.currentRoute.value.fullPath + '/')
