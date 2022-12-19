@@ -12,6 +12,7 @@
           >
             <q-card
               class="flex-1 cursor-pointer zoom-on-hover"
+              :data-testid="'card-' + exercise"
               @click="selectExercise(exercise)"
             >
               <q-card-section class="words-bg text-bold">
@@ -29,6 +30,7 @@
         <div class="row-sm column-xs q-col-gutter-lg">
           <div class="col-3 column" v-for="exercise in mathEx" :key="exercise">
             <q-card
+              :data-testid="'card-' + exercise"
               class="flex-1 cursor-pointer zoom-on-hover"
               @click="selectExercise(exercise)"
             >
@@ -51,6 +53,7 @@
             :key="exercise"
           >
             <q-card
+              :data-testid="'card-' + exercise"
               class="flex-1 cursor-pointer zoom-on-hover"
               @click="selectExercise(exercise)"
             >

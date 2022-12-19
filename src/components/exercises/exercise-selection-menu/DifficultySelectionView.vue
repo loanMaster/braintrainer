@@ -15,6 +15,7 @@
           <q-card class="flex-1 cursor-pointer zoom-on-hover text-center">
             <q-card-section
               class="text-bold"
+              :data-testid="'card-' + difficulty"
               :class="{
                 'bg-easy': difficulty === 'easy',
                 'bg-normal': difficulty === 'normal',

@@ -25,6 +25,7 @@
         <div class="flex-1 column">
           <q-btn
             @click="playAsGuest"
+            data-testid="continueAsGuestButton"
             :label="$t('Continue as guest')"
             class="self-center q-mb-md"
           ></q-btn>

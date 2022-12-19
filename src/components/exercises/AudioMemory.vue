@@ -1,5 +1,5 @@
 <template>
-  <div ref="buttons" class="row q-gutter-sm justify-center max-width-xs">
+  <div ref="buttons" class="row q-gutter-sm justify-center max-width-xs" data-testid="memory-buttons">
     <div
       v-for="(_, idx) in Array.from(
         Array(store.exercise.totalQuestions * 2).keys()
@@ -12,6 +12,7 @@
         class="transition-duration-md text-h5"
         :class="{ invisible: isSolved(idx) }"
         @click="buttonClick(idx, $event)"
+        :data-test="'button-' + buttonValue(idx)"
         :disabled="inputDisabled || isSolved(idx)"
         >🔉</q-btn
       >
@@ -130,6 +131,13 @@ function isSelected(idx: number) {
 
 function isSolved(idx: number) {
   return solved.value.indexOf(idx) > -1;
+}
+
+function buttonValue(buttonIndex: number) {
+  if (!permutation || !currentAudio[permutation[buttonIndex]]) {
+    return ''
+  }
+  return currentAudio[permutation[buttonIndex]].val
 }
 
 async function buttonClick(idx: number, $event: Event) {
