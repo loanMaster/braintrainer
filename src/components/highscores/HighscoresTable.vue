@@ -105,7 +105,6 @@ const props = defineProps({
 const { t } = useI18n();
 const router = useRouter();
 const store = useAppStore();
-const showLoadingIndicator = ref(true);
 
 const rows = computed(() => {
   if (!props.scores) {

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import Userfront from '@userfront/core';
 import { isTokenValid } from 'stores/token.utils';
-import { UserService } from 'src/shared-services/user.service';
 
 export interface IAuth {
   id: string | undefined;

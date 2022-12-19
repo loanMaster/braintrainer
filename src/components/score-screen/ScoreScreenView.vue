@@ -115,7 +115,7 @@ import StarsRating from 'src/components/shared/StarsRating.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { TweenService } from 'src/shared-services/tween.service';
-import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
+import { ref, computed, Ref, onMounted } from 'vue';
 import { useAppStore } from 'src/stores/app-store';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';

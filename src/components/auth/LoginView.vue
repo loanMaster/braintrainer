@@ -78,7 +78,6 @@
 
 <script setup lang="ts">
 import { ref, onBeforeMount, computed } from 'vue';
-import { useRoute } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
@@ -93,8 +92,6 @@ const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);
 const { t } = useI18n();
-
-const route = useRoute();
 
 onBeforeMount(async () => {
   await authStore.redirectIfLoggedIn();

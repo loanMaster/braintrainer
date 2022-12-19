@@ -41,9 +41,6 @@ import {
 } from 'src/const/games';
 
 const { t } = useI18n();
-const rows: Ref<any[]> = ref([]);
-const router = useRouter();
-const store = useAppStore();
 const showLoadingIndicator = ref(true);
 const highscores: Ref<HighScoreDto[]> = ref([]);
 
