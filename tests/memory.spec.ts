@@ -20,12 +20,12 @@ const solveMemory = async (page: Page, count: number) => {
   await page.waitForURL('http://localhost:9000/en/score-screen')
 }
 
-test('play memory', async ({ page }) => {
+test('train memory', async ({ page }) => {
   await navigateToGame(page, 'memory', 'easy')
   await solveMemory(page, 12)
 });
 
-test('play memory with animals', async ({ page }) => {
+test('train memory with animals', async ({ page }) => {
   await navigateToGame(page, 'memory-animals', 'hard')
   await solveMemory(page, 40)
 });

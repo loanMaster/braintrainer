@@ -1,10 +1,11 @@
 <template>
-  <div ref="buttons" class="row q-gutter-sm justify-center">
+  <div ref="buttons" class="row q-gutter-sm justify-center" data-testid="exercise-buttons">
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
       <q-btn
         color="primary"
         @click="selectWord(label, $event)"
         :disabled="inputDisabled"
+        :data-test="(solution === label) ? 'correct-button' : 'incorrect-button'"
         class="transition-duration-md"
         >{{ label }}</q-btn
       >
@@ -110,13 +111,13 @@ async function nextQuestion() {
     buttonLabels.value[idx] = alts[permutation[idx]];
   }
 
-  inputDisabled.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(buttons.value, 'flex');
     store.beginExercise();
   }
   await new TweenService().fadeIn(buttons.value);
-  playAudio(true);
+  await playAudio(true);
+  inputDisabled.value = false;
 }
 
 async function playAudio(measureTime = false) {
