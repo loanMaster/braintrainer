@@ -43,12 +43,14 @@
               dense
               no-wrap
               no-caps
+              data-testid="practise-nav-item"
               :label="$t('Practise')"
               class="text-white q-px-sm"
             />
           </router-link>
 
           <router-link
+            data-testid="player-scores-nav-item"
             :to="{
               name: 'player-scores',
               params: { language: store.language },
@@ -59,12 +61,14 @@
               dense
               no-wrap
               no-caps
+              data-testid="progress-nav-item"
               :label="$t('Progress')"
               class="text-white q-px-sm"
             />
           </router-link>
 
           <router-link
+            data-testid="user-settings-nav-item"
             :to="{
               name: 'user-settings',
               params: { language: store.language },
@@ -81,6 +85,7 @@
           </router-link>
 
           <router-link
+            data-testid="highscores-nav-item"
             :to="{ name: 'highscores', params: { language: store.language } }"
           >
             <q-btn
@@ -99,22 +104,41 @@
             flat
             dense
             @click="$q.fullscreen.toggle()"
+            data-testid="fullScreenToggle"
             :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
           />
           <q-toggle
             :modelValue="lightMode"
+            data-testid="darkModeToggle"
             @update:modelValue="toggleDarkMode($event)"
             checked-icon="light_mode"
             color="secondary"
             unchecked-icon="dark_mode"
           />
-          <q-btn flat round dense icon="language" class="q-mr-xs">
+          <q-btn
+            flat
+            round
+            dense
+            icon="language"
+            class="q-mr-xs"
+            data-testid="languageDropdown"
+          >
             <q-menu>
               <q-list dense style="min-width: 100px">
-                <q-item clickable v-close-popup @click="setLanguage('en')">
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="setLanguage('en')"
+                  data-testid="select-language-en"
+                >
                   <q-item-section>English</q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup @click="setLanguage('de')">
+                <q-item
+                  clickable
+                  v-close-popup
+                  @click="setLanguage('de')"
+                  data-testid="select-language-de"
+                >
                   <q-item-section>deutsch</q-item-section>
                 </q-item>
                 <q-item clickable v-close-popup @click="setLanguage('es')">
@@ -137,7 +161,7 @@
 
           <q-btn flat round v-if="isLoggedIn">
             <q-avatar>
-              <img :src="profileImage" />
+              <img :src="profileImage" data-testid="profile-picture" />
             </q-avatar>
             <q-menu>
               <q-list dense>

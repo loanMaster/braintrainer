@@ -8,7 +8,12 @@
       <div class="col-6 q-gutter-sm">
         <div class="text-h6">{{ authStore.email }}</div>
         <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
-        <q-btn-dropdown color="primary" size="xl" class="text-h1">
+        <q-btn-dropdown
+          color="primary"
+          size="xl"
+          class="text-h1"
+          data-testid="avatar-dropdown"
+        >
           <template v-slot:label>
             <q-avatar size="5rem">
               <img :src="currentAvatar" />
@@ -18,6 +23,7 @@
             <q-item
               clickable
               v-close-popup
+              :data-testid="'select-avatar-' + avatar"
               @click="onItemClick(avatar)"
               v-for="avatar in avatars"
               :key="avatar"
@@ -34,6 +40,7 @@
           <q-input
             filled
             v-model="username"
+            data-testid="username-input"
             :label="$t('Username')"
             type="text"
             lazy-rules
@@ -42,9 +49,13 @@
             ]"
           />
           <div class="col-6 q-mt-sm">
-            <q-btn color="primary" type="submit" :disable="isSending">{{
-              $t('auth.Save changes')
-            }}</q-btn>
+            <q-btn
+              color="primary"
+              type="submit"
+              :disable="isSending"
+              data-testid="save-user-settings"
+              >{{ $t('auth.Save changes') }}</q-btn
+            >
           </div>
         </q-form>
       </div>

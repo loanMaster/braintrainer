@@ -15,6 +15,7 @@
           v-model="email"
           test="login-email"
           :label="$t('auth.Email address')"
+          data-testid="email-input"
           type="email"
           lazy-rules
           :rules="[
@@ -28,6 +29,7 @@
           v-model="password"
           test="login-password"
           :label="$t('auth.Password')"
+          data-testid="password-input"
           lazy-rules
           :type="showPassword ? 'test' : 'password'"
           autocomplete="on"
@@ -51,6 +53,7 @@
             type="submit"
             test="login-submit"
             :disabled="submitting"
+            data-testid="submit"
             color="primary"
           >
             {{ $t('auth.Sign In') }}

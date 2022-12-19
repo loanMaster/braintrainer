@@ -25,6 +25,12 @@
             dense
             @click="play(props)"
             :icon="'play_arrow'"
+            :data-testid="
+              'train-' +
+              props.row.nameOfTheGameOri +
+              '-' +
+              props.row.difficultyOri
+            "
             class="q-mr-sm"
           />
         </q-td>

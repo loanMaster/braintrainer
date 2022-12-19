@@ -1,7 +1,11 @@
 <template>
   <div class="row flex-center relative-position flex-1">
     <LoadingIndicator :showing="showLoadingIndicator" />
-    <canvas ref="chart" style="max-width: 100%"></canvas>
+    <canvas
+      ref="chart"
+      style="max-width: 100%"
+      data-testid="progress-diagram"
+    ></canvas>
   </div>
 </template>
 LoadingIndicator

@@ -16,21 +16,33 @@
     </q-dialog>
 
     <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
-    <div class="words-table-header" v-if="languageScores.length > 0">
+    <div
+      class="words-table-header"
+      v-if="languageScores.length > 0"
+      data-testid="words-table"
+    >
       <div class="text-h5">{{ t('Language') }}</div>
       <PlayerScoresTable
         @show-progress-diagram="showProgress"
         :scores="languageScores"
       />
     </div>
-    <div class="math-table-header q-mt-md" v-if="mathScores.length > 0">
+    <div
+      class="math-table-header q-mt-md"
+      v-if="mathScores.length > 0"
+      data-testid="math-table"
+    >
       <div class="text-h5">{{ t('Maths') }}</div>
       <PlayerScoresTable
         @show-progress-diagram="showProgress"
         :scores="mathScores"
       />
     </div>
-    <div class="memory-table-header q-mt-md" v-if="memoryScores.length > 0">
+    <div
+      class="memory-table-header q-mt-md"
+      v-if="memoryScores.length > 0"
+      data-testid="memory-table"
+    >
       <div class="text-h5">{{ t('Memory exercises') }}</div>
       <PlayerScoresTable
         @show-progress-diagram="showProgress"

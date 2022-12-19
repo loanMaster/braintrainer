@@ -5,12 +5,20 @@
       <q-toolbar-title>🎉 {{ t('Highscores') }}</q-toolbar-title>
     </q-toolbar>
     <div class="flex-1 relative-position max-width-sm full-width q-my-sm">
-      <div class="words-table-header" v-if="languageHighscores.length > 0">
+      <div
+        class="words-table-header"
+        v-if="languageHighscores.length > 0"
+        data-testid="words-table"
+      >
         <div class="text-h5">{{ $t('Language') }}</div>
         <HighscoresTable :scores="languageHighscores" />
       </div>
 
-      <div class="math-table-header q-mt-md" v-if="mathHighscores.length > 0">
+      <div
+        class="math-table-header q-mt-md"
+        v-if="mathHighscores.length > 0"
+        data-testid="math-table"
+      >
         <div class="text-h5">{{ $t('Maths') }}</div>
         <HighscoresTable :scores="mathHighscores" color="math" />
       </div>
@@ -18,7 +26,9 @@
       <div
         class="memory-table-header q-mt-md"
         v-if="memoryHighscores.length > 0"
+        data-testid="memory-table"
       >
+        >
         <div class="text-h5">{{ $t('Memory exercises') }}</div>
         <HighscoresTable :scores="memoryHighscores" color="memory" />
       </div>

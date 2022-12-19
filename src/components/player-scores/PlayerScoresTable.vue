@@ -22,6 +22,12 @@
             size="md"
             color="primary"
             dense
+            :data-testid="
+              'train-' +
+              props.row.nameOfTheGameOri +
+              '-' +
+              props.row.difficultyOri
+            "
             @click="play(props)"
             :icon="'play_arrow'"
             class="q-mr-sm"
@@ -30,6 +36,12 @@
             size="md"
             color="primary"
             dense
+            :data-testid="
+              'showProgress-' +
+              props.row.nameOfTheGameOri +
+              '-' +
+              props.row.difficultyOri
+            "
             @click="showProgress(props)"
             :icon="'assessment'"
             class="q-ml-sm"
