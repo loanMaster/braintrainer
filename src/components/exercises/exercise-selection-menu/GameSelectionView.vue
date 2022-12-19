@@ -27,11 +27,7 @@
       <q-card class="exercise-block">
         <div class="exercise-title">{{ $t('Maths') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg">
-          <div
-            class="col-3 column"
-            v-for="exercise in mathEx"
-            :key="exercise"
-          >
+          <div class="col-3 column" v-for="exercise in mathEx" :key="exercise">
             <q-card
               class="flex-1 cursor-pointer zoom-on-hover"
               @click="selectExercise(exercise)"
@@ -79,7 +75,11 @@ import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
-import {languageExercises, mathExercises, memoryExercises} from "src/const/games";
+import {
+  languageExercises,
+  mathExercises,
+  memoryExercises,
+} from 'src/const/games';
 
 const { t } = useI18n();
 const router = useRouter();

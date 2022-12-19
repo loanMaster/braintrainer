@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex-1 max-width-sm full-width q-mx-sm q-my-sm"
-  >
+  <div class="flex-1 max-width-sm full-width q-mx-sm q-my-sm">
     <q-dialog v-model="showProgressDiagram">
       <q-card class="full-width">
         <div class="full-width q-pa-sm column no-wrap">
@@ -20,38 +18,54 @@
     <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
     <div class="words-table-header" v-if="languageScores.length > 0">
       <div class="text-h5">{{ t('Language') }}</div>
-      <PlayerScoresTable @show-progress-diagram="showProgress" :scores="languageScores"/>
+      <PlayerScoresTable
+        @show-progress-diagram="showProgress"
+        :scores="languageScores"
+      />
     </div>
     <div class="math-table-header q-mt-md" v-if="mathScores.length > 0">
       <div class="text-h5">{{ t('Maths') }}</div>
-      <PlayerScoresTable @show-progress-diagram="showProgress" :scores="mathScores"/>
+      <PlayerScoresTable
+        @show-progress-diagram="showProgress"
+        :scores="mathScores"
+      />
     </div>
     <div class="memory-table-header q-mt-md" v-if="memoryScores.length > 0">
       <div class="text-h5">{{ t('Memory exercises') }}</div>
-      <PlayerScoresTable @show-progress-diagram="showProgress" :scores="memoryScores"/>
+      <PlayerScoresTable
+        @show-progress-diagram="showProgress"
+        :scores="memoryScores"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {PercentileScore, ScoreService} from 'src/shared-services/score.service';
-import {ref, onMounted, Ref, computed} from 'vue';
+import {
+  PercentileScore,
+  ScoreService,
+} from 'src/shared-services/score.service';
+import { ref, onMounted, Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import PlayerScoresTable from './PlayerScoresTable.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
-import {languageExercises, mathExercises, memoryExercises} from "src/const/games";
+import {
+  languageExercises,
+  mathExercises,
+  memoryExercises,
+} from 'src/const/games';
 
 const { t } = useI18n();
 const showLoadingIndicator = ref(false);
 const router = useRouter();
 const store = useAppStore();
-const percentiles: Ref<PercentileScore[]> = ref([])
+const percentiles: Ref<PercentileScore[]> = ref([]);
 const nameOfTheGame = ref('');
 const difficulty = ref('easy');
-const showProgressDiagram = ref(false)
+const showProgressDiagram = ref(false);
 
 onMounted(async () => {
   showLoadingIndicator.value = true;
@@ -60,18 +74,24 @@ onMounted(async () => {
 });
 
 const languageScores = computed(() => {
-  return percentiles.value.filter(s => languageExercises.indexOf(s.nameOfTheGame) > -1)
-})
+  return percentiles.value.filter(
+    (s) => languageExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
 
 const mathScores = computed(() => {
-  return percentiles.value.filter(s => mathExercises.indexOf(s.nameOfTheGame) > -1)
-})
+  return percentiles.value.filter(
+    (s) => mathExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
 
 const memoryScores = computed(() => {
-  return percentiles.value.filter(s => memoryExercises.indexOf(s.nameOfTheGame) > -1)
-})
+  return percentiles.value.filter(
+    (s) => memoryExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
 
-function showProgress(props: { difficulty: string, game: string }) {
+function showProgress(props: { difficulty: string; game: string }) {
   difficulty.value = props.difficulty;
   nameOfTheGame.value = props.game;
   showProgressDiagram.value = true;

@@ -2,9 +2,9 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
-    <LoadingIndicator :showing="isSending" style="z-index: 1"/>
+    <LoadingIndicator :showing="isSending" style="z-index: 1" />
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
-      <div class="text-h5 col-6">{{ $t('auth[\'Your profile\']') }}</div>
+      <div class="text-h5 col-6">{{ $t("auth['Your profile']") }}</div>
       <div class="col-6 q-gutter-sm">
         <div class="text-h6">{{ authStore.email }}</div>
         <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
@@ -108,12 +108,12 @@ async function saveChanges() {
     if (error.response?.data?.message === 'Username exists') {
       $q.notify({
         group: 'update-user',
-        message: t('auth[\'error username exists\']'),
+        message: t("auth['error username exists']"),
         color: 'red',
         timeout: 4000,
       });
     } else {
-      throw error
+      throw error;
     }
   } finally {
     isSending.value = false;
@@ -123,9 +123,9 @@ async function saveChanges() {
 async function resetPassword() {
   try {
     isSending.value = true;
-    const result = await new UserService().resetPassword(authStore.email)
+    const result = await new UserService().resetPassword(authStore.email);
     if (!result.ok) {
-      throw result
+      throw result;
     }
     $q.notify({
       group: 'reset-password',

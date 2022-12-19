@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import Userfront from '@userfront/core';
 import { isTokenValid } from 'stores/token.utils';
-import {UserService} from "src/shared-services/user.service";
+import { UserService } from 'src/shared-services/user.service';
 
 export interface IAuth {
   id: string | undefined;
@@ -64,7 +64,7 @@ export const useAuthStore = defineStore('auth', {
       token?: string;
       emailOrUsername?: string;
       password?: string;
-      redirect?: boolean
+      redirect?: boolean;
     }) {
       await Userfront.login(options as any);
       if (!this._hasAccount) {
@@ -96,33 +96,35 @@ export const useAuthStore = defineStore('auth', {
         body: JSON.stringify(payload),
       });
     },
-    async signupWithSSO(options: {
-      method: string;
-    }) {
+    async signupWithSSO(options: { method: string }) {
       await Userfront.signup(options);
       if (!this._hasAccount) {
         this._hasAccount = true;
         localStorage.setItem('hasAccount', String(true));
       }
     },
-    async signup(email: string, password: string): Promise<{ userId: number, error: any, message?: string }> {
-      const user = await fetch("https://api.userfront.com/v0/auth/create", {
-        method: "POST",
+    async signup(
+      email: string,
+      password: string
+    ): Promise<{ userId: number; error: any; message?: string }> {
+      const user = await fetch('https://api.userfront.com/v0/auth/create', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email,
+        body: JSON.stringify({
+          email,
           password,
           options: { noSignupEmail: true },
           tenantId: userFrontTenant,
-          data: { image: '/images/avatars/default_avatar.png' }
-        })
+          data: { image: '/images/avatars/default_avatar.png' },
+        }),
       });
       if (!this._hasAccount) {
         this._hasAccount = true;
         localStorage.setItem('hasAccount', String(true));
       }
-      return await user.json()
+      return await user.json();
     },
     async refreshAccessToken() {
       try {

@@ -66,7 +66,7 @@ module.exports = configure(function (ctx) {
       env: {
         serverPath: ctx.dev
           ? 'http://localhost:3000'
-          : 'https://braintrainer.io'
+          : 'https://braintrainer.io',
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

@@ -1,5 +1,5 @@
 export default {
-  "An error occurred": "_",
+  'An error occurred': '_',
   APP_NAME: 'BrainTunes',
   'Train again': '_',
   Practise: 'Train',
@@ -48,31 +48,28 @@ export default {
   },
   'remember-numbers-rev': {
     title: 'Memorize numbers (backwards)',
-    description:
-      'Memorize the numbers and repeat them in reverse order',
+    description: 'Memorize the numbers and repeat them in reverse order',
     hint: 'Memorize the numbers and repeat them in reverse order.',
   },
   'remember-numbers': {
     title: 'Memorize numbers',
-    description:
-      'Memorize the numbers and put them in the correct order',
+    description: 'Memorize the numbers and put them in the correct order',
     hint: 'Memorize the numbers and put them in the correct order.',
   },
   'remember-words-rev': {
     title: 'Memorize words (backwards)',
-    description:
-      'Memorize the words and put them back in reverse order',
+    description: 'Memorize the words and put them back in reverse order',
     hint: 'Memorize the words and put them back in reverse order.',
   },
   'remember-words': {
     title: 'Memorize words',
-    description:
-      'Memorize the words and put them in the correct order',
+    description: 'Memorize the words and put them in the correct order',
     hint: 'Memorize the words and put them in the correct order.',
   },
   'math-marathon': {
     title: 'Math marathon',
-    description: 'Solve the arithmetic problems and note the intermediate result',
+    description:
+      'Solve the arithmetic problems and note the intermediate result',
     hint: 'Solve the arithmetic problems and note the intermediate result.',
   },
   'mental-arithmetic-mul': {
@@ -106,12 +103,12 @@ export default {
   'Memory exercises': 'Memory',
   Language: '_',
   auth: {
-    "error username exists": 'This usename is already taken',
-    "error email exists": "A user with this email address is already registered.",
+    'error username exists': 'This usename is already taken',
+    'error email exists':
+      'A user with this email address is already registered.',
     Logout: '_',
     Login: '_',
-    'There was an error during login.':
-      '_',
+    'There was an error during login.': '_',
     'There was an error during login. Please verify your e-mail address and password.':
       '_',
     'Email address': '_',
@@ -130,7 +127,8 @@ export default {
     'Password changed': '_',
     'Sign up': '_',
     'Sign up with email': '_',
-    '16 characters OR at least 8 characters including a number and a letter': '_',
+    '16 characters OR at least 8 characters including a number and a letter':
+      '_',
     'Already registered?': '_',
     'Sign in here': '_',
     'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
@@ -170,7 +168,8 @@ export default {
   'Try up to three exercises as guest before creating an account.': '_',
   'Train now': '_',
   'What is { APP_NAME }?': '_',
-  'What is_RESPONSE': '{ APP_NAME } is a brain-jogging app with audio exercises to improve your cognitive performance. With various exercises and challenges and personal progress reports, you will stay motivated and on track. Try it now and improve your brain power!',
+  'What is_RESPONSE':
+    '{ APP_NAME } is a brain-jogging app with audio exercises to improve your cognitive performance. With various exercises and challenges and personal progress reports, you will stay motivated and on track. Try it now and improve your brain power!',
   'What are the benefits of audio brain jogging?': '_',
   benefits_1: '-It strengthens memory',
   benefits_2: '-The exercises are varied',

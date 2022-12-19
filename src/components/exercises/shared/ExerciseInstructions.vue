@@ -10,7 +10,9 @@
       <q-separator dark />
 
       <q-card-actions class="justify-center">
-        <q-btn color="primary" @click="confirm" :disable="disabled">{{ $t('START') }}</q-btn>
+        <q-btn color="primary" @click="confirm" :disable="disabled">{{
+          $t('START')
+        }}</q-btn>
       </q-card-actions>
     </q-card>
   </div>
@@ -25,7 +27,7 @@ import { Subject } from 'rxjs';
 
 const emits = defineEmits(['confirm']);
 const route = useRoute();
-const disabled = ref(false)
+const disabled = ref(false);
 const destroy = new Subject<void>();
 
 onMounted(() => {
@@ -46,7 +48,7 @@ onBeforeUnmount(() => {
 });
 
 function confirm() {
-  disabled.value = true
+  disabled.value = true;
   emits('confirm');
 }
 const nameOfTheGame = computed(() => route.params.game);

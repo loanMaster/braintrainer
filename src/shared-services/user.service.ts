@@ -22,7 +22,7 @@ export class UserService {
     return fetch(this.serverPath + '/user', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify({ email, lang: this.store.language })
+      body: JSON.stringify({ email, lang: this.store.language }),
     });
   }
 
@@ -30,7 +30,7 @@ export class UserService {
     return fetch(this.serverPath + '/user/password-reset', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify({ email, lang: this.store.language })
+      body: JSON.stringify({ email, lang: this.store.language }),
     });
   }
 }

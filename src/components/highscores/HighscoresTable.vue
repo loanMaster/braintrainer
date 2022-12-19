@@ -58,9 +58,7 @@
                 <span>{{ props.row.playerName }}</span>
                 <q-avatar size="sm" class="q-ml-sm">
                   <img
-                    :src="
-                      props.row.image || '/images/avatars/avatar_00.jpg'
-                    "
+                    :src="props.row.image || '/images/avatars/avatar_00.jpg'"
                   />
                 </q-avatar>
               </div>
@@ -77,9 +75,7 @@
               <div>{{ $t('Date') }}</div>
               <div>
                 {{
-                  new Date(props.row.date).toLocaleDateString(
-                    store.language
-                  )
+                  new Date(props.row.date).toLocaleDateString(store.language)
                 }}
               </div>
             </div>
@@ -100,11 +96,11 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { formatScore } from 'src/util/format-number';
 import { useAppStore } from 'stores/app-store';
-import {HighScoreDto} from 'src/shared-services/score.service';
+import { HighScoreDto } from 'src/shared-services/score.service';
 
 const props = defineProps({
-  scores: Object
-})
+  scores: Object,
+});
 
 const { t } = useI18n();
 const router = useRouter();
@@ -113,9 +109,9 @@ const showLoadingIndicator = ref(true);
 
 const rows = computed(() => {
   if (!props.scores) {
-    return []
+    return [];
   }
-  const _rows: any[] = []
+  const _rows: any[] = [];
   props.scores.forEach((s: HighScoreDto) => {
     _rows.push({
       nameOfTheGame: t(s.nameOfTheGame + '.title'),
@@ -138,8 +134,8 @@ const rows = computed(() => {
     const byDiff = a.sortDiff < b.sortDiff ? -1 : 1;
     return byName !== 0 ? byName : byDiff;
   });
-  return _rows
-})
+  return _rows;
+});
 
 const columns = ref([
   {

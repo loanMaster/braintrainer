@@ -1,6 +1,6 @@
 <template>
   <div class="full-width column justify-center items-center flex-1 q-px-sm">
-    <LoadingIndicator :showing="isSending" style="z-index: 1"/>
+    <LoadingIndicator :showing="isSending" style="z-index: 1" />
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" class="q-gutter-md" v-if="!passwordReset">
         <div class="text-h5">{{ $t('Set new Password') }}</div>
@@ -15,7 +15,10 @@
           autocomplete="off"
           required
           :rules="[
-              (val && isValidPw(val)) || $t('auth.16 characters OR at least 8 characters including a number and a letter'),
+            (val && isValidPw(val)) ||
+              $t(
+                'auth.16 characters OR at least 8 characters including a number and a letter'
+              ),
           ]"
         >
           <template v-slot:append>
@@ -42,15 +45,13 @@
         >
         </q-input>
 
-        <q-btn color="primary" type="submit" :disable="isSending">{{ $t('Reset password') }} </q-btn>
+        <q-btn color="primary" type="submit" :disable="isSending"
+          >{{ $t('Reset password') }}
+        </q-btn>
       </q-form>
 
       <div v-if="passwordReset" test="signup-success-msg" class="text-center">
-        {{
-        $t(
-        'auth[\'Password changed\']'
-        )
-        }}
+        {{ $t("auth['Password changed']") }}
       </div>
     </q-card>
   </div>
@@ -69,16 +70,16 @@ const passwordVerify = ref('');
 const passwordReset = ref(false);
 const authStore = useAuthStore();
 const route = useRoute();
-const isSending = ref(false)
+const isSending = ref(false);
 const showPassword = ref('');
 
 function isValidPw(pw: string) {
   if (pw.length >= 16) {
     return true;
   } else if (pw.length < 8) {
-    return false
+    return false;
   }
-  return (/\d/g).test(pw) && (/[a-zA-Z]/g).test(pw)
+  return /\d/g.test(pw) && /[a-zA-Z]/g.test(pw);
 }
 
 async function submit() {
@@ -92,7 +93,7 @@ async function submit() {
     return;
   }
   try {
-    isSending.value = true
+    isSending.value = true;
     await authStore.resetPassword({
       password: password.value,
       uuid: route.query.uuid,
@@ -108,6 +109,6 @@ async function submit() {
       timeout: 2000,
     });
   }
-  isSending.value = false
+  isSending.value = false;
 }
 </script>

@@ -125,7 +125,7 @@ async function fetchNextExercise() {
   nextExercise.next(
     await new MathExerciseService().fetchEquation({
       difficulty,
-      lang: store.language
+      lang: store.language,
     })
   );
 }

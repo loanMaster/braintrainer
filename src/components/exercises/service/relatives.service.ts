@@ -218,7 +218,7 @@ export class RelativesService {
       if (nextRelation) {
         this.relations.push(nextRelation);
       } else {
-        return undefined
+        return undefined;
       }
     }
     return this.relations[depth];

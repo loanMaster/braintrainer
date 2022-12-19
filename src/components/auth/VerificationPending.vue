@@ -29,19 +29,19 @@
 import { ref, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useQuasar } from 'quasar';
-import {useI18n} from "vue-i18n";
-import {UserService} from "src/shared-services/user.service";
+import { useI18n } from 'vue-i18n';
+import { UserService } from 'src/shared-services/user.service';
 
 const $q = useQuasar();
-const {t} = useI18n()
+const { t } = useI18n();
 const authStore = useAuthStore();
 const emailSent = ref(false);
 const email = computed(() => authStore.email);
 
 async function sendVerificationEmail() {
-  const result = await new UserService().activate(email.value)
+  const result = await new UserService().activate(email.value);
   if (!result.ok) {
-    throw result
+    throw result;
   }
   if (result.error) {
     $q.notify({

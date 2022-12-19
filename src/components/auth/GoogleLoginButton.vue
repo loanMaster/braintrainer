@@ -1,5 +1,10 @@
 <template>
-  <q-btn test="google-login-submit" @click="login" :disable="disable" type="button">
+  <q-btn
+    test="google-login-submit"
+    @click="login"
+    :disable="disable"
+    type="button"
+  >
     <img src="/images/google.svg" />
     <span>Google</span>
   </q-btn>

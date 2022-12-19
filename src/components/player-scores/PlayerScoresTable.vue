@@ -110,13 +110,13 @@ const router = useRouter();
 const store = useAppStore();
 
 const props = defineProps({
-  scores: Array
-})
+  scores: Array,
+});
 
-const emits = defineEmits(['show-progress-diagram'])
+const emits = defineEmits(['show-progress-diagram']);
 
 const rows = computed(() => {
-  const _rows: any[] = []
+  const _rows: any[] = [];
   props.scores!.forEach((s: any) => {
     _rows.push({
       difficultyOri: s.difficulty,
@@ -138,7 +138,7 @@ const rows = computed(() => {
     return byName !== 0 ? byName : byDiff;
   });
   return _rows;
-})
+});
 
 const columns = ref([
   {
@@ -179,7 +179,10 @@ const columns = ref([
 ]);
 
 function showProgress(props: any) {
-  emits('show-progress-diagram', { difficulty:  props.row.difficultyOri, game: props.row.nameOfTheGameOri })
+  emits('show-progress-diagram', {
+    difficulty: props.row.difficultyOri,
+    game: props.row.nameOfTheGameOri,
+  });
 }
 
 function play(props: any) {

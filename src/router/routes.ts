@@ -45,8 +45,19 @@ const guestMaxPlayGuard = (
   }
 };
 
-const routes: RouteRecordRaw[] = [
+const exerciseFinishedGuard = (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  if (useAppStore().exercise.state !== 'finished') {
+    next({ name: 'home', params: { language: useAppStore().language } });
+  } else {
+    next();
+  }
+};
 
+const routes: RouteRecordRaw[] = [
   {
     path: '/:language(es|de|en)?',
     component: MainLayout,
@@ -233,6 +244,7 @@ const routes: RouteRecordRaw[] = [
         path: 'score-screen',
         name: 'score-screen',
         component: ScoreScreenView,
+        beforeEnter: exerciseFinishedGuard,
       },
       {
         path: 'highscores',

@@ -2,7 +2,7 @@
   <div
     class="bg-gradient full-width column justify-center items-center flex-1 q-px-sm"
   >
-    <LoadingIndicator :showing="submitting" style="z-index: 1"/>
+    <LoadingIndicator :showing="submitting" style="z-index: 1" />
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" class="q-gutter-md">
         <div class="text-h5">{{ $t('auth.Sign In') }}</div>

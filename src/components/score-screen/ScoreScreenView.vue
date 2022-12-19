@@ -116,7 +116,7 @@ import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { TweenService } from 'src/shared-services/tween.service';
 import { ref, computed, Ref, onMounted, onBeforeMount } from 'vue';
-import { newExercise, useAppStore } from 'src/stores/app-store';
+import { useAppStore } from 'src/stores/app-store';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
 import { formatScore } from 'src/util/format-number';
@@ -134,16 +134,6 @@ const percentile = computed(() =>
     ? formatScore(updateScoreResponse.value.percentile * 100, store.language)
     : 0
 );
-
-onBeforeMount(() => {
-  if (!store.exercise || store.exercise.score === undefined) {
-    store.$patch((store) => {
-      // TODO for debugging
-      store.exercise = newExercise('mental-arithmetic', 'easy', 10);
-      store.exercise.score = 50;
-    });
-  }
-});
 
 onMounted(async () => {
   new SoundService().playLevelFinished();

@@ -65,7 +65,8 @@ $memory-bg-color-dark: $pink-10;
 }
 
 .math-table-header {
-  & th, & .table-header {
+  & th,
+  & .table-header {
     background-color: $math-bg-color;
     .body--dark & {
       background-color: $math-bg-color-dark;
@@ -73,7 +74,8 @@ $memory-bg-color-dark: $pink-10;
   }
 }
 .memory-table-header {
-  & th, & .table-header {
+  & th,
+  & .table-header {
     background-color: $memory-bg-color;
     .body--dark & {
       background-color: $memory-bg-color-dark;
@@ -81,7 +83,8 @@ $memory-bg-color-dark: $pink-10;
   }
 }
 .words-table-header {
-  & th, & .table-header {
+  & th,
+  & .table-header {
     background-color: $words-bg-color;
     .body--dark & {
       background-color: $words-bg-color-dark;
