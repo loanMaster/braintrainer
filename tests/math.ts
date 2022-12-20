@@ -38,3 +38,9 @@ test('train math-marathon', async ({ page }) => {
   await solve(page, 15)
   await page.waitForURL('http://localhost:9000/de/score-screen')
 });
+
+test('train solve-equation', async ({ page }) => {
+  await navigateToGame(page, 'solve-equation', 'easy', 'de')
+  await solve(page, 5)
+  await page.waitForURL('http://localhost:9000/de/score-screen')
+});
