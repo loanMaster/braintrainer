@@ -13,9 +13,7 @@ test('train word-scramble', async ({ page }) => {
   for (let i = 0; i < 10; i++) {
     await expect(coreExercise).not.toHaveAttribute('data-test', previousSolution, { timeout: 10000 })
     const solution = await coreExercise.getAttribute('data-test') as string
-    console.log(solution)
     for (let j = 0; j < solution.length; j++) {
-      console.log(solution[j])
       await page.locator(`[data-test="letter-button-${solution[j]}"]:not([disabled])`).click()
     }
     previousSolution = solution
