@@ -5,7 +5,7 @@
     <LoadingIndicator :showing="submitting" style="z-index: 1" />
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" class="q-gutter-md">
-        <div class="text-h5">{{ $t('auth.Sign In') }}</div>
+        <div class="text-h5">{{ $t('auth.Sign in') }}</div>
 
         <GoogleLoginButton :disable="submitting" />
 
@@ -56,7 +56,7 @@
             data-testid="submit"
             color="primary"
           >
-            {{ $t('auth.Sign In') }}
+            {{ $t('auth.Sign in') }}
           </q-btn>
 
           <q-btn
