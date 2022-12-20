@@ -14,6 +14,7 @@
       </div>
       <div
         ref="buttons"
+        data-testid="exercise-buttons"
         class="max-width-xs row wrap justify-center q-gutter-sm"
       >
         <div
@@ -23,6 +24,7 @@
         >
           <q-btn
             color="primary"
+            :data-test="isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'"
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             class="transition-duration-md"
@@ -192,9 +194,13 @@ async function playAudio() {
   await soundService.playAll(currentTask.value!.audio, 100, true);
 }
 
+function isCorrectBtn(idx: number) {
+  return currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1
+}
+
 function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
-  if (currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1) {
+  if (isCorrectBtn(idx)) {
     inputDisabled.value = true;
     countdownTimer.value?.stop();
     store.$patch((store) => store.exercise.correctAnswers++);

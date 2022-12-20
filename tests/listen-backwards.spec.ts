@@ -1,5 +1,8 @@
 import {expect, Page, test} from '@playwright/test';
 import {navigateToGame} from "app/tests/pom/navigate-to-game.pom";
+import {listenForConsoleErrors} from "app/tests/listen-for-console-errors";
+
+test.beforeEach(listenForConsoleErrors)
 
 test('train listen-backwards', async ({ page }) => {
   await navigateToGame(page, 'listen-backwards', 'easy')

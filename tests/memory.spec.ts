@@ -1,5 +1,8 @@
 import {expect, Page, test} from '@playwright/test';
 import {navigateToGame} from "app/tests/pom/navigate-to-game.pom";
+import {listenForConsoleErrors} from "app/tests/listen-for-console-errors";
+
+test.beforeEach(listenForConsoleErrors)
 
 const solveMemory = async (page: Page, count: number) => {
   const buttonWrapper = await page.getByTestId('memory-buttons');

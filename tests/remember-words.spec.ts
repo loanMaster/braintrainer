@@ -1,5 +1,8 @@
 import {expect, Page, test} from '@playwright/test';
 import {navigateToGame} from "app/tests/pom/navigate-to-game.pom";
+import {listenForConsoleErrors} from "app/tests/listen-for-console-errors";
+
+test.beforeEach(listenForConsoleErrors)
 
 const solve = async (page: Page) => {
   const coreExercise = await page.getByTestId('core-exercise');
@@ -9,7 +12,6 @@ const solve = async (page: Page) => {
     await expect(coreExercise).not.toHaveAttribute('data-test', previousSolution, { timeout: 10000 })
     const solution = await coreExercise.getAttribute('data-test') as string
     const solutionWords = solution.split(' - ').map(s => s.trim())
-    console.log(solutionWords.join('|'))
     for (let j = 0; j < solutionWords.length; j++) {
       await page.locator(`[data-testid="button-${solutionWords[j]}"]:not([disabled])`).click()
     }
