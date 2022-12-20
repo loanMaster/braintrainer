@@ -122,7 +122,7 @@ export const useAppStore = defineStore('main', {
     },
   },
   actions: {
-    setLanguage(i18n: Composer<any>, lang: string, updateRoute = true) {
+    setLanguage(i18n: Composer<any>, lang: string, _ = true) {
       i18n.locale.value = lang;
       this._language = lang;
       localStorage.setItem('language', lang);

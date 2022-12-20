@@ -5,7 +5,7 @@
         color="primary"
         @click="selectWord(label, $event)"
         :disabled="inputDisabled"
-        :data-test="(solution === label) ? 'correct-button' : 'incorrect-button'"
+        :data-test="(isDev && solution === label) ? 'correct-button' : 'incorrect-button'"
         class="transition-duration-md"
         >{{ label }}</q-btn
       >
@@ -44,6 +44,7 @@ const {
   store,
   inputDisabled,
   onSolutionConfirmed,
+  isDev,
   route,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),

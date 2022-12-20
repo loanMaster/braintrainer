@@ -42,8 +42,6 @@ import { ref, onMounted, Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import HighscoresTable from './HighscoresTable.vue';
-import { useRouter } from 'vue-router';
-import { useAppStore } from 'stores/app-store';
 import {
   languageExercises,
   mathExercises,

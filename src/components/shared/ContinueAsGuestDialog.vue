@@ -10,20 +10,21 @@
         <div class="flex-1 column">
           <q-btn
             color="primary"
-            :label="$t('Sign up')"
+            :label="$t('auth.Sign up')"
             class="self-center q-mb-md"
             :to="{ name: 'signup', params: { language } }"
           ></q-btn>
           <q-btn
             color="primary"
-            :label="$t('Sign in')"
-            class="self-center q-mb-md"
+            :label="$t('auth.Sign in')"
+            class="self-center"
             :to="{ name: 'login', params: { language } }"
           ></q-btn>
         </div>
         <q-separator></q-separator>
         <div class="flex-1 column">
           <q-btn
+            color="primary"
             @click="playAsGuest"
             data-testid="continueAsGuestButton"
             :label="$t('Continue as guest')"

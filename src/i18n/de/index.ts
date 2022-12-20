@@ -122,7 +122,7 @@ export default {
       'Bei der Anmeldung ist ein Fehler aufgetreten. Bitte überprüfe Benutzername und Password',
     'Email address': 'E-Mail Adresse',
     'Sign in with email': 'Mit E-Mail anmelden',
-    'Sign In': 'Anmelden',
+    'Sign in': 'Anmelden',
     'No account? Sign up here!': 'Kein Benutzerkonto? Jetzt registrieren!',
     'Forgot your password?': 'Passwort vergessen?',
     'Reset Password': 'Passwort zurücksetzen',

@@ -24,7 +24,7 @@
         >
           <q-btn
             color="primary"
-            :data-test="isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'"
+            :data-test="isDev && isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'"
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             class="transition-duration-md"
@@ -59,6 +59,7 @@ const {
   soundService,
   revealed,
   t,
+  isDev,
   route,
   store,
   inputDisabled,

@@ -12,7 +12,6 @@ test('train find-relative', async ({ page }) => {
   for (let i = 0; i < 5; i++) {
     await expect(await buttonWrapper.locator('button:not([disabled])')).toHaveCount(5, { timeout: 10000 })
     const allCorrectButtons = await (await page.locator('[data-test="correct-button"]:not([disabled])').all())
-    console.log(allCorrectButtons.length)
     await allCorrectButtons[0].click()
   }
 

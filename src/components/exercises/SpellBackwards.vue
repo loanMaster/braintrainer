@@ -1,5 +1,5 @@
 <template>
-  <div ref="coreExercise" class="column items-center" :data-test="solution" data-testid="core-exercise">
+  <div ref="coreExercise" class="column items-center" :data-test="isDev && solution" data-testid="core-exercise">
     <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal" />
     <div class="q-my-md">
       <WordDisplay
@@ -49,6 +49,7 @@ const {
   soundService,
   revealed,
   destroy,
+  isDev,
   route,
   store,
   inputDisabled,

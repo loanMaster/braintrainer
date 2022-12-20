@@ -25,6 +25,7 @@ export function createExerciseContext({
   const inputDisabled = ref(true);
   const revealed = ref(false);
   const destroy = new Subject<void>();
+  const isDev = ref(dev)
 
   const difficulty = computed(() => {
     return route.params.difficulty;
@@ -70,7 +71,7 @@ export function createExerciseContext({
       filter((k) => k.key === 'Escape' || k.key === 'Enter'),
       takeUntil(destroy)
     )
-    .subscribe((key) => {
+    .subscribe(() => {
       if (revealed.value) {
         onSolutionConfirmed();
       }
@@ -86,6 +87,7 @@ export function createExerciseContext({
     route,
     onSolutionConfirmed,
     difficulty,
+    isDev,
     t,
   };
 }

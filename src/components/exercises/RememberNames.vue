@@ -42,7 +42,7 @@
             color="primary"
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
-            :data-test="isCorrectButton(idx) ? 'correct-button' : 'incorrect-button'"
+            :data-test="isDev && isCorrectButton(idx) ? 'correct-button' : 'incorrect-button'"
             class="transition-duration-md"
             >{{ label }}</q-btn
           >
@@ -81,6 +81,7 @@ const {
   revealed,
   route,
   store,
+  isDev,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({

@@ -113,7 +113,7 @@ export default {
       '_',
     'Email address': '_',
     'Sign in with email': '_',
-    'Sign In': '_',
+    'Sign in': '_',
     'No account? Sign up here!': '_',
     'Forgot your password?': '_',
     'Reset Password': '_',

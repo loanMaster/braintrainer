@@ -12,7 +12,7 @@
         class="transition-duration-md text-h5"
         :class="{ invisible: isSolved(idx) }"
         @click="buttonClick(idx, $event)"
-        :data-test="'button-' + buttonValue(idx)"
+        :data-test="isDev ? 'button-' + buttonValue(idx) : ''"
         :disabled="inputDisabled || isSolved(idx)"
         >🔉</q-btn
       >
@@ -38,7 +38,7 @@ import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 
-const { soundService, revealed, store, inputDisabled, difficulty } =
+const { soundService, revealed, store, inputDisabled, difficulty, isDev } =
   createExerciseContext({
     playAudioCb: () => playAudio(),
     nextQuestionCb: () => nextQuestion(),

@@ -1,5 +1,5 @@
 <template>
-  <div ref="numpadContainer" class="relative-position" data-testid="core-exercise" :data-test="currentExercise?.result">
+  <div ref="numpadContainer" class="relative-position" data-testid="core-exercise" :data-test="isDev && currentExercise?.result">
     <NumPadWithDisplay
       ref="numpad"
       :input-disabled="inputDisabled"
@@ -41,6 +41,7 @@ const {
   revealed,
   destroy,
   store,
+  isDev,
   inputDisabled,
   onSolutionConfirmed,
   route,
