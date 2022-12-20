@@ -1,5 +1,5 @@
 <template>
-  <div ref="numpad" class="relative-position">
+  <div ref="numpad" class="relative-position" :data-test="solution" data-testid="core-exercise">
     <NumPadWithDisplay
       :input-disabled="inputDisabled"
       :input-value="inputValue"
@@ -146,11 +146,5 @@ function reveal() {
   inputDisabled.value = true;
 }
 
-const solution = computed(() => {
-  let temp = inputValue.value;
-  for (let i = temp.length; i < sequenceLength.value; i++) {
-    temp += String(sequence.value[i]);
-  }
-  return temp;
-});
+const solution = computed(() => sequence.value.join(''));
 </script>

@@ -82,7 +82,6 @@ router.afterEach(() => {
 
 store.$onAction(({ name, after, args }) => {
   after(() => {
-    console.log(args.join(', '))
     if (name == 'setLanguage' && (args.length < 3 || args[2])) {
       const language = route.params.language;
       if (store.language !== language) {

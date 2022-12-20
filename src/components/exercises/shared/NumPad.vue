@@ -8,6 +8,7 @@
       <q-btn
         round
         push
+        :data-testid="'numpad-' + label"
         @click="buttonClick(idx, $event)"
         class="text-h5"
         :disabled="disabled"

@@ -1,10 +1,12 @@
 <template>
-  <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm">
+  <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm"
+       :data-test="solution" data-testid="core-exercise">
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
       <q-btn
         color="primary"
         :class="textTransparent ? 'text-transparent' : ''"
         @click="selectWord(idx, $event)"
+        :data-testid="'button-' + label"
         :disabled="isButtonDisabled(idx)"
         class="transition-duration-md"
         >{{ label }}</q-btn
