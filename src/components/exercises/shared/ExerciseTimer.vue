@@ -1,9 +1,10 @@
 <template>
   <span class="text-h6 non-selectable">{{ elapsedTimeFormatted }}</span
-  ><q-icon name="timer" tag="timer-outline" size="2rem"></q-icon>
+  ><q-icon :name="matTimer" tag="timer-outline" size="2rem"></q-icon>
 </template>
 
 <script setup lang="ts">
+import { matTimer } from '@quasar/extras/material-icons'
 import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useAppStore } from 'src/stores/app-store';
 import { Subject, takeUntil, interval } from 'rxjs';

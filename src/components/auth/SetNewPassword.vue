@@ -23,7 +23,7 @@
         >
           <template v-slot:append>
             <q-icon
-              :name="showPassword ? 'visibility' : 'visibility_off'"
+              :name="showPassword ? matVisibility : matVisibilityOff"
               class="cursor-pointer"
               @click="showPassword = !showPassword"
             />
@@ -58,6 +58,8 @@
 </template>
 
 <script setup lang="ts">
+import { matVisibility } from '@quasar/extras/material-icons'
+import { matVisibilityOff } from '@quasar/extras/material-icons'
 import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useRoute } from 'vue-router';

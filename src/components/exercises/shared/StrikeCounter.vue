@@ -3,11 +3,12 @@
     class="c-wrapper no-pointer-events row flex-center text-negative non-selectable"
   >
     <span>{{ store.exercise.totalStrikeCount }}</span
-    ><q-icon name="close" />
+    ><q-icon :name="matClose" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { matClose } from '@quasar/extras/material-icons'
 import { useAppStore } from 'stores/app-store';
 const store = useAppStore();
 </script>

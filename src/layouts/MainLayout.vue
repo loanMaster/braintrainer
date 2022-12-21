@@ -225,6 +225,7 @@
 </template>
 
 <script setup lang="ts">
+import { matHome, matFitnessCenter, matBarChart, matPerson, matEmojiEvents } from '@quasar/extras/material-icons'
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
@@ -278,11 +279,11 @@ function login() {
 const profileImage = computed(() => authStore.image);
 
 const links1 = ref([
-  { icon: 'home', text: 'Startseite', to: 'home' },
-  { icon: 'fitness_center', text: 'Üben', to: 'select-exercise' },
-  { icon: 'bar_chart', text: 'Fortschritt', to: 'player-scores' },
-  { icon: 'person', text: 'Benutzerprofil', to: 'user-settings' },
-  { icon: 'emoji_events', text: 'Highscores', to: 'highscores' },
+  { icon: matHome, text: 'Startseite', to: 'home' },
+  { icon: matFitnessCenter, text: 'Üben', to: 'select-exercise' },
+  { icon: matBarChart, text: 'Fortschritt', to: 'player-scores' },
+  { icon: matPerson, text: 'Benutzerprofil', to: 'user-settings' },
+  { icon: matEmojiEvents, text: 'Highscores', to: 'highscores' },
 ]);
 </script>
 
