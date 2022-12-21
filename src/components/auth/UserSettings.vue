@@ -11,6 +11,7 @@
         <q-btn-dropdown
           color="primary"
           size="xl"
+          dropdown-icon="none"
           class="text-h1"
           data-testid="avatar-dropdown"
         >
