@@ -10,9 +10,13 @@
       <q-separator dark />
 
       <q-card-actions class="justify-center">
-        <q-btn color="primary" @click="confirm" data-testid="confirm-exercise-instructions-btn" :disable="disabled">{{
-          $t('START')
-        }}</q-btn>
+        <q-btn
+          color="primary"
+          @click="confirm"
+          data-testid="confirm-exercise-instructions-btn"
+          :disable="disabled"
+          >{{ $t('START') }}</q-btn
+        >
       </q-card-actions>
     </q-card>
   </div>

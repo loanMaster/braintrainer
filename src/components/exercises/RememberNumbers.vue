@@ -1,5 +1,10 @@
 <template>
-  <div ref="numpad" class="relative-position" :data-test="isDev && solution" data-testid="core-exercise">
+  <div
+    ref="numpad"
+    class="relative-position"
+    :data-test="isDev && solution"
+    data-testid="core-exercise"
+  >
     <NumPadWithDisplay
       :input-disabled="inputDisabled"
       :input-value="inputValue"

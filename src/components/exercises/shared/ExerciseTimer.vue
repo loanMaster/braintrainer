@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { matTimer } from '@quasar/extras/material-icons'
+import { matTimer } from '@quasar/extras/material-icons';
 import { ref, onBeforeMount, onMounted, computed } from 'vue';
 import { useAppStore } from 'src/stores/app-store';
 import { Subject, takeUntil, interval } from 'rxjs';

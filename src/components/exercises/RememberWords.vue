@@ -1,6 +1,10 @@
 <template>
-  <div ref="buttons" class="max-width-xs row wrap justify-center q-gutter-sm"
-       :data-test="isDev && solution" data-testid="core-exercise">
+  <div
+    ref="buttons"
+    class="max-width-xs row wrap justify-center q-gutter-sm"
+    :data-test="isDev && solution"
+    data-testid="core-exercise"
+  >
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
       <q-btn
         color="primary"

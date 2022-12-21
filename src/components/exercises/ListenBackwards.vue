@@ -1,11 +1,17 @@
 <template>
-  <div ref="buttons" class="row q-gutter-sm justify-center" data-testid="exercise-buttons">
+  <div
+    ref="buttons"
+    class="row q-gutter-sm justify-center"
+    data-testid="exercise-buttons"
+  >
     <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
       <q-btn
         color="primary"
         @click="selectWord(label, $event)"
         :disabled="inputDisabled"
-        :data-test="(isDev && solution === label) ? 'correct-button' : 'incorrect-button'"
+        :data-test="
+          isDev && solution === label ? 'correct-button' : 'incorrect-button'
+        "
         class="transition-duration-md"
         >{{ label }}</q-btn
       >

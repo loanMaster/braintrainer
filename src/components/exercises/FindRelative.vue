@@ -24,7 +24,9 @@
         >
           <q-btn
             color="primary"
-            :data-test="isDev && isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'"
+            :data-test="
+              isDev && isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'
+            "
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             class="transition-duration-md"
@@ -196,7 +198,7 @@ async function playAudio() {
 }
 
 function isCorrectBtn(idx: number) {
-  return currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1
+  return currentTask.value!.solutions.indexOf(buttonOptions.value[idx]) > -1;
 }
 
 function selectWord(idx: number, $event: Event) {

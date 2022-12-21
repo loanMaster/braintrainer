@@ -5,11 +5,11 @@
       <QuestionNumberIndicator />
     </div>
     <div class="flex items-center">
-      <q-btn round color="primary" icon="pause" @click="pause" />
+      <q-btn round color="primary" :icon="matPause" @click="pause" />
       <q-btn
         round
         color="primary"
-        icon="volume_up"
+        :icon="matVolumeUp"
         class="q-ml-sm"
         @click="repeat"
       />
@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { matVolumeUp, matPause } from '@quasar/extras/material-icons';
 import StrikeCounter from './StrikeCounter.vue';
 import QuestionNumberIndicator from './QuestionNumberIndicator.vue';
 import { useAppStore } from 'stores/app-store';

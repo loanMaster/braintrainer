@@ -7,7 +7,7 @@
             dense
             flat
             round
-            icon="menu"
+            :icon="matMenu"
             @click="toggleLeftDrawer"
             class="mobile-only"
           />
@@ -105,21 +105,21 @@
             dense
             @click="$q.fullscreen.toggle()"
             data-testid="fullScreenToggle"
-            :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
+            :icon="$q.fullscreen.isActive ? matFullscreenExit : matFullscreen"
           />
           <q-toggle
             :modelValue="lightMode"
             data-testid="darkModeToggle"
             @update:modelValue="toggleDarkMode($event)"
-            checked-icon="light_mode"
+            :checked-icon="matLightMode"
             color="secondary"
-            unchecked-icon="dark_mode"
+            :unchecked-icon="matDarkMode"
           />
           <q-btn
             flat
             round
             dense
-            icon="language"
+            :icon="matLanguage"
             class="q-mr-xs"
             data-testid="languageDropdown"
           >
@@ -225,7 +225,18 @@
 </template>
 
 <script setup lang="ts">
-import { matHome, matFitnessCenter, matBarChart, matPerson, matEmojiEvents } from '@quasar/extras/material-icons'
+import {
+  matLightMode,
+  matDarkMode,
+  matLanguage,
+  matHome,
+  matFitnessCenter,
+  matBarChart,
+  matPerson,
+  matEmojiEvents,
+  matFullscreen,
+  matFullscreenExit,
+} from '@quasar/extras/material-icons';
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';

@@ -58,8 +58,8 @@
 </template>
 
 <script setup lang="ts">
-import { matVisibility } from '@quasar/extras/material-icons'
-import { matVisibilityOff } from '@quasar/extras/material-icons'
+import { matVisibility } from '@quasar/extras/material-icons';
+import { matVisibilityOff } from '@quasar/extras/material-icons';
 import { ref } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import { useRoute } from 'vue-router';

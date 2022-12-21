@@ -1,34 +1,42 @@
-import {expect, Page, test} from '@playwright/test';
-import {navigateToGame} from "app/tests/pom/navigate-to-game.pom";
-import {listenForConsoleErrors} from "app/tests/listen-for-console-errors";
+import { expect, Page, test } from '@playwright/test';
+import { navigateToGame } from 'app/tests/pom/navigate-to-game.pom';
+import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 
-test.beforeEach(listenForConsoleErrors)
+test.beforeEach(listenForConsoleErrors);
 
 const solveMemory = async (page: Page, count: number) => {
   const buttonWrapper = await page.getByTestId('memory-buttons');
-  await expect(await buttonWrapper.locator('button:not([disabled])')).toHaveCount(count, { timeout: 10000 })
+  await expect(
+    await buttonWrapper.locator('button:not([disabled])')
+  ).toHaveCount(count, { timeout: 10000 });
 
-  while (await (await buttonWrapper.locator('button:not([disabled])')).count() > 0) {
-    const allButtons = await (await buttonWrapper.locator('button:not([disabled])')).all()
-    const firstButton = allButtons[0]
+  while (
+    (await (await buttonWrapper.locator('button:not([disabled])')).count()) > 0
+  ) {
+    const allButtons = await (
+      await buttonWrapper.locator('button:not([disabled])')
+    ).all();
+    const firstButton = allButtons[0];
     await firstButton.click();
 
-    const testValue = await firstButton.getAttribute('data-test')
-    const matchingButtons = await (await buttonWrapper.locator(`[data-test="${testValue}"]`)).all()
-    const secondButton = matchingButtons[1]
-    await secondButton.click()
-    await new Promise(resolve => setTimeout(() => resolve(''), 250))
+    const testValue = await firstButton.getAttribute('data-test');
+    const matchingButtons = await (
+      await buttonWrapper.locator(`[data-test="${testValue}"]`)
+    ).all();
+    const secondButton = matchingButtons[1];
+    await secondButton.click();
+    await new Promise((resolve) => setTimeout(() => resolve(''), 250));
   }
 
-  await page.waitForURL('http://localhost:9000/en/score-screen')
-}
+  await page.waitForURL('http://localhost:9000/en/score-screen');
+};
 
 test('train memory', async ({ page }) => {
-  await navigateToGame(page, 'memory', 'easy')
-  await solveMemory(page, 12)
+  await navigateToGame(page, 'memory', 'easy');
+  await solveMemory(page, 12);
 });
 
 test('train memory with animals', async ({ page }) => {
-  await navigateToGame(page, 'memory-animals', 'hard')
-  await solveMemory(page, 40)
+  await navigateToGame(page, 'memory-animals', 'hard');
+  await solveMemory(page, 40);
 });

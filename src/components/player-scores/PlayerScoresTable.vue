@@ -29,7 +29,7 @@
               props.row.difficultyOri
             "
             @click="play(props)"
-            :icon="'play_arrow'"
+            :icon="matPlayArrow"
             class="q-mr-sm"
           />
           <q-btn
@@ -43,7 +43,7 @@
               props.row.difficultyOri
             "
             @click="showProgress(props)"
-            :icon="'assessment'"
+            :icon="matAssessment"
             class="q-ml-sm"
           />
         </q-td>
@@ -69,7 +69,7 @@
                 color="primary"
                 dense
                 @click="play(props)"
-                :icon="'play_arrow'"
+                :icon="matPlayArrow"
                 class="q-mr-sm"
               />
               <q-btn
@@ -77,7 +77,7 @@
                 color="primary"
                 dense
                 @click="showProgress(props)"
-                :icon="'assessment'"
+                :icon="matAssessment"
                 class="q-ml-sm"
               />
             </div>
@@ -115,6 +115,7 @@ import { useRouter } from 'vue-router';
 import { formatScore } from 'src/util/format-number';
 import { useAppStore } from 'stores/app-store';
 import { mapScoreToRating } from 'src/util/calculate-rating';
+import { matPlayArrow, matAssessment } from '@quasar/extras/material-icons';
 
 const { t } = useI18n();
 const showLoadingIndicator = ref(false);

@@ -16,6 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { matStar, matStarBorder } from '@quasar/extras/material-icons'
+import { matStar, matStarBorder } from '@quasar/extras/material-icons';
 defineProps({ rating: Number });
 </script>

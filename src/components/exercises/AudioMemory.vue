@@ -1,5 +1,9 @@
 <template>
-  <div ref="buttons" class="row q-gutter-sm justify-center max-width-xs" data-testid="memory-buttons">
+  <div
+    ref="buttons"
+    class="row q-gutter-sm justify-center max-width-xs"
+    data-testid="memory-buttons"
+  >
     <div
       v-for="(_, idx) in Array.from(
         Array(store.exercise.totalQuestions * 2).keys()
@@ -135,9 +139,9 @@ function isSolved(idx: number) {
 
 function buttonValue(buttonIndex: number) {
   if (!permutation || !currentAudio[permutation[buttonIndex]]) {
-    return ''
+    return '';
   }
-  return currentAudio[permutation[buttonIndex]].val
+  return currentAudio[permutation[buttonIndex]].val;
 }
 
 async function buttonClick(idx: number, $event: Event) {

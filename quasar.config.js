@@ -42,7 +42,6 @@ module.exports = configure(function (ctx) {
       // 'themify',
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
       // 'roboto-font', // optional, you are not bound to it
       // 'material-icons', // optional, you are not bound to it
     ],
@@ -67,7 +66,7 @@ module.exports = configure(function (ctx) {
         serverPath: ctx.dev
           ? 'http://localhost:3000'
           : 'https://braintrainer.io',
-        dev: ctx.dev
+        dev: ctx.dev,
       },
       // rawDefine: {}
       // ignorePublicFolder: true,

@@ -32,7 +32,11 @@
             {{ $t('Find the matching person') }}
           </div>
         </div>
-        <div class="q-pa-sm relative-position" :data-test="isDev ? solution : ''" data-testid="core-exercise">
+        <div
+          class="q-pa-sm relative-position"
+          :data-test="isDev ? solution : ''"
+          data-testid="core-exercise"
+        >
           <q-carousel swipeable animated v-model="slide" thumbnails infinite>
             <q-carousel-slide
               v-for="person in options"

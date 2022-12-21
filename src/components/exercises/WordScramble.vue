@@ -1,5 +1,10 @@
 <template>
-  <div ref="coreExercise" class="column items-center" data-testid="core-exercise" :data-test="isDev && getMatchingAnagram()">
+  <div
+    ref="coreExercise"
+    class="column items-center"
+    data-testid="core-exercise"
+    :data-test="isDev && getMatchingAnagram()"
+  >
     <SpeechBubble
       :show="store.exercise.audioState.playingSequence"
       :text="store.exercise.audioState.meta.text"

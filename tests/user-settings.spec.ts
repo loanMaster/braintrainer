@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { login } from 'app/tests/pom/login.pom';
-import {listenForConsoleErrors} from "app/tests/listen-for-console-errors";
+import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 
-test.beforeEach(listenForConsoleErrors)
+test.beforeEach(listenForConsoleErrors);
 
 test('change username and avatar', async ({ page }) => {
   await login(page);

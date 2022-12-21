@@ -80,8 +80,8 @@
 </template>
 
 <script setup lang="ts">
-import { matVisibility } from '@quasar/extras/material-icons'
-import { matVisibilityOff } from '@quasar/extras/material-icons'
+import { matVisibility } from '@quasar/extras/material-icons';
+import { matVisibilityOff } from '@quasar/extras/material-icons';
 import { ref, onBeforeMount, computed } from 'vue';
 import { useAuthStore } from 'stores/auth-store';
 import GoogleLoginButton from './GoogleLoginButton.vue';

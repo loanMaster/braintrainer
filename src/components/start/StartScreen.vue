@@ -16,7 +16,7 @@
           color="secondary"
           rounded
           size="xl"
-          icon="double_arrow"
+          :icon="matDoubleArrow"
           :to="{
             name: 'select-exercise',
             params: { language: store.language },
@@ -108,7 +108,7 @@
           color="primary"
           rounded
           size="xl"
-          icon="double_arrow"
+          :icon="matDoubleArrow"
           class="q-mb-lg"
           :to="{
             name: 'select-exercise',
@@ -140,6 +140,7 @@
 </template>
 
 <script setup lang="ts">
+import { matDoubleArrow } from '@quasar/extras/material-icons';
 import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
 import { useI18n } from 'vue-i18n';

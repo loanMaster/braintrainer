@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { matClose } from '@quasar/extras/material-icons'
+import { matClose } from '@quasar/extras/material-icons';
 import { useAppStore } from 'stores/app-store';
 const store = useAppStore();
 </script>

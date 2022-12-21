@@ -24,7 +24,7 @@
             color="primary"
             dense
             @click="play(props)"
-            :icon="'play_arrow'"
+            :icon="matPlayArrow"
             :data-testid="
               'train-' +
               props.row.nameOfTheGameOri +
@@ -53,7 +53,7 @@
               color="primary"
               dense
               @click="play(props)"
-              :icon="'play_arrow'"
+              :icon="matPlayArrow"
             />
           </q-card-section>
           <q-separator />
@@ -97,6 +97,7 @@
 </template>
 
 <script setup lang="ts">
+import { matPlayArrow } from '@quasar/extras/material-icons';
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';

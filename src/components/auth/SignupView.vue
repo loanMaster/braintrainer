@@ -77,8 +77,8 @@
 </template>
 
 <script setup lang="ts">
-import { matVisibility } from '@quasar/extras/material-icons'
-import { matVisibilityOff } from '@quasar/extras/material-icons'
+import { matVisibility } from '@quasar/extras/material-icons';
+import { matVisibilityOff } from '@quasar/extras/material-icons';
 import GoogleLoginButton from './GoogleLoginButton.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { ref, computed } from 'vue';

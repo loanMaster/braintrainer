@@ -36,13 +36,21 @@
           <img :src="currentImage" class="q-pa-sm" ref="imageToGuess" />
         </q-card>
       </div>
-      <div ref="buttons" class="row q-gutter-sm justify-center" data-testid="exercise-buttons">
+      <div
+        ref="buttons"
+        class="row q-gutter-sm justify-center"
+        data-testid="exercise-buttons"
+      >
         <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
           <q-btn
             color="primary"
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
-            :data-test="isDev && isCorrectButton(idx) ? 'correct-button' : 'incorrect-button'"
+            :data-test="
+              isDev && isCorrectButton(idx)
+                ? 'correct-button'
+                : 'incorrect-button'
+            "
             class="transition-duration-md"
             >{{ label }}</q-btn
           >
@@ -189,7 +197,7 @@ async function playAudio() {
 }
 
 function isCorrectButton(idx: number) {
-  return personToGuess.value!.name === buttonLabels.value[idx]
+  return personToGuess.value!.name === buttonLabels.value[idx];
 }
 
 function selectWord(idx: number, $event: Event) {
