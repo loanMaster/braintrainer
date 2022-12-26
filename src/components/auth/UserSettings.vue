@@ -112,7 +112,7 @@ async function saveChanges() {
     await authStore.update(username.value!, currentAvatar.value!);
     $q.notify({
       group: 'update-user',
-      message: 'Changes saved',
+      message: t('Changes saved'),
       color: 'green',
       timeout: 1000,
     });

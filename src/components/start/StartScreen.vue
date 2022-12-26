@@ -61,7 +61,7 @@
         <div class="col-8 text-center q-mb-xs-md">
           <div class="q-ma-lg">
             <div class="text-h4">
-              Welche Vorteile bietet Gerhinjogging mit Audio?
+              {{ $t('What are the benefits of audio brain jogging?') }}
             </div>
             <div class="text-h6 text-justify">
               {{ $t('benefits_1') }}<br />

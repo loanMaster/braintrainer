@@ -110,6 +110,7 @@ export default {
   Maths: 'Mathe',
   'Memory exercises': 'Gedächtnis',
   Language: 'Sprache',
+  'Changes saved': 'Änderungen gespeichert',
   auth: {
     'error username exists': 'Dieser Benutzername ist bereits vergeben',
     'error email exists':

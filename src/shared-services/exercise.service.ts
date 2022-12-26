@@ -46,6 +46,13 @@ export interface NumberRequest {
   count: number;
 }
 
+export interface WordGroupResponse {
+  audio: {
+     val: string, audio: string
+  }[];
+  words: string[]
+}
+
 export interface AudioResponse {
   audio: string;
   val: string | number;
@@ -59,6 +66,16 @@ export interface AnagramResponse {
 export class ExerciseService {
   get serverPath() {
     return serverPath || '';
+  }
+
+
+  async fetchWordGroup(req: { lang: string, minLength: number, maxLength: number, includeWordList: boolean }): Promise<WordGroupResponse> {
+    const response = await fetch(this.serverPath + '/speech/word-group', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify(req),
+    });
+    return response.json();
   }
 
   async fetchRandomWords(randomWord: RandomWord): Promise<AudioResponse[]> {

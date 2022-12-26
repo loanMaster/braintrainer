@@ -150,22 +150,19 @@ const columns = ref([
     label: t('Exercise'),
     align: 'left',
     field: 'nameOfTheGame',
-    sortable: true,
   },
   {
     name: 'difficulty',
     align: 'left',
     label: t('Difficulty'),
     field: 'difficulty',
-    sortable: true,
   },
-  { name: 'playerName', label: t('User'), field: 'playerName', sortable: true },
+  { name: 'playerName', label: t('User'), field: 'playerName' },
   {
     name: 'image',
     label: t('Avatar'),
     field: 'image',
     align: 'left',
-    sortable: true,
   },
   {
     name: 'score',

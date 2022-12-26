@@ -28,7 +28,6 @@
         v-if="memoryHighscores.length > 0"
         data-testid="memory-table"
       >
-        >
         <div class="text-h5">{{ $t('Memory exercises') }}</div>
         <HighscoresTable :scores="memoryHighscores" color="memory" />
       </div>

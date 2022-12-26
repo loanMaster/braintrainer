@@ -160,20 +160,17 @@ const columns = ref([
     label: t('Exercise'),
     align: 'left',
     field: 'nameOfTheGame',
-    sortable: true,
   },
   {
     name: 'difficulty',
     align: 'left',
     label: t('Difficulty'),
     field: 'difficulty',
-    sortable: true,
   },
   {
     name: 'score',
     label: t('Rating'),
     field: 'score',
-    sortable: true,
     format: (val: number) => formatScore(val, store.language),
   },
   {
@@ -181,7 +178,6 @@ const columns = ref([
     label: t('Stars'),
     field: 'stars',
     align: 'center',
-    sortable: true,
   },
   {
     name: 'percentile',

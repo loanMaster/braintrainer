@@ -226,6 +226,7 @@
 
 <script setup lang="ts">
 import {
+  matMenu,
   matLightMode,
   matDarkMode,
   matLanguage,

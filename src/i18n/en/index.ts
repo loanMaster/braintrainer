@@ -102,6 +102,7 @@ export default {
   Maths: '_',
   'Memory exercises': 'Memory',
   Language: '_',
+  'Changes saved': '-',
   auth: {
     'error username exists': 'This usename is already taken',
     'error email exists':
@@ -182,9 +183,7 @@ export default {
   easy: 'Beginner',
   normal: 'Intermediate',
   hard: 'Expert',
-
   Resume: 'Resume',
-
   LANGUAGE_CODE: 'en',
   'Train your brain': 'Train your brain',
   'Only use your head': 'Only use your head',
