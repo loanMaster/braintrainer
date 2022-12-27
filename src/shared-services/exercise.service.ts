@@ -48,9 +48,10 @@ export interface NumberRequest {
 
 export interface WordGroupResponse {
   audio: {
-     val: string, audio: string
+    val: string;
+    audio: string;
   }[];
-  words: string[]
+  words: string[];
 }
 
 export interface AudioResponse {
@@ -68,8 +69,12 @@ export class ExerciseService {
     return serverPath || '';
   }
 
-
-  async fetchWordGroup(req: { lang: string, minLength: number, maxLength: number, includeWordList: boolean }): Promise<WordGroupResponse> {
+  async fetchWordGroup(req: {
+    lang: string;
+    minLength: number;
+    maxLength: number;
+    includeWordList: boolean;
+  }): Promise<WordGroupResponse> {
     const response = await fetch(this.serverPath + '/speech/word-group', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',

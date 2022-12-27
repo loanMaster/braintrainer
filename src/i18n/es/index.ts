@@ -1,185 +1,206 @@
 export default {
-  "An error occurred": "Se ha producido un error",
-  "APP_NAME": "BrainTunes",
-  "Train again": "Entrenar otra vez",
-  "Practise": "Elaborar",
-  "Progress": "Progreso",
-  "User profile": "Perfil del usuario",
-  "Username": "Nombre de usuario",
-  "LANGUAGE": "Alemán",
-  "keys": "es",
-  "Yes": "Sí",
-  "No": "no",
-  "solve-equation": {
-    "title": "Resolver ecuaciones",
-    "description": "Memoriza la ecuación y resuelve para x.",
-    "hint": "Memoriza la ecuación y resuelve para x."
+  'An error occurred': 'Se ha producido un error',
+  APP_NAME: 'BrainTunes',
+  'Train again': 'Entrenar otra vez',
+  Practise: 'Elaborar',
+  Progress: 'Progreso',
+  'User profile': 'Perfil del usuario',
+  Username: 'Nombre de usuario',
+  LANGUAGE: 'Alemán',
+  keys: 'es',
+  Yes: 'Sí',
+  No: 'no',
+  'solve-equation': {
+    title: 'Resolver ecuaciones',
+    description: 'Memoriza la ecuación y resuelve para x.',
+    hint: 'Memoriza la ecuación y resuelve para x.',
   },
-  "find-relative": {
-    "title": "Determinar el parentesco",
-    "description": "¿Puede averiguar cómo la persona descrita está relacionada con usted?",
-    "hint": "Escucha cómo te relacionas con una persona. A continuación, seleccione la relación adecuada."
+  'find-relative': {
+    title: 'Determinar el parentesco',
+    description:
+      '¿Puede averiguar cómo la persona descrita está relacionada con usted?',
+    hint: 'Escucha cómo te relacionas con una persona. A continuación, seleccione la relación adecuada.',
   },
-  "word-scramble": {
-    "title": "Ensalada de palabras",
-    "description": "Formar una palabra a partir de las letras leídas.",
-    "hint": "Formar una palabra a partir de las letras leídas. Utilice ‹ss› en lugar de ‹ß›."
+  'word-scramble': {
+    title: 'Ensalada de palabras',
+    description: 'Formar una palabra a partir de las letras leídas.',
+    hint: 'Formar una palabra a partir de las letras leídas. Utilice ‹ss› en lugar de ‹ß›.',
   },
-  "memory-animals": {
-    "title": "Memoria - Animales",
-    "description": "Memoria con audio en lugar de imágenes. Solo hay animales.",
-    "hint": "Encuentra parejas que contengan las mismas palabras. El ejercicio funciona como la memoria ordinaria, solo con audio."
+  'memory-animals': {
+    title: 'Memoria - Animales',
+    description: 'Memoria con audio en lugar de imágenes. Solo hay animales.',
+    hint: 'Encuentra parejas que contengan las mismas palabras. El ejercicio funciona como la memoria ordinaria, solo con audio.',
   },
-  "memory": {
-    "title": "Memoria - mixta",
-    "description": "Memoria con audio en lugar de imágenes.",
-    "hint": "Encuentra parejas que contengan las mismas palabras. El ejercicio funciona como la memoria ordinaria, solo con audio."
+  memory: {
+    title: 'Memoria - mixta',
+    description: 'Memoria con audio en lugar de imágenes.',
+    hint: 'Encuentra parejas que contengan las mismas palabras. El ejercicio funciona como la memoria ordinaria, solo con audio.',
   },
-  "find-matching-person": {
-    "title": "Recuerda a la gente (II)",
-    "description": "Tenga en cuenta los nombres de las personas que se muestran y ponga una cara a los nombres.",
-    "hint": "Tenga en cuenta los nombres de las personas que se muestran. Luego, relaciona cada nombre con la persona adecuada."
+  'find-matching-person': {
+    title: 'Recuerda a la gente (II)',
+    description:
+      'Tenga en cuenta los nombres de las personas que se muestran y ponga una cara a los nombres.',
+    hint: 'Tenga en cuenta los nombres de las personas que se muestran. Luego, relaciona cada nombre con la persona adecuada.',
   },
-  "remember-names": {
-    "title": "Recuerda a la gente (I)",
-    "description": "Memoriza los nombres de las personas que se muestran y asigna nombres a las caras.",
-    "hint": "Tenga en cuenta los nombres de las personas que se muestran. Luego dé a cada persona el nombre apropiado."
+  'remember-names': {
+    title: 'Recuerda a la gente (I)',
+    description:
+      'Memoriza los nombres de las personas que se muestran y asigna nombres a las caras.',
+    hint: 'Tenga en cuenta los nombres de las personas que se muestran. Luego dé a cada persona el nombre apropiado.',
   },
-  "remember-numbers-rev": {
-    "title": "Memorizar números (al revés)",
-    "description": "Memoriza los números y repítelos en orden inverso.",
-    "hint": "Memoriza los números y repítelos en orden inverso."
+  'remember-numbers-rev': {
+    title: 'Memorizar números (al revés)',
+    description: 'Memoriza los números y repítelos en orden inverso.',
+    hint: 'Memoriza los números y repítelos en orden inverso.',
   },
-  "remember-numbers": {
-    "title": "Memorizar números",
-    "description": "Memoriza los números y colócalos en el orden correcto.",
-    "hint": "Memoriza los números y colócalos en el orden correcto."
+  'remember-numbers': {
+    title: 'Memorizar números',
+    description: 'Memoriza los números y colócalos en el orden correcto.',
+    hint: 'Memoriza los números y colócalos en el orden correcto.',
   },
-  "remember-words-rev": {
-    "title": "Memorizar palabras (al revés)",
-    "description": "Memoriza las palabras y vuelve a ponerlas en orden inverso.",
-    "hint": "Memoriza las palabras y vuelve a ponerlas en orden inverso."
+  'remember-words-rev': {
+    title: 'Memorizar palabras (al revés)',
+    description: 'Memoriza las palabras y vuelve a ponerlas en orden inverso.',
+    hint: 'Memoriza las palabras y vuelve a ponerlas en orden inverso.',
   },
-  "remember-words": {
-    "title": "Memorizar palabras",
-    "description": "Memoriza las palabras y ponlas en el orden correcto",
-    "hint": "Memoriza las palabras y colócalas en el orden correcto."
+  'remember-words': {
+    title: 'Memorizar palabras',
+    description: 'Memoriza las palabras y ponlas en el orden correcto',
+    hint: 'Memoriza las palabras y colócalas en el orden correcto.',
   },
-  "math-marathon": {
-    "title": "Maratón de matemáticas",
-    "description": "Resuelve los problemas aritméticos y recuerda el resultado intermedio.",
-    "hint": "Resuelve los problemas aritméticos y recuerda el resultado intermedio."
+  'math-marathon': {
+    title: 'Maratón de matemáticas',
+    description:
+      'Resuelve los problemas aritméticos y recuerda el resultado intermedio.',
+    hint: 'Resuelve los problemas aritméticos y recuerda el resultado intermedio.',
   },
-  "mental-arithmetic-mul": {
-    "title": "Aritmética mental (*/÷)",
-    "description": "Resuelve problemas de multiplicación/división en tu cabeza.",
-    "hint": "Resolver los problemas de matemáticas. Solo usa tu cabeza."
+  'mental-arithmetic-mul': {
+    title: 'Aritmética mental (*/÷)',
+    description: 'Resuelve problemas de multiplicación/división en tu cabeza.',
+    hint: 'Resolver los problemas de matemáticas. Solo usa tu cabeza.',
   },
-  "mental-arithmetic": {
-    "title": "Aritmética mental (+/-)",
-    "description": "Resuelve problemas con sumas/restas en tu cabeza.",
-    "hint": "Resolver los problemas de matemáticas. Solo usa tu cabeza."
+  'mental-arithmetic': {
+    title: 'Aritmética mental (+/-)',
+    description: 'Resuelve problemas con sumas/restas en tu cabeza.',
+    hint: 'Resolver los problemas de matemáticas. Solo usa tu cabeza.',
   },
-  "listen-backwards": {
-    "title": "Hablado al revés",
-    "description": "Averigua qué palabra se pronunció al revés.",
-    "hint": "Elige la palabra que se pronunció al revés."
+  'listen-backwards': {
+    title: 'Hablado al revés',
+    description: 'Averigua qué palabra se pronunció al revés.',
+    hint: 'Elige la palabra que se pronunció al revés.',
   },
-  "spell-backwards": {
-    "title": "Deletrear al revés",
-    "description": "Deletrear al revés",
-    "hint": "¡Deletrea al revés!"
+  'spell-backwards': {
+    title: 'Deletrear al revés',
+    description: 'Deletrear al revés',
+    hint: '¡Deletrea al revés!',
   },
-  "Press \"START\" when you are ready": "Haga clic en \"EMPEZAR\" cuando esté listo.",
-  "START": "EMPEZAR",
-  "The solution is": "La solucion es",
-  "Continue": "Continuar",
-  "Find the matching person": "Encuentra a la persona adecuada",
-  "Who is this person?": "¿Quién es esta persona?",
-  "Back": "Devolver",
-  "Maths": "Matemáticas",
-  "Memory exercises": "Memoria",
-  "Language": "Idioma",
+  'Press "START" when you are ready':
+    'Haga clic en "EMPEZAR" cuando esté listo.',
+  START: 'EMPEZAR',
+  'The solution is': 'La solucion es',
+  Continue: 'Continuar',
+  'Find the matching person': 'Encuentra a la persona adecuada',
+  'Who is this person?': '¿Quién es esta persona?',
+  Back: 'Devolver',
+  Maths: 'Matemáticas',
+  'Memory exercises': 'Memoria',
+  Language: 'Idioma',
   'Changes saved': 'Cambios guardados',
-  "auth": {
-    "error username exists": "Este nombre de usuario ya está en uso",
-    "error email exists": "Un usuario con esta dirección de correo electrónico ya está registrado",
-    "Logout": "Cerrar sesión",
-    "Login": "Ingresar",
-    "There was an error during login.": "Hubo un error al iniciar sesión.",
-    "There was an error during login. Please verify your e-mail address and password.": "Hubo un error al iniciar sesión. Por favor, compruebe el nombre de usuario y la contraseña.",
-    "Email address": "Dirección de correo electrónico",
-    "Sign in with email": "Ingresar con e-mail",
-    "Sign in": "Ingresar",
-    "No account? Sign up here!": "¿Sin cuenta de usuario? ¡Únete ahora!",
-    "Forgot your password?": "¿Has olvidado tu contraseña?",
-    "Reset Password": "Restablecer la contraseña",
-    "Delete account": "Eliminar cuenta de usuario",
-    "Are you sure that you want to delete your account? This action can not be undone.": "¿Realmente desea eliminar su cuenta de usuario? Esta acción no se puede deshacer.",
-    "You will shortly receive an email with a link to reset your password.": "En breve recibirá un correo electrónico para restablecer su contraseña.",
-    "Set new Password": "Establecer una nueva contraseña",
-    "Please type something": "Por favor escriba algo",
-    "Password changed": "Contraseña cambiada",
-    "Sign up": "Registrar",
-    "Sign up with email": "Registrarse con correo electrónico",
-    "16 characters OR at least 8 characters including a number and a letter": "16 letras o al menos 8 letras con al menos un dígito",
-    "Already registered?": "¿Ya registrado?",
-    "Sign in here": "Ingresar aquí",
-    "Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.": "Gracias por registrarte. En breve recibirá un correo electrónico de confirmación para activar su cuenta de usuario.",
-    "An error occurred when sending the e-mail": "Ocurrió un error al enviar el correo electrónico de confirmación.",
-    "Your profile": "Tu perfil",
-    "Account": "Cuenta de usuario",
-    "Picture": "Fotografía",
-    "Save changes": "Guardar cambios",
-    "Password": "Clave",
-    "Reset password": "Restablecer la contraseña",
-    "Email verification pending": "Tu dirección de correo electrónico aún no ha sido confirmada.",
-    "Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.": "Gracias por registrarte. Haga clic en el enlace del correo electrónico de confirmación enviado a {email}.",
-    "Resend verification email": "Reenviar correo electrónico de confirmación"
+  auth: {
+    'error username exists': 'Este nombre de usuario ya está en uso',
+    'error email exists':
+      'Un usuario con esta dirección de correo electrónico ya está registrado',
+    Logout: 'Cerrar sesión',
+    Login: 'Ingresar',
+    'There was an error during login.': 'Hubo un error al iniciar sesión.',
+    'There was an error during login. Please verify your e-mail address and password.':
+      'Hubo un error al iniciar sesión. Por favor, compruebe el nombre de usuario y la contraseña.',
+    'Email address': 'Dirección de correo electrónico',
+    'Sign in with email': 'Ingresar con e-mail',
+    'Sign in': 'Ingresar',
+    'No account? Sign up here!': '¿Sin cuenta de usuario? ¡Únete ahora!',
+    'Forgot your password?': '¿Has olvidado tu contraseña?',
+    'Reset Password': 'Restablecer la contraseña',
+    'Delete account': 'Eliminar cuenta de usuario',
+    'Are you sure that you want to delete your account? This action can not be undone.':
+      '¿Realmente desea eliminar su cuenta de usuario? Esta acción no se puede deshacer.',
+    'You will shortly receive an email with a link to reset your password.':
+      'En breve recibirá un correo electrónico para restablecer su contraseña.',
+    'Set new Password': 'Establecer una nueva contraseña',
+    'Please type something': 'Por favor escriba algo',
+    'Password changed': 'Contraseña cambiada',
+    'Sign up': 'Registrar',
+    'Sign up with email': 'Registrarse con correo electrónico',
+    '16 characters OR at least 8 characters including a number and a letter':
+      '16 letras o al menos 8 letras con al menos un dígito',
+    'Already registered?': '¿Ya registrado?',
+    'Sign in here': 'Ingresar aquí',
+    'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
+      'Gracias por registrarte. En breve recibirá un correo electrónico de confirmación para activar su cuenta de usuario.',
+    'An error occurred when sending the e-mail':
+      'Ocurrió un error al enviar el correo electrónico de confirmación.',
+    'Your profile': 'Tu perfil',
+    Account: 'Cuenta de usuario',
+    Picture: 'Fotografía',
+    'Save changes': 'Guardar cambios',
+    Password: 'Clave',
+    'Reset password': 'Restablecer la contraseña',
+    'Email verification pending':
+      'Tu dirección de correo electrónico aún no ha sido confirmada.',
+    'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':
+      'Gracias por registrarte. Haga clic en el enlace del correo electrónico de confirmación enviado a {email}.',
+    'Resend verification email': 'Reenviar correo electrónico de confirmación',
   },
-  "An error has occurred. Please refresh this site or try again later.": "Lo sentimos, ha ocurrido un error. Actualice la página o vuelva a intentarlo más tarde.",
-  "Exercise": "Ejercicio",
-  "Difficulty": "Dificultad",
-  "SPELLING_WARNING": "",
-  "User": "Usuario",
-  "Avatar": "Avatar",
-  "Rating": "Valuación",
-  "Date": "Fecha",
-  "Your rating": "Tu clasificación",
-  "Your ratings": "Tus calificaciones",
-  "Top % of users": "% superior de usuarios",
-  "Stars": "Estrellas",
-  "Exercise finished": "Ejercicio termino",
-  "Evaluation": "Evaluación",
-  "Solved": "Resuelto",
-  "Mistakes": "Error",
-  "Time required": "Tiempo necesario",
-  "You are in the top { percentile }% of users": "Estás entre el { percentile }% superior de los jugadores",
-  "New highscore": "🎉 Nueva puntuación más alta 🎉",
-  "Continue as guest": "Continuar como invitado",
-  "Try up to three exercises as guest before creating an account.": "Pruebe hasta tres ejercicios como invitado antes de registrarse.",
-  "Train now": "Entrenar ahora",
-  "What is { APP_NAME }?": "¿Qué es { APP_NAME }?",
-  "What is_RESPONSE": "{ APP_NAME } es una aplicación de entrenamiento mental con ejercicios de audio para mejorar tu rendimiento mental.\n            Con varios ejercicios y desafíos e informes de progreso personal, te mantienes motivado y en curso.\n                 ¡Pruébelo ahora y mejore su poder mental!",
-  "What are the benefits of audio brain jogging?": "¿Cuáles son las ventajas de Gerhinjogging con audio?",
-  "benefits_1": "-Fortalece la memoria",
-  "benefits_2": "-Los ejercicios son variados",
-  "benefits_3": "-Los ejercicios son útiles porque en la vida cotidiana a menudo tenemos que reaccionar a la información auditiva (por ejemplo, en una conversación)",
-  "How does { APP_NAME } work?": "¿Cómo funciona { APP_NAME }?",
-  "How does work_RESPONSE": "{ APP_NAME } ofrece una variedad de ejercicios diferentes para entrenar tu cerebro. Elige un ejercicio y elige un nivel de dificultad. Puedes practicar como invitado o registrarte con tu dirección de correo electrónico.",
-  "Select an exercise": "Elige un ejercicio",
-  "easy": "Principiante",
-  "normal": "Avanzado",
-  "hard": "Experto",
-  "Resume": "Cerrar",
-  "Select difficulty": "Elegir dificultad",
-  "LANGUAGE_CODE": "es",
-  "Highscores": "Puntuaciones altas",
-  "Application paused": "Rotura",
-  "Privacy": "Protección de Datos",
-  "Terms of service": "Términos de Uso",
-  "Cookies": "Uso de cookies",
-  "Legal notice": "Aviso legal",
+  'An error has occurred. Please refresh this site or try again later.':
+    'Lo sentimos, ha ocurrido un error. Actualice la página o vuelva a intentarlo más tarde.',
+  Exercise: 'Ejercicio',
+  Difficulty: 'Dificultad',
+  SPELLING_WARNING: '',
+  User: 'Usuario',
+  Avatar: 'Avatar',
+  Rating: 'Valuación',
+  Date: 'Fecha',
+  'Your rating': 'Tu clasificación',
+  'Your ratings': 'Tus calificaciones',
+  'Top % of users': '% superior de usuarios',
+  Stars: 'Estrellas',
+  'Exercise finished': 'Ejercicio termino',
+  Evaluation: 'Evaluación',
+  Solved: 'Resuelto',
+  Mistakes: 'Error',
+  'Time required': 'Tiempo necesario',
+  'You are in the top { percentile }% of users':
+    'Estás entre el { percentile }% superior de los jugadores',
+  'New highscore': '🎉 Nueva puntuación más alta 🎉',
+  'Continue as guest': 'Continuar como invitado',
+  'Try up to three exercises as guest before creating an account.':
+    'Pruebe hasta tres ejercicios como invitado antes de registrarse.',
+  'Train now': 'Entrenar ahora',
+  'What is { APP_NAME }?': '¿Qué es { APP_NAME }?',
+  'What is_RESPONSE':
+    '{ APP_NAME } es una aplicación de entrenamiento mental con ejercicios de audio para mejorar tu rendimiento mental.\n            Con varios ejercicios y desafíos e informes de progreso personal, te mantienes motivado y en curso.\n                 ¡Pruébelo ahora y mejore su poder mental!',
+  'What are the benefits of audio brain jogging?':
+    '¿Cuáles son las ventajas de Gerhinjogging con audio?',
+  benefits_1: '-Fortalece la memoria',
+  benefits_2: '-Los ejercicios son variados',
+  benefits_3:
+    '-Los ejercicios son útiles porque en la vida cotidiana a menudo tenemos que reaccionar a la información auditiva (por ejemplo, en una conversación)',
+  'How does { APP_NAME } work?': '¿Cómo funciona { APP_NAME }?',
+  'How does work_RESPONSE':
+    '{ APP_NAME } ofrece una variedad de ejercicios diferentes para entrenar tu cerebro. Elige un ejercicio y elige un nivel de dificultad. Puedes practicar como invitado o registrarte con tu dirección de correo electrónico.',
+  'Select an exercise': 'Elige un ejercicio',
+  easy: 'Principiante',
+  normal: 'Avanzado',
+  hard: 'Experto',
+  Resume: 'Cerrar',
+  'Select difficulty': 'Elegir dificultad',
+  LANGUAGE_CODE: 'es',
+  Highscores: 'Puntuaciones altas',
+  'Application paused': 'Rotura',
+  Privacy: 'Protección de Datos',
+  'Terms of service': 'Términos de Uso',
+  Cookies: 'Uso de cookies',
+  'Legal notice': 'Aviso legal',
   LEGAL_NOTICE:
     'Legal Notice<br/> ' +
     ' <br/> ' +

@@ -230,7 +230,7 @@ const routes: RouteRecordRaw[] = [
                 name: 'find-matching-person',
                 component: () =>
                   import('src/components/exercises/FindMatchingPerson.vue'),
-              }
+              },
             ],
           },
           {
