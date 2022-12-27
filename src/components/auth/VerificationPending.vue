@@ -54,7 +54,7 @@ async function sendVerificationEmail() {
     emailSent.value = true;
     $q.notify({
       group: 'send-verification-email',
-      message: 'Verification email sent',
+      message: t('auth.Verification email sent'),
       color: 'green',
       timeout: 2000,
     });

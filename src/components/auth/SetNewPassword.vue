@@ -3,7 +3,7 @@
     <LoadingIndicator :showing="isSending" style="z-index: 1" />
     <q-card class="q-pa-md max-width-xs full-width shadow-8">
       <q-form @submit="submit" class="q-gutter-md" v-if="!passwordReset">
-        <div class="text-h5">{{ $t('Set new Password') }}</div>
+        <div class="text-h5">{{ $t('auth.Set new Password') }}</div>
 
         <q-input
           filled
@@ -40,13 +40,14 @@
           autocomplete="off"
           required
           :rules="[
-            (val) => (val && val.length > 0) || $t('Please type something'),
+            (val) =>
+              (val && val.length > 0) || $t('auth.Please type something'),
           ]"
         >
         </q-input>
 
         <q-btn color="primary" type="submit" :disable="isSending"
-          >{{ $t('Reset password') }}
+          >{{ $t('auth.Reset password') }}
         </q-btn>
       </q-form>
 

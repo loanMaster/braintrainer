@@ -29,7 +29,7 @@ import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useRouter } from 'vue-router';
-import {preloadAudio} from "src/util/preload-assets";
+import { preloadAudio } from 'src/util/preload-assets';
 
 const {
   soundService,
@@ -80,9 +80,11 @@ onMounted(async () => {
 
   inputDisabled.value = true;
 
-  const preload = Array.from(new Array(10).keys()).map(k => `/sounds/${store.language}_${k}.mp3`)
-  console.log(preload)
-  preloadAudio(preload)
+  const preload = Array.from(new Array(10).keys()).map(
+    (k) => `/sounds/${store.language}_${k}.mp3`
+  );
+  console.log(preload);
+  preloadAudio(preload);
   new TweenService().setDisplay(numpad.value, 'none');
 });
 

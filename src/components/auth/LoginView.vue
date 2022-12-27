@@ -98,13 +98,13 @@ const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);
 const { t } = useI18n();
-const route = useRoute()
+const route = useRoute();
 
 onBeforeMount(async () => {
   await authStore.redirectIfLoggedIn();
   if (route.query.uuid && route.query.token) {
     try {
-      submitting.value = true
+      submitting.value = true;
       await authStore.login({
         method: 'link',
         uuid: route.query.uuid as string,
@@ -118,7 +118,7 @@ onBeforeMount(async () => {
         timeout: 30000,
       });
     } finally {
-      submitting.value = false
+      submitting.value = false;
     }
   }
 });

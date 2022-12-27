@@ -148,6 +148,7 @@ export default {
       '_',
     'Resend verification email': '_',
     'An error occurred when sending the e-mail': '_',
+    'Verification email sent': '_',
   },
   'An error has occurred. Please refresh this site or try again later.': '_',
   Exercise: '_',

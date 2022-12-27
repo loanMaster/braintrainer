@@ -114,7 +114,8 @@ export default {
   Language: 'Sprache',
   'Changes saved': 'Änderungen gespeichert',
   auth: {
-    'lower case letters and hyphens only': 'Nur Kleinbuchstaben und Bindestrich',
+    'lower case letters and hyphens only':
+      'Nur Kleinbuchstaben und Bindestrich',
     'error username exists': 'Dieser Benutzername ist bereits vergeben',
     'error email exists':
       'Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert',
@@ -148,6 +149,7 @@ export default {
       'Danke fürs Registrieren. Du erhälst in Kürze eine Bestätigungsemail, um dein Benutzerkonto zu aktivieren.',
     'An error occurred when sending the e-mail':
       'Beim Verschicken der Bestätigungsemail ist ein Fehler aufgetreten.',
+    'Verification email sent': 'Bestätigungsemail verschickt',
     'Your profile': 'Dein Profil',
     Account: 'Benutzerkonto',
     Picture: 'Bild',

@@ -109,7 +109,8 @@ export default {
   Language: 'Idioma',
   'Changes saved': 'Cambios guardados',
   auth: {
-    'lower case letters and hyphens only': 'Letras minúsculas y guiones solamente',
+    'lower case letters and hyphens only':
+      'Letras minúsculas y guiones solamente',
     'error username exists': 'Este nombre de usuario ya está en uso',
     'error email exists':
       'Un usuario con esta dirección de correo electrónico ya está registrado',
@@ -142,6 +143,7 @@ export default {
       'Gracias por registrarte. En breve recibirá un correo electrónico de confirmación para activar su cuenta de usuario.',
     'An error occurred when sending the e-mail':
       'Ocurrió un error al enviar el correo electrónico de confirmación.',
+    'Verification email sent': 'Correo de Confirmación Mandado',
     'Your profile': 'Tu perfil',
     Account: 'Cuenta de usuario',
     Picture: 'Fotografía',

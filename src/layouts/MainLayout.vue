@@ -249,7 +249,7 @@ const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
 const store = useAppStore();
-const { t } = useI18n()
+const { t } = useI18n();
 
 onMounted(() => {
   leftDrawerOpen.value = false;
