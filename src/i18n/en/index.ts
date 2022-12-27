@@ -3,6 +3,7 @@ export default {
   APP_NAME: 'BrainTunes',
   'Train again': '_',
   Practise: 'Train',
+  Home: 'Home',
   Progress: '_',
   'User profile': '_',
   Username: '_',

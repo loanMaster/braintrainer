@@ -6,7 +6,7 @@
       <div class="absolute-full half-transparent"></div>
       <MovingColorsBackground />
       <q-img
-        style="width: 280px"
+        style="max-width: 280px"
         src="/images/logo_transparent.png"
         spinner-color="white"
       />

@@ -19,7 +19,7 @@
               <q-avatar>
                 <img src="/images/logo_small.png" />
               </q-avatar>
-              {{ $t('APP_NAME') }}
+              <span class="xs-hide">{{ $t('APP_NAME') }}</span>
             </router-link>
           </q-toolbar-title>
         </div>
@@ -249,6 +249,7 @@ const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
 const store = useAppStore();
+const { t } = useI18n()
 
 onMounted(() => {
   leftDrawerOpen.value = false;
@@ -291,11 +292,11 @@ function login() {
 const profileImage = computed(() => authStore.image);
 
 const links1 = ref([
-  { icon: matHome, text: 'Startseite', to: 'home' },
-  { icon: matFitnessCenter, text: 'Üben', to: 'select-exercise' },
-  { icon: matBarChart, text: 'Fortschritt', to: 'player-scores' },
-  { icon: matPerson, text: 'Benutzerprofil', to: 'user-settings' },
-  { icon: matEmojiEvents, text: 'Highscores', to: 'highscores' },
+  { icon: matHome, text: t('Home'), to: 'home' },
+  { icon: matFitnessCenter, text: t('Practise'), to: 'select-exercise' },
+  { icon: matBarChart, text: t('Progress'), to: 'player-scores' },
+  { icon: matPerson, text: t('User profile'), to: 'user-settings' },
+  { icon: matEmojiEvents, text: t('Highscores'), to: 'highscores' },
 ]);
 </script>
 

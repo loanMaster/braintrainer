@@ -4,6 +4,7 @@ export default {
   'Train again': 'Entrenar otra vez',
   Practise: 'Elaborar',
   Progress: 'Progreso',
+  Home: 'Inicio',
   'User profile': 'Perfil del usuario',
   Username: 'Nombre de usuario',
   LANGUAGE: 'Alemán',
