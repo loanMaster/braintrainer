@@ -109,7 +109,7 @@ const countdownTimer = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions = 5;
+  const numberOfQuestions = 6;
   exerciseUtils.createExercise(numberOfQuestions);
 });
 
@@ -155,7 +155,7 @@ async function nextQuestion() {
   texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
 
   buttonOptions.value = [...task.solutions];
-  while (buttonOptions.value.length < 5) {
+  while (buttonOptions.value.length < 6) {
     const randomRelative = randomElement(relations);
     if (
       buttonOptions.value.indexOf(randomRelative) === -1 &&
