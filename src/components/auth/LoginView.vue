@@ -89,6 +89,7 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { useQuasar } from 'quasar';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const $q = useQuasar();
 const email = ref('');
@@ -97,9 +98,38 @@ const submitting = ref(false);
 const authStore = useAuthStore();
 const showPassword = ref(false);
 const { t } = useI18n();
+const route = useRoute()
 
 onBeforeMount(async () => {
   await authStore.redirectIfLoggedIn();
+  if (route.query.uuid && route.query.token) {
+    // clear all cookies and reload due to firefox bug.
+    if (document.cookie) {
+      document.cookie.split(';').forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, '')
+          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+        location.reload();
+      });
+    }
+    try {
+      submitting.value = true
+      await authStore.login({
+        method: 'link',
+        uuid: route.query.uuid as string,
+        token: route.query.token as string,
+        redirect: '/user-settings',
+      });
+    } catch (error) {
+      $q.notify({
+        message: t("auth['There was an error during login.']"),
+        color: 'red',
+        timeout: 30000,
+      });
+    } finally {
+      submitting.value = false
+    }
+  }
 });
 
 const language = computed(() => {

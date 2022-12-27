@@ -63,7 +63,7 @@ export const useAuthStore = defineStore('auth', {
       token?: string;
       emailOrUsername?: string;
       password?: string;
-      redirect?: boolean;
+      redirect?: string;
     }) {
       await Userfront.login(options as any);
       if (!this._hasAccount) {

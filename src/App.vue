@@ -57,6 +57,7 @@ router.beforeEach(
       next({
         name: to.name as string,
         params: { ...to.params, language: language || store.language },
+        query: to.query
       });
     } else {
       if (language && useAppStore().language !== language) {
