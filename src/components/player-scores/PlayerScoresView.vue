@@ -62,8 +62,6 @@ import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import PlayerScoresTable from './PlayerScoresTable.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
-import { useRouter } from 'vue-router';
-import { useAppStore } from 'stores/app-store';
 import {
   languageExercises,
   mathExercises,
@@ -72,8 +70,6 @@ import {
 
 const { t } = useI18n();
 const showLoadingIndicator = ref(false);
-const router = useRouter();
-const store = useAppStore();
 const percentiles: Ref<PercentileScore[]> = ref([]);
 const nameOfTheGame = ref('');
 const difficulty = ref('easy');

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, computed } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import { useQuasar } from 'quasar';

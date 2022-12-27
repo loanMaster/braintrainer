@@ -118,7 +118,6 @@ import { mapScoreToRating } from 'src/util/calculate-rating';
 import { matPlayArrow, matAssessment } from '@quasar/extras/material-icons';
 
 const { t } = useI18n();
-const showLoadingIndicator = ref(false);
 const router = useRouter();
 const store = useAppStore();
 
