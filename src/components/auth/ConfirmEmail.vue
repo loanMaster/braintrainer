@@ -19,25 +19,12 @@ const { t } = useI18n();
 
 onBeforeMount(async () => {
   if (route.query.uuid && route.query.token) {
-    // clear all cookies and reload due to firefox bug.
-    if (document.cookie) {
-      document.cookie.split(';').forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, '')
-          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
-        location.reload();
-      });
-    }
     try {
       await authStore.login({
         method: 'link',
         uuid: route.query.uuid as string,
         token: route.query.token as string,
-        redirect: false,
-      });
-      router.push({
-        name: 'user-settings',
-        params: { language: useAppStore().language },
+        redirect: '/user-settings',
       });
     } catch (error) {
       $q.notify({

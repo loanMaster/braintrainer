@@ -103,15 +103,6 @@ const route = useRoute()
 onBeforeMount(async () => {
   await authStore.redirectIfLoggedIn();
   if (route.query.uuid && route.query.token) {
-    // clear all cookies and reload due to firefox bug.
-    if (document.cookie) {
-      document.cookie.split(';').forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, '')
-          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
-        location.reload();
-      });
-    }
     try {
       submitting.value = true
       await authStore.login({
