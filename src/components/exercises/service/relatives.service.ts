@@ -76,8 +76,6 @@ const mapping: { [key: string]: any } = {
     Father: ['Uncle'],
     Sister: ['Cousin'],
     Brother: ['Cousin'],
-    Daughter: ['Niece'],
-    Son: ['Nephew'],
     Uncle: ['Father', 'Uncle'],
     Aunt: ['Mother', 'Aunt'],
   },

@@ -40,6 +40,7 @@ import {
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
 import { useRouter } from 'vue-router';
+import {preloadAudio} from "src/util/preload-assets";
 
 const {
   soundService,
@@ -89,6 +90,8 @@ onMounted(async () => {
       onNumberEntered(number);
     }
   });
+
+  preloadAudio(['÷', '+', '×', '−'].map(k => `/sounds/${store.language}_${k}.mp3`))
 });
 
 async function nextQuestion() {

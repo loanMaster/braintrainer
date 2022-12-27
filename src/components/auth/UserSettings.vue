@@ -48,7 +48,7 @@
             @update:model-value="username = username.toLowerCase().replaceAll(' ', '')"
             :hint="$t('auth.lower case letters and hyphens only')"
             :rules="[
-              (val) => (val && val.length > 0) || $t('Please type something'),
+              (val) => (val && val.length > 2) || $t('auth.Please type something'),
               (val) => (/^[a-z0-9\-]+$/.test(val)) || $t('auth.lower case letters and hyphens only'),
             ]"
           />

@@ -40,6 +40,7 @@ import {
 } from 'src/shared-services/math-exercise.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { useRouter } from 'vue-router';
+import {preloadAudio} from "src/util/preload-assets";
 
 const {
   soundService,
@@ -100,6 +101,7 @@ onMounted(() => {
       onNumberEntered(number);
     }
   });
+  preloadAudio(['÷', '+', '×', '−'].map(k => `/sounds/${store.language}_${k}.mp3`))
   new TweenService().setDisplay(numpadContainer.value, 'none');
 });
 
