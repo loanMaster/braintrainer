@@ -15,7 +15,9 @@ export class UserService {
       ...requestHelper.getStandardRequestInit(),
       method: 'DELETE',
     });
-    return response.json();
+    if (!response.ok) {
+      throw response
+    }
   }
 
   activate(email: string): Promise<any> {
