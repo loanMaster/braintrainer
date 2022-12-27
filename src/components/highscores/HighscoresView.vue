@@ -2,7 +2,7 @@
   <div class="bg-gradient flex-1 column items-center">
     <LoadingIndicator :showing="showLoadingIndicator" style="z-index: 1" />
     <q-toolbar class="bg-secondary text-white no-pointer-events non-selectable">
-      <q-toolbar-title>🎉 {{ t('Highscores') }}</q-toolbar-title>
+      <q-toolbar-title>🎉 {{ t('High scores (last 30 days)') }}</q-toolbar-title>
     </q-toolbar>
     <div class="flex-1 relative-position max-width-sm full-width q-my-sm">
       <div

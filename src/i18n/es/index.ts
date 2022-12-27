@@ -1,4 +1,5 @@
 export default {
+  'High scores (last 30 days)': 'Puntuaciones altas (30 días)',
   'An error occurred': 'Se ha producido un error',
   APP_NAME: 'BrainTunes',
   'Train again': 'Entrenar otra vez',
