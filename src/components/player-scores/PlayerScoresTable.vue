@@ -157,6 +157,7 @@ const columns = ref([
   {
     name: 'nameOfTheGame',
     required: true,
+    sortable: true,
     label: t('Exercise'),
     align: 'left',
     field: 'nameOfTheGame',
@@ -169,18 +170,21 @@ const columns = ref([
   },
   {
     name: 'score',
+    sortable: true,
     label: t('Rating'),
     field: 'score',
     format: (val: number) => formatScore(val, store.language),
   },
   {
     name: 'stars',
+    sortable: true,
     label: t('Stars'),
     field: 'stars',
     align: 'center',
   },
   {
     name: 'percentile',
+    sortable: true,
     label: t('Top % of users'),
     field: 'percentile',
     format: (val: number) => `${formatScore(val, store.language)}%`,

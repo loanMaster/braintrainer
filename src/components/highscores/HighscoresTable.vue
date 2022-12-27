@@ -149,6 +149,7 @@ const columns = ref([
     required: true,
     label: t('Exercise'),
     align: 'left',
+    sortable: true,
     field: 'nameOfTheGame',
   },
   {
@@ -157,7 +158,7 @@ const columns = ref([
     label: t('Difficulty'),
     field: 'difficulty',
   },
-  { name: 'playerName', label: t('User'), field: 'playerName' },
+  { name: 'playerName', label: t('User'), field: 'playerName', sortable: true },
   {
     name: 'image',
     label: t('Avatar'),
@@ -168,12 +169,14 @@ const columns = ref([
     name: 'score',
     label: t('Rating'),
     field: 'score',
+    sortable: true,
     format: (val: number) => formatScore(val, store.language),
   },
   {
     name: 'date',
     label: t('Date'),
     field: 'date',
+    sortable: true,
     format: (val: number) =>
       `${new Date(val).toLocaleDateString(store.language)}`,
   },
