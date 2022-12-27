@@ -107,6 +107,7 @@ export default {
   Language: 'Idioma',
   'Changes saved': 'Cambios guardados',
   auth: {
+    'lower case letters and hyphens only': 'Letras minúsculas y guiones solamente',
     'error username exists': 'Este nombre de usuario ya está en uso',
     'error email exists':
       'Un usuario con esta dirección de correo electrónico ya está registrado',

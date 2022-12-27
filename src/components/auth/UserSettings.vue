@@ -44,8 +44,12 @@
             :label="$t('Username')"
             type="text"
             lazy-rules
+            maxlength="30"
+            @update:model-value="username = username.toLowerCase().replaceAll(' ', '')"
+            :hint="$t('auth.lower case letters and hyphens only')"
             :rules="[
               (val) => (val && val.length > 0) || $t('Please type something'),
+              (val) => (/^[a-z0-9\-]+$/.test(val)) || $t('auth.lower case letters and hyphens only'),
             ]"
           />
           <div class="col-6 q-mt-sm">

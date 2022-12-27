@@ -104,6 +104,7 @@ export default {
   Language: '_',
   'Changes saved': '-',
   auth: {
+    'lower case letters only': '_',
     'error username exists': 'This usename is already taken',
     'error email exists':
       'A user with this email address is already registered.',

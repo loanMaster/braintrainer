@@ -112,6 +112,7 @@ export default {
   Language: 'Sprache',
   'Changes saved': 'Änderungen gespeichert',
   auth: {
+    'lower case letters and hyphens only': 'Nur Kleinbuchstaben und Bindestrich',
     'error username exists': 'Dieser Benutzername ist bereits vergeben',
     'error email exists':
       'Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert',
