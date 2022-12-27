@@ -142,6 +142,7 @@ export default {
     Picture: '_',
     'Save changes': '_',
     Password: '_',
+    'Repeat new password': '',
     'Reset password': '_',
     'Email verification pending': '_',
     'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':

@@ -155,6 +155,7 @@ export default {
     Picture: 'Bild',
     'Save changes': 'Änderungen speichern',
     Password: 'Passwort',
+    'Repeat new password': 'Neues Passwort wiederholen',
     'Reset password': 'Passwort zurücksetzen',
     'Email verification pending':
       'Deine E-Mail Adresse wurde noch nicht bestätigt.',

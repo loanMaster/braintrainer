@@ -149,6 +149,7 @@ export default {
     Picture: 'Fotografía',
     'Save changes': 'Guardar cambios',
     Password: 'Clave',
+    'Repeat new password': 'Repita la nueva contraseña',
     'Reset password': 'Restablecer la contraseña',
     'Email verification pending':
       'Tu dirección de correo electrónico aún no ha sido confirmada.',

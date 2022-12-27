@@ -34,7 +34,7 @@
           filled
           v-model="passwordVerify"
           test="new-password verify"
-          label="Repeat new password"
+          :label="$t('Repeat new password')"
           lazy-rules
           type="password"
           autocomplete="off"
