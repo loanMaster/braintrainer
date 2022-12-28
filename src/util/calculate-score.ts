@@ -17,13 +17,6 @@ export const calculateScore = (exercise: Exercise) => {
     (exercise.duration - minTime) / time_divisor
   );
 
-  console.log(
-    `exercise.totalAudioDuration ${exercise.totalAudioDuration}. exercise.duration ${exercise.duration}`
-  );
-
-  console.log(
-    `TODO minTime ${minTime}. time penalty ${timePenalty}. strikes ${exercise.totalStrikeCount} error penalty ${errorPenalty}`
-  );
   return (
     Math.floor(Math.max(0, maxScore - errorPenalty - timePenalty) * 10) / 10
   );

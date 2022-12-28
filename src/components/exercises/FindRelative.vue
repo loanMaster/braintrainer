@@ -56,6 +56,9 @@ import { useAppStore } from 'stores/app-store';
 import { RelativesService } from 'components/exercises/service/relatives.service';
 import { randomElement, shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
+import { preloadAudio } from 'src/util/preload-assets';
+import { ReplaySubject, Subject, take, takeUntil } from 'rxjs';
+import { skip } from 'rxjs/operators';
 
 const {
   soundService,
@@ -65,6 +68,7 @@ const {
   route,
   store,
   inputDisabled,
+  destroy,
   onSolutionConfirmed,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
@@ -76,11 +80,25 @@ let currentTask: Ref<
   | {
       queue: string[];
       solutions: string[];
+      gender: string;
+      person: string;
       audio: Sound[];
       texts: string[];
     }
   | undefined
 > = ref();
+
+let nextTask: Subject<
+  | {
+      queue: string[];
+      solutions: string[];
+      gender: string;
+      audio: Sound[];
+      person: string;
+      texts: string[];
+    }
+  | undefined
+>;
 
 const male_names = ['Bob', 'Charlie', 'David'];
 const female_names = ['Alice', 'Eve', 'Judy'];
@@ -104,7 +122,6 @@ const relations = [
 ];
 let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
-const character = ref(male_names[0]);
 const countdownTimer = ref();
 const router = useRouter();
 
@@ -117,6 +134,21 @@ const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
   new TweenService().setDisplay(coreExercise.value, 'none');
+  nextTask = new ReplaySubject<
+    | {
+        queue: string[];
+        solutions: string[];
+        person: string;
+        gender: string;
+        audio: Sound[];
+        texts: string[];
+      }
+    | undefined
+  >(store.exercise.totalQuestions + 1);
+  nextTask
+    .pipe(take(store.exercise.totalQuestions), takeUntil(destroy))
+    .subscribe(() => fetchNextExercise());
+  fetchNextExercise();
 });
 
 async function nextQuestion() {
@@ -135,51 +167,24 @@ async function nextQuestion() {
   }
   countdownTimer.value?.reset();
 
-  const relativesService = new RelativesService();
-  const task = relativesService.createRelationshipTree(
-    difficulty.value as string
-  );
-  character.value =
-    task.gender === 'f'
-      ? female_names[Math.floor(Math.random() * female_names.length)]
-      : male_names[Math.floor(Math.random() * male_names.length)];
-  const texts = [
-    t('findRelatives.{name}_is', {
-      name: t('findRelatives.' + character.value),
-    }),
-    t('findRelatives.subj_' + task.queue[0]),
-  ];
-  for (let i = 1; i < task.queue.length - 1; i++) {
-    texts.push(t('findRelatives.poss_' + task.queue[i]));
-  }
-  texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
+  currentTask.value = await nextTask
+    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
+    .toPromise();
 
-  buttonOptions.value = [...task.solutions];
+  const relativesService = new RelativesService();
+  buttonOptions.value = [...currentTask.value!.solutions];
   while (buttonOptions.value.length < 6) {
     const randomRelative = randomElement(relations);
     if (
       buttonOptions.value.indexOf(randomRelative) === -1 &&
       (relativesService.getGender(randomRelative) === 'n' ||
-        relativesService.getGender(randomRelative) === task.gender)
+        relativesService.getGender(randomRelative) ===
+          currentTask.value!.gender)
     ) {
       buttonOptions.value.push(randomRelative);
     }
   }
   shuffle(buttonOptions.value);
-
-  const audio = texts.map((text) => {
-    return {
-      src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
-      meta: { text },
-    };
-  });
-
-  currentTask.value = {
-    queue: task.queue,
-    solutions: task.solutions,
-    audio,
-    texts,
-  };
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(coreExercise.value, 'flex');
@@ -190,6 +195,45 @@ async function nextQuestion() {
   inputDisabled.value = false;
   await playAudio();
   countdownTimer.value?.start();
+}
+
+async function fetchNextExercise() {
+  const relativesService = new RelativesService();
+  const task = relativesService.createRelationshipTree(
+    difficulty.value as string
+  );
+  const person =
+    task.gender === 'f'
+      ? female_names[Math.floor(Math.random() * female_names.length)]
+      : male_names[Math.floor(Math.random() * male_names.length)];
+  const texts = [
+    t('findRelatives.{name}_is', {
+      name: t('findRelatives.' + person),
+    }),
+    t('findRelatives.subj_' + task.queue[0]),
+  ];
+  for (let i = 1; i < task.queue.length - 1; i++) {
+    texts.push(t('findRelatives.poss_' + task.queue[i]));
+  }
+  texts.push(t('findRelatives.of_your_' + task.queue[task.queue.length - 1]));
+
+  const audio = texts.map((text) => {
+    return {
+      src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
+      meta: { text },
+    };
+  });
+
+  await preloadAudio(audio.map((s) => s.src as string));
+
+  nextTask.next({
+    queue: task.queue,
+    solutions: task.solutions,
+    person,
+    gender: task.gender,
+    audio,
+    texts,
+  });
 }
 
 async function playAudio() {
@@ -223,7 +267,7 @@ function reveal() {
 
 const whoIs = computed(() => {
   return t('findRelatives.Who is {name}?', {
-    name: t('findRelatives.' + character.value),
+    name: t('findRelatives.' + currentTask.value?.person || male_names[0]),
   });
 });
 

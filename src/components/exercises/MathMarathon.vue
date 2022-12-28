@@ -80,15 +80,6 @@ onBeforeMount(() => {
   nextExercise
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((value: ContinuationExerciseResponse) => {
-      console.log(
-        value?.initial?.val +
-          ' ' +
-          value.operation +
-          ' ' +
-          value.val +
-          ' -> ' +
-          value.result
-      );
       fetchNextExercise(value.result);
     });
   fetchNextExercise();

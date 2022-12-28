@@ -36,7 +36,7 @@ const guestMaxPlayGuard = (
   next: NavigationGuardNext
 ) => {
   if (
-    (useAppStore().noOfGamesPlayedAsGuest > 1 || useAuthStore().hasAccount) &&
+    (useAppStore().noOfGamesPlayedAsGuest > 3 || useAuthStore().hasAccount) &&
     (!useAuthStore().isLoggedIn || !useAuthStore().isConfirmed)
   ) {
     next({ name: 'login', params: { language: useAppStore().language } });
@@ -188,6 +188,12 @@ const routes: RouteRecordRaw[] = [
                 name: 'spell-backwards',
                 component: () =>
                   import('src/components/exercises/SpellBackwards.vue'),
+              },
+              {
+                path: ':game(voices-memory)',
+                name: 'voices-memory',
+                component: () =>
+                  import('src/components/exercises/AudioMemory.vue'),
               },
               {
                 path: ':game(memory)',

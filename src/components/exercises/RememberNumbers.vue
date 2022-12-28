@@ -83,7 +83,6 @@ onMounted(async () => {
   const preload = Array.from(new Array(10).keys()).map(
     (k) => `/sounds/${store.language}_${k}.mp3`
   );
-  console.log(preload);
   preloadAudio(preload);
   new TweenService().setDisplay(numpad.value, 'none');
 });

@@ -33,6 +33,12 @@ export interface RandomWord {
   exclude?: string[];
 }
 
+export interface WordsMultipleSpeakers {
+  lang: string;
+  number: number;
+  category?: string;
+}
+
 export interface HomophoneAudioResponse {
   audio: string;
   val: string[];
@@ -85,6 +91,15 @@ export class ExerciseService {
 
   async fetchRandomWords(randomWord: RandomWord): Promise<AudioResponse[]> {
     const response = await fetch(this.serverPath + '/speech/words', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify(randomWord),
+    });
+    return response.json();
+  }
+
+  async fetchWordsMultipleSpeakers(randomWord: WordsMultipleSpeakers): Promise<AudioResponse[]> {
+    const response = await fetch(this.serverPath + '/speech/words-multiple-speakers', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
       body: JSON.stringify(randomWord),

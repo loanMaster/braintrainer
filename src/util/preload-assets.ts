@@ -19,7 +19,7 @@ export const preloadAudio = (urls: string[]): Promise<void> => {
     let toGo = urls.length;
     for (let i = 0; i < urls.length; i++) {
       const audio = new Audio();
-      audio.onload = () => {
+      audio.oncanplay = () => {
         toGo--;
         if (toGo <= 0) {
           resolve();
