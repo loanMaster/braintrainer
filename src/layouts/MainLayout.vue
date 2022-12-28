@@ -218,7 +218,10 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container class="column flex-auto">
+    <q-page-container
+      class="column flex-auto"
+      style="max-width: 100vw; overflow-x: hidden"
+    >
       <router-view />
     </q-page-container>
   </q-layout>

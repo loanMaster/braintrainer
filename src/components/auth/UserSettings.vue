@@ -4,74 +4,78 @@
   >
     <LoadingIndicator :showing="isSending" style="z-index: 1" />
     <q-card class="row justify-around full-width max-width-xs q-pa-lg">
-      <div class="text-h5 col-6">{{ $t("auth['Your profile']") }}</div>
-      <div class="col-6 q-gutter-sm">
-        <div class="text-h6">{{ authStore.email }}</div>
-        <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
-        <q-btn-dropdown
-          color="primary"
-          size="xl"
-          class="text-h1"
-          data-testid="avatar-dropdown"
-        >
-          <template v-slot:label>
-            <q-avatar size="5rem">
-              <img :src="currentAvatar" />
-            </q-avatar>
-          </template>
-          <q-list>
-            <q-item
-              clickable
-              v-close-popup
-              :data-testid="'select-avatar-' + avatar"
-              @click="onItemClick(avatar)"
-              v-for="avatar in avatars"
-              :key="avatar"
-            >
-              <q-item-section>
-                <q-avatar class="q-mx-auto">
-                  <img :src="avatar" />
-                </q-avatar>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
-        <q-form @submit="saveChanges">
-          <q-input
-            filled
-            v-model="username"
-            data-testid="username-input"
-            :label="$t('Username')"
-            type="text"
-            lazy-rules
-            maxlength="30"
-            @update:model-value="
-              username = username.toLowerCase().replaceAll(' ', '')
-            "
-            :hint="$t('auth.lower case letters and hyphens only')"
-            :rules="[
-              (val) =>
-                (val && val.length > 2) || $t('auth.Please type something'),
-              (val) =>
-                /^[a-z0-9\-]+$/.test(val) ||
-                $t('auth.lower case letters and hyphens only'),
-            ]"
-          />
-          <div class="col-6 q-mt-sm">
-            <q-btn
-              color="primary"
-              type="submit"
-              :disable="isSending"
-              data-testid="save-user-settings"
-              >{{ $t('auth.Save changes') }}</q-btn
-            >
-          </div>
-        </q-form>
+      <div class="row-sm column-xs justify-around full-width max-width-xs">
+        <div class="text-h5 col-sm-6">{{ $t("auth['Your profile']") }}</div>
+        <div class="col-sm-6 q-gutter-sm">
+          <div class="text-h6">{{ authStore.email }}</div>
+          <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
+          <q-btn-dropdown
+            color="primary"
+            size="xl"
+            class="text-h1"
+            data-testid="avatar-dropdown"
+          >
+            <template v-slot:label>
+              <q-avatar size="5rem">
+                <img :src="currentAvatar" />
+              </q-avatar>
+            </template>
+            <q-list>
+              <q-item
+                clickable
+                v-close-popup
+                :data-testid="'select-avatar-' + avatar"
+                @click="onItemClick(avatar)"
+                v-for="avatar in avatars"
+                :key="avatar"
+              >
+                <q-item-section>
+                  <q-avatar class="q-mx-auto">
+                    <img :src="avatar" />
+                  </q-avatar>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+          <q-form @submit="saveChanges">
+            <q-input
+              filled
+              v-model="username"
+              data-testid="username-input"
+              :label="$t('Username')"
+              type="text"
+              lazy-rules
+              maxlength="30"
+              @update:model-value="
+                username = username.toLowerCase().replaceAll(' ', '')
+              "
+              :hint="$t('auth.lower case letters and hyphens only')"
+              :rules="[
+                (val) =>
+                  (val && val.length > 2) || $t('auth.Please type something'),
+                (val) =>
+                  /^[a-z0-9\-]+$/.test(val) ||
+                  $t('auth.lower case letters and hyphens only'),
+              ]"
+            />
+            <div class="col-6 q-mt-sm">
+              <q-btn
+                color="primary"
+                type="submit"
+                :disable="isSending"
+                data-testid="save-user-settings"
+                >{{ $t('auth.Save changes') }}</q-btn
+              >
+            </div>
+          </q-form>
+        </div>
       </div>
 
-      <div class="row justify-around full-width max-width-xs q-mt-lg">
-        <div class="text-h5 col-6">{{ $t('auth.Account') }}</div>
-        <div class="col-6 q-gutter-sm">
+      <div
+        class="row-sm column-xs justify-around full-width max-width-xs q-mt-lg"
+      >
+        <div class="text-h5 col-sm-6">{{ $t('auth.Account') }}</div>
+        <div class="col-sm-6 q-gutter-sm">
           <q-btn
             color="primary"
             :disable="isSending || submitted"

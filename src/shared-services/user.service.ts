@@ -16,7 +16,7 @@ export class UserService {
       method: 'DELETE',
     });
     if (!response.ok) {
-      throw response
+      throw response;
     }
   }
 

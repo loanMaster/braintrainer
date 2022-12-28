@@ -104,9 +104,10 @@ export default {
   Maths: '_',
   'Memory exercises': 'Memory',
   Language: '_',
-  'Changes saved': '-',
+  'Changes saved': '_',
   auth: {
-    'lower case letters only': '_',
+    'lower case letters and hyphens only':
+      'Nur Kleinbuchstaben und Bindestrich',
     'error username exists': 'This usename is already taken',
     'error email exists':
       'A user with this email address is already registered.',

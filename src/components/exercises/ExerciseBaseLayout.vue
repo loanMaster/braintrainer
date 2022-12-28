@@ -1,7 +1,7 @@
 <template>
   <div
     class="column flex-auto relative-position"
-    :style="{ 'overflow-x': overflow }"
+    :style="{ 'overflow-x': overflow, 'max-width': '100%' }"
   >
     <MovingColorsBackground />
     <ExerciseHeader />

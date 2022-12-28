@@ -83,7 +83,10 @@
             </div>
           </q-card-section>
           <q-separator />
-          <q-card-section class="column">
+          <q-card-section class="column" style="margin-top: -12px">
+            <div class="row justify-center">
+              <StarsRating class="text-h5" :rating="props.row.stars" />
+            </div>
             <div class="row justify-between">
               <div>{{ $t('Difficulty') }}</div>
               <div>{{ props.row.difficulty }}</div>
@@ -91,10 +94,6 @@
             <div class="row justify-between">
               <div>{{ $t('Rating') }}</div>
               <div>{{ props.row.score }}</div>
-            </div>
-            <div class="row justify-between">
-              <div>{{ $t('Stars') }}</div>
-              <StarsRating class="text-h5" :rating="props.row.stars" />
             </div>
             <div class="row justify-between">
               <div>{{ $t('Top % of users') }}</div>
