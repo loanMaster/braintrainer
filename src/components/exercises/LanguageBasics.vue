@@ -59,7 +59,7 @@ import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
-import { Sound, SoundService } from 'src/shared-services/sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
@@ -73,7 +73,6 @@ import { useRouter } from 'vue-router';
 const {
   soundService,
   revealed,
-  destroy,
   route,
   store,
   isDev,
