@@ -190,6 +190,12 @@ const routes: RouteRecordRaw[] = [
                   import('src/components/exercises/SpellBackwards.vue'),
               },
               {
+                path: ':game(language-basics)',
+                name: 'language-basics',
+                component: () =>
+                  import('src/components/exercises/LanguageBasics.vue'),
+              },
+              {
                 path: ':game(voices-memory)',
                 name: 'voices-memory',
                 component: () =>

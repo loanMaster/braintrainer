@@ -40,7 +40,7 @@ import { ReplaySubject, Subject, take } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
-import {useRoute, useRouter} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const { soundService, revealed, store, inputDisabled, difficulty, isDev } =
   createExerciseContext({
@@ -63,9 +63,18 @@ const buttons = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions = useRoute().params.game === 'voices-memory' ?
-    difficulty.value === 'easy' ? 5 : difficulty.value === 'normal' ? 7 : 10 :
-    difficulty.value === 'easy' ? 6 : difficulty.value === 'normal' ? 12 : 20;
+  const numberOfQuestions =
+    useRoute().params.game === 'voices-memory'
+      ? difficulty.value === 'easy'
+        ? 5
+        : difficulty.value === 'normal'
+        ? 7
+        : 10
+      : difficulty.value === 'easy'
+      ? 6
+      : difficulty.value === 'normal'
+      ? 12
+      : 20;
   exerciseUtils.createExercise(numberOfQuestions);
   nextAudio = new ReplaySubject<AudioResponse[]>(1);
   loadAudio();
@@ -96,7 +105,9 @@ async function nextQuestion() {
     permutation = Array.from(Array(store.exercise.totalQuestions * 2).keys());
   } else {
     permutation = Array.from(Array(store.exercise.totalQuestions).keys());
-    permutation.push(...Array.from(Array(store.exercise.totalQuestions).keys()));
+    permutation.push(
+      ...Array.from(Array(store.exercise.totalQuestions).keys())
+    );
   }
   shuffle(permutation);
   new TweenService().setDisplay(buttons.value, 'flex');
@@ -118,22 +129,22 @@ function playAudio() {
 
 async function loadAudio(): Promise<void> {
   nextAudio.next(
-    store.exercise.nameOfTheGame === 'voices-memory' ?
-      await new ExerciseService().fetchWordsMultipleSpeakers({
-        lang: store.language,
-        number: store.exercise.totalQuestions
-      }) :
-      await new ExerciseService().fetchRandomWords({
-        minLength: 3,
-        maxLength: 14,
-        lang: store.language,
-        number: store.exercise.totalQuestions,
-        gender: 'FEMALE',
-        category:
-          store.exercise.nameOfTheGame === 'memory-animals'
-            ? 'ANIMALS'
-            : undefined,
-      })
+    store.exercise.nameOfTheGame === 'voices-memory'
+      ? await new ExerciseService().fetchWordsMultipleSpeakers({
+          lang: store.language,
+          number: store.exercise.totalQuestions,
+        })
+      : await new ExerciseService().fetchRandomWords({
+          minLength: 3,
+          maxLength: 14,
+          lang: store.language,
+          number: store.exercise.totalQuestions,
+          gender: 'FEMALE',
+          category:
+            store.exercise.nameOfTheGame === 'memory-animals'
+              ? 'ANIMALS'
+              : undefined,
+        })
   );
 }
 

@@ -3,6 +3,7 @@ export const languageExercises = [
   'word-scramble',
   'listen-backwards',
   'find-relative',
+  'language-basics',
 ];
 
 export const mathExercises = [
@@ -21,4 +22,5 @@ export const memoryExercises = [
   'remember-numbers-rev',
   'memory-animals',
   'memory',
+  'voices-memory',
 ];

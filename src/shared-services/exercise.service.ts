@@ -13,6 +13,11 @@ export interface IntroductionResponse {
   };
 }
 
+export interface LanguageBasicsResponse {
+  audio: { val: string; audio: string; en: string }[];
+  lang: string;
+}
+
 export interface Introduction {
   text: string;
   audio: {
@@ -98,12 +103,28 @@ export class ExerciseService {
     return response.json();
   }
 
-  async fetchWordsMultipleSpeakers(randomWord: WordsMultipleSpeakers): Promise<AudioResponse[]> {
-    const response = await fetch(this.serverPath + '/speech/words-multiple-speakers', {
+  async fetchLanguageBasics(req: {
+    difficulty: string;
+  }): Promise<LanguageBasicsResponse> {
+    const response = await fetch(this.serverPath + '/speech/language-basics', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
-      body: JSON.stringify(randomWord),
+      body: JSON.stringify(req),
     });
+    return response.json();
+  }
+
+  async fetchWordsMultipleSpeakers(
+    randomWord: WordsMultipleSpeakers
+  ): Promise<AudioResponse[]> {
+    const response = await fetch(
+      this.serverPath + '/speech/words-multiple-speakers',
+      {
+        ...requestHelper.getStandardRequestInit(),
+        method: 'POST',
+        body: JSON.stringify(randomWord),
+      }
+    );
     return response.json();
   }
 
