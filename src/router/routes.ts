@@ -202,6 +202,12 @@ const routes: RouteRecordRaw[] = [
                   import('src/components/exercises/AudioMemory.vue'),
               },
               {
+                path: ':game(countries-and-capitals)',
+                name: 'voices-memory',
+                component: () =>
+                  import('src/components/exercises/CountriesAndCapitals.vue'),
+              },
+              {
                 path: ':game(memory)',
                 name: 'memory',
                 component: () =>
