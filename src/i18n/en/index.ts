@@ -20,7 +20,7 @@ export default {
   'find-relative': {
     title: 'Find your relative',
     description:
-      'The exercise describes relationships. Can you find out which one?',
+      'Which relative is being described?',
     hint: 'Listen to how you are related to a person. Then select the appropriate relationship.',
   },
   'word-scramble': {
@@ -46,7 +46,7 @@ export default {
   'language-basics': {
     title: 'Travel vocabulary',
     description: 'Learn some new words in a foreign language',
-    hint: 'Remember the words, which are read and their translation.',
+    hint: 'Remember the words and their respective translation.',
   },
   'find-matching-person': {
     title: 'Remember people (II)',
@@ -179,7 +179,7 @@ export default {
   Solved: '_',
   Mistakes: '_',
   'Time required': '_',
-  'You are in the top { percentile }% of users': '_',
+  'You are in the top { percentile }% of users': 'You are among the top { percentile }% of users',
   'New highscore': '🎉 New highscore 🎉',
   'Continue as guest': '_',
   'Try up to three exercises as guest before creating an account.': '_',
@@ -334,7 +334,7 @@ export default {
     'Who is {name}?': 'Who is {name}?',
   },
   languageBasics: {
-    'Today: lang': 'Heute: { lang }',
+    'Today: lang': 'Today: { lang }',
     af: 'Africaans',
     ar: 'Arabic',
     bn: 'Bengali',
