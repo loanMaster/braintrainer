@@ -19,8 +19,7 @@ export default {
   },
   'find-relative': {
     title: 'Find your relative',
-    description:
-      'Which relative is being described?',
+    description: 'Which relative is being described?',
     hint: 'Listen to how you are related to a person. Then select the appropriate relationship.',
   },
   'word-scramble': {
@@ -179,7 +178,8 @@ export default {
   Solved: '_',
   Mistakes: '_',
   'Time required': '_',
-  'You are in the top { percentile }% of users': 'You are among the top { percentile }% of users',
+  'You are in the top { percentile }% of users':
+    'You are among the top { percentile }% of users',
   'New highscore': '🎉 New highscore 🎉',
   'Continue as guest': '_',
   'Try up to three exercises as guest before creating an account.': '_',
