@@ -1,32 +1,26 @@
 <template>
   <div ref="coreExercise" class="column items-center flex-1 justify-around">
+    <InlineSvg
+      src="/images/world-map.svg"
+      width="150"
+      height="150"
+      fill="black"
+    ></InlineSvg>
     <div
       class="flex-1 column justify-center items-center"
       v-if="store.exercise.currentQuestion < 1"
     >
-      <div ref="languageIndicator" class="text-h5" v-if="!showSpeechBubble">
-        <span v-if="task?.lang">{{
-          $t('languageBasics.Today: lang', {
-            lang: $t('languageBasics.' + task.lang),
-          })
-        }}</span>
-      </div>
-      <div
-        class="column q-gutter-md items-center justify-center"
-        v-if="showSpeechBubble"
-      >
-        <SpeechBubble
-          style="background-color: lightblue"
-          :show="showSpeechBubble"
-          :transparentText="!showSpeechBubbleText"
-          :text="currentAudio?.val || '...'"
-        />
-        <SpeechBubble
-          :show="showSpeechBubble"
-          :transparentText="!showSpeechBubbleText"
-          :text="$t('languageBasics.' + currentAudio?.en)"
-        />
-      </div>
+      <SpeechBubble
+        style="background-color: lightblue"
+        :show="showSpeechBubble"
+        :transparentText="!showSpeechBubbleText"
+        :text="currentAudio?.val || '...'"
+      />
+      <SpeechBubble
+        :show="showSpeechBubble"
+        :transparentText="!showSpeechBubbleText"
+        :text="$t('languageBasics.' + currentAudio?.en)"
+      />
     </div>
     <div class="position-relative">
       <div class="column q-gutter-md" ref="buttons">
@@ -80,6 +74,7 @@ import {
 import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import InlineSvg from 'vue-inline-svg';
 
 const {
   soundService,

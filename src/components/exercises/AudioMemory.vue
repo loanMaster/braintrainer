@@ -66,10 +66,10 @@ onBeforeMount(() => {
   const numberOfQuestions =
     useRoute().params.game === 'voices-memory'
       ? difficulty.value === 'easy'
-        ? 5
+        ? 4
         : difficulty.value === 'normal'
-        ? 7
-        : 10
+        ? 5
+        : 6
       : difficulty.value === 'easy'
       ? 6
       : difficulty.value === 'normal'
