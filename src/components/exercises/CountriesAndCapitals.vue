@@ -224,7 +224,7 @@ function onLetterEntered(letter: string) {
   ) {
     return;
   }
-  if (letter === task.value[store.exercise.currentQuestion - 1].capital[0]) {
+  if (letter === getCurrentTask().capital[0]) {
     new TweenService().setDisplay(letterButtonsWrapper.value, 'none')
     new TweenService().setDisplay(buttons.value, 'flex')
   } else {
