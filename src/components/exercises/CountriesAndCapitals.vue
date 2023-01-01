@@ -4,7 +4,7 @@
       <div class="relative-position flex justify-center">
         <InlineSvg
           ref="worldMap"
-          style="max-width: 100%; width: 100vw; max-height: 55vh;"
+          style="max-width: 100%; width: 100vw; max-height: 55vh"
           src="/images/world-map.svg"
           fill="black"
         >
@@ -17,7 +17,11 @@
           />
         </div>
       </div>
-      <div style="flex: 1 1 0" class="flex align-center content-center" ref="exerciseButtons">
+      <div
+        style="flex: 1 1 0"
+        class="flex align-center content-center"
+        ref="exerciseButtons"
+      >
         <div ref="letterButtonsWrapper" class="flex-1 justify-center">
           <LetterButtons
             ref="letterButtons"
@@ -26,10 +30,12 @@
             @letter-selected="onLetterEntered"
           />
         </div>
-        <div
-          class="row q-gutter-sm justify-center flex-1" ref="buttons"
-        >
-          <div v-for="(label, idx) in buttonLabels" v-bind:key="idx" class="row">
+        <div class="row q-gutter-sm justify-center flex-1" ref="buttons">
+          <div
+            v-for="(label, idx) in buttonLabels"
+            v-bind:key="idx"
+            class="row"
+          >
             <q-btn
               color="primary"
               @click="selectWord(idx, $event)"
@@ -73,12 +79,11 @@ import {
   GeographyService,
 } from './service/countries.service';
 import { preloadAudio } from 'src/util/preload-assets';
-import {useAppStore} from "stores/app-store";
+import { useAppStore } from 'stores/app-store';
 
 const {
   soundService,
   revealed,
-  route,
   store,
   isDev,
   inputDisabled,
@@ -89,7 +94,6 @@ const {
   startCb: () => start(),
 });
 
-const { t } = useI18n();
 const task: Ref<CountryAndCapital[]> = ref([]);
 let buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
@@ -97,14 +101,14 @@ const worldMap = ref();
 const coreExercise = ref();
 let showLoadingIndicator = ref(false);
 const router = useRouter();
-const letterButtons = ref()
-const letterButtonsWrapper = ref()
-const exerciseButtons = ref()
+const letterButtons = ref();
+const letterButtonsWrapper = ref();
+const exerciseButtons = ref();
 
 onBeforeMount(() => {
-  const numberOfQuestion = 10
+  const numberOfQuestion = 10;
   exerciseUtils.createExercise(numberOfQuestion);
-  store.$patch(s => s.exercise.difficulty = 'normal')
+  store.$patch((s) => (s.exercise.difficulty = 'normal'));
 });
 
 onMounted(async () => {
@@ -113,15 +117,20 @@ onMounted(async () => {
 
 async function start() {
   showLoadingIndicator.value = true;
-  task.value = new GeographyService().getCountriesAndGeographies(store.language, store.exercise.totalQuestions);
+  task.value = new GeographyService().getCountriesAndGeographies(
+    store.language,
+    store.exercise.totalQuestions
+  );
   await preloadAudio(
-    task.value.map((c) => `/sounds/countries/${store.language}_${c.country}.mp3`)
+    task.value.map(
+      (c) => `/sounds/countries/${store.language}_${c.country}.mp3`
+    )
   );
   showLoadingIndicator.value = false;
 
   store.beginExercise();
 
-  letterButtons.value.showAtLeast(['?'])
+  letterButtons.value.showAtLeast(['?']);
   new TweenService().setDisplay(buttons.value, 'none');
   new TweenService().setDisplay(coreExercise.value, 'flex');
   await new TweenService().fadeIn(exerciseButtons.value);
@@ -129,21 +138,27 @@ async function start() {
 }
 
 function updateButtons() {
-  let capitalOptions = [getCurrentTask().capital]
-  capitalOptions.push(...new GeographyService()
-    .getCapitalsByFirstLetter(store.language, getCurrentTask().capital[0]))
-  capitalOptions = [...new Set(capitalOptions)]
+  let capitalOptions = [getCurrentTask().capital];
+  capitalOptions.push(
+    ...new GeographyService().getCapitalsByFirstLetter(
+      store.language,
+      getCurrentTask().capital[0]
+    )
+  );
+  capitalOptions = [...new Set(capitalOptions)];
   do {
-    const randomCapital = new GeographyService().getRandomCapital(store.language)
+    const randomCapital = new GeographyService().getRandomCapital(
+      store.language
+    );
     if (capitalOptions.indexOf(randomCapital) === -1) {
-      capitalOptions.push(randomCapital)
+      capitalOptions.push(randomCapital);
     }
-  } while (capitalOptions.length < 4)
-  capitalOptions = capitalOptions.splice(0, 4)
-  capitalOptions.sort((a, b) => (a < b) ? -1 : (a > b) ? 1 : 0)
+  } while (capitalOptions.length < 4);
+  capitalOptions = capitalOptions.splice(0, 4);
+  capitalOptions.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   buttonLabels.value = capitalOptions;
-  console.log('capital is ' + getCurrentTask().capital)
-  letterButtons.value.showAtLeast([getCurrentTask().capital[0]])
+  console.log('capital is ' + getCurrentTask().capital);
+  letterButtons.value.showAtLeast([getCurrentTask().capital[0]]);
 }
 
 async function nextQuestion() {
@@ -161,11 +176,11 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(exerciseButtons.value);
     new TweenService().setDisplay(buttons.value, 'none');
-    new TweenService().setDisplay(letterButtonsWrapper.value, 'flex')
-    updateButtons()
+    new TweenService().setDisplay(letterButtonsWrapper.value, 'flex');
+    updateButtons();
     await new TweenService().fadeIn(exerciseButtons.value);
   } else {
-    updateButtons()
+    updateButtons();
   }
   console.log(task.value);
   console.log('country is ' + country.value);
@@ -174,14 +189,10 @@ async function nextQuestion() {
 }
 
 async function playAudio() {
-  await soundService.play(
-      {
-        src: `/sounds/countries/${store.language}_${
-          country.value
-        }.mp3`,
-        meta: { tag: country.value }
-      }
-  );
+  await soundService.play({
+    src: `/sounds/countries/${store.language}_${country.value}.mp3`,
+    meta: { tag: country.value },
+  });
 }
 
 function highlightCountry(countryName: string) {
@@ -208,9 +219,7 @@ function highlightCountry(countryName: string) {
 }
 
 function isCorrectButton(idx: number) {
-  return (
-    buttonLabels.value[idx] === getCurrentTask().capital
-  );
+  return buttonLabels.value[idx] === getCurrentTask().capital;
 }
 
 function onLetterEntered(letter: string) {
@@ -225,8 +234,8 @@ function onLetterEntered(letter: string) {
     return;
   }
   if (letter === getCurrentTask().capital[0]) {
-    new TweenService().setDisplay(letterButtonsWrapper.value, 'none')
-    new TweenService().setDisplay(buttons.value, 'flex')
+    new TweenService().setDisplay(letterButtonsWrapper.value, 'none');
+    new TweenService().setDisplay(buttons.value, 'flex');
   } else {
     handleMistake(reveal, letterButtonsWrapper);
   }
@@ -248,13 +257,10 @@ async function selectWord(idx: number, $event: Event) {
   }
 }
 
-function handleMistake(
-  reveal: () => any,
-  elementToWiggle: Ref<HTMLElement>
-) {
+function handleMistake(reveal: () => any, elementToWiggle: Ref<HTMLElement>) {
   if (useAppStore().strike()) {
     new SoundService().playError();
-      reveal();
+    reveal();
   }
   new TweenService().wiggle(elementToWiggle.value);
 }
@@ -281,5 +287,5 @@ const solution = computed(() => {
 
 const country = computed(() => {
   return getCurrentTask().country;
-})
+});
 </script>

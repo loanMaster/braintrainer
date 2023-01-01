@@ -10,18 +10,17 @@ export interface CountryAndCapital {
 }
 
 export class GeographyService {
-
   private getList(lang: string) {
     return lang === 'de'
       ? countries_de
       : lang === 'es'
-        ? countries_es
-        : countries_en;
+      ? countries_es
+      : countries_en;
   }
 
   getCountriesAndGeographies(lang: string, count: number): CountryAndCapital[] {
     const result: CountryAndCapital[] = [];
-    const list = this.getList(lang)
+    const list = this.getList(lang);
     do {
       const randomEntry: any = randomElement(list as any);
       if (result.indexOf(randomEntry) === -1) {
@@ -34,18 +33,19 @@ export class GeographyService {
   }
 
   getRandomCapital(lang: string): string {
-    return randomElement(this.getList(lang)).capital
+    return randomElement(this.getList(lang)).capital;
   }
 
   getCapitalsByFirstLetter(lang: string, firstLetter: string): string[] {
-    const list = this.getList(lang)
-    return list.filter(c => c.capital.startsWith(firstLetter))
-      .map(c => c.capital)
+    const list = this.getList(lang);
+    return list
+      .filter((c) => c.capital.startsWith(firstLetter))
+      .map((c) => c.capital);
   }
 
   getAllCountries(lang: string): string[] {
-    return countries_en.map(entry => {
+    return countries_en.map((entry) => {
       return entry.country;
-    })
+    });
   }
 }
