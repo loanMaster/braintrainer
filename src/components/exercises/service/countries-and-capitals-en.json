@@ -196,10 +196,6 @@
     "capital": "Accra"
   },
   {
-    "country": "Granada",
-    "capital": "St George's"
-  },
-  {
     "country": "Greece",
     "capital": "Athens"
   },
@@ -306,10 +302,6 @@
   {
     "country": "Kyrgyzstan",
     "capital": "Bishkek"
-  },
-  {
-    "country": "Kiribati",
-    "capital": "Bairiki"
   },
   {
     "country": "Colombia",
@@ -644,7 +636,7 @@
     "capital": "Paramaribo"
   },
   {
-    "country": "Swaziland",
+    "country": "Eswatini",
     "capital": "Mbabane"
   },
   {
@@ -732,10 +724,6 @@
     "capital": "Port Vila"
   },
   {
-    "country": "Vatican State",
-    "capital": "Vatican City"
-  },
-  {
     "country": "Venezuela",
     "capital": "caracas"
   },
@@ -752,7 +740,7 @@
     "capital": "London"
   },
   {
-    "country": "Viet Nam",
+    "country": "Vietnam",
     "capital": "Hanoi"
   },
   {
