@@ -47,7 +47,11 @@
       <q-card class="exercise-block">
         <div class="exercise-title">{{ $t('Knowledge') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg justify-center">
-          <div class="col-3 column" v-for="exercise in knowledgeEx" :key="exercise">
+          <div
+            class="col-3 column"
+            v-for="exercise in knowledgeEx"
+            :key="exercise"
+          >
             <q-card
               :data-testid="'card-' + exercise"
               class="flex-1 cursor-pointer zoom-on-hover"
@@ -58,7 +62,7 @@
               </q-card-section>
               <q-card-section>{{
                 t(exercise + '.description')
-                }}</q-card-section>
+              }}</q-card-section>
             </q-card>
           </div>
         </div>
@@ -111,7 +115,7 @@ const continueAsGuestDialog = ref();
 const languageEx = ref(languageExercises);
 const mathEx = ref(mathExercises);
 const memoryEx = ref(memoryExercises);
-const knowledgeEx = ref(knowledgeExercises)
+const knowledgeEx = ref(knowledgeExercises);
 
 onMounted(() => {
   if (

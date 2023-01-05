@@ -22,7 +22,7 @@
         data-testid="math-table"
       >
         <div class="text-h5">{{ $t('Maths') }}</div>
-        <HighscoresTable :scores="mathHighscores"/>
+        <HighscoresTable :scores="mathHighscores" />
       </div>
 
       <div
@@ -31,7 +31,7 @@
         data-testid="knowledge-table"
       >
         <div class="text-h5">{{ $t('Knowledge') }}</div>
-        <HighscoresTable :scores="knowledgeHighscores"  />
+        <HighscoresTable :scores="knowledgeHighscores" />
       </div>
 
       <div

@@ -24,8 +24,7 @@ export class GeographyService {
     do {
       const randomEntry: any = randomElement(list as any);
       if (result.indexOf(randomEntry) === -1) {
-        randomEntry.countryEn =
-          countries_en[list.indexOf(randomEntry)].country;
+        randomEntry.countryEn = countries_en[list.indexOf(randomEntry)].country;
         result.push(randomEntry);
       }
     } while (result.length < count);
