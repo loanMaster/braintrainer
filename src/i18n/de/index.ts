@@ -51,8 +51,8 @@ export default {
   },
   'countries-and-capitals': {
     title: 'Hauptstädte',
-    description: 'Was ist die Hauptstadt des jeweiligen Lands?',
-    hint: 'Was ist die Hauptstadt des jeweiligen Lands?',
+    description: 'Kennst du Hauptstadt des jeweiligen Lands?',
+    hint: 'Kennst du Hauptstadt des jeweiligen Lands?',
   },
   'find-matching-person': {
     title: 'Personen Merken (II)',
