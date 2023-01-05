@@ -49,6 +49,11 @@ export default {
     description: 'Merke dir einige Wörter einer Fremdsprache',
     hint: 'Merke dir die Wörter, die gleich vorgelesen werden und deren Übersetzung.',
   },
+  'countries-and-capitals': {
+    title: 'Hauptstädte',
+    description: 'Was ist die Hauptstadt des jeweiligen Lands?',
+    hint: 'Was ist die Hauptstadt des jeweiligen Lands?',
+  },
   'find-matching-person': {
     title: 'Personen Merken (II)',
     description:
@@ -120,6 +125,7 @@ export default {
   'Who is this person?': 'Wer ist diese Person?',
   Back: 'Zurück',
   Maths: 'Mathe',
+  Knowledge: 'Wissen',
   'Memory exercises': 'Gedächtnis',
   Language: 'Sprache',
   'Changes saved': 'Änderungen gespeichert',

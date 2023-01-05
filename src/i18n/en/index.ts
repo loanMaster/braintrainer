@@ -47,6 +47,11 @@ export default {
     description: 'Learn some new words in a foreign language',
     hint: 'Remember the words and their respective translation.',
   },
+  'countries-and-capitals': {
+    title: 'Countries and capitals',
+    description: 'Do you know capital of each country?',
+    hint: 'Do you know capitals of the following countries?',
+  },
   'find-matching-person': {
     title: 'Remember people (II)',
     description: 'Note the names of the person displayed',
@@ -111,6 +116,7 @@ export default {
   'Who is this person?': '_',
   Back: '_',
   Maths: '_',
+  Knowledge: '_',
   'Memory exercises': 'Memory',
   Language: '_',
   'Changes saved': '_',

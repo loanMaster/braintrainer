@@ -3,9 +3,11 @@
 
 $words-bg-color: $blue-2;
 $math-bg-color: $green-2;
+$knowledge-bg-color: $purple-2;
 $memory-bg-color: $orange-2;
 
 $math-bg-color-dark: $brown-10;
+$knowledge-bg-color-dark: $purple-10;
 $words-bg-color-dark: $indigo-10;
 $memory-bg-color-dark: $pink-10;
 
@@ -79,6 +81,15 @@ $memory-bg-color-dark: $pink-10;
     background-color: $memory-bg-color;
     .body--dark & {
       background-color: $memory-bg-color-dark;
+    }
+  }
+}
+.knowledge-table-header {
+  & th,
+  & .table-header {
+    background-color: $knowledge-bg-color;
+    .body--dark & {
+      background-color: $knowledge-bg-color-dark;
     }
   }
 }

@@ -48,6 +48,11 @@ export default {
     description: 'Memoriza algunas palabras de un idioma extranjero',
     hint: 'Recuerda las palabras que vas a leer y su traducción.',
   },
+  'countries-and-capitals': {
+    title: 'TODO',
+    description: '',
+    hint: '',
+  },
   'find-matching-person': {
     title: 'Recuerda a la gente (II)',
     description:
@@ -115,6 +120,7 @@ export default {
   'Who is this person?': '¿Quién es esta persona?',
   Back: 'Devolver',
   Maths: 'Matemáticas',
+  Knowledge: 'TODO',
   'Memory exercises': 'Memoria',
   Language: 'Idioma',
   'Changes saved': 'Cambios guardados',

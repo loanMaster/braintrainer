@@ -22,7 +22,16 @@
         data-testid="math-table"
       >
         <div class="text-h5">{{ $t('Maths') }}</div>
-        <HighscoresTable :scores="mathHighscores" color="math" />
+        <HighscoresTable :scores="mathHighscores"/>
+      </div>
+
+      <div
+        class="knowledge-table-header q-mt-md"
+        v-if="knowledgeHighscores.length > 0"
+        data-testid="knowledge-table"
+      >
+        <div class="text-h5">{{ $t('Knowledge') }}</div>
+        <HighscoresTable :scores="knowledgeHighscores"  />
       </div>
 
       <div
@@ -31,7 +40,7 @@
         data-testid="memory-table"
       >
         <div class="text-h5">{{ $t('Memory exercises') }}</div>
-        <HighscoresTable :scores="memoryHighscores" color="memory" />
+        <HighscoresTable :scores="memoryHighscores" />
       </div>
     </div>
   </div>
@@ -44,6 +53,7 @@ import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import HighscoresTable from './HighscoresTable.vue';
 import {
+  knowledgeExercises,
   languageExercises,
   mathExercises,
   memoryExercises,
@@ -68,6 +78,12 @@ const languageHighscores = computed(() => {
 const mathHighscores = computed(() => {
   return highscores.value.filter(
     (s) => mathExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
+
+const knowledgeHighscores = computed(() => {
+  return highscores.value.filter(
+    (s) => knowledgeExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 

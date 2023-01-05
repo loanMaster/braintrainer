@@ -45,6 +45,25 @@
         </div>
       </q-card>
       <q-card class="exercise-block">
+        <div class="exercise-title">{{ $t('Knowledge') }}</div>
+        <div class="row-sm column-xs q-col-gutter-lg justify-center">
+          <div class="col-3 column" v-for="exercise in knowledgeEx" :key="exercise">
+            <q-card
+              :data-testid="'card-' + exercise"
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
+              <q-card-section class="knowledge-bg text-bold">
+                {{ t(exercise + '.title') }}
+              </q-card-section>
+              <q-card-section>{{
+                t(exercise + '.description')
+                }}</q-card-section>
+            </q-card>
+          </div>
+        </div>
+      </q-card>
+      <q-card class="exercise-block">
         <div class="exercise-title">{{ $t('Memory exercises') }}</div>
         <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
           <div
@@ -79,6 +98,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import {
+  knowledgeExercises,
   languageExercises,
   mathExercises,
   memoryExercises,
@@ -91,6 +111,7 @@ const continueAsGuestDialog = ref();
 const languageEx = ref(languageExercises);
 const mathEx = ref(mathExercises);
 const memoryEx = ref(memoryExercises);
+const knowledgeEx = ref(knowledgeExercises)
 
 onMounted(() => {
   if (
@@ -103,13 +124,24 @@ onMounted(() => {
 });
 
 function selectExercise(game: string) {
-  router.push({
-    name: 'select-difficulty',
-    params: {
-      game: game.toLowerCase(),
-      language: useAppStore().language,
-    },
-  });
+  if (game === 'countries-and-capitals') {
+    router.push({
+      name: 'countries-and-capitals',
+      params: {
+        game: game.toLowerCase(),
+        difficulty: 'normal',
+        language: useAppStore().language,
+      },
+    });
+  } else {
+    router.push({
+      name: 'select-difficulty',
+      params: {
+        game: game.toLowerCase(),
+        language: useAppStore().language,
+      },
+    });
+  }
 }
 </script>
 
@@ -119,6 +151,9 @@ function selectExercise(game: string) {
 
 .math-bg {
   background-color: $math-bg-color;
+}
+.knowledge-bg {
+  background-color: $knowledge-bg-color;
 }
 .words-bg {
   background-color: $words-bg-color;
@@ -130,6 +165,9 @@ function selectExercise(game: string) {
 .body--dark {
   .math-bg {
     background-color: $math-bg-color-dark;
+  }
+  .knowledge-bg {
+    background-color: $knowledge-bg-color-dark;
   }
   .words-bg {
     background-color: $words-bg-color-dark;

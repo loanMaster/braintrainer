@@ -39,6 +39,18 @@
       />
     </div>
     <div
+      class="knowledge-table-header q-mt-md"
+      v-if="knowledgeScores.length > 0"
+      data-testid="knowledge-table"
+    >
+      <div class="text-h5">{{ t('Knowledge') }}</div>
+      <PlayerScoresTable
+        @show-progress-diagram="showProgress"
+        :scores="knowledgeScores"
+      />
+    </div>
+
+    <div
       class="memory-table-header q-mt-md"
       v-if="memoryScores.length > 0"
       data-testid="memory-table"
@@ -63,6 +75,7 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import PlayerScoresTable from './PlayerScoresTable.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import {
+  knowledgeExercises,
   languageExercises,
   mathExercises,
   memoryExercises,
@@ -90,6 +103,12 @@ const languageScores = computed(() => {
 const mathScores = computed(() => {
   return percentiles.value.filter(
     (s) => mathExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
+
+const knowledgeScores = computed(() => {
+  return percentiles.value.filter(
+    (s) => knowledgeExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 
