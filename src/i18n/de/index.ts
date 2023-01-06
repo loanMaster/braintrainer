@@ -116,6 +116,11 @@ export default {
     description: 'Buchstabiere rückwärts',
     hint: 'Buchstabiere rückwärts! Anstatt ‹ß› bitte ‹ss› verwenden.',
   },
+  'rapid-math': {
+    title: 'Schnellrechnen',
+    description: 'Sind die zwei Zahlen zusammen gleich gross wie die dritte?',
+    hint: 'Du siehst 2 Zahlen und hörst eine weitere. Klicke schnell auf den grünen Knopf, wenn die Summe von 2 der Zahlen so gross wie die dritte Zahl ist. Sonst drücke auf den roten Knopf. Du hast jeweils nur eine Sekunde Zeit!',
+  },
   'Press "START" when you are ready':
     'Klicke auf "START" sobald Du bereit bist.',
   START: 'START',
@@ -127,6 +132,7 @@ export default {
   Maths: 'Mathe',
   Knowledge: 'Wissen',
   'Memory exercises': 'Gedächtnis',
+  Concentration: 'Konzentration',
   Language: 'Sprache',
   'Changes saved': 'Änderungen gespeichert',
   auth: {

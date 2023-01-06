@@ -108,6 +108,11 @@ export default {
     description: 'Spell backwards',
     hint: 'Spell backwards!',
   },
+  'rapid-math': {
+    title: 'Rapid sum',
+    description: 'TODO',
+    hint: 'TODO',
+  },
   'Press "START" when you are ready': '_',
   START: '_',
   'The solution is': '_',
@@ -118,6 +123,7 @@ export default {
   Maths: '_',
   Knowledge: '_',
   'Memory exercises': 'Memory',
+  Concentration: '_',
   Language: '_',
   'Changes saved': '_',
   auth: {

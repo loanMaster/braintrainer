@@ -111,6 +111,11 @@ export default {
     description: 'Deletrear al revés',
     hint: '¡Deletrea al revés!',
   },
+  'rapid-math': {
+    title: 'Rapid sum',
+    description: 'TODO',
+    hint: 'TODO',
+  },
   'Press "START" when you are ready':
     'Haga clic en "EMPEZAR" cuando esté listo.',
   START: 'EMPEZAR',
@@ -122,6 +127,7 @@ export default {
   Maths: 'Matemáticas',
   Knowledge: 'TODO',
   'Memory exercises': 'Memoria',
+  Concentration: 'TODO',
   Language: 'Idioma',
   'Changes saved': 'Cambios guardados',
   auth: {

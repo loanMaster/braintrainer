@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="max-width: 512px">
     <q-card class="q-ma-sm">
       <q-card-section class="text-center">
         {{ $t(nameOfTheGame + '.hint') }}

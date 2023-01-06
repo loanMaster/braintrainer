@@ -90,6 +90,29 @@
           </div>
         </div>
       </q-card>
+      <q-card class="exercise-block">
+        <div class="exercise-title">{{ $t('Concentration') }}</div>
+        <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
+          <div
+            class="col-3 column"
+            v-for="exercise in concentrationEx"
+            :key="exercise"
+          >
+            <q-card
+              :data-testid="'card-' + exercise"
+              class="flex-1 cursor-pointer zoom-on-hover"
+              @click="selectExercise(exercise)"
+            >
+              <q-card-section class="concentration-bg text-bold">
+                {{ t(exercise + '.title') }}
+              </q-card-section>
+              <q-card-section>{{
+                t(exercise + '.description')
+              }}</q-card-section>
+            </q-card>
+          </div>
+        </div>
+      </q-card>
     </div>
   </div>
 </template>
@@ -102,6 +125,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from 'stores/auth-store';
 import {
+  concentrationExercises,
   knowledgeExercises,
   languageExercises,
   mathExercises,
@@ -116,6 +140,7 @@ const languageEx = ref(languageExercises);
 const mathEx = ref(mathExercises);
 const memoryEx = ref(memoryExercises);
 const knowledgeEx = ref(knowledgeExercises);
+const concentrationEx = ref(concentrationExercises);
 
 onMounted(() => {
   if (
@@ -165,6 +190,9 @@ function selectExercise(game: string) {
 .memory-bg {
   background-color: $memory-bg-color;
 }
+.concentration-bg {
+  background-color: $concentration-bg-color;
+}
 
 .body--dark {
   .math-bg {
@@ -178,6 +206,9 @@ function selectExercise(game: string) {
   }
   .memory-bg {
     background-color: $memory-bg-color-dark;
+  }
+  .concentration-bg {
+    background-color: $concentration-bg-color-dark;
   }
 }
 

@@ -42,6 +42,15 @@
         <div class="text-h5">{{ $t('Memory exercises') }}</div>
         <HighscoresTable :scores="memoryHighscores" />
       </div>
+
+      <div
+        class="memory-table-header q-mt-md"
+        v-if="concentrationHighscores.length > 0"
+        data-testid="concentration-table"
+      >
+        <div class="text-h5">{{ $t('Concentration') }}</div>
+        <HighscoresTable :scores="concentrationHighscores" />
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +62,7 @@ import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import HighscoresTable from './HighscoresTable.vue';
 import {
+  concentrationExercises,
   knowledgeExercises,
   languageExercises,
   mathExercises,
@@ -90,6 +100,12 @@ const knowledgeHighscores = computed(() => {
 const memoryHighscores = computed(() => {
   return highscores.value.filter(
     (s) => memoryExercises.indexOf(s.nameOfTheGame) > -1
+  );
+});
+
+const concentrationHighscores = computed(() => {
+  return highscores.value.filter(
+    (s) => concentrationExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 </script>
