@@ -47,6 +47,7 @@ $memory-bg-color-dark: $pink-10;
 }
 
 .content {
+  width: 100%;
   max-width: $breakpoint-sm;
   display: flex;
   flex-direction: column;

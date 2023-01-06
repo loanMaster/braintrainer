@@ -67,7 +67,7 @@ export class TweenService {
         if (element.isConnected && duration) {
           element.style.removeProperty('--animate-duration');
         }
-
+        console.log(`animation ${animationName} ended`)
         resolve('Animation ended');
       }
 
