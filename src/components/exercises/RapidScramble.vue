@@ -201,11 +201,11 @@ function createTask() {
     .toUpperCase()
     .split('');
   const permutation = [...currentWord];
-  if (Math.random() > 0.75) {
+  if (Math.random() > 0.8) {
     permutation.pop();
-  } else if (Math.random() > 0.6) {
+  } else if (Math.random() > 0.55) {
     permutation.push(randomElement(LETTERS[store.language].split('')));
-    if (Math.random() > 0.6) {
+    if (Math.random() > 0.3) {
       permutation.pop();
     }
   }
