@@ -92,7 +92,7 @@
       </q-card>
       <q-card class="exercise-block">
         <div class="exercise-title">{{ $t('Concentration') }}</div>
-        <div class="row-sm column-xs q-col-gutter-lg q-mb-lg">
+        <div class="row-sm column-xs q-col-gutter-lg q-mb-lg  justify-center">
           <div
             class="col-3 column"
             v-for="exercise in concentrationEx"

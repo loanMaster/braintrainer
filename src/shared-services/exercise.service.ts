@@ -28,11 +28,15 @@ export interface Introduction {
   gender: 'FEMALE' | 'MALE';
 }
 
+export interface RandomWords extends RandomWord {
+  count: number;
+}
+
 export interface RandomWord {
   lang: string;
   minLength: number;
   maxLength: number;
-  number: number;
+  number?: number;
   category?: string;
   gender?: string;
   exclude?: string[];
@@ -141,6 +145,17 @@ export class ExerciseService {
     randomWord: RandomWord
   ): Promise<HomophoneAudioResponse> {
     const response = await fetch(this.serverPath + '/speech/homophone', {
+      ...requestHelper.getStandardRequestInit(),
+      method: 'POST',
+      body: JSON.stringify(randomWord),
+    });
+    return response.json();
+  }
+
+  async fetchHomophones(
+    randomWord: RandomWords
+  ): Promise<HomophoneAudioResponse[]> {
+    const response = await fetch(this.serverPath + '/speech/homophones', {
       ...requestHelper.getStandardRequestInit(),
       method: 'POST',
       body: JSON.stringify(randomWord),

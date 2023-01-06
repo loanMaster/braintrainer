@@ -105,3 +105,12 @@ $concentration-bg-color-dark: $grey-7;
     }
   }
 }
+.concentration-table-header {
+  & th,
+  & .table-header {
+    background-color: $concentration-bg-color;
+    .body--dark & {
+      background-color: $concentration-bg-color-dark;
+    }
+  }
+}

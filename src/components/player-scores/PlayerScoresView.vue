@@ -63,7 +63,7 @@
     </div>
 
     <div
-      class="memory-table-header q-mt-md"
+      class="concentration-table-header q-mt-md"
       v-if="concentrationScores.length > 0"
       data-testid="concentration-table"
     >

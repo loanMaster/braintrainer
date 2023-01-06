@@ -7,7 +7,7 @@ export const languageExercises = [
 ];
 
 export const knowledgeExercises = ['countries-and-capitals'];
-export const concentrationExercises = ['rapid-math'];
+export const concentrationExercises = ['rapid-math', 'rapid-word-scramble'];
 
 export const mathExercises = [
   'mental-arithmetic',

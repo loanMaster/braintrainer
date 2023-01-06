@@ -6,10 +6,10 @@
     data-testid="core-exercise"
   >
     <div class="row full-width justify-center text-h4 q-ma-lg full-width">
-      <div class="relative-position q-mr-xl">
+      <div class="relative-positionx">
         <div
-          ref="numberLeft"
-          class="numberIndicator"
+          ref="word"
+          class="wordDisplay"
           :style="{
             color:
               state === 'correct'
@@ -19,23 +19,7 @@
                 : 'black',
           }"
         >
-          {{ task.value1 }}
-        </div>
-      </div>
-      <div class="relative-position q-ml-xl">
-        <div
-          ref="numberRight"
-          class="numberIndicator"
-          :style="{
-            color:
-              state === 'correct'
-                ? 'green'
-                : state === 'wrong'
-                ? 'red'
-                : 'black',
-          }"
-        >
-          {{ task.value2 }}
+          {{ task.scrambledWord }}
         </div>
       </div>
     </div>
@@ -65,16 +49,18 @@
 
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
-import { ref, onBeforeMount, onMounted, computed, Ref } from 'vue';
+import { ref, Ref, onBeforeMount, onMounted, computed } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
 import {
-  AudioResponse,
   ExerciseService,
+  HomophoneAudioResponse,
 } from 'src/shared-services/exercise.service';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
+import { randomElement, shuffle } from 'src/util/array.utils';
+import { LETTERS } from 'src/const/letters';
 
 const {
   soundService,
@@ -94,29 +80,27 @@ const {
 });
 
 const showLoadingIndicator = ref(false);
-const numberLeft = ref();
-const numberRight = ref();
+const word = ref();
 const buttons = ref();
 const router = useRouter();
 const coreExercise = ref();
-const state: Ref<'correct' | 'wrong' | ''> = ref('');
 const timeout = ref(false);
-let audio: AudioResponse[] = [];
+const state: Ref<'correct' | 'wrong' | ''> = ref('');
+let homophones: HomophoneAudioResponse[] = [];
 let cancelTimeout = -1;
 
-const task = ref({ audio: '', value1: '0', value2: '0', isTrue: false });
+const task = ref({ audio: '', scrambledWord: '', isTrue: false });
 
 onBeforeMount(() => {
-  const numberOfQuestions = 20;
+  const numberOfQuestions = 10;
   exerciseUtils.createExercise(numberOfQuestions);
 });
 
 onMounted(async () => {
   inputDisabled.value = true;
   new TweenService().setDisplay(coreExercise.value, 'none');
-  if (numberLeft.value.isConnected) {
-    numberLeft.value.style.setProperty('opacity', '0');
-    numberRight.value.style.setProperty('opacity', '0');
+  if (word.value.isConnected) {
+    word.value.style.setProperty('opacity', '0');
   }
 });
 
@@ -129,20 +113,19 @@ async function start() {
 }
 
 async function fetchAudio() {
-  audio = await new ExerciseService().fetchNumbers({
+  homophones = await new ExerciseService().fetchHomophones({
     lang: store.language,
     count: store.exercise.totalQuestions,
-    min: minNum.value,
-    max: maxNum.value,
+    minLength: minLength.value,
+    maxLength: maxLength.value,
   });
 }
 
 async function nextQuestion() {
   state.value = '';
   clearTimeout(cancelTimeout);
-  if (numberLeft.value.isConnected) {
-    numberLeft.value.style.setProperty('opacity', '0');
-    numberRight.value.style.setProperty('opacity', '0');
+  if (word.value.isConnected) {
+    word.value.style.setProperty('opacity', '0');
   }
   if (
     !(await exerciseUtils.prepareNewQuestion({
@@ -165,26 +148,24 @@ async function nextQuestion() {
   createTask();
   timeout.value = false;
 
-  if (numberLeft.value.isConnected) {
-    numberLeft.value.style.setProperty('opacity', '1');
-    numberRight.value.style.setProperty('opacity', '1');
+  if (word.value.isConnected) {
+    word.value.style.setProperty('opacity', '1');
   }
-  new TweenService().animateCSS(numberLeft.value, 'bounceInLeft', 0.75);
-  new TweenService().animateCSS(numberRight.value, 'bounceInRight', 0.75);
+  new TweenService().animateCSS(
+    word.value,
+    store.exercise.currentQuestion % 2 == 0 ? 'bounceInLeft' : 'bounceInRight',
+    0.75
+  );
 
   if (store.exercise.currentQuestion === 1) {
     store.beginExercise();
   }
   inputDisabled.value = false;
   await playAudio();
-
   cancelTimeout = setTimeout(async () => {
     if (!inputDisabled.value) {
       timeout.value = true;
-      await Promise.all([
-        new TweenService().fadeOut(numberLeft.value, 0.65),
-        new TweenService().fadeOut(numberRight.value, 0.65),
-      ]);
+      await new TweenService().fadeOut(word.value, 0.65);
       if (!inputDisabled.value) {
         inputDisabled.value = true;
         nextQuestion();
@@ -193,65 +174,69 @@ async function nextQuestion() {
   }, 650) as any;
 }
 
-const maxNum = computed(() => {
+const minLength = computed(() => {
   switch (store.exercise.difficulty) {
     case 'easy':
-      return 20;
+      return 3;
     case 'normal':
-      return 30;
+      return 6;
     default:
-      return 50;
+      return 8;
   }
 });
 
-const minNum = computed(() => {
+const maxLength = computed(() => {
   switch (store.exercise.difficulty) {
     case 'easy':
-      return 0;
+      return 5;
     case 'normal':
-      return 10;
+      return 8;
     default:
-      return 20;
+      return 10;
   }
 });
 
 function createTask() {
-  const vals = [
-    Number(audio[store.exercise.currentQuestion - 1].val),
-    Math.floor(Math.random() * maxNum.value + minNum.value),
-  ];
-  if (Math.random() > 0.65) {
-    if (vals[0] > vals[1] && Math.random() > 0.5) {
-      vals.push(vals[0] - vals[1]);
-    } else {
-      vals.push(vals[0] + vals[1]);
+  const currentWord = homophones[store.exercise.currentQuestion - 1].val[0]
+    .toUpperCase()
+    .split('');
+  const permutation = [...currentWord];
+  if (Math.random() > 0.75) {
+    permutation.pop();
+  } else if (Math.random() > 0.6) {
+    permutation.push(randomElement(LETTERS[store.language].split('')));
+    if (Math.random() > 0.6) {
+      permutation.pop();
     }
-  } else {
-    const expected = vals[0] + vals[1];
-    vals.push(Math.max(0, expected + Math.floor((Math.random() * 8) / 4)));
   }
-  const isTrue =
-    vals[0] + vals[1] === vals[2] ||
-    vals[0] + vals[2] === vals[1] ||
-    vals[1] + vals[2] === vals[0];
-  if (Math.random() > 0.5) {
-    const temp = vals[1];
-    vals[1] = vals[2];
-    vals[2] = temp;
+  shuffle(permutation);
+  while (permutation.join('') === currentWord.join('')) {
+    shuffle(permutation);
   }
+  const sortedPermutation = permutation.sort((a, b) =>
+    a > b ? 1 : a < b ? -1 : 0
+  );
+  let isTrue = false;
+  homophones[store.exercise.currentQuestion - 1].val.forEach((v) => {
+    const sortedWord = v
+      .toUpperCase()
+      .split('')
+      .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
+    if (sortedPermutation.join('') === sortedWord.join('')) {
+      isTrue = true;
+    }
+  });
   task.value = {
-    audio: audio[store.exercise.currentQuestion - 1].audio,
-    value1: String(vals[1]),
-    value2: String(vals[2]),
+    audio: homophones[store.exercise.currentQuestion - 1].audio,
+    scrambledWord: permutation.join(''),
     isTrue,
   };
 }
 
 function playAudio() {
-  if (soundService.isPlaying()) {
-    soundService.stop();
+  if (!soundService.isPlaying()) {
+    return soundService.play(task.value);
   }
-  return soundService.play(task.value);
 }
 
 async function onButtonClicked(value: boolean) {
@@ -259,36 +244,31 @@ async function onButtonClicked(value: boolean) {
     return;
   }
   inputDisabled.value = true;
-  new TweenService().stopAnimations(numberRight.value);
-  new TweenService().stopAnimations(numberLeft.value);
-
   if (value !== task.value.isTrue) {
     useAppStore().strike();
     new TweenService().wiggle(buttons.value);
     state.value = 'wrong';
-    task.value.value1 = 'X';
-    task.value.value2 = 'X';
+    task.value.scrambledWord = 'X';
+    new TweenService().stopAnimations(word.value);
     await Promise.all([
-      new TweenService().animateCSS(numberLeft.value, 'backOutDown', 0.5),
-      new TweenService().animateCSS(numberRight.value, 'backOutDown', 0.5),
+      new TweenService().animateCSS(word.value, 'backOutDown', 0.5),
     ]);
   } else {
     store.$patch((state) => state.exercise.correctAnswers++);
     state.value = 'correct';
-    task.value.value1 = '✓';
-    task.value.value2 = '✓';
+    task.value.scrambledWord = '✓';
+    new TweenService().stopAnimations(word.value);
     await Promise.all([
-      new TweenService().animateCSS(numberRight.value, 'bounceOutUp', 0.5),
-      new TweenService().animateCSS(numberLeft.value, 'bounceOutUp', 0.5),
+      new TweenService().animateCSS(word.value, 'bounceOutUp', 0.5),
     ]);
   }
-
   nextQuestion();
 }
 </script>
 
 <style scoped>
-.numberIndicator {
+.wordDisplay {
+  color: black;
   border: 3px black solid;
   border-radius: 10px;
   background-color: white;

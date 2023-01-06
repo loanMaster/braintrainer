@@ -119,7 +119,12 @@ export default {
   'rapid-math': {
     title: 'Schnellrechnen',
     description: 'Sind die zwei Zahlen zusammen gleich gross wie die dritte?',
-    hint: 'Du siehst 2 Zahlen und hörst eine weitere. Klicke schnell auf den grünen Knopf, wenn die Summe von 2 der Zahlen so gross wie die dritte Zahl ist. Sonst drücke auf den roten Knopf. Du hast jeweils nur eine Sekunde Zeit!',
+    hint: 'Du siehst 2 Zahlen und hörst eine weitere. Klicke schnell auf den grünen Knopf, wenn die Summe von 2 der Zahlen so gross wie die dritte Zahl ist. Sonst drücke auf den roten Knopf. Du hast jeweils nur etwa eine Sekunde Zeit!',
+  },
+  'rapid-word-scramble': {
+    title: 'Buchstabensuppe',
+    description: 'Lässt sich das vorgelesene Wort aus den angzeigten Buchstaben bilden?',
+    hint: 'Lässt sich das vorgelesene Wort aus den angezeigten Buchstaben bilden? Drücke auf den grünen Knopf, falls ja, ansonsten drücke den roten. Du hast jeweils nur etwa eine Sekunde Zeit!',
   },
   'Press "START" when you are ready':
     'Klicke auf "START" sobald Du bereit bist.',

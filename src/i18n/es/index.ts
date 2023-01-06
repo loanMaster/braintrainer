@@ -116,6 +116,11 @@ export default {
     description: 'TODO',
     hint: 'TODO',
   },
+  'rapid-word-scramble': {
+    title: 'TODO',
+    description: 'Lässt sich das vorgegebene Wort aus den angzeigten Buchstaben bilden',
+    hint: 'Lässt sich das vorgelesene Wort aus den angezeigten Buchstaben bilden? Drücke auf den grünen Knopf, falls ja, ansonsten drücke den roten. Du hast jeweils nur etwa eine Sekunde Zeit!',
+  },
   'Press "START" when you are ready':
     'Haga clic en "EMPEZAR" cuando esté listo.',
   START: 'EMPEZAR',
