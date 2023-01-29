@@ -7,7 +7,7 @@
         v-if="!showLoadingIndicator"
       >
         <div
-          class="col-4 column"
+          class="col-4 column flex-1"
           v-for="difficulty in difficulties"
           :key="difficulty"
           @click="selectDifficulty(difficulty)"

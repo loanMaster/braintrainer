@@ -187,4 +187,8 @@ function playAgain() {
 .body--dark .semi-transparent-background {
   background-color: #ffffff11;
 }
+.q-circular-progress__svg {
+  height: auto!important; /* safari bug */
+  min-height: 100%;
+}
 </style>

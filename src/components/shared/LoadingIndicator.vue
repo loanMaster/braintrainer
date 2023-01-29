@@ -1,6 +1,6 @@
 <template>
   <q-inner-loading :showing="showing">
-    <q-spinner-gears size="8rem" />
+      <q-spinner-gears  size="15%"/>
   </q-inner-loading>
 </template>
 
