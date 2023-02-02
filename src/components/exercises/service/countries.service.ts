@@ -42,7 +42,7 @@ export class GeographyService {
       .map((c) => c.capital);
   }
 
-  getAllCountries(lang: string): string[] {
+  getAllCountries(): string[] {
     return countries_en.map((entry) => {
       return entry.country;
     });

@@ -79,12 +79,8 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 const {
   soundService,
   revealed,
-  isDev,
-  destroy,
-  route,
   store,
   inputDisabled,
-  onSolutionConfirmed,
 } = createExerciseContext({
   playAudioCb: () => {
     // no-op

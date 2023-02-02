@@ -65,12 +65,8 @@ import { LETTERS } from 'src/const/letters';
 const {
   soundService,
   revealed,
-  isDev,
-  destroy,
-  route,
   store,
   inputDisabled,
-  onSolutionConfirmed,
 } = createExerciseContext({
   playAudioCb: () => {
     // no-op
