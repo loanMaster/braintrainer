@@ -15,7 +15,8 @@
           autocomplete="off"
           required
           :rules="[
-            (val && isValidPw(val)) ||
+            (val) =>
+              (val && isValidPw(val)) ||
               $t(
                 'auth.16 characters OR at least 8 characters including a number and a letter'
               ),

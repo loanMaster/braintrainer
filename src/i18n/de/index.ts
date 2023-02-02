@@ -188,7 +188,7 @@ export default {
     'Email verification pending':
       'Deine E-Mail Adresse wurde noch nicht bestätigt.',
     'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':
-      'Danke fürs Registrieren. Bitte klicke auf den Link in der Bestätigungsemail die an {email} geschickt wurde.',
+      'Danke fürs Registrieren. Bitte klicke auf den Link in der Bestätigungsemail, die an {email} geschickt wurde.',
     'Resend verification email': 'Bestätigungsemail erneut versenden',
   },
   'An error has occurred. Please refresh this site or try again later.':
