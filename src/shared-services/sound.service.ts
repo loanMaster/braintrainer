@@ -35,7 +35,7 @@ export class SoundService {
   private soundsToPreload: { [key: string]: string } = {
     success: '/sounds/Menu1A.ogg',
     error: '/sounds/negative_2.ogg',
-    finished: '/sounds/finished.ogg',
+    finished: '/sounds/finished2.mp3',
   };
 
   preCacheSounds() {

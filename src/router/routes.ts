@@ -59,7 +59,7 @@ const exerciseFinishedGuard = (
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/:language(es|de|en)?',
+    path: '/:language(de|en)?',
     component: MainLayout,
     children: [
       {

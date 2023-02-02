@@ -14,9 +14,7 @@ const solve = async (page: Page, count: number) => {
     ).toHaveCount(10, { timeout: 10000 });
     const solutionNo = await coreExercise.getAttribute('data-test');
     const solution = String(solutionNo);
-    console.log(solution);
     for (let j = 0; j < solution.length; j++) {
-      console.log(solution[j]);
       await page
         .locator(`[data-testid="numpad-${solution[j]}"]:not([disabled])`)
         .click();

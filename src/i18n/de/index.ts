@@ -1,7 +1,7 @@
 export default {
   'High scores (last 30 days)': 'Highscores der letzen 30 Tage',
   'An error occurred': 'Es ist ein Fehler aufgetreten',
-  APP_NAME: 'BrainTunes',
+  APP_NAME: 'BrainTrainer',
   'Train again': 'Nochmal trainieren',
   Practise: 'Trainieren',
   Home: 'Home',
@@ -399,4 +399,8 @@ export default {
     I: 'Ich',
     You: 'Du',
   },
+  'Please take the following survey to improve BrainTrainer:':
+    'Bitte nimm an folgender Umfrage Teil, um BrainTrainer weiter zu verbessern:',
+  'Have a look at our partner website:': 'Besuche unsere Partner-Website:',
+  SURVEY_URL: 'https://freeonlinesurveys.com/s/SXpB2X1J',
 };

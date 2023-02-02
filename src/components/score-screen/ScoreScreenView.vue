@@ -102,6 +102,30 @@
         </div>
       </q-card-section>
     </q-card>
+    <div class="q-mx-auto text-h6 text-center q-mt-xl q-px-sm">
+      <div class="">
+        {{ $t('Please take the following survey to improve BrainTrainer:') }}
+      </div>
+      <a
+        class="text-color-default"
+        style="word-break: break-all"
+        target="_blank"
+        :href="$t('SURVEY_URL')"
+        >{{ $t('SURVEY_URL') }}</a
+      >
+    </div>
+    <div class="q-mx-auto text-h6 text-center q-mt-xl q-px-sm">
+      <div class="">
+        {{ $t('Have a look at our partner website:') }}
+      </div>
+      <a
+        class="text-color-default"
+        style="word-break: break-all"
+        target="_blank"
+        :href="'https://chessninja.org'"
+        >https://chessninja.org</a
+      >
+    </div>
   </div>
 </template>
 
@@ -188,7 +212,7 @@ function playAgain() {
   background-color: #ffffff11;
 }
 .q-circular-progress__svg {
-  height: auto!important; /* safari bug */
+  height: auto !important; /* safari bug */
   min-height: 100%;
 }
 </style>

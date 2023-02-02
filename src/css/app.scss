@@ -114,3 +114,12 @@ $concentration-bg-color-dark: $grey-7;
     }
   }
 }
+
+.text-color-default {
+  color: black;
+}
+.body--dark {
+  .text-color-default {
+    color: white;
+  }
+}

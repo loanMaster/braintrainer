@@ -141,9 +141,9 @@
                 >
                   <q-item-section>deutsch</q-item-section>
                 </q-item>
-                <q-item clickable v-close-popup @click="setLanguage('es')">
+                <!-- <q-item clickable v-close-popup @click="setLanguage('es')">
                   <q-item-section>español</q-item-section>
-                </q-item>
+                </q-item> -->
               </q-list>
             </q-menu>
           </q-btn>

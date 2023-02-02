@@ -3,7 +3,10 @@
     class="column flex-auto relative-position"
     :style="{ 'overflow-x': overflow, 'max-width': '100%' }"
   >
-    <MovingColorsBackground />
+    <MovingColorsBackground
+      :style="{ opacity: notPlaying ? '1' : '0.2' }"
+      style="transition-property: opacity; transition-duration: 1s"
+    />
     <ExerciseHeader />
     <router-view v-slot="{ Component }">
       <transition
@@ -22,13 +25,14 @@
 <script setup lang="ts">
 import ExerciseHeader from 'src/components/exercises/shared/ExerciseHeader.vue';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 
 const refEnterClass = ref('fadeIn');
 const refLeaveClass = ref('fadeIn');
 const overflow = ref('hidden');
+const route = useRoute();
 
 router.beforeEach((to, from) => {
   overflow.value = 'hidden';
@@ -52,6 +56,11 @@ router.beforeEach((to, from) => {
     refLeaveClass.value = 'fadeOut';
   }
 });
+
+const notPlaying = computed(() => {
+  return route.name === 'select-difficulty' || route.name === 'select-exercise';
+});
+
 router.afterEach(() => {
   setTimeout(() => {
     overflow.value = 'visible';

@@ -21,6 +21,7 @@
   display: block;
   font-size: 52px;
   color: transparent;
+  pointer-events: none;
 }
 
 .animated-bg::before,

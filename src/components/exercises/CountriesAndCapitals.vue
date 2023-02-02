@@ -72,7 +72,6 @@ import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import InlineSvg from 'vue-inline-svg';
 import {
   CountryAndCapital,
@@ -157,7 +156,6 @@ function updateButtons() {
   capitalOptions = capitalOptions.splice(0, 4);
   capitalOptions.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   buttonLabels.value = capitalOptions;
-  console.log('capital is ' + getCurrentTask().capital);
   letterButtons.value.showAtLeast([getCurrentTask().capital[0]]);
 }
 
@@ -182,8 +180,6 @@ async function nextQuestion() {
   } else {
     updateButtons();
   }
-  console.log(task.value);
-  console.log('country is ' + country.value);
   highlightCountry(getCurrentTask().countryEn);
   await playAudio();
 }

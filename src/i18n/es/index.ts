@@ -1,7 +1,7 @@
 export default {
   'High scores (last 30 days)': 'Puntuaciones altas (30 días)',
   'An error occurred': 'Se ha producido un error',
-  APP_NAME: 'BrainTunes',
+  APP_NAME: 'BrainTrainer',
   'Train again': 'Entrenar otra vez',
   Practise: 'Elaborar',
   Progress: 'Progreso',
@@ -118,7 +118,8 @@ export default {
   },
   'rapid-word-scramble': {
     title: 'TODO',
-    description: 'Lässt sich das vorgegebene Wort aus den angzeigten Buchstaben bilden',
+    description:
+      'Lässt sich das vorgegebene Wort aus den angzeigten Buchstaben bilden',
     hint: 'Lässt sich das vorgelesene Wort aus den angezeigten Buchstaben bilden? Drücke auf den grünen Knopf, falls ja, ansonsten drücke den roten. Du hast jeweils nur etwa eine Sekunde Zeit!',
   },
   'Press "START" when you are ready':

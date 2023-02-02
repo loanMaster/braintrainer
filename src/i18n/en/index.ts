@@ -1,7 +1,7 @@
 export default {
   'High scores (last 30 days)': '_',
   'An error occurred': '_',
-  APP_NAME: 'BrainTunes',
+  APP_NAME: 'BrainTrainer',
   'Train again': '_',
   Practise: 'Train',
   Home: 'Home',
@@ -110,13 +110,13 @@ export default {
   },
   'rapid-math': {
     title: 'Rapid sum',
-    description: 'TODO',
-    hint: 'TODO',
+    description: 'Is the sum of two numbers equal to the third?',
+    hint: 'You see two numbers and hear another. Quickly click the green button if the sum of two of the numbers is as big as the third number. Otherwise, press the red button. You have approximately one second each time!',
   },
   'rapid-word-scramble': {
-    title: 'TODO',
-    description: 'Lässt sich das vorgegebene Wort aus den angzeigten Buchstaben bilden',
-    hint: 'Lässt sich das vorgelesene Wort aus den angezeigten Buchstaben bilden? Drücke auf den grünen Knopf, falls ja, ansonsten drücke den roten. Du hast jeweils nur etwa eine Sekunde Zeit!',
+    title: 'Rapid word scramble',
+    description: 'Can the read word be formed from the displayed letters?',
+    hint: 'Can the read word be formed from the displayed letters? Press the green button if yes, otherwise press the red one. You have approximately one second each time!',
   },
   'Press "START" when you are ready': '_',
   START: '_',
@@ -133,7 +133,7 @@ export default {
   'Changes saved': '_',
   auth: {
     'lower case letters and hyphens only':
-      'Nur Kleinbuchstaben und Bindestrich',
+      'Lower case letters and hyphens only',
     'error username exists': 'This usename is already taken',
     'error email exists':
       'A user with this email address is already registered.',
@@ -395,4 +395,7 @@ export default {
     I: '_',
     You: '_',
   },
+  'Please take the following survey to improve BrainTrainer:': '_',
+  'Have a look at our partner website:': '_',
+  SURVEY_URL: 'https://freeonlinesurveys.com/s/V4SH5VqZ',
 };
