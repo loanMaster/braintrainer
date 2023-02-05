@@ -62,12 +62,7 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { randomElement, shuffle } from 'src/util/array.utils';
 import { LETTERS } from 'src/const/letters';
 
-const {
-  soundService,
-  revealed,
-  store,
-  inputDisabled,
-} = createExerciseContext({
+const { soundService, revealed, store, inputDisabled } = createExerciseContext({
   playAudioCb: () => {
     // no-op
   },

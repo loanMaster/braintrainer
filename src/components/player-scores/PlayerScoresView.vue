@@ -77,10 +77,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  PercentileScore,
-  ScoreService,
-} from 'src/shared-services/score.service';
 import { ref, onMounted, Ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
@@ -93,46 +89,47 @@ import {
   mathExercises,
   memoryExercises,
 } from 'src/const/games';
+import { Score, useAppStore } from 'stores/app-store';
 
 const { t } = useI18n();
 const showLoadingIndicator = ref(false);
-const percentiles: Ref<PercentileScore[]> = ref([]);
+const scores: Ref<Score[]> = ref([]);
 const nameOfTheGame = ref('');
 const difficulty = ref('easy');
 const showProgressDiagram = ref(false);
 
 onMounted(async () => {
   showLoadingIndicator.value = true;
-  percentiles.value = await new ScoreService().fetchPlayerScorePercentiles();
+  scores.value = (await useAppStore().playerScores?.scores) || [];
   showLoadingIndicator.value = false;
 });
 
 const languageScores = computed(() => {
-  return percentiles.value.filter(
+  return scores.value.filter(
     (s) => languageExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const mathScores = computed(() => {
-  return percentiles.value.filter(
+  return scores.value.filter(
     (s) => mathExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const knowledgeScores = computed(() => {
-  return percentiles.value.filter(
+  return scores.value.filter(
     (s) => knowledgeExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const memoryScores = computed(() => {
-  return percentiles.value.filter(
+  return scores.value.filter(
     (s) => memoryExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const concentrationScores = computed(() => {
-  return percentiles.value.filter(
+  return scores.value.filter(
     (s) => concentrationExercises.indexOf(s.nameOfTheGame) > -1
   );
 });

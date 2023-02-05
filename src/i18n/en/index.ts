@@ -134,49 +134,11 @@ export default {
   auth: {
     'lower case letters and hyphens only':
       'Lower case letters and hyphens only',
-    'error username exists': 'This usename is already taken',
-    'error email exists':
-      'A user with this email address is already registered.',
-    Logout: '_',
-    Login: '_',
-    'There was an error during login.': '_',
-    'There was an error during login. Please verify your e-mail address and password.':
-      '_',
-    'Email address': '_',
-    'Sign in with email': '_',
-    'Sign in': '_',
-    'No account? Sign up here!': '_',
-    'Forgot your password?': '_',
-    'Reset Password': '_',
-    'Delete account': '_',
-    'Are you sure that you want to delete your account? This action can not be undone.':
-      '_',
-    'You will shortly receive an email with a link to reset your password.':
-      '_',
-    'Set new Password': '_',
     'Please type something': '_',
-    'Password changed': '_',
-    'Sign up': '_',
-    'Sign up with email': '_',
-    '16 characters OR at least 8 characters including a number and a letter':
-      '_',
-    'Already registered?': '_',
-    'Sign in here': '_',
-    'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
-      '_',
     'Your profile': '_',
     Account: '_',
     Picture: '_',
     'Save changes': '_',
-    Password: '_',
-    'Repeat new password': '',
-    'Reset password': '_',
-    'Email verification pending': '_',
-    'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':
-      '_',
-    'Resend verification email': '_',
-    'An error occurred when sending the e-mail': '_',
-    'Verification email sent': '_',
   },
   'An error has occurred. Please refresh this site or try again later.': '_',
   Exercise: '_',
@@ -211,7 +173,7 @@ export default {
     '-The exercises are useful because we often have to respond to auditory information in everyday life (e.g. in conversation)',
   'How does { APP_NAME } work?': '_',
   'How does work_RESPONSE':
-    '{ APP_NAME } offers a variety of different exercises to train your brain. Choose an exercise and select a difficulty level. You can practice as a guest or register with your email address.',
+    '{ APP_NAME } offers a variety of different exercises to train your brain. Choose an exercise and select a difficulty level.',
   'Select an exercise': '_',
   easy: 'Beginner',
   normal: 'Intermediate',

@@ -3,9 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
-import { PercentileScore, Score } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
-import { useAuthStore } from 'stores/auth-store';
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -59,15 +57,20 @@ export interface AudioState {
   measuringTime?: boolean;
 }
 
+export interface Score {
+  nameOfTheGame: string;
+  difficulty: string;
+  score: number;
+  date: number;
+}
+
 export interface IAppState {
   exercise: Exercise;
   machineId: string;
   _language: string;
   _themePreference: string;
-  playerScores?: { scores: PercentileScore[]; hasPercentiles: boolean };
+  playerScores?: { scores: Score[] };
   scoreHistory?: Score[];
-  _noOfTimesPlayedAsGuest: number;
-  playingAsGuest?: boolean;
 }
 
 const getBrowserLanguage = (): string => {
@@ -88,10 +91,30 @@ const tmp = {
   pauseEnd: 0,
 };
 
+const store = (data: any, key: string) => {
+  localStorage.setItem(key, btoa(JSON.stringify(data)));
+};
+const fetch = (key: string) => {
+  const data = localStorage.getItem(key);
+  if (data) {
+    return JSON.parse(atob(data));
+  } else {
+    return undefined;
+  }
+};
+
 export const useAppStore = defineStore('main', {
   state: (): IAppState => {
     if (!localStorage.getItem('machineId')) {
       localStorage.setItem('machineId', uuidv4());
+    }
+    const playerScores = fetch('playerScores');
+    if (playerScores === undefined) {
+      store({ scores: [] }, 'playerScores');
+    }
+    const scoreHistory = fetch('scoreHistory');
+    if (scoreHistory === undefined) {
+      store([], 'scoreHistory');
     }
     return {
       machineId: localStorage.getItem('machineId') || uuidv4(),
@@ -99,12 +122,8 @@ export const useAppStore = defineStore('main', {
       exercise: newExercise('remember-numbers', 'easy', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
       _themePreference: localStorage.getItem('themePreference') || 'dark',
-      _noOfTimesPlayedAsGuest: Number(
-        localStorage.getItem('noOfTimesPlayedAsGuest') || 0
-      ),
-      playerScores: undefined,
-      scoreHistory: undefined,
-      playingAsGuest: undefined,
+      playerScores,
+      scoreHistory,
     } as IAppState;
   },
   getters: {
@@ -116,9 +135,6 @@ export const useAppStore = defineStore('main', {
     },
     themePreference(): string {
       return this._themePreference;
-    },
-    noOfGamesPlayedAsGuest(): number {
-      return this._noOfTimesPlayedAsGuest;
     },
   },
   actions: {
@@ -155,9 +171,8 @@ export const useAppStore = defineStore('main', {
           score: this.exercise.score,
           date: Date.now(),
         });
+        store(this.scoreHistory, 'scoreHistory');
       }
-    },
-    updatePlayerScores(percentile: number) {
       if (this.playerScores !== undefined) {
         const matchingScore = this.playerScores.scores.find(
           (s) =>
@@ -167,15 +182,15 @@ export const useAppStore = defineStore('main', {
         if (!matchingScore) {
           this.playerScores.scores.push({
             nameOfTheGame: this.exercise.nameOfTheGame,
-            percentile: percentile,
             difficulty: this.exercise.difficulty,
             score: this.exercise.score!,
             date: Date.now(),
           });
+          store(this.playerScores, 'playerScores');
         } else if (matchingScore.score < this.exercise.score!) {
           matchingScore.score = this.exercise.score!;
-          matchingScore.percentile = percentile;
           matchingScore.date = Date.now();
+          store(this.playerScores, 'playerScores');
         }
       }
     },
@@ -206,13 +221,6 @@ export const useAppStore = defineStore('main', {
       // noop
     },
     beginExercise() {
-      if (!useAuthStore().isLoggedIn || !useAuthStore().isConfirmed) {
-        this._noOfTimesPlayedAsGuest++;
-        localStorage.setItem(
-          'noOfTimesPlayedAsGuest',
-          String(this._noOfTimesPlayedAsGuest)
-        );
-      }
       this.exercise.state = 'started';
       this.exercise.beginTimeStamp = Date.now();
     },

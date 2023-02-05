@@ -1,11 +1,7 @@
 <template>
   <div class="full-width flex-1 column items-center">
     <div class="q-py-md column flex-1 items-center content">
-      <LoadingIndicator :show="showLoadingIndicator" />
-      <div
-        class="row-sm column-xs q-col-gutter-lg"
-        v-if="!showLoadingIndicator"
-      >
+      <div class="row-sm column-xs q-col-gutter-lg">
         <div
           class="col-4 column flex-1"
           v-for="difficulty in difficulties"
@@ -42,12 +38,10 @@
 
 <script setup lang="ts">
 import StarsRating from 'src/components/shared/StarsRating.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
-import { ScoreService } from 'src/shared-services/score.service';
 import { mapScoreToRating } from 'src/util/calculate-rating';
 
 const selectedDifficulty = ref('');
@@ -57,7 +51,6 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const store = useAppStore();
-const showLoadingIndicator = ref(false);
 
 const nameOfTheGame = computed(() => route.params.game as string);
 
@@ -72,12 +65,6 @@ function getStars(difficulty: string): number {
     return 0;
   }
 }
-
-onMounted(() => {
-  showLoadingIndicator.value = true;
-  new ScoreService().fetchPlayerScores();
-  showLoadingIndicator.value = false;
-});
 
 async function selectDifficulty(difficulty: string) {
   selectedDifficulty.value = difficulty;

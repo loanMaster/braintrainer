@@ -10,40 +10,7 @@ import ExerciseView from 'src/components/exercises/ExerciseView.vue';
 import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue';
 import StartScreen from 'src/components/start/StartScreen.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
-import { useAuthStore } from 'stores/auth-store';
 import { useAppStore } from 'stores/app-store';
-
-const loginGuard = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext
-) => {
-  if (!useAuthStore().isLoggedIn) {
-    next({ name: 'login', params: { language: useAppStore().language } });
-  } else if (!useAuthStore().isConfirmed) {
-    next({
-      name: 'verification-pending',
-      params: { language: useAppStore().language },
-    });
-  } else {
-    next();
-  }
-};
-
-const guestMaxPlayGuard = (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext
-) => {
-  if (
-    (useAppStore().noOfGamesPlayedAsGuest > 3 || useAuthStore().hasAccount) &&
-    (!useAuthStore().isLoggedIn || !useAuthStore().isConfirmed)
-  ) {
-    next({ name: 'login', params: { language: useAppStore().language } });
-  } else {
-    next();
-  }
-};
 
 const exerciseFinishedGuard = (
   to: RouteLocationNormalized,
@@ -63,76 +30,23 @@ const routes: RouteRecordRaw[] = [
     component: MainLayout,
     children: [
       {
-        path: 'confirm-email',
-        component: () => import('src/components/auth/ConfirmEmail.vue'),
-        name: 'confirm-email',
-      },
-      {
-        path: 'login',
-        name: 'login',
-        component: () => import('src/components/auth/LoginView.vue'),
-        beforeEnter: (
-          to: RouteLocationNormalized,
-          from: RouteLocationNormalized,
-          next: NavigationGuardNext
-        ) => {
-          if (useAuthStore().isLoggedIn && useAuthStore().isConfirmed) {
-            next({
-              name: 'user-settings',
-              params: { language: useAppStore().language },
-            });
-          } else if (useAuthStore().isLoggedIn && !useAuthStore().isConfirmed) {
-            next({
-              name: 'verification-pending',
-              params: { language: useAppStore().language },
-            });
-          } else {
-            next();
-          }
-        },
-      },
-      {
-        path: 'signup',
-        name: 'signup',
-        component: () => import('src/components/auth/SignupView.vue'),
-      },
-      {
-        path: 'reset-password',
-        name: 'reset-password',
-        component: () => import('src/components/auth/ResetPassword.vue'),
-      },
-      {
-        path: 'set-new-password',
-        name: 'set-new-password',
-        component: () => import('src/components/auth/SetNewPassword.vue'),
-      },
-      {
-        path: 'verification-pending',
-        name: 'verification-pending',
-        component: () => import('src/components/auth/VerificationPending.vue'),
-      },
-      {
         path: 'user-settings',
         name: 'user-settings',
         component: () => import('src/components/auth/UserSettings.vue'),
-        beforeEnter: loginGuard,
       },
       { path: '', component: StartScreen, name: 'home' },
       {
         path: 'train',
         component: ExerciseBaseLayout,
-        beforeEnter: guestMaxPlayGuard,
         children: [
           {
             path: '',
             name: 'select-exercise',
             component: GameSelectionView,
-            beforeEnter: guestMaxPlayGuard,
           },
           {
             path: ':difficulty(easy|normal|hard)',
             component: ExerciseView,
-            beforeEnter: guestMaxPlayGuard,
             name: 'exercise',
             children: [
               {
@@ -277,16 +191,10 @@ const routes: RouteRecordRaw[] = [
         beforeEnter: exerciseFinishedGuard,
       },
       {
-        path: 'highscores',
-        name: 'highscores',
-        component: () => import('src/components/highscores/HighscoresView.vue'),
-      },
-      {
         path: 'player-scores',
         name: 'player-scores',
         component: () =>
           import('src/components/player-scores/PlayerScoresLayout.vue'),
-        beforeEnter: loginGuard,
       },
     ],
   },

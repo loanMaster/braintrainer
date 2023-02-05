@@ -83,20 +83,6 @@
               class="text-white q-px-sm"
             />
           </router-link>
-
-          <router-link
-            data-testid="highscores-nav-item"
-            :to="{ name: 'highscores', params: { language: store.language } }"
-          >
-            <q-btn
-              flat
-              dense
-              no-wrap
-              no-caps
-              :label="$t('Highscores')"
-              class="text-white q-px-sm"
-            />
-          </router-link>
         </div>
 
         <div class="row no-wrap">
@@ -148,18 +134,7 @@
             </q-menu>
           </q-btn>
 
-          <q-btn
-            flat
-            dense
-            no-caps
-            class="q-mr-xs"
-            v-if="!isLoggedIn"
-            @click="login"
-          >
-            {{ $t('auth.Login') }}
-          </q-btn>
-
-          <q-btn flat round v-if="isLoggedIn">
+          <q-btn flat round>
             <q-avatar>
               <img :src="profileImage" data-testid="profile-picture" />
             </q-avatar>
@@ -175,9 +150,6 @@
                       >{{ $t('User profile') }}</router-link
                     ></q-item-section
                   >
-                </q-item>
-                <q-item clickable v-close-popup @click="logout">
-                  <q-item-section>{{ $t('auth.Logout') }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -237,7 +209,6 @@ import {
   matFitnessCenter,
   matBarChart,
   matPerson,
-  matEmojiEvents,
   matFullscreen,
   matFullscreenExit,
 } from '@quasar/extras/material-icons';
@@ -247,7 +218,6 @@ import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 import { setDarkMode } from 'src/util/dark-model.toggle';
 import { useAuthStore } from 'stores/auth-store';
-import { useRouter } from 'vue-router';
 const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
@@ -269,27 +239,12 @@ function toggleDarkMode() {
 
 const i18n = useI18n();
 const authStore = useAuthStore();
-const router = useRouter();
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 function setLanguage(lang: string) {
   store.setLanguage(i18n, lang);
-}
-
-const isLoggedIn = computed(() => {
-  return authStore.isLoggedIn;
-});
-
-function logout() {
-  authStore.logout();
-}
-
-function login() {
-  if (!authStore.isLoggedIn) {
-    router.push({ name: 'login', params: { language: store.language } });
-  }
 }
 
 const profileImage = computed(() => authStore.image);
@@ -299,7 +254,6 @@ const links1 = ref([
   { icon: matFitnessCenter, text: t('Practise'), to: 'select-exercise' },
   { icon: matBarChart, text: t('Progress'), to: 'player-scores' },
   { icon: matPerson, text: t('User profile'), to: 'user-settings' },
-  { icon: matEmojiEvents, text: t('Highscores'), to: 'highscores' },
 ]);
 </script>
 

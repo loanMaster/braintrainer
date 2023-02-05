@@ -10,9 +10,6 @@ export const requestHelper = {
         'Content-Type': 'application/json',
         'x-machine': useAppStore().machineId,
         'x-player': useAuthStore().id || '',
-        Authorization: useAuthStore().accessToken
-          ? `Bearer ${useAuthStore().accessToken}`
-          : '',
       },
     };
   },

@@ -58,7 +58,7 @@ export default {
     title: 'Personen Merken (II)',
     description:
       'Merke dir die Namen der angezeigten Personen und ordne den Namen ein Gesicht zu.',
-    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jedem Namen der passenden Person zu.',
+    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jeden Namen der passenden Person zu.',
   },
   'remember-names': {
     title: 'Personen merken (I)',
@@ -144,52 +144,11 @@ export default {
   auth: {
     'lower case letters and hyphens only':
       'Nur Kleinbuchstaben und Bindestrich',
-    'error username exists': 'Dieser Benutzername ist bereits vergeben',
-    'error email exists':
-      'Ein Benutzer mit dieser E-Mail Adresse ist bereits registriert',
-    Logout: 'Abmelden',
-    Login: 'Anmelden',
-    'There was an error during login.':
-      'Bei der Anmeldung ist ein Fehler aufgetreten.',
-    'There was an error during login. Please verify your e-mail address and password.':
-      'Bei der Anmeldung ist ein Fehler aufgetreten. Bitte überprüfe Benutzername und Password',
-    'Email address': 'E-Mail Adresse',
-    'Sign in with email': 'Mit E-Mail anmelden',
-    'Sign in': 'Anmelden',
-    'No account? Sign up here!': 'Kein Benutzerkonto? Jetzt registrieren!',
-    'Forgot your password?': 'Passwort vergessen?',
-    'Reset Password': 'Passwort zurücksetzen',
-    'Delete account': 'Benutzerkonto löschen',
-    'Are you sure that you want to delete your account? This action can not be undone.':
-      'Möchtest du dein Benutzerkonto wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.',
-    'You will shortly receive an email with a link to reset your password.':
-      'Du erhälst in Kürze eine E-Mail, um dein Passwort zurück zu setzen.',
-    'Set new Password': 'Setze ein neues Passwort',
     'Please type something': 'Bitte tippe etwas ein',
-    'Password changed': 'Passwort geändert',
-    'Sign up': 'Registrieren',
-    'Sign up with email': 'Mit E-Mail registrieren',
-    '16 characters OR at least 8 characters including a number and a letter':
-      '16 Buchstaben oder mindestens 8 Buchstaben mit mindestens einer Ziffer',
-    'Already registered?': 'Bereits registriert?',
-    'Sign in here': 'Hier anmelden',
-    'Thank you for signing up. To activate your account click on the link in the verification email you will receive shortly.':
-      'Danke fürs Registrieren. Du erhälst in Kürze eine Bestätigungsemail, um dein Benutzerkonto zu aktivieren.',
-    'An error occurred when sending the e-mail':
-      'Beim Verschicken der Bestätigungsemail ist ein Fehler aufgetreten.',
-    'Verification email sent': 'Bestätigungsemail verschickt',
     'Your profile': 'Dein Profil',
     Account: 'Benutzerkonto',
     Picture: 'Bild',
     'Save changes': 'Änderungen speichern',
-    Password: 'Passwort',
-    'Repeat new password': 'Neues Passwort wiederholen',
-    'Reset password': 'Passwort zurücksetzen',
-    'Email verification pending':
-      'Deine E-Mail Adresse wurde noch nicht bestätigt.',
-    'Thank you for signing up. To activate your account click on the link in the verification email which was sent to { email }.':
-      'Danke fürs Registrieren. Bitte klicke auf den Link in der Bestätigungsemail, die an {email} geschickt wurde.',
-    'Resend verification email': 'Bestätigungsemail erneut versenden',
   },
   'An error has occurred. Please refresh this site or try again later.':
     'Leider ist ein Fehler aufgetreten. Bitte Laden Sie die Seite neu oder versuchen Sie es später noch einmal.',
@@ -228,7 +187,7 @@ export default {
     '-Die Übungen sind nützlich, da wir im Alltag häufig auf auditorische Information reagieren müssen (z.B. im Gespräch)',
   'How does { APP_NAME } work?': 'Wie funktioniert { APP_NAME }?',
   'How does work_RESPONSE':
-    '{ APP_NAME } bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren. Suche eine Übung aus und wähle einen Schwierigkeitsgrad. Du kannst als Gast üben oder dich mit deiner E-Mail Adresse registrieren.',
+    '{ APP_NAME } bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren. Suche eine Übung aus und wähle einen Schwierigkeitsgrad.',
   'Select an exercise': 'Wähle eine Übung',
   easy: 'Anfänger',
   normal: 'Fortgeschrittener',

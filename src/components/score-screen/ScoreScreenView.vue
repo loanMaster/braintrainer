@@ -39,29 +39,6 @@
               >
             </div>
           </div>
-          <div class="q-mt-sm">
-            <div class="text-left">
-              <div
-                v-if="
-                  updateScoreResponse && !updateScoreResponse.isNewHighScore
-                "
-                class="q-mb-sm"
-              >
-                {{
-                  $t('You are in the top { percentile }% of users', {
-                    percentile,
-                  })
-                }}
-              </div>
-              <div
-                class="text-center animated text-h6 animate bounceIn"
-                style="--animate-duration: 2s"
-                v-if="updateScoreResponse?.isNewHighScore"
-              >
-                {{ $t('New highscore') }}
-              </div>
-            </div>
-          </div>
         </div>
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
@@ -88,9 +65,7 @@
         <q-separator class="mobile-only q-mb-md"></q-separator>
         <div class="column col-4 flex-1" style="min-height: 40vh">
           <div class="text-h5">{{ $t('Progress') }}</div>
-          <q-skeleton square class="flex-1" v-if="showLoadingIndicator" />
           <ProgressDiagram
-            v-if="!showLoadingIndicator"
             :difficulty="store.exercise.difficulty"
             :nameOfTheGame="store.exercise.nameOfTheGame"
           />
@@ -130,16 +105,12 @@
 </template>
 
 <script setup lang="ts">
-import {
-  ScoreService,
-  UpdateScoreResponse,
-} from 'src/shared-services/score.service';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
 import StarsRating from 'src/components/shared/StarsRating.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { TweenService } from 'src/shared-services/tween.service';
-import { ref, computed, Ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useAppStore } from 'src/stores/app-store';
 import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
@@ -150,26 +121,10 @@ const store = useAppStore();
 const router = useRouter();
 const knob = ref();
 const score = ref(0);
-const updateScoreResponse: Ref<UpdateScoreResponse | null> = ref(null);
-const showLoadingIndicator = ref(true);
-
-const percentile = computed(() =>
-  updateScoreResponse.value
-    ? formatScore(updateScoreResponse.value.percentile * 100, store.language)
-    : 0
-);
 
 onMounted(async () => {
   new SoundService().playLevelFinished();
 
-  updateScoreResponse.value = await new ScoreService().updateScore({
-    score: store.exercise.score!,
-    nameOfTheGame: store.exercise.nameOfTheGame,
-    difficulty: store.exercise.difficulty,
-  });
-  store.updatePlayerScores(updateScoreResponse.value.percentile);
-
-  showLoadingIndicator.value = false;
   const stop = new Subject<void>();
   setTimeout(() => {
     interval(20)

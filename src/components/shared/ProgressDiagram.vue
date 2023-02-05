@@ -1,6 +1,5 @@
 <template>
   <div class="row flex-center relative-position flex-1">
-    <LoadingIndicator :showing="showLoadingIndicator" />
     <canvas
       ref="chart"
       style="max-width: 100%"
@@ -12,13 +11,10 @@ LoadingIndicator
 <script setup lang="ts">
 import { Chart, registerables } from 'chart.js';
 import { onMounted, ref } from 'vue';
-import { Score, ScoreService } from 'src/shared-services/score.service';
-import LoadingIndicator from './LoadingIndicator.vue';
-import { IAppState, useAppStore } from 'stores/app-store';
+import { IAppState, Score, useAppStore } from 'stores/app-store';
 import { SubscriptionCallbackMutationPatchObject } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
-const showLoadingIndicator = ref(false);
 
 const chart = ref();
 let chartJs: Chart;
@@ -33,9 +29,7 @@ const props = defineProps({
 
 onMounted(async () => {
   createChart([]);
-  showLoadingIndicator.value = true;
-  const scores = await new ScoreService().fetchPlayerScoreHistory();
-  showLoadingIndicator.value = false;
+  const scores = (await useAppStore().scoreHistory) || [];
   createChart(scores);
 });
 

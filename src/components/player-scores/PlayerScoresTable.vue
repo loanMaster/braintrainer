@@ -95,10 +95,6 @@
               <div>{{ $t('Rating') }}</div>
               <div>{{ props.row.score }}</div>
             </div>
-            <div class="row justify-between">
-              <div>{{ $t('Top % of users') }}</div>
-              <div>{{ props.row.percentile }}</div>
-            </div>
           </q-card-section>
         </q-card>
       </div>
@@ -137,7 +133,6 @@ const rows = computed(() => {
       score: s.score,
       date: s.date,
       stars: mapScoreToRating(s.score),
-      percentile: formatScore(s.percentile, store.language),
       sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty),
     });
   });
@@ -179,13 +174,6 @@ const columns = ref([
     label: t('Stars'),
     field: 'stars',
     align: 'center',
-  },
-  {
-    name: 'percentile',
-    sortable: true,
-    label: t('Top % of users'),
-    field: 'percentile',
-    format: (val: number) => `${formatScore(val, store.language)}%`,
   },
 ]);
 

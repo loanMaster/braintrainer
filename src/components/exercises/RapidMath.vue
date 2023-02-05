@@ -76,12 +76,7 @@ import {
 } from 'src/shared-services/exercise.service';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 
-const {
-  soundService,
-  revealed,
-  store,
-  inputDisabled,
-} = createExerciseContext({
+const { soundService, revealed, store, inputDisabled } = createExerciseContext({
   playAudioCb: () => {
     // no-op
   },
