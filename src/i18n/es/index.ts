@@ -133,7 +133,6 @@ export default {
   Maths: 'Matemáticas',
   Knowledge: 'TODO',
   'Memory exercises': 'Memoria',
-  Concentration: 'TODO',
   Language: 'Idioma',
   'Changes saved': 'Cambios guardados',
   auth: {

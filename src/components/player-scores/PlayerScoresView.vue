@@ -61,18 +61,6 @@
         :scores="memoryScores"
       />
     </div>
-
-    <div
-      class="concentration-table-header q-mt-md"
-      v-if="concentrationScores.length > 0"
-      data-testid="concentration-table"
-    >
-      <div class="text-h5">{{ $t('Concentration') }}</div>
-      <PlayerScoresTable
-        @show-progress-diagram="showProgress"
-        :scores="concentrationScores"
-      />
-    </div>
   </div>
 </template>
 
@@ -83,7 +71,6 @@ import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import PlayerScoresTable from './PlayerScoresTable.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
 import {
-  concentrationExercises,
   knowledgeExercises,
   languageExercises,
   mathExercises,
@@ -125,12 +112,6 @@ const knowledgeScores = computed(() => {
 const memoryScores = computed(() => {
   return scores.value.filter(
     (s) => memoryExercises.indexOf(s.nameOfTheGame) > -1
-  );
-});
-
-const concentrationScores = computed(() => {
-  return scores.value.filter(
-    (s) => concentrationExercises.indexOf(s.nameOfTheGame) > -1
   );
 });
 

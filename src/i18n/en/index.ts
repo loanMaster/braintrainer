@@ -128,7 +128,6 @@ export default {
   Maths: '_',
   Knowledge: '_',
   'Memory exercises': 'Memory',
-  Concentration: '_',
   Language: '_',
   'Changes saved': '_',
   auth: {

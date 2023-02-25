@@ -138,7 +138,6 @@ export default {
   Maths: 'Mathe',
   Knowledge: 'Wissen',
   'Memory exercises': 'Gedächtnis',
-  Concentration: 'Konzentration',
   Language: 'Sprache',
   'Changes saved': 'Änderungen gespeichert',
   auth: {

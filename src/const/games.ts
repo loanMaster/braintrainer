@@ -7,7 +7,6 @@ export const languageExercises = [
 ];
 
 export const knowledgeExercises = ['countries-and-capitals'];
-export const concentrationExercises = ['rapid-math', 'rapid-word-scramble'];
 
 export const mathExercises = [
   'mental-arithmetic',
@@ -22,7 +21,6 @@ export const memoryExercises = [
   'remember-names',
   'find-matching-person',
   'remember-words-rev',
-  'remember-numbers-rev',
   'memory-animals',
   'memory',
   'voices-memory',

@@ -5,13 +5,11 @@ $words-bg-color: $blue-2;
 $math-bg-color: $green-2;
 $knowledge-bg-color: $purple-2;
 $memory-bg-color: $orange-2;
-$concentration-bg-color: $grey-2;
 
 $math-bg-color-dark: $brown-10;
 $knowledge-bg-color-dark: $purple-10;
 $words-bg-color-dark: $indigo-10;
 $memory-bg-color-dark: $pink-10;
-$concentration-bg-color-dark: $grey-7;
 
 .flex-auto {
   flex: auto;
@@ -102,15 +100,6 @@ $concentration-bg-color-dark: $grey-7;
     background-color: $words-bg-color;
     .body--dark & {
       background-color: $words-bg-color-dark;
-    }
-  }
-}
-.concentration-table-header {
-  & th,
-  & .table-header {
-    background-color: $concentration-bg-color;
-    .body--dark & {
-      background-color: $concentration-bg-color-dark;
     }
   }
 }
