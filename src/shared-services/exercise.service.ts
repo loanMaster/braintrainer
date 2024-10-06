@@ -3,19 +3,10 @@ import { DictionaryProvider } from '../components/exercises/service/dictionary.p
 import { DictionaryService } from '../components/exercises/service/dictionary.service';
 import { requestHelper } from '../shared-services/request.helper';
 import languageBasics from '../components/exercises/service/other-languages/language-basics.json';
-import translationsDe from '../components/exercises/service/other-languages/translation-de.json';
 
 export interface IntroductionRequest {
   lang: string;
   count: number;
-}
-
-export interface IntroductionResponse {
-  introductions: Introduction[];
-  optionalNames: {
-    FEMALE: string[];
-    MALE: string[];
-  };
 }
 
 export interface LanguageBasics {
@@ -91,29 +82,6 @@ export class ExerciseService {
 
   get serverPath() {
     return serverPath || '';
-  }
-
-  async fetchWordGroup(req: {
-    lang: string;
-    minLength: number;
-    maxLength: number;
-    includeWordList: boolean;
-  }): Promise<WordGroupResponse> {
-    const response = await fetch(this.serverPath + '/speech/word-group', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(req),
-    });
-    return response.json();
-  }
-
-  async fetchRandomWords(randomWord: RandomWord): Promise<AudioResponse[]> {
-    const response = await fetch(this.serverPath + '/speech/words', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(randomWord),
-    });
-    return response.json();
   }
 
   private createWordList(
@@ -216,26 +184,6 @@ export class ExerciseService {
     return result.splice(0, numberSpeakers * 2);
   }
 
-  async fetchNumbers(numberRequest: NumberRequest): Promise<AudioResponse[]> {
-    const response = await fetch(this.serverPath + '/speech/numbers', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(numberRequest),
-    });
-    return response.json();
-  }
-
-  async fetchHomophone(
-    randomWord: RandomWord
-  ): Promise<HomophoneAudioResponse> {
-    const response = await fetch(this.serverPath + '/speech/homophone', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(randomWord),
-    });
-    return response.json();
-  }
-
   randomHomophone(query: RandomWord): WordList {
     let word = '';
     do {
@@ -270,35 +218,6 @@ export class ExerciseService {
     return letters.split('');
   }
 
-  async fetchHomophones(
-    randomWord: RandomWords
-  ): Promise<HomophoneAudioResponse[]> {
-    const response = await fetch(this.serverPath + '/speech/homophones', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(randomWord),
-    });
-    return response.json();
-  }
-
-  async fetchWordsBackwards(randomWord: RandomWord): Promise<AudioResponse> {
-    const response = await fetch(this.serverPath + '/speech/words-backwards', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(randomWord),
-    });
-    return response.json();
-  }
-
-  async fetchAlphabet(query: { lang: string }): Promise<AudioResponse[]> {
-    const response = await fetch(this.serverPath + '/speech/alphabet', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(query),
-    });
-    return response.json();
-  }
-
   async fetchAnagram(randomWord: RandomWord): Promise<AnagramResponse> {
     const response = await fetch(
       this.serverPath + '/dictionary/random-anagram',
@@ -322,16 +241,5 @@ export class ExerciseService {
     } while (query.exclude && query.exclude.indexOf(word) > -1);
     const words = this.dictionaryService.getAnagrams(query.lang, word);
     return words;
-  }
-
-  async fetchIntroductions(
-    req: IntroductionRequest
-  ): Promise<IntroductionResponse> {
-    const response = await fetch(this.serverPath + '/speech/introductions', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(req),
-    });
-    return response.json();
   }
 }
