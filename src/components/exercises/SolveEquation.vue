@@ -28,21 +28,20 @@ import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import { takeUntil } from 'rxjs';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import { Sound, SoundService } from 'src/shared-services/sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { onBeforeMount, onMounted, Ref, ref } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
-import { ReplaySubject, Subject, take } from 'rxjs';
-import { skip } from 'rxjs/operators';
 import {
-  EquationResponse,
+  Equation,
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
 import { useRouter } from 'vue-router';
 
 const {
   soundService,
+  speechService,
   revealed,
   destroy,
   store,
@@ -62,20 +61,12 @@ const numpadContainer = ref();
 const numpad = ref();
 const showLoadingIndicator = ref(false);
 const router = useRouter();
-let nextExercise: Subject<EquationResponse>;
-let currentExercise: Ref<EquationResponse | undefined> = ref();
-
-let question: Sound[] = [];
+let currentExercise: Ref<Equation | undefined> = ref();
 
 onBeforeMount(async () => {
   const difficulty = exerciseUtils.difficulty(route);
   const numberOfQuestions = difficulty === 'easy' ? 5 : 7;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextExercise = new ReplaySubject<EquationResponse>(numberOfQuestions);
-  nextExercise
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe(() => fetchNextExercise());
-  fetchNextExercise();
 });
 
 onMounted(async () => {
@@ -107,10 +98,7 @@ async function nextQuestion() {
   numpad.value?.resetTimer();
   inputValue.value = 'x=';
   showLoadingIndicator.value = true;
-  currentExercise.value = (await nextExercise
-    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as EquationResponse;
-  question = currentExercise.value.audio.map((audio) => ({ audio }));
+  currentExercise.value = getNextExercise();
   showLoadingIndicator.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'block');
@@ -123,17 +111,15 @@ async function nextQuestion() {
 }
 
 async function playAudio(measureTime = false) {
-  await soundService.playAll(question, 100, measureTime);
+  await speechService.say(currentExercise.value!.formulaToRead);
 }
 
-async function fetchNextExercise() {
+function getNextExercise(): Equation {
   const difficulty = store.exercise.difficulty;
-  nextExercise.next(
-    await new MathExerciseService().fetchEquation({
-      difficulty,
-      lang: store.language,
-    })
-  );
+  return new MathExerciseService().createEquation({
+    difficulty,
+    lang: store.language,
+  });
 }
 
 async function onNumberEntered(num: number) {

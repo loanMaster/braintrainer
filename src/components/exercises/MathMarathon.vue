@@ -32,18 +32,18 @@ import { Sound, SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import { skip, take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { keyInput } from 'src/util/key.input';
 import {
   ContinuationExerciseResponse,
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
-import { ReplaySubject, Subject } from 'rxjs';
 import { useRouter } from 'vue-router';
 import { preloadAudio } from 'src/util/preload-assets';
 
 const {
   soundService,
+  speechService,
   revealed,
   destroy,
   store,
@@ -64,25 +64,14 @@ const numpad = ref();
 const showLoadingIndicator = ref(false);
 const router = useRouter();
 
-let nextExercise: Subject<ContinuationExerciseResponse>;
 let currentExercise: ContinuationExerciseResponse;
 
-let question: Sound[] = [];
 const expectedResult: Ref<number | null> = ref(null);
 const previousResult: Ref<number | null> = ref(null);
 
 onBeforeMount(() => {
   const numberOfQuestions = 15;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextExercise = new ReplaySubject<ContinuationExerciseResponse>(
-    numberOfQuestions + 1
-  );
-  nextExercise
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe((value: ContinuationExerciseResponse) => {
-      fetchNextExercise(value.result);
-    });
-  fetchNextExercise();
 });
 
 onMounted(() => {
@@ -98,19 +87,17 @@ onMounted(() => {
   new TweenService().setDisplay(numpadContainer.value, 'none');
 });
 
-async function fetchNextExercise(current?: number) {
-  nextExercise.next(
-    await new MathExerciseService().fetchContinuationExercise({
-      difficulty: difficulty.value as string,
-      lang: store.language,
-      current,
-    })
-  );
+function fetchNextExercise(current?: number) {
+  return new MathExerciseService().getNextCalculation({
+    difficulty: difficulty.value as string,
+    lang: store.language,
+    current,
+  });
 }
 
 async function nextQuestion() {
   inputValue.value = '';
-  soundService.stop();
+  speechService.stop();
   currentIndex.value = 0;
   if (
     !(await exerciseUtils.prepareNewQuestion({
@@ -129,20 +116,8 @@ async function nextQuestion() {
   previousResult.value = expectedResult.value;
 
   showLoadingIndicator.value = true;
-  currentExercise = (await nextExercise
-    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as ContinuationExerciseResponse;
+  currentExercise = fetchNextExercise(currentExercise?.result);
   expectedResult.value = currentExercise.result;
-  question = currentExercise.initial
-    ? [
-        { audio: currentExercise.initial.audio },
-        exerciseUtils.getSoundForMathOp(currentExercise.operation),
-        { audio: currentExercise.audio },
-      ]
-    : [
-        exerciseUtils.getSoundForMathOp(currentExercise.operation),
-        { audio: currentExercise.audio },
-      ];
   showLoadingIndicator.value = false;
 
   if (store.exercise.currentQuestion === 1) {
@@ -156,8 +131,15 @@ async function nextQuestion() {
 }
 
 async function playAudio(measureTime = false) {
-  soundService.stop();
-  await soundService.playAll(question, 100, measureTime);
+  speechService.stop();
+  if (store.exercise.currentQuestion === 1) {
+    await speechService.say(
+      currentExercise.initial + ' ' + currentExercise.asText,
+      { measureTime }
+    );
+  } else {
+    await speechService.say(currentExercise.asText, { measureTime });
+  }
 }
 
 async function onNumberEntered(num: number) {

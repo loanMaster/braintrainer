@@ -1,7 +1,6 @@
 export const languageExercises = [
   'spell-backwards',
   'word-scramble',
-  'listen-backwards',
   'find-relative',
   'language-basics',
 ];

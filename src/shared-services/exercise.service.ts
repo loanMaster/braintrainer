@@ -1,4 +1,9 @@
-import { requestHelper } from 'src/shared-services/request.helper';
+import { randomElement, shuffle } from 'src/util/array.utils';
+import { DictionaryProvider } from '../components/exercises/service/dictionary.provider';
+import { DictionaryService } from '../components/exercises/service/dictionary.service';
+import { requestHelper } from '../shared-services/request.helper';
+import languageBasics from '../components/exercises/service/other-languages/language-basics.json';
+import translationsDe from '../components/exercises/service/other-languages/translation-de.json';
 
 export interface IntroductionRequest {
   lang: string;
@@ -13,19 +18,13 @@ export interface IntroductionResponse {
   };
 }
 
-export interface LanguageBasicsResponse {
-  audio: { val: string; audio: string; en: string }[];
+export interface LanguageBasics {
   lang: string;
-}
-
-export interface Introduction {
-  text: string;
-  audio: {
-    introduction: string;
-    name: string;
-  };
-  name: string;
-  gender: 'FEMALE' | 'MALE';
+  words: {
+    src: string;
+    val: string;
+    key: string;
+  }[];
 }
 
 export interface RandomWords extends RandomWord {
@@ -38,7 +37,6 @@ export interface RandomWord {
   maxLength: number;
   number?: number;
   category?: string;
-  gender?: string;
   exclude?: string[];
 }
 
@@ -50,6 +48,11 @@ export interface WordsMultipleSpeakers {
 
 export interface HomophoneAudioResponse {
   audio: string;
+  val: string[];
+  alts?: string[];
+}
+
+export interface WordList {
   val: string[];
   alts?: string[];
 }
@@ -80,6 +83,12 @@ export interface AnagramResponse {
 }
 
 export class ExerciseService {
+  private dictionaryService: DictionaryService;
+
+  constructor() {
+    this.dictionaryService = new DictionaryService(new DictionaryProvider());
+  }
+
   get serverPath() {
     return serverPath || '';
   }
@@ -107,29 +116,104 @@ export class ExerciseService {
     return response.json();
   }
 
-  async fetchLanguageBasics(req: {
-    difficulty: string;
-  }): Promise<LanguageBasicsResponse> {
-    const response = await fetch(this.serverPath + '/speech/language-basics', {
-      ...requestHelper.getStandardRequestInit(),
-      method: 'POST',
-      body: JSON.stringify(req),
-    });
-    return response.json();
+  private createWordList(
+    lang = 'en',
+    minLength: number,
+    maxLength: number,
+    number: number,
+    category?: string
+  ): string[] {
+    const words: string[] = [];
+    const homoPhones: string[] = [];
+    do {
+      const next = this.dictionaryService.getRandomWord(
+        lang,
+        minLength,
+        maxLength,
+        category
+      );
+      if (words.indexOf(next) === -1 && homoPhones.indexOf(next) === -1) {
+        words.push(next);
+        this.dictionaryService.getHomophones(lang, next).forEach((h) => {
+          homoPhones.push(h);
+        });
+      }
+    } while (words.length < number);
+    return words;
   }
 
-  async fetchWordsMultipleSpeakers(
-    randomWord: WordsMultipleSpeakers
-  ): Promise<AudioResponse[]> {
-    const response = await fetch(
-      this.serverPath + '/speech/words-multiple-speakers',
-      {
-        ...requestHelper.getStandardRequestInit(),
-        method: 'POST',
-        body: JSON.stringify(randomWord),
-      }
+  getRandomWords(randomWord: RandomWord): string[] {
+    return this.createWordList(
+      randomWord.lang,
+      randomWord.minLength,
+      randomWord.maxLength,
+      randomWord.number || 1,
+      randomWord.category
     );
-    return response.json();
+  }
+
+  getLanguageBasics(difficulty: string): LanguageBasics {
+    const entry: {
+      lang: string;
+      voice: string;
+      easy: { [word: string]: string };
+      normal: { [word: string]: string };
+    } = randomElement(languageBasics);
+    const words = entry[difficulty === 'easy' ? 'easy' : 'normal'];
+    return {
+      words: Object.keys(words).map((word) => ({
+        src: `/sounds/other-languages/${entry.lang}_${word}.mp3`,
+        val: words[word],
+        key: word,
+      })),
+      lang: entry.lang,
+    };
+  }
+
+  getVoiceMemory(
+    numberSpeakers: number,
+    lang: string
+  ): { src: string; val: string }[] {
+    const animals = new DictionaryProvider()
+      .getDictionary(lang, 'ANIMALS')
+      .map((a) => a);
+    const shuffledAnimals = shuffle(animals);
+    const voices_en = [
+      'en-US-Studio-O',
+      'en-US-Studio-Q',
+      'en-US-Wavenet-A',
+      'en-US-Wavenet-B',
+      'en-US-Wavenet-C',
+      'en-US-Wavenet-D',
+      'en-US-Wavenet-E',
+      'en-US-Wavenet-F',
+      'en-US-Wavenet-G',
+      'en-US-Wavenet-H',
+    ];
+    const voices_de = [
+      'de-DE-Studio-B',
+      'de-DE-Studio-C',
+      'de-DE-Wavenet-A',
+      'de-DE-Wavenet-B',
+      'de-DE-Wavenet-C',
+      'de-DE-Wavenet-D',
+      'de-DE-Wavenet-E',
+      'de-DE-Wavenet-F',
+      'de-DE-Wavenet-H',
+    ];
+    const voices = lang === 'de' ? voices_de : voices_en;
+    const result = [];
+    for (const voice of voices) {
+      result.push({
+        src: `/sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
+        val: voice,
+      });
+      result.push({
+        src: `/sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
+        val: voice,
+      });
+    }
+    return result.splice(0, numberSpeakers * 2);
   }
 
   async fetchNumbers(numberRequest: NumberRequest): Promise<AudioResponse[]> {
@@ -150,6 +234,40 @@ export class ExerciseService {
       body: JSON.stringify(randomWord),
     });
     return response.json();
+  }
+
+  randomHomophone(query: RandomWord): WordList {
+    let word = '';
+    do {
+      word = this.dictionaryService.getRandomWord(
+        query.lang,
+        query.minLength,
+        query.maxLength,
+        query.category
+      );
+    } while (query.exclude && query.exclude.indexOf(word) > -1);
+
+    const homoPhones = this.dictionaryService
+      .getHomophones(query.lang, word)
+      .filter((w) => w.length === word.length);
+    const words = [word];
+    homoPhones.forEach((p) => words.push(p));
+    return {
+      val: words,
+    };
+  }
+
+  getAlphabet(query: { lang: string }): string[] {
+    const letters_de = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ';
+    const letters_en = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const letters_es = 'AÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚÜVWXYZ';
+    const letters =
+      query.lang == 'de'
+        ? letters_de
+        : query.lang == 'es'
+        ? letters_es
+        : letters_en;
+    return letters.split('');
   }
 
   async fetchHomophones(
@@ -191,6 +309,19 @@ export class ExerciseService {
       }
     );
     return response.json();
+  }
+
+  getAnagram(query: RandomWord): string[] {
+    let word: string;
+    do {
+      word = this.dictionaryService.getRandomWord(
+        query.lang,
+        query.minLength,
+        query.maxLength
+      );
+    } while (query.exclude && query.exclude.indexOf(word) > -1);
+    const words = this.dictionaryService.getAnagrams(query.lang, word);
+    return words;
   }
 
   async fetchIntroductions(

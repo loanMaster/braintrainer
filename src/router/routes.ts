@@ -80,12 +80,6 @@ const routes: RouteRecordRaw[] = [
                   import('src/components/exercises/SolveEquation.vue'),
               },
               {
-                path: ':game(listen-backwards)',
-                name: 'listen-backwards',
-                component: () =>
-                  import('src/components/exercises/ListenBackwards.vue'),
-              },
-              {
                 path: ':game(remember-words)',
                 name: 'remember-words',
                 component: () =>

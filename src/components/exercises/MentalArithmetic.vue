@@ -33,10 +33,8 @@ import { onBeforeMount, onMounted, ref } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
-import { ReplaySubject, Subject, take } from 'rxjs';
-import { skip } from 'rxjs/operators';
 import {
-  MathExerciseResponse,
+  MathExercise,
   MathExerciseService,
 } from 'src/shared-services/math-exercise.service';
 import { useRouter } from 'vue-router';
@@ -44,6 +42,7 @@ import { preloadAudio } from 'src/util/preload-assets';
 
 const {
   soundService,
+  speechService,
   revealed,
   destroy,
   store,
@@ -64,21 +63,13 @@ const numpadContainer = ref();
 const showLoadingIndicator = ref(false);
 const router = useRouter();
 
-let nextExercise: Subject<MathExerciseResponse>;
-let currentExercise: MathExerciseResponse;
-
-let question: Sound[] = [];
+let currentExercise: MathExercise;
 let solution = ref(0);
 
 onBeforeMount(async () => {
   const difficulty = exerciseUtils.difficulty(route);
   const numberOfQuestions = difficulty === 'easy' ? 5 : 7;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextExercise = new ReplaySubject<MathExerciseResponse>(numberOfQuestions);
-  nextExercise
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe(() => fetchNextExercise());
-  fetchNextExercise();
 });
 
 onMounted(async () => {
@@ -114,14 +105,7 @@ async function nextQuestion() {
   }
   numpad.value?.resetTimer();
   showLoadingIndicator.value = true;
-  currentExercise = (await nextExercise
-    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as MathExerciseResponse;
-  question = [
-    { audio: currentExercise.first.audio },
-    exerciseUtils.getSoundForMathOp(currentExercise.operation),
-    { audio: currentExercise.second.audio },
-  ];
+  currentExercise = createNewExercise();
   solution.value = currentExercise.result;
   showLoadingIndicator.value = false;
   if (store.exercise.currentQuestion === 1) {
@@ -135,24 +119,17 @@ async function nextQuestion() {
 }
 
 async function playAudio(measureTime = false) {
-  await soundService.playAll(question, 100, measureTime);
+  await speechService.say(currentExercise.asText, { measureTime });
 }
 
-async function fetchNextExercise() {
+function createNewExercise() {
   const difficulty = store.exercise.difficulty;
   if (store.exercise.nameOfTheGame === 'mental-arithmetic') {
-    nextExercise.next(
-      await new MathExerciseService().fetchAddSubExercise({
-        difficulty,
-        lang: store.language,
-      })
-    );
+    return new MathExerciseService().createAddSubExercise(difficulty as any);
   } else {
-    nextExercise.next(
-      await new MathExerciseService().fetchMatMulExercise({
-        difficulty,
-        lang: store.language,
-      })
+    return new MathExerciseService().createMulDivExercise(
+      difficulty as any,
+      store.language
     );
   }
 }

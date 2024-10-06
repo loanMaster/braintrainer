@@ -7,6 +7,7 @@ import { useAppStore } from 'stores/app-store';
 import { useRoute } from 'vue-router';
 import { keyInput } from 'src/util/key.input';
 import { filter, takeUntil } from 'rxjs/operators';
+import { SpeechService } from 'src/shared-services/speech.service';
 
 export function createExerciseContext({
   playAudioCb,
@@ -22,6 +23,7 @@ export function createExerciseContext({
   const { t } = useI18n();
   const route = useRoute();
   const soundService = new SoundService();
+  const speechService = new SpeechService();
   const inputDisabled = ref(true);
   const revealed = ref(false);
   const destroy = new Subject<void>();
@@ -32,6 +34,7 @@ export function createExerciseContext({
   });
 
   onBeforeUnmount(() => {
+    speechService.stop();
     soundService.stop();
     soundService.deactivate();
     store.$patch((store) => (store.exercise.state = 'created'));
@@ -42,13 +45,13 @@ export function createExerciseContext({
   store.$onAction(({ name, after }) => {
     after(async () => {
       if (name === 'pause' || name === 'resume') {
-        soundService.pause(store.exercise.paused);
+        speechService.pause(store.exercise.paused);
       }
       if (name === 'playerReady') {
         startCb();
       }
       if (name === 'repeatAudio') {
-        if (!soundService.isPlaying()) {
+        if (!speechService.isPlaying()) {
           const revealedWhenStarting = revealed.value;
           inputDisabled.value = true;
           await playAudioCb();
@@ -79,6 +82,7 @@ export function createExerciseContext({
 
   return {
     soundService,
+    speechService,
     revealed,
     inputDisabled,
     destroy,

@@ -13,9 +13,11 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-const nameOfTheGame = computed(() => useRoute().params?.game as string);
+const route = useRoute();
+
+const nameOfTheGame = computed(() => route.params?.game as string);
 
 const difficulty = computed(() => {
-  return useRoute().params?.difficulty;
+  return route.params?.difficulty;
 });
 </script>

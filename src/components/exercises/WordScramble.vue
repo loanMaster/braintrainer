@@ -54,16 +54,14 @@ import { SoundService } from 'src/shared-services/sound.service';
 import { ref, onBeforeMount, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {
-  AudioResponse,
-  ExerciseService,
-} from 'src/shared-services/exercise.service';
+import { ExerciseService } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
 import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 
 const {
   soundService,
+  speechService,
   revealed,
   destroy,
   store,
@@ -85,8 +83,7 @@ const countdownTimer = ref();
 const showLoadingIndicator = ref(false);
 let nextAnagrams: ReplaySubject<string[]>;
 let anagrams: string[] = [];
-let alphabet: AudioResponse[] = [];
-let loadAlphabet: Promise<AudioResponse[]>;
+let alphabet: string[] = [];
 let permutation: string[] = [];
 let highlightError = false;
 const router = useRouter();
@@ -96,6 +93,9 @@ onBeforeMount(() => {
   exerciseUtils.createExercise(numberOfQuestions);
   nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
   const exclude: string[] = [];
+  alphabet = new ExerciseService().getAlphabet({
+    lang: store.language,
+  });
   nextAnagrams
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((result) => {
@@ -103,7 +103,6 @@ onBeforeMount(() => {
       loadNextAnagram(exclude);
     });
   loadNextAnagram();
-  loadAlphabet = startLoadAlphabet();
 });
 
 onMounted(() => {
@@ -126,13 +125,11 @@ async function nextQuestion() {
   ) {
     return;
   }
+
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
   countdownTimer.value?.reset();
-  if (alphabet.length === 0) {
-    alphabet = await loadAlphabet;
-  }
   currentIndex.value = 0;
 
   showLoadingIndicator.value = true;
@@ -172,41 +169,25 @@ async function playAudio(measureTime = false) {
   const audio = [];
   for (let idx = 0; idx < permutation.length; idx++) {
     const matchingAudio = alphabet.find(
-      (a) => (a.val as string).toUpperCase() === permutation[idx]
+      (a) => a.toUpperCase() === permutation[idx]
     );
-    const letter = (matchingAudio as AudioResponse).val as string;
-    audio.push({ audio: matchingAudio!.audio, meta: { text: letter } });
+    const letter = permutation[idx];
+    audio.push({ text: letter, meta: { text: letter } });
   }
-  await soundService.playAll(audio, 100, measureTime);
+  await speechService.playAll(audio, 100, measureTime);
 }
 
-async function startLoadAlphabet(): Promise<AudioResponse[]> {
-  return new ExerciseService().fetchAlphabet({
-    lang: store.language,
-  });
-}
-
-async function loadNextAnagram(exclude?: string[]): Promise<void> {
+function loadNextAnagram(exclude?: string[]) {
   nextAnagrams.next(
-    (
-      await new ExerciseService().fetchAnagram({
-        minLength:
-          difficulty.value === 'easy'
-            ? 3
-            : difficulty.value === 'normal'
-            ? 5
-            : 6,
-        maxLength:
-          difficulty.value === 'easy'
-            ? 4
-            : difficulty.value === 'normal'
-            ? 6
-            : 7,
-        lang: store.language,
-        number: 1,
-        exclude,
-      })
-    ).words
+    new ExerciseService().getAnagram({
+      minLength:
+        difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 5 : 6,
+      maxLength:
+        difficulty.value === 'easy' ? 4 : difficulty.value === 'normal' ? 6 : 7,
+      lang: store.language,
+      number: 1,
+      exclude,
+    })
   );
 }
 

@@ -24,7 +24,7 @@
         <SpeechBubble
           :show="showSpeechBubble"
           :transparentText="!showSpeechBubbleText"
-          :text="$t('languageBasics.' + currentAudio?.en)"
+          :text="$t('languageBasics.' + currentAudio?.key)"
         />
       </div>
     </div>
@@ -75,11 +75,12 @@ import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import {
   ExerciseService,
-  LanguageBasicsResponse,
+  LanguageBasics,
 } from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { preloadAudio } from 'src/util/preload-assets';
 
 const {
   soundService,
@@ -97,7 +98,7 @@ const {
 
 const { t } = useI18n();
 let permutation: Ref<number[]> = ref([]);
-const task: Ref<LanguageBasicsResponse | undefined> = ref(undefined);
+const task: Ref<LanguageBasics | undefined> = ref(undefined);
 let buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
 let showLoadingIndicator = ref(false);
@@ -105,9 +106,8 @@ const languageIndicator = ref();
 const router = useRouter();
 const showSpeechBubble = ref(false);
 const showSpeechBubbleText = ref(false);
-const currentAudio: Ref<
-  { val: string; en: string; audio: string } | undefined
-> = ref(undefined);
+const currentAudio: Ref<{ val: string; key: string; src: string } | undefined> =
+  ref(undefined);
 
 onBeforeMount(() => {
   exerciseUtils.createExercise(sequenceLength.value);
@@ -122,22 +122,26 @@ onMounted(async () => {
 
 async function start() {
   showLoadingIndicator.value = true;
-  task.value = await loadTask();
+  task.value = loadTask();
+
   showLoadingIndicator.value = false;
 
-  await exerciseUtils.wait(1000);
+  await exerciseUtils.wait(500);
   new TweenService().setDisplay(languageIndicator.value, 'block');
   await new TweenService().fadeIn(languageIndicator.value, 1);
-  await exerciseUtils.wait(1500);
+  await Promise.all([
+    exerciseUtils.wait(1500),
+    preloadAudio(task.value.words.map((t) => t.src)),
+  ]);
   await new TweenService().fadeOut(languageIndicator.value, 1);
 
   if (difficulty.value !== 'hard') {
     showSpeechBubble.value = true;
-    for (let idx = 0; idx < task.value.audio.length; idx++) {
-      currentAudio.value = task.value.audio[idx];
+    for (let idx = 0; idx < task.value.words.length; idx++) {
+      currentAudio.value = task.value.words[idx];
       showSpeechBubbleText.value = true;
       await exerciseUtils.wait(500);
-      await soundService.play({ audio: currentAudio.value.audio });
+      await soundService.play({ src: currentAudio.value.src });
       await exerciseUtils.wait(500);
       showSpeechBubbleText.value = false;
       await exerciseUtils.wait(500);
@@ -147,10 +151,10 @@ async function start() {
 
   store.beginExercise();
 
-  shuffle(task.value.audio);
+  shuffle(task.value.words);
   permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()));
   for (let idx = 0; idx < sequenceLength.value; idx++) {
-    buttonLabels.value[idx] = task.value!.audio[permutation.value[idx]].en;
+    buttonLabels.value[idx] = task.value!.words[permutation.value[idx]].key;
   }
   nextQuestion();
 }
@@ -176,7 +180,7 @@ async function nextQuestion() {
   }
   inputDisabled.value = false;
 
-  currentAudio.value = task.value!.audio[store.exercise.currentQuestion - 1];
+  currentAudio.value = task.value!.words[store.exercise.currentQuestion - 1];
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(buttons.value, 'flex');
@@ -188,16 +192,21 @@ async function nextQuestion() {
 
 async function playAudio(measureTime = false) {
   await soundService.playAll(
-    [{ audio: currentAudio.value!.audio }],
+    [{ src: currentAudio.value!.src }],
     0,
     measureTime
   );
 }
 
-async function loadTask(): Promise<LanguageBasicsResponse> {
-  return new ExerciseService().fetchLanguageBasics({
-    difficulty: difficulty.value as string,
-  });
+function loadTask(): LanguageBasics {
+  const result = new ExerciseService().getLanguageBasics(
+    difficulty.value as string
+  );
+  const sub = shuffle(result.words).splice(0, sequenceLength.value);
+  return {
+    lang: result.lang,
+    words: sub,
+  };
 }
 
 async function selectWord(idx: number, $event: Event) {
@@ -205,7 +214,7 @@ async function selectWord(idx: number, $event: Event) {
     return;
   }
   $event.stopPropagation();
-  if (buttonLabels.value[idx] === currentAudio.value!.en) {
+  if (buttonLabels.value[idx] === currentAudio.value!.key) {
     inputDisabled.value = true;
     store.$patch((store) => store.exercise.correctAnswers++);
     new SoundService().playSuccess();
@@ -229,7 +238,7 @@ const solution = computed(() => {
   if (!currentAudio.value) {
     return '';
   }
-  return `${t('languageBasics.' + currentAudio.value!.en)} - ${
+  return `${t('languageBasics.' + currentAudio.value!.key)} - ${
     currentAudio.value!.val
   }`;
 });

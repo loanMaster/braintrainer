@@ -45,10 +45,11 @@ import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import {
   ExerciseService,
-  HomophoneAudioResponse,
+  WordList,
 } from 'src/shared-services/exercise.service';
 import { skip, take } from 'rxjs/operators';
 import { useRouter } from 'vue-router';
+import { SpeechService } from 'src/shared-services/speech.service';
 
 const {
   soundService,
@@ -57,10 +58,11 @@ const {
   isDev,
   route,
   store,
+  difficulty,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({
-  playAudioCb: () => playAudio(),
+  playAudioCb: () => speak(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
 });
@@ -71,8 +73,8 @@ let homophones: string[] = [];
 let highlightError = ref(false);
 const showLoadingIndicator = ref(false);
 
-let nextAudio: Subject<HomophoneAudioResponse>;
-let currentAudio: Ref<HomophoneAudioResponse | undefined> = ref();
+let nextWord: Subject<WordList>;
+let currentWord: Ref<WordList | undefined> = ref();
 const router = useRouter();
 const coreExercise = ref();
 const letterButtons = ref();
@@ -81,15 +83,15 @@ const countdownTimer = ref();
 onBeforeMount(() => {
   const numberOfQuestions = difficulty.value === 'easy' ? 5 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextAudio = new ReplaySubject<HomophoneAudioResponse>(numberOfQuestions);
+  nextWord = new ReplaySubject<WordList>(numberOfQuestions);
   const exclude: string[] = [];
-  nextAudio
+  nextWord
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((result) => {
       result.val.forEach((v) => exclude.push(v));
-      loadNextAudio(exclude);
+      fetchNextWord(exclude);
     });
-  loadNextAudio();
+  fetchNextWord();
 });
 
 onMounted(() => {
@@ -99,10 +101,6 @@ onMounted(() => {
     }
   });
   new TweenService().setDisplay(coreExercise.value, 'none');
-});
-
-const difficulty = computed(() => {
-  return route.params.difficulty;
 });
 
 async function nextQuestion() {
@@ -121,15 +119,13 @@ async function nextQuestion() {
   }
   countdownTimer.value?.reset();
   showLoadingIndicator.value = true;
-  currentAudio.value = (await nextAudio
+  currentWord.value = await nextWord
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as HomophoneAudioResponse;
+    .toPromise();
 
   showLoadingIndicator.value = false;
 
-  homophones = (currentAudio.value as HomophoneAudioResponse).val.map((value) =>
-    value.toUpperCase()
-  );
+  homophones = currentWord.value!.val.map((value) => value.toUpperCase());
   currentIndex = homophones[0].length - 1;
 
   displayEmpty();
@@ -140,7 +136,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  await playAudio(true);
+  await speak(true);
   countdownTimer.value?.start();
 }
 
@@ -156,13 +152,13 @@ function updateButtonLabels() {
   letterButtons.value.showAtLeast([solution.value[currentIndex]]);
 }
 
-async function playAudio(measureTime = false) {
-  await soundService.play({ ...currentAudio.value!, meta: { measureTime } });
+async function speak(measureTime = false) {
+  await new SpeechService().say(currentWord.value!.val[0], { measureTime });
 }
 
-async function loadNextAudio(exclude?: string[]): Promise<void> {
-  nextAudio.next(
-    await new ExerciseService().fetchHomophone({
+function fetchNextWord(exclude?: string[]) {
+  nextWord.next(
+    new ExerciseService().randomHomophone({
       minLength:
         difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 5 : 7,
       maxLength:

@@ -41,21 +41,28 @@ import { skip } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
 import { useRoute, useRouter } from 'vue-router';
+import { preloadAudio } from 'src/util/preload-assets';
 
-const { soundService, revealed, store, inputDisabled, difficulty, isDev } =
-  createExerciseContext({
-    playAudioCb: () => playAudio(),
-    nextQuestionCb: () => nextQuestion(),
-    startCb: () => nextQuestion(),
-  });
+const {
+  soundService,
+  speechService,
+  revealed,
+  store,
+  inputDisabled,
+  difficulty,
+  isDev,
+} = createExerciseContext({
+  playAudioCb: () => playAudio(),
+  nextQuestionCb: () => nextQuestion(),
+  startCb: () => nextQuestion(),
+});
 
 let permutation: number[] = [];
-let currentAudio: AudioResponse[] = [];
-let nextAudio: Subject<AudioResponse[]>;
+let wordList: Ref<{ src: string; val: string }[]> = ref([]);
 const alreadyVisited: Ref<number[]> = ref([]);
 const solved: Ref<number[]> = ref([]);
 const showLoadingIndicator = ref(false);
-let lastAudioPlayed: Sound;
+let lastPlayed: { src: string; val: string };
 
 let selectedButtonIdx = ref(-1);
 let secondSelectedButtonIdx = ref(-1);
@@ -76,8 +83,6 @@ onBeforeMount(() => {
       ? 12
       : 20;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextAudio = new ReplaySubject<AudioResponse[]>(1);
-  loadAudio();
 });
 
 onMounted(async () => {
@@ -97,10 +102,11 @@ async function nextQuestion() {
   }
   inputDisabled.value = true;
   showLoadingIndicator.value = true;
-  currentAudio = (await nextAudio
-    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as AudioResponse[];
   showLoadingIndicator.value = false;
+  wordList.value =
+    store.exercise.nameOfTheGame === 'voices-memory'
+      ? await loadExerciseVoiceMemory()
+      : loadExercise();
   if (store.exercise.nameOfTheGame === 'voices-memory') {
     permutation = Array.from(Array(store.exercise.totalQuestions * 2).keys());
   } else {
@@ -115,37 +121,47 @@ async function nextQuestion() {
   inputDisabled.value = false;
 }
 
-async function readWord(sound: Sound) {
+async function readWord(word: { src: string; val: string }) {
+  speechService.stop();
   soundService.stop();
-  lastAudioPlayed = sound;
-  await soundService.play(sound);
-}
-
-function playAudio() {
-  if (lastAudioPlayed) {
-    readWord(lastAudioPlayed);
+  lastPlayed = word;
+  if (store.exercise.nameOfTheGame === 'voices-memory') {
+    await soundService.play(word);
+  } else {
+    await speechService.say(word.src);
   }
 }
 
-async function loadAudio(): Promise<void> {
-  nextAudio.next(
-    store.exercise.nameOfTheGame === 'voices-memory'
-      ? await new ExerciseService().fetchWordsMultipleSpeakers({
-          lang: store.language,
-          number: store.exercise.totalQuestions,
-        })
-      : await new ExerciseService().fetchRandomWords({
-          minLength: 3,
-          maxLength: 14,
-          lang: store.language,
-          number: store.exercise.totalQuestions,
-          gender: 'FEMALE',
-          category:
-            store.exercise.nameOfTheGame === 'memory-animals'
-              ? 'ANIMALS'
-              : undefined,
-        })
+function playAudio() {
+  if (lastPlayed) {
+    readWord(lastPlayed);
+  }
+}
+
+function loadExercise(): { src: string; val: string }[] {
+  return new ExerciseService()
+    .getRandomWords({
+      minLength: 3,
+      maxLength: 14,
+      lang: store.language,
+      number: store.exercise.totalQuestions,
+      category:
+        store.exercise.nameOfTheGame === 'memory-animals'
+          ? 'ANIMALS'
+          : undefined,
+    })
+    .map((w) => ({ src: w, val: w }));
+}
+
+async function loadExerciseVoiceMemory(): Promise<
+  { src: string; val: string }[]
+> {
+  const items = new ExerciseService().getVoiceMemory(
+    store.exercise.totalQuestions,
+    store.language
   );
+  await preloadAudio(items.map((i) => i.src));
+  return items;
 }
 
 function isSelected(idx: number) {
@@ -159,10 +175,10 @@ function isSolved(idx: number) {
 }
 
 function buttonValue(buttonIndex: number) {
-  if (!permutation || !currentAudio[permutation[buttonIndex]]) {
+  if (!permutation || wordList.value.length === 0) {
     return '';
   }
-  return currentAudio[permutation[buttonIndex]].val;
+  return wordList.value[permutation[buttonIndex]].val;
 }
 
 async function buttonClick(idx: number, $event: Event) {
@@ -171,7 +187,7 @@ async function buttonClick(idx: number, $event: Event) {
     idx === selectedButtonIdx.value ||
     idx === secondSelectedButtonIdx.value
   ) {
-    readWord(currentAudio[permutation[idx]]);
+    readWord(wordList.value[permutation[idx]]);
     return;
   }
   if (selectedButtonIdx.value !== -1 && secondSelectedButtonIdx.value !== -1) {
@@ -196,7 +212,7 @@ async function buttonClick(idx: number, $event: Event) {
     selectedButtonIdx.value = -1;
     return;
   }
-  readWord(currentAudio[permutation[idx]]);
+  readWord(wordList.value[permutation[idx]]);
   if (selectedButtonIdx.value === -1) {
     selectedButtonIdx.value = idx;
   } else {

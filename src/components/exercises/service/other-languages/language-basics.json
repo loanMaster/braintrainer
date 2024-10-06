@@ -1,0 +1,582 @@
+[
+  {
+    "lang": "af",
+    "voice": "af-ZA-Standard-A",
+    "easy": {
+      "Hello": "Hallo",
+      "Yes": "Ja",
+      "No": "Geen",
+      "Thank you": "Dankie",
+      "Big": "Groot"
+    },
+    "normal": {
+      "Car": "Voertuig",
+      "Green": "Groen",
+      "Red": "Rooi",
+      "Blue": "Blou",
+      "House": "Huis",
+      "Dog": "Hond",
+      "Cat": "Kat",
+      "One": "Een",
+      "Two": "Twee",
+      "Three": "Drie",
+      "Beach": "Strand",
+      "City": "Stad",
+      "Woman": "Vrou",
+      "Man": "Man",
+      "I": "Ek",
+      "You": "Jy"
+    }
+  },
+  {
+    "lang": "ar",
+    "voice": "ar-XA-Wavenet-A",
+    "easy": {
+      "Hello": "مرحبًا",
+      "Yes": "نعم",
+      "No": "لا",
+      "Thank you": "شكرًا لك",
+      "Big": "كبير"
+    },
+    "normal": {
+      "Car": "سيارة",
+      "Green": "لون أخضر",
+      "Red": "أحمر",
+      "Blue": "أزرق",
+      "House": "منزل",
+      "Dog": "كلب",
+      "Cat": "قط",
+      "One": "واحد",
+      "Two": "اثنين",
+      "Three": "ثلاثة",
+      "Beach": "شاطئ",
+      "City": "مدينة",
+      "Woman": "النساء",
+      "Man": "رجل",
+      "I": "أنا",
+      "You": "أنت"
+    }
+  },
+  {
+    "lang": "bn",
+    "voice": "bn-IN-Wavenet-A",
+    "easy": {
+      "Hello": "হ্যালো",
+      "Yes": "হ্যাঁ",
+      "No": "না",
+      "Thank you": "ধন্যবাদ",
+      "Big": "মস্ত"
+    },
+    "normal": {
+      "Car": "গাড়ী",
+      "Green": "সবুজ",
+      "Red": "লাল",
+      "Blue": "নীল",
+      "House": "গৃহ",
+      "Dog": "কুকুর",
+      "Cat": "বিড়াল",
+      "One": "এক",
+      "Two": "দুই",
+      "Three": "তিন",
+      "Beach": "সৈকত",
+      "City": "শহর",
+      "Woman": "নারী",
+      "Man": "মানুষ",
+      "I": "আমি",
+      "You": "আপনি"
+    }
+  },
+  {
+    "lang": "cs",
+    "voice": "cs-CZ-Wavenet-A",
+    "easy": {
+      "Hello": "Ahoj",
+      "Yes": "Ano",
+      "No": "Ne",
+      "Thank you": "Děkuju",
+      "Big": "Velký"
+    },
+    "normal": {
+      "Car": "Auto",
+      "Green": "Zelená",
+      "Red": "Červené",
+      "Blue": "Modrý",
+      "House": "Dům",
+      "Dog": "Pes",
+      "Cat": "Kočka",
+      "One": "Jeden",
+      "Two": "Dva",
+      "Three": "Tři",
+      "Beach": "Pláž",
+      "City": "Město",
+      "Woman": "Žena",
+      "Man": "Muž",
+      "I": "Já",
+      "You": "Vy"
+    }
+  },
+  {
+    "lang": "da",
+    "voice": "da-DK-Wavenet-C",
+    "easy": {
+      "Hello": "Hej",
+      "Yes": "Ja",
+      "No": "Ingen",
+      "Thank you": "Tak skal du have",
+      "Big": "Stor"
+    },
+    "normal": {
+      "Car": "Bil",
+      "Green": "Grøn",
+      "Red": "Rød",
+      "Blue": "Blå",
+      "House": "Hus",
+      "Dog": "Hund",
+      "Cat": "Kat",
+      "One": "En",
+      "Two": "To",
+      "Three": "Tre",
+      "Beach": "Strand",
+      "City": "By",
+      "Woman": "Kvinde",
+      "Man": "Mand",
+      "I": "Jeg",
+      "You": "Du"
+    }
+  },
+  {
+    "lang": "fil",
+    "voice": "fil-PH-Wavenet-A",
+    "easy": {
+      "Hello": "Kamusta",
+      "Yes": "Oo",
+      "No": "Hindi",
+      "Thank you": "Salamat",
+      "Big": "Malaki"
+    },
+    "normal": {
+      "Car": "Kotse",
+      "Green": "Berde",
+      "Red": "Pula",
+      "Blue": "Bughaw",
+      "House": "Bahay",
+      "Dog": "Aso",
+      "Cat": "Pusa",
+      "One": "Isa",
+      "Two": "Dalawa",
+      "Three": "Tatlo",
+      "Beach": "Dalampasigan",
+      "City": "Lungsod",
+      "Woman": "Babae",
+      "Man": "Lalaki",
+      "I": "Ako",
+      "You": "Ikaw"
+    }
+  },
+  {
+    "lang": "gu",
+    "voice": "gu-IN-Wavenet-A",
+    "easy": {
+      "Hello": "નમસ્તે",
+      "Yes": "હા",
+      "No": "ના",
+      "Thank you": "આભાર",
+      "Big": "મોટા"
+    },
+    "normal": {
+      "Car": "કાર",
+      "Green": "લીલા",
+      "Red": "લાલ",
+      "Blue": "વાદળી",
+      "House": "ઘર",
+      "Dog": "કૂતરો",
+      "Cat": "બિલાડી",
+      "One": "એક",
+      "Two": "બે",
+      "Three": "ત્રણ",
+      "Beach": "બીચ",
+      "City": "શહેર",
+      "Woman": "સ્ત્રી",
+      "Man": "માણસ",
+      "I": "આઈ",
+      "You": "તમે"
+    }
+  },
+  {
+    "lang": "hi",
+    "voice": "hi-IN-Wavenet-D",
+    "easy": {
+      "Hello": "नमस्ते",
+      "Yes": "हां",
+      "No": "नहीं",
+      "Thank you": "शुक्रिया",
+      "Big": "बड़ा"
+    },
+    "normal": {
+      "Car": "कार",
+      "Green": "हरा",
+      "Red": "लाल",
+      "Blue": "नीला",
+      "House": "घर",
+      "Dog": "कुत्ता",
+      "Cat": "बिल्ली",
+      "One": "एक",
+      "Two": "दो",
+      "Three": "तीन",
+      "Beach": "समुद्र तट",
+      "City": "शहर",
+      "Woman": "महिला",
+      "Man": "मर्द",
+      "I": "मैं",
+      "You": "आप"
+    }
+  },
+  {
+    "lang": "hu",
+    "voice": "hu-HU-Wavenet-A",
+    "easy": {
+      "Hello": "Helló",
+      "Yes": "Igen",
+      "No": "Nem",
+      "Thank you": "Köszönöm",
+      "Big": "Nagy"
+    },
+    "normal": {
+      "Car": "Autó",
+      "Green": "Zöld",
+      "Red": "Piros",
+      "Blue": "Kék",
+      "House": "Ház",
+      "Dog": "Kutya",
+      "Cat": "Macska",
+      "One": "Egy",
+      "Two": "Kettő",
+      "Three": "Három",
+      "Beach": "Strand",
+      "City": "Város",
+      "Woman": "Nő",
+      "Man": "Férfi",
+      "I": "Én",
+      "You": "Te"
+    }
+  },
+  {
+    "lang": "id",
+    "voice": "id-ID-Wavenet-D",
+    "easy": {
+      "Hello": "Halo",
+      "Yes": "Ya",
+      "No": "Tidak",
+      "Thank you": "Terima kasih",
+      "Big": "Besar"
+    },
+    "normal": {
+      "Car": "Mobil",
+      "Green": "Hijau",
+      "Red": "Merah",
+      "Blue": "Biru",
+      "House": "Rumah",
+      "Dog": "Anjing",
+      "Cat": "Kucing",
+      "One": "Satu",
+      "Two": "Dua",
+      "Three": "Tiga",
+      "Beach": "Pantai",
+      "City": "Kota",
+      "Woman": "Wanita",
+      "Man": "Manusia",
+      "I": "Saya",
+      "You": "Anda"
+    }
+  },
+  {
+    "lang": "ja",
+    "voice": "ja-JP-Wavenet-B",
+    "easy": {
+      "Hello": "こんにちは",
+      "Yes": "はい",
+      "No": "いいえ",
+      "Thank you": "ありがとうございました",
+      "Big": "大きい"
+    },
+    "normal": {
+      "Car": "車",
+      "Green": "緑",
+      "Red": "赤",
+      "Blue": "青い",
+      "House": "家",
+      "Dog": "犬",
+      "Cat": "ネコ",
+      "One": "一",
+      "Two": "二",
+      "Three": "三つ",
+      "Beach": "ビーチ",
+      "City": "街",
+      "Woman": "女性",
+      "Man": "男",
+      "I": "私",
+      "You": "君"
+    }
+  },
+  {
+    "lang": "ko",
+    "voice": "ko-KR-Wavenet-A",
+    "easy": {
+      "Hello": "여보세요",
+      "Yes": "예",
+      "No": "아니",
+      "Thank you": "감사합니다",
+      "Big": "큰"
+    },
+    "normal": {
+      "Car": "차",
+      "Green": "녹색",
+      "Red": "빨간색",
+      "Blue": "파란색",
+      "House": "집",
+      "Dog": "개",
+      "Cat": "고양이",
+      "One": "하나",
+      "Two": "둘",
+      "Three": "삼",
+      "Beach": "해변",
+      "City": "도시",
+      "Woman": "여성",
+      "Man": "남성",
+      "I": "나",
+      "You": "너"
+    }
+  },
+  {
+    "lang": "lv",
+    "voice": "lv-LV-Standard-A",
+    "easy": {
+      "Hello": "Sveiki",
+      "Yes": "Jā",
+      "No": "Nē",
+      "Thank you": "Paldies",
+      "Big": "Liels"
+    },
+    "normal": {
+      "Car": "Automašīna",
+      "Green": "Zaļš",
+      "Red": "sarkans",
+      "Blue": "Zils",
+      "House": "Māja",
+      "Dog": "Suns",
+      "Cat": "kat",
+      "One": "Viens",
+      "Two": "Divas",
+      "Three": "Trīs",
+      "Beach": "Pludmale",
+      "City": "Pilsēta",
+      "Woman": "Sieviete",
+      "Man": "Cilvēks",
+      "I": "Es",
+      "You": "Tu"
+    }
+  },
+  {
+    "lang": "ms",
+    "voice": "ms-MY-Wavenet-A",
+    "easy": {
+      "Hello": "Hello",
+      "Yes": "ya",
+      "No": "Tidak",
+      "Thank you": "Terima kasih",
+      "Big": "Besar"
+    },
+    "normal": {
+      "Car": "Kereta",
+      "Green": "Hijau",
+      "Red": "Merah",
+      "Blue": "Biru",
+      "House": "Rumah",
+      "Dog": "Anjing",
+      "Cat": "Kucing",
+      "One": "Satu",
+      "Two": "Dua",
+      "Three": "Tiga",
+      "Beach": "Pantai",
+      "City": "Bandar",
+      "Woman": "perempuan",
+      "Man": "Lelaki",
+      "I": "Saya",
+      "You": "Awak"
+    }
+  },
+  {
+    "lang": "cmn",
+    "voice": "cmn-CN-Wavenet-A",
+    "easy": {
+      "Hello": "你好",
+      "Yes": "是的",
+      "No": "不",
+      "Thank you": "谢谢",
+      "Big": "大"
+    },
+    "normal": {
+      "Car": "车",
+      "Green": "绿色的",
+      "Red": "红色的",
+      "Blue": "蓝色的",
+      "House": "房子",
+      "Dog": "狗",
+      "Cat": "猫",
+      "One": "一",
+      "Two": "二",
+      "Three": "三",
+      "Beach": "海滩",
+      "City": "城市",
+      "Woman": "女士",
+      "Man": "掌管",
+      "I": "我",
+      "You": "你"
+    }
+  },
+  {
+    "lang": "pl",
+    "voice": "pl-PL-Wavenet-A",
+    "easy": {
+      "Hello": "Witaj",
+      "Yes": "Tak",
+      "No": "Nie",
+      "Thank you": "Dziękuję Ci",
+      "Big": "Duży"
+    },
+    "normal": {
+      "Car": "Samochód",
+      "Green": "Zielony",
+      "Red": "Czerwony",
+      "Blue": "Niebieski",
+      "House": "Dom",
+      "Dog": "Pies",
+      "Cat": "Kot",
+      "One": "Jeden",
+      "Two": "Dwa",
+      "Three": "Trzy",
+      "Beach": "Plaża",
+      "City": "Miasto",
+      "Woman": "Kobieta",
+      "Man": "Człowiek",
+      "I": "I",
+      "You": "ty"
+    }
+  },
+  {
+    "lang": "ro",
+    "voice": "ro-RO-Wavenet-A",
+    "easy": {
+      "Hello": "Buna ziua",
+      "Yes": "Da",
+      "No": "Nu",
+      "Thank you": "Mulțumesc",
+      "Big": "Mare"
+    },
+    "normal": {
+      "Car": "Mașină",
+      "Green": "Verde",
+      "Red": "roșu",
+      "Blue": "Albastru",
+      "House": "Casa",
+      "Dog": "Câine",
+      "Cat": "Pisică",
+      "One": "Unu",
+      "Two": "Două",
+      "Three": "Trei",
+      "Beach": "plajă",
+      "City": "Oraș",
+      "Woman": "Femeie",
+      "Man": "Om",
+      "I": "Eu",
+      "You": "Tu"
+    }
+  },
+  {
+    "lang": "ta",
+    "voice": "ta-IN-Wavenet-A",
+    "easy": {
+      "Hello": "வணக்கம்",
+      "Yes": "ஆம்",
+      "No": "இல்லை",
+      "Thank you": "நன்றி",
+      "Big": "பெரிய"
+    },
+    "normal": {
+      "Car": "கார்",
+      "Green": "பச்சை",
+      "Red": "சிவப்பு",
+      "Blue": "நீலம்",
+      "House": "வீடு",
+      "Dog": "நாய்",
+      "Cat": "பூனை",
+      "One": "ஒன்று",
+      "Two": "இரண்டு",
+      "Three": "மூன்று",
+      "Beach": "கடற்கரை",
+      "City": "நகரம்",
+      "Woman": "பெண்",
+      "Man": "மனிதன்",
+      "I": "நான்",
+      "You": "நீங்கள்"
+    }
+  },
+  {
+    "lang": "tr",
+    "voice": "tr-TR-Wavenet-B",
+    "easy": {
+      "Hello": "Merhaba",
+      "Yes": "Evet",
+      "No": "Numara",
+      "Thank you": "Teşekkürler",
+      "Big": "Büyük"
+    },
+    "normal": {
+      "Car": "Araba",
+      "Green": "Yeşil",
+      "Red": "Kırmızı",
+      "Blue": "Mavi",
+      "House": "Ev",
+      "Dog": "Köpek",
+      "Cat": "Kedi",
+      "One": "Bir tane",
+      "Two": "Iki",
+      "Three": "Üç",
+      "Beach": "Sahil",
+      "City": "Şehir",
+      "Woman": "Kadın",
+      "Man": "Erkek adam",
+      "I": "Ben",
+      "You": "Sen"
+    }
+  },
+  {
+    "lang": "vi",
+    "voice": "vi-VN-Wavenet-A",
+    "easy": {
+      "Hello": "Xin chào",
+      "Yes": "Đúng",
+      "No": "Không",
+      "Thank you": "Cảm ơn bạn",
+      "Big": "To lớn"
+    },
+    "normal": {
+      "Car": "Xe ô tô",
+      "Green": "Xanh",
+      "Red": "Màu đỏ",
+      "Blue": "Màu xanh da trời",
+      "House": "Căn nhà",
+      "Dog": "Chú chó",
+      "Cat": "Con mèo",
+      "One": "Một",
+      "Two": "Hai",
+      "Three": "Số ba",
+      "Beach": "Bãi biển",
+      "City": "Thành phố",
+      "Woman": "Người đàn bà",
+      "Man": "Người đàn ông",
+      "I": "Tôi",
+      "You": "Bạn"
+    }
+  }
+]

@@ -44,6 +44,7 @@ import { useRouter } from 'vue-router';
 
 const {
   soundService,
+  speechService,
   revealed,
   destroy,
   route,
@@ -60,8 +61,7 @@ const {
 let currentIndex = ref(0);
 
 let permutation: Ref<number[]> = ref([]);
-let nextAudio: Subject<AudioResponse[]>;
-let currentAudio: Ref<AudioResponse[]> = ref([]);
+let currentExercise: Ref<string[]> = ref([]);
 const sequence: Ref<string[]> = ref([]);
 const reverse = ref(false);
 let buttonLabels: Ref<string[]> = ref([]);
@@ -73,11 +73,6 @@ const router = useRouter();
 onBeforeMount(() => {
   const numberOfQuestions = 5;
   exerciseUtils.createExercise(numberOfQuestions);
-  nextAudio = new ReplaySubject<AudioResponse[]>(numberOfQuestions);
-  nextAudio
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
-    .subscribe(() => loadNextAudio());
-  loadNextAudio();
 });
 
 const difficulty = computed(() => route.params.difficulty);
@@ -116,10 +111,8 @@ async function nextQuestion() {
     await new TweenService().fadeOut(buttons.value);
   }
   showLoadingIndicator.value = true;
-  currentAudio.value = (await nextAudio
-    .pipe(skip(store.exercise.currentQuestion - 1), take(1))
-    .toPromise()) as AudioResponse[];
-  sequence.value = currentAudio.value.map((v) => v.val as string);
+  currentExercise.value = getNextExercise();
+  sequence.value = currentExercise.value.map((v) => v as string);
   if (reverse.value) {
     sequence.value = sequence.value.reverse();
   }
@@ -143,19 +136,21 @@ async function nextQuestion() {
 }
 
 async function playAudio(measureTime = false) {
-  await soundService.playAll(currentAudio.value, 100, measureTime);
+  await speechService.say(
+    Array.from(currentExercise.value)
+      .splice(currentIndex.value, currentExercise.value.length)
+      .join('. '),
+    { measureTime }
+  );
 }
 
-async function loadNextAudio(): Promise<void> {
-  nextAudio.next(
-    await new ExerciseService().fetchRandomWords({
-      minLength: 3,
-      maxLength: 12,
-      lang: store.language,
-      number: sequenceLength.value,
-      gender: 'FEMALE',
-    })
-  );
+function getNextExercise(): string[] {
+  return new ExerciseService().getRandomWords({
+    minLength: 3,
+    maxLength: 12,
+    lang: store.language,
+    number: sequenceLength.value,
+  });
 }
 
 function selectWord(idx: number, $event: Event) {

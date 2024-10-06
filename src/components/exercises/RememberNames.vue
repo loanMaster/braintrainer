@@ -58,7 +58,6 @@
       </div>
     </div>
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="solution"
@@ -69,23 +68,23 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {
-  ExerciseService,
-  Introduction,
-  IntroductionResponse,
-} from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { padNumber } from 'src/util/format-number';
 import { preloadAssets } from 'src/util/preload-assets';
 import { useRouter } from 'vue-router';
+import {
+  Introduction,
+  Introductions,
+  PersonIntroductionService,
+} from 'src/shared-services/person-introduction.service';
 
 const {
   soundService,
+  speechService,
   revealed,
   route,
   store,
@@ -98,13 +97,12 @@ const {
   startCb: () => start(),
 });
 
-const currentTask: Ref<IntroductionResponse | undefined> = ref();
+const currentTask: Ref<Introductions | undefined> = ref();
 const personToGuess: Ref<Introduction | undefined> = ref();
 let buttonLabels: Ref<string[]> = ref([]);
 const coreExercise = ref();
 const imageToGuess = ref();
 const showLoadingIndicator = ref(false);
-let loadAudio: Promise<IntroductionResponse>;
 const nameToImageMapping: { [key: string]: string } = {};
 const router = useRouter();
 
@@ -112,10 +110,10 @@ onBeforeMount(() => {
   const numberOfQuestions =
     difficulty.value === 'easy' ? 5 : difficulty.value === 'normal' ? 7 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
-  loadAudio = new ExerciseService().fetchIntroductions({
-    lang: store.language,
-    count: numberOfQuestions,
-  });
+  currentTask.value = new PersonIntroductionService().createIntroductions(
+    store.language,
+    numberOfQuestions
+  );
 });
 
 const difficulty = computed(() => route.params.difficulty);
@@ -126,14 +124,13 @@ onMounted(async () => {
 
 async function start() {
   showLoadingIndicator.value = true;
-  currentTask.value = await loadAudio;
-  const audio = currentTask.value.introductions.map((i) => ({
-    audio: i.audio.introduction,
+  const speech = currentTask.value!.introductions.map((i) => ({
+    text: i.text,
     meta: { text: i.name },
   }));
   const men = shuffle(Array.from(Array(20).keys()));
   const women = shuffle(Array.from(Array(20).keys()));
-  currentTask.value.introductions.forEach((i) => {
+  currentTask.value!.introductions.forEach((i) => {
     nameToImageMapping[i.name] =
       (i.gender === 'FEMALE'
         ? '/images/w_' + padNumber(women.pop()!, 2)
@@ -141,10 +138,10 @@ async function start() {
   });
   await preloadAssets(Object.values(nameToImageMapping));
   showLoadingIndicator.value = false;
-  shuffle(currentTask.value.introductions);
+  shuffle(currentTask.value!.introductions);
   await exerciseUtils.wait(1000);
   store.beginExercise();
-  await soundService.playAll(audio, 350, true);
+  await speechService.playAll(speech, 100, true);
   await exerciseUtils.wait(150);
   nextQuestion();
 }

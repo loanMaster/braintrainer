@@ -6,7 +6,6 @@
       <div class="row-sm column-xs justify-around full-width max-width-xs">
         <div class="text-h5 col-sm-6">{{ $t("auth['Your profile']") }}</div>
         <div class="col-sm-6 q-gutter-sm">
-          <div class="text-h6">{{ authStore.email }}</div>
           <div class="text-h6 col-6">{{ $t('Avatar') }}</div>
           <q-btn-dropdown
             color="primary"
