@@ -122,18 +122,6 @@ const routes: RouteRecordRaw[] = [
                   import('src/components/exercises/CountriesAndCapitals.vue'),
               },
               {
-                path: ':game(rapid-math)',
-                name: 'rapid-math',
-                component: () =>
-                  import('src/components/exercises/RapidMath.vue'),
-              },
-              {
-                path: ':game(rapid-word-scramble)',
-                name: 'rapid-word-scramble',
-                component: () =>
-                  import('src/components/exercises/RapidScramble.vue'),
-              },
-              {
                 path: ':game(memory)',
                 name: 'memory',
                 component: () =>

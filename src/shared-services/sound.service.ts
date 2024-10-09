@@ -103,8 +103,8 @@ export class SoundService {
     this.pausing.next(pausing);
   }
 
-  async playAll(sounds: Sound[], pauseTime = 0, measureTime = false) {
-    useAppStore().startedPlaySequence(measureTime);
+  async playAll(sounds: Sound[], pauseTime = 0) {
+    useAppStore().startedPlaySequence();
     this.queue = [];
     sounds.forEach((s) => this.queue.push(JSON.parse(JSON.stringify(s))));
     this.isPlayingSequence = true;
@@ -115,7 +115,7 @@ export class SoundService {
       }
     }
     this.isPlayingSequence = false;
-    useAppStore().finishedPlayingSequence(measureTime);
+    useAppStore().finishedPlayingSequence();
   }
 
   isPlaying(): boolean {

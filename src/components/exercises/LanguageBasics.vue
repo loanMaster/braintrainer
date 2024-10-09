@@ -188,15 +188,11 @@ async function nextQuestion() {
     await new TweenService().fadeIn(buttons.value);
   }
 
-  await playAudio(false);
+  await playAudio();
 }
 
-async function playAudio(measureTime = false) {
-  await soundService.playAll(
-    [{ src: currentAudio.value!.src }],
-    0,
-    measureTime
-  );
+async function playAudio() {
+  await soundService.playAll([{ src: currentAudio.value!.src }], 0);
 }
 
 function loadTask(): LanguageBasics {

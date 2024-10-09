@@ -125,12 +125,11 @@ async function nextQuestion() {
   inputDisabled.value = false;
 }
 
-async function playAudio(measureTime = false) {
+async function playAudio() {
   await speechService.say(
     Array.from(currentExercise.value)
       .splice(currentIndex.value, currentExercise.value.length)
-      .join('. '),
-    { measureTime }
+      .join('. ')
   );
 }
 

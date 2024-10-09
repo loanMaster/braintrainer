@@ -108,7 +108,6 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(numpadContainer.value);
   }
-  numpad.value?.resetTimer();
   previousResult.value = expectedResult.value;
 
   currentExercise = fetchNextExercise(currentExercise?.result);
@@ -120,19 +119,17 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
-  await playAudio(true);
-  numpad.value?.startTimer();
+  await playAudio();
 }
 
-async function playAudio(measureTime = false) {
+async function playAudio() {
   speechService.stop();
   if (store.exercise.currentQuestion === 1) {
     await speechService.say(
-      currentExercise.initial + ' ' + currentExercise.asText,
-      { measureTime }
+      currentExercise.initial + ' ' + currentExercise.asText
     );
   } else {
-    await speechService.say(currentExercise.asText, { measureTime });
+    await speechService.say(currentExercise.asText);
   }
 }
 

@@ -141,8 +141,8 @@ function updateButtonLabels() {
   letterButtons.value.showAtLeast([solution.value[currentIndex]]);
 }
 
-async function speak(measureTime = false) {
-  await new SpeechService().say(currentWord.value!.val[0], { measureTime });
+async function speak() {
+  await new SpeechService().say(currentWord.value!.val[0]);
 }
 
 function fetchNextWord(exclude?: string[]) {

@@ -17,36 +17,16 @@
 
 <script setup lang="ts">
 import NumPad from 'src/components/exercises/shared/NumPad.vue';
-import { ref } from 'vue';
 
 const emits = defineEmits(['button-click']);
 defineProps({
   inputValue: String,
   inputDisabled: Boolean,
 });
-const countdownTimer = ref();
 
 function onNumberEntered(num: number) {
   emits('button-click', num);
 }
-
-function stopTimer() {
-  countdownTimer.value?.stop();
-}
-
-function resetTimer() {
-  countdownTimer.value?.reset();
-}
-
-function startTimer() {
-  countdownTimer.value?.start();
-}
-
-defineExpose({
-  stopTimer,
-  startTimer,
-  resetTimer,
-});
 </script>
 
 <style scoped>

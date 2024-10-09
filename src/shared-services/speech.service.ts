@@ -37,10 +37,9 @@ export class SpeechService {
 
   async playAll(
     texts: ({ text: string; meta?: any } | string)[],
-    pauseTime = 0,
-    measureTime = false
+    pauseTime = 0
   ) {
-    useAppStore().startedPlaySequence(measureTime);
+    useAppStore().startedPlaySequence();
     this.queue = texts.map((s) => (typeof s === 'string' ? { text: s } : s));
     this.isPlayingSequence = true;
     for (const sound of this.queue) {
@@ -53,7 +52,7 @@ export class SpeechService {
     }
     this.isPlayingSequence = false;
     this.abort = false;
-    useAppStore().finishedPlayingSequence(measureTime);
+    useAppStore().finishedPlayingSequence();
   }
 
   pause(pausing: boolean) {

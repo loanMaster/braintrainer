@@ -1,7 +1,6 @@
 import { randomElement, shuffle } from 'src/util/array.utils';
 import { DictionaryProvider } from './dictionary.provider';
 import { DictionaryService } from './dictionary.service';
-import { requestHelper } from '../shared-services/request.helper';
 import languageBasics from '../components/exercises/service/other-languages/language-basics.json';
 
 export interface LanguageBasics {

@@ -131,8 +131,8 @@ function createTask() {
   }
 }
 
-function playAudio(measureTime = false) {
-  return soundService.playAll(currentAudio.value, 100, measureTime);
+function playAudio() {
+  return soundService.playAll(currentAudio.value, 100);
 }
 
 async function onNumberEntered(num: number) {

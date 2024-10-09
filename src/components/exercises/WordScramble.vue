@@ -152,13 +152,13 @@ function updateButtonLabels() {
   letterButtons.value.showAtLeast(letters);
 }
 
-async function playAudio(measureTime = false) {
+async function playAudio() {
   const audio = [];
   for (let idx = 0; idx < permutation.length; idx++) {
     const letter = permutation[idx];
     audio.push({ text: letter, meta: { text: letter } });
   }
-  await speechService.playAll(audio, 100, measureTime);
+  await speechService.playAll(audio, 100);
 }
 
 function loadNextAnagram(exclude?: string[]) {

@@ -33,7 +33,7 @@ export const newExercise = (
   nameOfTheGame: string,
   difficulty: string,
   totalQuestions: number,
-  enableSkip: boolean
+  enableSkip = true
 ): Exercise => ({
   correctAnswers: 0,
   totalQuestions,
@@ -57,7 +57,6 @@ export interface AudioState {
   playing: boolean;
   meta: { [key: string]: string | boolean | undefined | number };
   playingSequence: boolean;
-  measuringTime?: boolean;
 }
 
 export interface Score {
@@ -202,9 +201,6 @@ export const useAppStore = defineStore('main', {
         this.exercise.paused = true;
         this.exercise.duration +=
           Date.now() - Math.max(this.exercise.beginTimeStamp, tmp.pauseEnd);
-        if (this.exercise.audioState.measuringTime) {
-          this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
-        }
         return true;
       }
       return false;
@@ -213,9 +209,6 @@ export const useAppStore = defineStore('main', {
       if (this.exercise.paused) {
         this.exercise.paused = false;
         tmp.pauseEnd = Date.now();
-        if (this.exercise.audioState.measuringTime) {
-          tmp.soundStart = Date.now();
-        }
         return true;
       }
       return false;
@@ -238,38 +231,22 @@ export const useAppStore = defineStore('main', {
     }): void {
       this.exercise.audioState.playing = true;
       this.exercise.audioState.meta = meta;
-      if (meta['measureTime']) {
-        tmp.soundStart = Date.now();
-        this.exercise.audioState.measuringTime = true;
-      }
     },
     finishedPlayingSound(meta: {
       [key: string]: string | boolean | undefined | number;
     }): void {
       this.exercise.audioState.playing = false;
       this.exercise.audioState.meta = meta;
-      if (meta['measureTime']) {
-        this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
-        this.exercise.audioState.measuringTime = false;
-      }
     },
     setThemePreference(theme: 'light' | 'dark') {
       this._themePreference = theme;
       localStorage.setItem('themePreference', theme);
     },
-    startedPlaySequence(measureTime: boolean) {
+    startedPlaySequence() {
       this.exercise.audioState.playingSequence = true;
-      if (measureTime) {
-        tmp.soundStart = Date.now();
-        this.exercise.audioState.measuringTime = true;
-      }
     },
-    finishedPlayingSequence(measureTime: boolean) {
+    finishedPlayingSequence() {
       this.exercise.audioState.playingSequence = false;
-      if (measureTime) {
-        this.exercise.audioState.measuringTime = false;
-        this.exercise.totalAudioDuration += Date.now() - tmp.soundStart;
-      }
     },
   },
 });

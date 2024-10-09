@@ -111,12 +111,12 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
-  await playAudio(true);
+  await playAudio();
   numpad.value?.startTimer();
 }
 
-async function playAudio(measureTime = false) {
-  await speechService.say(currentExercise.asText, { measureTime });
+async function playAudio() {
+  await speechService.say(currentExercise.asText);
 }
 
 function createNewExercise() {
