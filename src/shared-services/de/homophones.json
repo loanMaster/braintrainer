@@ -1,619 +1,152 @@
 [
-  [
-    "Achsel",
-    "Axel"
-  ],
-  [
-    "Äste",
-    "Este"
-  ],
-  [
-    "Beete",
-    "bete",
-    "Bete"
-  ],
-  [
-    "bis",
-    "Biss"
-  ],
-  [
-    "Block",
-    "Blog"
-  ],
-  [
-    "Bohle",
-    "Bowle",
-    "bowle"
-  ],
-  [
-    "Boote",
-    "Bote"
-  ],
-  [
-    "Bund",
-    "bunt"
-  ],
-  [
-    "Chor",
-    "Korps"
-  ],
-  [
-    "Code",
-    "Kot"
-  ],
-  [
-    "Coup",
-    "Kuh"
-  ],
-  [
-    "das",
-    "dass"
-  ],
-  [
-    "dealen",
-    "Dielen"
-  ],
-  [
-    "dehnen",
-    "denen"
-  ],
-  [
-    "Dschinn",
-    "Gin"
-  ],
-  [
-    "erhält",
-    "erhellt"
-  ],
-  [
-    "Fähre",
-    "faire"
-  ],
-  [
-    "Fälle",
-    "Felle"
-  ],
-  [
-    "Ferse",
-    "Verse"
-  ],
-  [
-    "fiel",
-    "viel"
-  ],
-  [
-    "Finish",
-    "finnisch",
-    "Finnisch"
-  ],
-  [
-    "Gewand",
-    "gewandt"
-  ],
-  [
-    "Grad",
-    "Grat"
-  ],
-  [
-    "Graf",
-    "Graph"
-  ],
-  [
-    "Heer",
-    "her"
-  ],
-  [
-    "Hemd",
-    "hemmt"
-  ],
-  [
-    "isst",
-    "ist"
-  ],
-  [
-    "Kälte",
-    "Kelte"
-  ],
-  [
-    "Kid",
-    "Kit",
-    "kitt",
-    "Kitt"
-  ],
-  [
-    "Lachs",
-    "lax"
-  ],
-  [
-    "Laib",
-    "Leib"
-  ],
-  [
-    "laichen",
-    "Leichen"
-  ],
-  [
-    "Lände",
-    "Lende"
-  ],
-  [
-    "lasst",
-    "Last"
-  ],
-  [
-    "Lärche",
-    "Lerche"
-  ],
-  [
-    "läuten",
-    "Leuten"
-  ],
-  [
-    "Leader",
-    "Lieder"
-  ],
-  [
-    "Leere",
-    "Lehre"
-  ],
-  [
-    "leeren",
-    "lehren"
-  ],
-  [
-    "Leerstelle",
-    "Lehrstelle"
-  ],
-  [
-    "Leerzug",
-    "Lehrzug"
-  ],
-  [
-    "Leid",
-    "leiht"
-  ],
-  [
-    "Lid",
-    "Lied"
-  ],
-  [
-    "links",
-    "Links"
-  ],
-  [
-    "lies",
-    "liess"
-  ],
-  [
-    "liest",
-    "least"
-  ],
-  [
-    "Liegen",
-    "Ligen"
-  ],
-  [
-    "Loser",
-    "Luser"
-  ],
-  [
-    "Luchs",
-    "Lux"
-  ],
-  [
-    "Maar",
-    "Mahr"
-  ],
-  [
-    "Mahl",
-    "Mal"
-  ],
-  [
-    "Mähre",
-    "Märe"
-  ],
-  [
-    "Maisen",
-    "Meisen"
-  ],
-  [
-    "mahlen",
-    "malen"
-  ],
-  [
-    "Mais",
-    "Maiss"
-  ],
-  [
-    "man",
-    "Mann"
-  ],
-  [
-    "Märkte",
-    "merkten"
-  ],
-  [
-    "Mathe",
-    "Matte"
-  ],
-  [
-    "Meer",
-    "mehr"
-  ],
-  [
-    "mehlieren",
-    "melieren"
-  ],
-  [
-    "Miene",
-    "Mine"
-  ],
-  [
-    "misst",
-    "Mist"
-  ],
-  [
-    "Mob",
-    "Mopp"
-  ],
-  [
-    "Mohr",
-    "Moor"
-  ],
-  [
-    "Mopps",
-    "Mops",
-    "mops"
-  ],
-  [
-    "mühten",
-    "Mythen"
-  ],
-  [
-    "Mund",
-    "Munt"
-  ],
-  [
-    "Nachfahren",
-    "nachfahren"
-  ],
-  [
-    "Nachnahme",
-    "Nachname"
-  ],
-  [
-    "Nähe",
-    "nähe"
-  ],
-  [
-    "nahmen",
-    "Namen"
-  ],
-  [
-    "Nitrid",
-    "Nitrit"
-  ],
-  [
-    "packt",
-    "Pakt"
-  ],
-  [
-    "Paps",
-    "Pubs"
-  ],
-  [
-    "Peak",
-    "Pik"
-  ],
-  [
-    "Phi",
-    "Vieh"
-  ],
-  [
-    "pisste",
-    "Piste"
-  ],
-  [
-    "Poop",
-    "Pup"
-  ],
-  [
-    "Prinz",
-    "Prints"
-  ],
-  [
-    "rächen",
-    "Rechen"
-  ],
-  [
-    "rächt",
-    "Recht"
-  ],
-  [
-    "Rasen",
-    "rasen"
-  ],
-  [
-    "Rad",
-    "Rat"
-  ],
-  [
-    "Raid",
-    "Reet"
-  ],
-  [
-    "Rain",
-    "rein"
-  ],
-  [
-    "rändern",
-    "Rändern",
-    "rendern"
-  ],
-  [
-    "Ränken",
-    "renken"
-  ],
-  [
-    "rechts",
-    "Rechts"
-  ],
-  [
-    "Rede",
-    "Reede"
-  ],
-  [
-    "Rederei",
-    "Reederei"
-  ],
-  [
-    "Reinfall",
-    "Rheinfall"
-  ],
-  [
-    "Reis",
-    "reiss"
-  ],
-  [
-    "reist",
-    "reisst"
-  ],
-  [
-    "ruhte",
-    "Rute",
-    "Route"
-  ],
-  [
-    "säen",
-    "sähen"
-  ],
-  [
-    "Sämann",
-    "Seemann"
-  ],
-  [
-    "sänge",
-    "senge",
-    "Senge"
-  ],
-  [
-    "Sätzen",
-    "setzen"
-  ],
-  [
-    "Saite",
-    "Seite"
-  ],
-  [
-    "Samt",
-    "samt"
-  ],
-  [
-    "schafft",
-    "Schaft"
-  ],
-  [
-    "schallten",
-    "schalten"
-  ],
-  [
-    "Schänke",
-    "schenke"
-  ],
-  [
-    "schellte",
-    "Schelte"
-  ],
-  [
-    "Schlächter",
-    "schlechter"
-  ],
-  [
-    "Schlämme",
-    "schlemme"
-  ],
-  [
-    "schoppen",
-    "shoppen"
-  ],
-  [
-    "Schwälle",
-    "Schwelle"
-  ],
-  [
-    "Schwamm",
-    "schwamm"
-  ],
-  [
-    "Schwämme",
-    "Schwemme"
-  ],
-  [
-    "Seen",
-    "sehen"
-  ],
-  [
-    "seid",
-    "seiht",
-    "seit"
-  ],
-  [
-    "sie",
-    "sieh"
-  ],
-  [
-    "sieg",
-    "Sieg",
-    "Sikh"
-  ],
-  [
-    "Siegel",
-    "Sigel"
-  ],
-  [
-    "Sohle",
-    "Sole"
-  ],
-  [
-    "Sold",
-    "sollt"
-  ],
-  [
-    "späht",
-    "spät"
-  ],
-  [
-    "Spind",
-    "spinnt"
-  ],
-  [
-    "Stadt",
-    "statt"
-  ],
-  [
-    "Städte",
-    "Stätte"
-  ],
-  [
-    "Ställe",
-    "Stelle",
-    "stelle"
-  ],
-  [
-    "starrt",
-    "Start"
-  ],
-  [
-    "Steak",
-    "Steg"
-  ],
-  [
-    "stehlen",
-    "Stelen"
-  ],
-  [
-    "stiehl",
-    "Stiel",
-    "Stil"
-  ],
-  [
-    "Taste",
-    "taste"
-  ],
-  [
-    "Toast",
-    "tost"
-  ],
-  [
-    "Tod",
-    "tot"
-  ],
-  [
-    "Trend",
-    "trennt"
-  ],
-  [
-    "Uhrzeit",
-    "Urzeit"
-  ],
-  [
-    "Umfeld",
-    "umfällt"
-  ],
-  [
-    "Vasen",
-    "Wasen"
-  ],
-  [
-    "Verband",
-    "verbannt"
-  ],
-  [
-    "Verben",
-    "werben"
-  ],
-  [
-    "verleasen",
-    "Verliesen"
-  ],
-  [
-    "verliess",
-    "Verlies"
-  ],
-  [
-    "verwaist",
-    "verweist"
-  ],
-  [
-    "verzinst",
-    "verzinnst"
-  ],
-  [
-    "Villen",
-    "Willen"
-  ],
-  [
-    "Waage",
-    "vage",
-    "wage"
-  ],
-  [
-    "Waagen",
-    "wagen",
-    "Wagen"
-  ],
-  [
-    "Wahl",
-    "Wal"
-  ],
-  [
-    "wahr",
-    "war"
-  ],
-  [
-    "wahre",
-    "Ware"
-  ],
-  [
-    "Waise",
-    "waise",
-    "Weise",
-    "weise"
-  ],
-  [
-    "Weck",
-    "weg"
-  ],
-  [
-    "weis",
-    "weiss"
-  ],
-  [
-    "wieder",
-    "wider"
-  ],
-  [
-    "Sauce",
-    "Sosse"
-  ]
+  ["Achsel", "Axel"],
+  ["Äste", "Este"],
+  ["Beete", "bete", "Bete"],
+  ["bis", "Biss"],
+  ["Block", "Blog"],
+  ["Bohle", "Bowle", "bowle"],
+  ["Boote", "Bote"],
+  ["Bund", "bunt"],
+  ["Chor", "Korps"],
+  ["Code", "Kot"],
+  ["Coup", "Kuh"],
+  ["das", "dass"],
+  ["dealen", "Dielen"],
+  ["dehnen", "denen"],
+  ["Dschinn", "Gin"],
+  ["erhält", "erhellt"],
+  ["Fähre", "faire"],
+  ["Fälle", "Felle"],
+  ["Ferse", "Verse"],
+  ["fiel", "viel"],
+  ["Finish", "finnisch", "Finnisch"],
+  ["Gewand", "gewandt"],
+  ["Grad", "Grat"],
+  ["Graf", "Graph"],
+  ["Heer", "her"],
+  ["Hemd", "hemmt"],
+  ["isst", "ist"],
+  ["Kälte", "Kelte"],
+  ["Kid", "Kit", "kitt", "Kitt"],
+  ["Lachs", "lax"],
+  ["Laib", "Leib"],
+  ["laichen", "Leichen"],
+  ["Lände", "Lende"],
+  ["lasst", "Last"],
+  ["Lärche", "Lerche"],
+  ["läuten", "Leuten"],
+  ["Leader", "Lieder"],
+  ["Leere", "Lehre"],
+  ["leeren", "lehren"],
+  ["Leerstelle", "Lehrstelle"],
+  ["Leerzug", "Lehrzug"],
+  ["Leid", "leiht"],
+  ["Lid", "Lied"],
+  ["links", "Links"],
+  ["lies", "liess"],
+  ["liest", "least"],
+  ["Liegen", "Ligen"],
+  ["Loser", "Luser"],
+  ["Luchs", "Lux"],
+  ["Maar", "Mahr"],
+  ["Mahl", "Mal"],
+  ["Mähre", "Märe"],
+  ["Maisen", "Meisen"],
+  ["mahlen", "malen"],
+  ["Mais", "Maiss"],
+  ["man", "Mann"],
+  ["Märkte", "merkten"],
+  ["Mathe", "Matte"],
+  ["Meer", "mehr"],
+  ["mehlieren", "melieren"],
+  ["Miene", "Mine"],
+  ["misst", "Mist"],
+  ["Mob", "Mopp"],
+  ["Mohr", "Moor"],
+  ["Mopps", "Mops", "mops"],
+  ["mühten", "Mythen"],
+  ["Mund", "Munt"],
+  ["Nachfahren", "nachfahren"],
+  ["Nachnahme", "Nachname"],
+  ["Nähe", "nähe"],
+  ["nahmen", "Namen"],
+  ["Nitrid", "Nitrit"],
+  ["packt", "Pakt"],
+  ["Paps", "Pubs"],
+  ["Peak", "Pik"],
+  ["Phi", "Vieh"],
+  ["pisste", "Piste"],
+  ["Poop", "Pup"],
+  ["Prinz", "Prints"],
+  ["rächen", "Rechen"],
+  ["rächt", "Recht"],
+  ["Rasen", "rasen"],
+  ["Rad", "Rat"],
+  ["Raid", "Reet"],
+  ["Rain", "rein"],
+  ["rändern", "Rändern", "rendern"],
+  ["Ränken", "renken"],
+  ["rechts", "Rechts"],
+  ["Rede", "Reede"],
+  ["Rederei", "Reederei"],
+  ["Reinfall", "Rheinfall"],
+  ["Reis", "reiss"],
+  ["reist", "reisst"],
+  ["ruhte", "Rute", "Route"],
+  ["säen", "sähen"],
+  ["Sämann", "Seemann"],
+  ["sänge", "senge", "Senge"],
+  ["Sätzen", "setzen"],
+  ["Saite", "Seite"],
+  ["Samt", "samt"],
+  ["schafft", "Schaft"],
+  ["schallten", "schalten"],
+  ["Schänke", "schenke"],
+  ["schellte", "Schelte"],
+  ["Schlächter", "schlechter"],
+  ["Schlämme", "schlemme"],
+  ["schoppen", "shoppen"],
+  ["Schwälle", "Schwelle"],
+  ["Schwamm", "schwamm"],
+  ["Schwämme", "Schwemme"],
+  ["Seen", "sehen"],
+  ["seid", "seiht", "seit"],
+  ["sie", "sieh"],
+  ["sieg", "Sieg", "Sikh"],
+  ["Siegel", "Sigel"],
+  ["Sohle", "Sole"],
+  ["Sold", "sollt"],
+  ["späht", "spät"],
+  ["Spind", "spinnt"],
+  ["Stadt", "statt"],
+  ["Städte", "Stätte"],
+  ["Ställe", "Stelle", "stelle"],
+  ["starrt", "Start"],
+  ["Steak", "Steg"],
+  ["stehlen", "Stelen"],
+  ["stiehl", "Stiel", "Stil"],
+  ["Taste", "taste"],
+  ["Toast", "tost"],
+  ["Tod", "tot"],
+  ["Trend", "trennt"],
+  ["Uhrzeit", "Urzeit"],
+  ["Umfeld", "umfällt"],
+  ["Vasen", "Wasen"],
+  ["Verband", "verbannt"],
+  ["Verben", "werben"],
+  ["verleasen", "Verliesen"],
+  ["verliess", "Verlies"],
+  ["verwaist", "verweist"],
+  ["verzinst", "verzinnst"],
+  ["Villen", "Willen"],
+  ["Waage", "vage", "wage"],
+  ["Waagen", "wagen", "Wagen"],
+  ["Wahl", "Wal"],
+  ["wahr", "war"],
+  ["wahre", "Ware"],
+  ["Waise", "waise", "Weise", "weise"],
+  ["Weck", "weg"],
+  ["weis", "weiss"],
+  ["wieder", "wider"],
+  ["Sauce", "Sosse"]
 ]

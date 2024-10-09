@@ -104,7 +104,7 @@ async function nextQuestion() {
   numpad.value?.startTimer();
 }
 
-async function playAudio(measureTime = false) {
+async function playAudio() {
   await speechService.say(currentExercise.value!.formulaToRead);
 }
 

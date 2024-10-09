@@ -76,7 +76,6 @@ const letterButtons = ref();
 const showLoadingIndicator = ref(false);
 let nextAnagrams: ReplaySubject<string[]>;
 let anagrams: string[] = [];
-let alphabet: string[] = [];
 let permutation: string[] = [];
 let highlightError = false;
 const router = useRouter();
@@ -86,9 +85,6 @@ onBeforeMount(() => {
   exerciseUtils.createExercise(numberOfQuestions);
   nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
   const exclude: string[] = [];
-  alphabet = new ExerciseService().getAlphabet({
-    lang: store.language,
-  });
   nextAnagrams
     .pipe(take(numberOfQuestions), takeUntil(destroy))
     .subscribe((result) => {

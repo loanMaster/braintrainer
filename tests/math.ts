@@ -10,7 +10,7 @@ const solve = async (page: Page, count: number) => {
   let previousSolution = '';
   for (let i = 0; i < count; i++) {
     await expect(
-      await coreExercise.locator(`button:not([disabled])`)
+      await coreExercise.locator('button:not([disabled])')
     ).toHaveCount(10, { timeout: 10000 });
     const solutionNo = await coreExercise.getAttribute('data-test');
     const solution = String(solutionNo);

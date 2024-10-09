@@ -1,381 +1,94 @@
 [
-  [
-    "hablando",
-    "ablando"
-  ],
-  [
-    "abollado",
-    "aboyado"
-  ],
-  [
-    "abrazarse",
-    "abrasarse"
-  ],
-  [
-    "acerbo",
-    "acervo"
-  ],
-  [
-    "agito",
-    "ajito"
-  ],
-  [
-    "alagar",
-    "halagar"
-  ],
-  [
-    "aprender",
-    "aprehender"
-  ],
-  [
-    "arrollo",
-    "arroyo"
-  ],
-  [
-    "as",
-    "has"
-  ],
-  [
-    "as",
-    "haz"
-  ],
-  [
-    "Asia",
-    "hacia"
-  ],
-  [
-    "ato",
-    "hato"
-  ],
-  [
-    "baca",
-    "vaca"
-  ],
-  [
-    "bacía",
-    "vacía"
-  ],
-  [
-    "bacilo",
-    "vacilo"
-  ],
-  [
-    "balido",
-    "valido"
-  ],
-  [
-    "barón",
-    "varón"
-  ],
-  [
-    "basar",
-    "vasar",
-    "bazar"
-  ],
-  [
-    "basto",
-    "vasto"
-  ],
-  [
-    "baya",
-    "vaya"
-  ],
-  [
-    "bello",
-    "vello"
-  ],
-  [
-    "bienes",
-    "vienes"
-  ],
-  [
-    "bobina",
-    "bovina"
-  ],
-  [
-    "botar",
-    "votar"
-  ],
-  [
-    "botas",
-    "votas"
-  ],
-  [
-    "cabo",
-    "cavo"
-  ],
-  [
-    "cala",
-    "cala",
-    "cala",
-    "cala"
-  ],
-  [
-    "callado",
-    "cayado"
-  ],
-  [
-    "callo",
-    "cayo"
-  ],
-  [
-    "calló",
-    "cayó"
-  ],
-  [
-    "cause",
-    "cauce"
-  ],
-  [
-    "ceda",
-    "seda"
-  ],
-  [
-    "cede",
-    "sede"
-  ],
-  [
-    "cenado",
-    "senado"
-  ],
-  [
-    "cepa",
-    "sepa"
-  ],
-  [
-    "ciego",
-    "siego"
-  ],
-  [
-    "ciervo",
-    "siervo"
-  ],
-  [
-    "cierra",
-    "sierra",
-    "sierra",
-    "cien",
-    "sien"
-  ],
-  [
-    "cocer",
-    "coser"
-  ],
-  [
-    "combino",
-    "convino"
-  ],
-  [
-    "consejo",
-    "concejo"
-  ],
-  [
-    "desmallar",
-    "desmayar"
-  ],
-  [
-    "errar",
-    "herrar"
-  ],
-  [
-    "estibo",
-    "estivo"
-  ],
-  [
-    "gira",
-    "jira"
-  ],
-  [
-    "graba",
-    "grava"
-  ],
-  [
-    "grabar",
-    "gravar"
-  ],
-  [
-    "grabe",
-    "grave"
-  ],
-  [
-    "gragea",
-    "grajea"
-  ],
-  [
-    "haber",
-    "a ver"
-  ],
-  [
-    "había",
-    "avía"
-  ],
-  [
-    "halla",
-    "haya",
-    "aya"
-  ],
-  [
-    "hasta",
-    "asta"
-  ],
-  [
-    "hierro",
-    "yerro",
-    "yerro"
-  ],
-  [
-    "hojear",
-    "ojear"
-  ],
-  [
-    "hola",
-    "ola"
-  ],
-  [
-    "hora",
-    "ora"
-  ],
-  [
-    "hulla",
-    "huya"
-  ],
-  [
-    "huso",
-    "uso"
-  ],
-  [
-    "ingerir",
-    "injerir"
-  ],
-  [
-    "izo",
-    "hizo"
-  ],
-  [
-    "La Haya",
-    "aya",
-    "la haya"
-  ],
-  [
-    "libido",
-    "lívido"
-  ],
-  [
-    "malla",
-    "maya"
-  ],
-  [
-    "mallo",
-    "mallo",
-    "mayo",
-    "mayo"
-  ],
-  [
-    "masa",
-    "maza"
-  ],
-  [
-    "nabal",
-    "naval"
-  ],
-  [
-    "novel",
-    "Nobel"
-  ],
-  [
-    "ola",
-    "¡Hola!"
-  ],
-  [
-    "onda",
-    "honda"
-  ],
-  [
-    "olla",
-    "hoya"
-  ],
-  [
-    "papa",
-    "papá"
-  ],
-  [
-    "pollo",
-    "poyo"
-  ],
-  [
-    "pulla",
-    "puya"
-  ],
-  [
-    "rockódromo",
-    "rocódromo"
-  ],
-  [
-    "sabia",
-    "savia"
-  ],
-  [
-    "té",
-    "te"
-  ],
-  [
-    "rallar",
-    "rayar"
-  ],
-  [
-    "rayo",
-    "rallo"
-  ],
-  [
-    "rebelar",
-    "revelar"
-  ],
-  [
-    "recabar",
-    "recavar"
-  ],
-  [
-    "reusar",
-    "rehusar"
-  ],
-  [
-    "rivera",
-    "ribera"
-  ],
-  [
-    "riza",
-    "risa"
-  ],
-  [
-    "sabia",
-    "savia"
-  ],
-  [
-    "z",
-    "seta"
-  ],
-  [
-    "tubo",
-    "tuvo"
-  ],
-  [
-    "valla",
-    "vaya"
-  ],
-  [
-    "vegete",
-    "vejete"
-  ],
-  [
-    "veta",
-    "beta"
-  ],
-  [
-    "vez",
-    "ves"
-  ],
-  [
-    "vidente",
-    "bidente"
-  ]
+  ["hablando", "ablando"],
+  ["abollado", "aboyado"],
+  ["abrazarse", "abrasarse"],
+  ["acerbo", "acervo"],
+  ["agito", "ajito"],
+  ["alagar", "halagar"],
+  ["aprender", "aprehender"],
+  ["arrollo", "arroyo"],
+  ["as", "has"],
+  ["as", "haz"],
+  ["Asia", "hacia"],
+  ["ato", "hato"],
+  ["baca", "vaca"],
+  ["bacía", "vacía"],
+  ["bacilo", "vacilo"],
+  ["balido", "valido"],
+  ["barón", "varón"],
+  ["basar", "vasar", "bazar"],
+  ["basto", "vasto"],
+  ["baya", "vaya"],
+  ["bello", "vello"],
+  ["bienes", "vienes"],
+  ["bobina", "bovina"],
+  ["botar", "votar"],
+  ["botas", "votas"],
+  ["cabo", "cavo"],
+  ["cala", "cala", "cala", "cala"],
+  ["callado", "cayado"],
+  ["callo", "cayo"],
+  ["calló", "cayó"],
+  ["cause", "cauce"],
+  ["ceda", "seda"],
+  ["cede", "sede"],
+  ["cenado", "senado"],
+  ["cepa", "sepa"],
+  ["ciego", "siego"],
+  ["ciervo", "siervo"],
+  ["cierra", "sierra", "sierra", "cien", "sien"],
+  ["cocer", "coser"],
+  ["combino", "convino"],
+  ["consejo", "concejo"],
+  ["desmallar", "desmayar"],
+  ["errar", "herrar"],
+  ["estibo", "estivo"],
+  ["gira", "jira"],
+  ["graba", "grava"],
+  ["grabar", "gravar"],
+  ["grabe", "grave"],
+  ["gragea", "grajea"],
+  ["haber", "a ver"],
+  ["había", "avía"],
+  ["halla", "haya", "aya"],
+  ["hasta", "asta"],
+  ["hierro", "yerro", "yerro"],
+  ["hojear", "ojear"],
+  ["hola", "ola"],
+  ["hora", "ora"],
+  ["hulla", "huya"],
+  ["huso", "uso"],
+  ["ingerir", "injerir"],
+  ["izo", "hizo"],
+  ["La Haya", "aya", "la haya"],
+  ["libido", "lívido"],
+  ["malla", "maya"],
+  ["mallo", "mallo", "mayo", "mayo"],
+  ["masa", "maza"],
+  ["nabal", "naval"],
+  ["novel", "Nobel"],
+  ["ola", "¡Hola!"],
+  ["onda", "honda"],
+  ["olla", "hoya"],
+  ["papa", "papá"],
+  ["pollo", "poyo"],
+  ["pulla", "puya"],
+  ["rockódromo", "rocódromo"],
+  ["sabia", "savia"],
+  ["té", "te"],
+  ["rallar", "rayar"],
+  ["rayo", "rallo"],
+  ["rebelar", "revelar"],
+  ["recabar", "recavar"],
+  ["reusar", "rehusar"],
+  ["rivera", "ribera"],
+  ["riza", "risa"],
+  ["sabia", "savia"],
+  ["z", "seta"],
+  ["tubo", "tuvo"],
+  ["valla", "vaya"],
+  ["vegete", "vejete"],
+  ["veta", "beta"],
+  ["vez", "ves"],
+  ["vidente", "bidente"]
 ]

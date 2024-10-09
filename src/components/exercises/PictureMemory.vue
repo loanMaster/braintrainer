@@ -150,12 +150,6 @@ function buttonValue(buttonIndex: number) {
   return fileList.value[permutation[buttonIndex]];
 }
 
-function isSelected(idx: number) {
-  return (
-    idx === selectedButtonIdx.value || idx === secondSelectedButtonIdx.value
-  );
-}
-
 function revealButton(idx: number) {
   return (
     idx === selectedButtonIdx.value ||

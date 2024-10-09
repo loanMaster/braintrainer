@@ -39,7 +39,6 @@ const {
   soundService,
   speechService,
   revealed,
-  destroy,
   route,
   store,
   isDev,

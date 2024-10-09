@@ -202,8 +202,6 @@ import {
   matFitnessCenter,
   matBarChart,
   matPerson,
-  matFullscreen,
-  matFullscreenExit,
 } from '@quasar/extras/material-icons';
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
