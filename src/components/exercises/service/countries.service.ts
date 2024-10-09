@@ -1,7 +1,7 @@
 import countries_de from './countries-and-capitals-de.json';
 import countries_en from './countries-and-capitals-en.json';
 import countries_es from './countries-and-capitals-es.json';
-import { randomElement } from 'src/util/array.utils';
+import { randomElement, shuffle } from 'src/util/array.utils';
 
 export interface CountryAndCapital {
   country: string;
@@ -33,6 +33,10 @@ export class GeographyService {
 
   getRandomCapital(lang: string): string {
     return randomElement(this.getList(lang)).capital;
+  }
+
+  getRandomCapitals(lang: string, num: number): string[] {
+    return shuffle(this.getList(lang).map((c) => c.capital)).splice(0, num);
   }
 
   getCapitalsByFirstLetter(lang: string, firstLetter: string): string[] {

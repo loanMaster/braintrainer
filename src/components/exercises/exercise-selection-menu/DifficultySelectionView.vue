@@ -13,9 +13,9 @@
               class="text-bold"
               :data-testid="'card-' + difficulty"
               :class="{
-                'bg-easy': difficulty === 'easy',
-                'bg-normal': difficulty === 'normal',
-                'bg-hard': difficulty === 'hard',
+                'bg-easy': difficulty === 'normal',
+                'bg-normal': difficulty === 'hard',
+                'bg-hard': difficulty === 'veryhard',
               }"
             >
               {{ t(difficulty) }}
@@ -45,7 +45,7 @@ import { useI18n } from 'vue-i18n';
 import { mapScoreToRating } from 'src/util/calculate-rating';
 
 const selectedDifficulty = ref('');
-const difficulties = ref(['easy', 'normal', 'hard']);
+const difficulties = ref(['normal', 'hard', 'veryhard']);
 
 const { t } = useI18n();
 const route = useRoute();

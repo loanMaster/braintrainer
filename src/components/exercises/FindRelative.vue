@@ -7,7 +7,6 @@
         :text="store.exercise.audioState.meta.text || '...'"
       />
     </div>
-    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal" />
     <div style="flex: 2">
       <div class="text-h5 q-my-md row justify-center">
         {{ whoIs }}
@@ -46,7 +45,6 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
-import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';
 import { Sound, SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
@@ -74,6 +72,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let currentTask: Ref<
@@ -122,7 +121,6 @@ const relations = [
 ];
 let buttonOptions: Ref<string[]> = ref([]);
 const coreExercise = ref();
-const countdownTimer = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
@@ -165,8 +163,6 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value?.reset();
-
   currentTask.value = await nextTask
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
     .toPromise();
@@ -194,7 +190,6 @@ async function nextQuestion() {
 
   inputDisabled.value = false;
   await playAudio();
-  countdownTimer.value?.start();
 }
 
 async function fetchNextExercise() {
@@ -249,7 +244,6 @@ function selectWord(idx: number, $event: Event) {
   $event.stopPropagation();
   if (isCorrectBtn(idx)) {
     inputDisabled.value = true;
-    countdownTimer.value?.stop();
     store.$patch((store) => store.exercise.correctAnswers++);
     new TweenService().fadeOut(coreExercise.value);
     new SoundService().playSuccess();
@@ -262,7 +256,6 @@ function selectWord(idx: number, $event: Event) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value?.stop();
 }
 
 const whoIs = computed(() => {

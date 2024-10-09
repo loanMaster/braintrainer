@@ -114,24 +114,13 @@ const memoryEx = ref(memoryExercises);
 const knowledgeEx = ref(knowledgeExercises);
 
 function selectExercise(game: string) {
-  if (game === 'countries-and-capitals') {
-    router.push({
-      name: 'countries-and-capitals',
-      params: {
-        game: game.toLowerCase(),
-        difficulty: 'normal',
-        language: useAppStore().language,
-      },
-    });
-  } else {
-    router.push({
-      name: 'select-difficulty',
-      params: {
-        game: game.toLowerCase(),
-        language: useAppStore().language,
-      },
-    });
-  }
+  router.push({
+    name: 'select-difficulty',
+    params: {
+      game: game.toLowerCase(),
+      language: useAppStore().language,
+    },
+  });
 }
 </script>
 

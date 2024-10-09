@@ -17,7 +17,6 @@
       >
     </div>
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="solution"
@@ -28,17 +27,11 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {
-  AudioResponse,
-  ExerciseService,
-} from 'src/shared-services/exercise.service';
-import { skip, take, takeUntil } from 'rxjs/operators';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ExerciseService } from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 
@@ -56,6 +49,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let currentIndex = ref(0);
@@ -67,7 +61,6 @@ const reverse = ref(false);
 let buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
 const textTransparent = ref(false);
-let showLoadingIndicator = ref(false);
 const router = useRouter();
 
 onBeforeMount(() => {
@@ -87,9 +80,9 @@ onMounted(async () => {
 });
 
 const sequenceLength = computed(() => {
-  return difficulty.value === 'easy'
+  return difficulty.value === 'normal'
     ? 6
-    : difficulty.value === 'normal'
+    : difficulty.value === 'hard'
     ? 9
     : 12;
 });
@@ -110,13 +103,11 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(buttons.value);
   }
-  showLoadingIndicator.value = true;
   currentExercise.value = getNextExercise();
   sequence.value = currentExercise.value.map((v) => v as string);
   if (reverse.value) {
     sequence.value = sequence.value.reverse();
   }
-  showLoadingIndicator.value = false;
 
   permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()));
 

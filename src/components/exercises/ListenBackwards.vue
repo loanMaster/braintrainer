@@ -56,6 +56,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let nextAudio: Subject<AudioResponse>;
@@ -76,9 +77,9 @@ onBeforeMount(() => {
 });
 
 const numberOfOptions = computed(() => {
-  return difficulty.value === 'easy'
+  return difficulty.value === 'normal'
     ? 4
-    : difficulty.value === 'normal'
+    : difficulty.value === 'hard'
     ? 6
     : 8;
 });
@@ -138,11 +139,11 @@ async function loadNextAudio(): Promise<void> {
   nextAudio.next(
     await new ExerciseService().fetchWordsBackwards({
       minLength:
-        difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 4 : 5,
+        difficulty.value === 'normal' ? 3 : difficulty.value === 'hard' ? 4 : 5,
       maxLength:
-        difficulty.value === 'easy'
+        difficulty.value === 'normal'
           ? 5
-          : difficulty.value === 'normal'
+          : difficulty.value === 'hard'
           ? 6
           : 20,
       lang: store.language,

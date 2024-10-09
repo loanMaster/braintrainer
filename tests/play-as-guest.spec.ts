@@ -5,7 +5,7 @@ import { navigateToGame } from 'app/tests/pom/navigate-to-game.pom';
 test.beforeEach(listenForConsoleErrors);
 
 test('play three times as guest', async ({ page }) => {
-  await navigateToGame(page, 'listen-backwards', 'easy');
+  await navigateToGame(page, 'listen-backwards', 'normal');
   await page.goto(`http://localhost:9000/de/train/normal/listen-backwards`);
   await page.getByTestId('confirm-exercise-instructions-btn').click();
   let buttonWrapper = await page.getByTestId('exercise-buttons');

@@ -11,11 +11,8 @@
       :input-disabled="inputDisabled"
       :input-value="inputValue"
       @button-click="onNumberEntered"
-      :totalTime="10000"
-      @timeout="reveal"
     />
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="expectedResult"
@@ -27,8 +24,7 @@
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
-import { Sound, SoundService } from 'src/shared-services/sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
@@ -55,13 +51,13 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 const currentIndex = ref(0);
 const inputValue = ref('');
 const numpadContainer = ref();
 const numpad = ref();
-const showLoadingIndicator = ref(false);
 const router = useRouter();
 
 let currentExercise: ContinuationExerciseResponse;
@@ -82,7 +78,7 @@ onMounted(() => {
     }
   });
   preloadAudio(
-    ['÷', '+', '×', '−'].map((k) => `/sounds/${store.language}_${k}.mp3`)
+    ['÷', '+', '×', '−'].map((k) => `/sounds/maths/${store.language}_${k}.mp3`)
   );
   new TweenService().setDisplay(numpadContainer.value, 'none');
 });
@@ -115,10 +111,8 @@ async function nextQuestion() {
   numpad.value?.resetTimer();
   previousResult.value = expectedResult.value;
 
-  showLoadingIndicator.value = true;
   currentExercise = fetchNextExercise(currentExercise?.result);
   expectedResult.value = currentExercise.result;
-  showLoadingIndicator.value = false;
 
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'flex');

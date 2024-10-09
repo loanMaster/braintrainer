@@ -5,7 +5,7 @@ import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 test.beforeEach(listenForConsoleErrors);
 
 test('train word-scramble', async ({ page }) => {
-  await navigateToGame(page, 'word-scramble', 'easy', 'de');
+  await navigateToGame(page, 'word-scramble', 'normal', 'de');
 
   const coreExercise = await page.getByTestId('core-exercise');
 

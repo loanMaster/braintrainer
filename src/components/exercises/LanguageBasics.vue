@@ -94,6 +94,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => start(),
+  skipCb: () => reveal(),
 });
 
 const { t } = useI18n();
@@ -135,7 +136,7 @@ async function start() {
   ]);
   await new TweenService().fadeOut(languageIndicator.value, 1);
 
-  if (difficulty.value !== 'hard') {
+  if (difficulty.value !== 'veryhard') {
     showSpeechBubble.value = true;
     for (let idx = 0; idx < task.value.words.length; idx++) {
       currentAudio.value = task.value.words[idx];
@@ -160,9 +161,9 @@ async function start() {
 }
 
 const sequenceLength = computed(() => {
-  return difficulty.value === 'easy'
+  return difficulty.value === 'normal'
     ? 5
-    : difficulty.value === 'normal'
+    : difficulty.value === 'hard'
     ? 7
     : 9;
 });

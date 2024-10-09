@@ -9,12 +9,9 @@
       ref="numpad"
       :input-disabled="inputDisabled"
       :input-value="inputValue"
-      :totalTime="10000"
-      @timeout="reveal"
       @button-click="onNumberEntered"
     />
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="solution"
@@ -23,12 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import { takeUntil } from 'rxjs';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import { Sound, SoundService } from 'src/shared-services/sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { onBeforeMount, onMounted, ref } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { TweenService } from 'src/shared-services/tween.service';
@@ -54,6 +50,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let currentIndex = 0;
@@ -68,7 +65,7 @@ let solution = ref(0);
 
 onBeforeMount(async () => {
   const difficulty = exerciseUtils.difficulty(route);
-  const numberOfQuestions = difficulty === 'easy' ? 5 : 7;
+  const numberOfQuestions = difficulty === 'normal' ? 5 : 7;
   exerciseUtils.createExercise(numberOfQuestions);
 });
 
@@ -83,7 +80,7 @@ onMounted(async () => {
   });
 
   preloadAudio(
-    ['÷', '+', '×', '−'].map((k) => `/sounds/${store.language}_${k}.mp3`)
+    ['÷', '+', '×', '−'].map((k) => `/sounds/maths/${store.language}_${k}.mp3`)
   );
 });
 

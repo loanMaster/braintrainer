@@ -18,9 +18,8 @@ export const memoryExercises = [
   'remember-words',
   'remember-numbers',
   'remember-names',
-  'find-matching-person',
-  'remember-words-rev',
   'memory-animals',
   'memory',
   'voices-memory',
+  'picture-memory',
 ];

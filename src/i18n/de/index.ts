@@ -1,3 +1,5 @@
+import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue';
+
 export default {
   'High scores (last 30 days)': 'Highscores der letzen 30 Tage',
   'An error occurred': 'Es ist ein Fehler aufgetreten',
@@ -44,6 +46,11 @@ export default {
     description: 'Achte nur auf die Stimme, nicht den Inhalt',
     hint: 'Suche Paare, hinter denen sich der gleiche Sprecher verbirgt. Ignoriere den Inhalt, achte nur auf die Stimme! Die Übung funktioniert wie gewöhnliches Memory - nur mit Audio.',
   },
+  'picture-memory': {
+    title: 'Bildermemory',
+    description: 'Memory, wie du es bereits kennst',
+    hint: 'Suche Paare, hinter denen sich das gleiche Bild verbirgt.',
+  },
   'language-basics': {
     title: 'Reisewortschatz',
     description: 'Merke dir einige Wörter einer Fremdsprache',
@@ -51,20 +58,20 @@ export default {
   },
   'countries-and-capitals': {
     title: 'Hauptstädte',
-    description: 'Kennst du Hauptstadt des jeweiligen Lands?',
-    hint: 'Kennst du Hauptstadt des jeweiligen Lands?',
+    description: 'Kennst du die Hauptstadt des jeweiligen Lands?',
+    hint: 'Kennst du die Hauptstadt des jeweiligen Lands?',
   },
   'find-matching-person': {
     title: 'Personen Merken (II)',
     description:
       'Merke dir die Namen der angezeigten Personen und ordne den Namen ein Gesicht zu.',
-    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jeden Namen der passenden Person zu.',
+    hint: 'Merke dir die Namen der angezeigten Personen. Ordne danach jeden Namen der passenden Person zu.',
   },
   'remember-names': {
-    title: 'Personen merken (I)',
+    title: 'Personen merken',
     description:
       'Merke dir die Namen der angezeigten Personen und ordne den Gesichtern einen Namen zu.',
-    hint: 'Merke dir die Namen der angezeigten Person. Ordne danach jeder Person den passenden Namen zu.',
+    hint: 'Merke dir die Namen der angezeigten Personen. Ordne danach jeder Person den passenden Namen zu.',
   },
   'remember-numbers-rev': {
     title: 'Zahlen merken (Rückwärts)',
@@ -188,9 +195,9 @@ export default {
   'How does work_RESPONSE':
     '{ APP_NAME } bietet eine vielzahl unterschiedlicher Übungen an, um Dein Gehirn zu trainieren. Suche eine Übung aus und wähle einen Schwierigkeitsgrad.',
   'Select an exercise': 'Wähle eine Übung',
-  easy: 'Anfänger',
-  normal: 'Fortgeschrittener',
-  hard: 'Experte',
+  normal: 'Normal',
+  hard: 'Schwer',
+  veryhard: 'Sehr schwer',
   Resume: 'Schliessen',
   'Select difficulty': 'Schwierigkeit wählen',
   LANGUAGE_CODE: 'de',
@@ -361,4 +368,13 @@ export default {
     'Bitte nimm an folgender Umfrage Teil, um BrainTrainer weiter zu verbessern:',
   'Have a look at our partner website:': 'Besuche unsere Partner-Website:',
   SURVEY_URL: 'https://freeonlinesurveys.com/s/SXpB2X1J',
+  ScoreScreenView: {
+    'Well done!': 'Gut gemacht!',
+    'Excellent!': 'Super!',
+    'Very good!': 'Sehr gut!',
+    'Made it!': 'Geschafft!',
+    'Keep going!': 'Weiter so!',
+    'Practise makes perfect.': 'Übung macht den meister',
+    'That went wrong.': 'Das ging daneben.',
+  },
 };

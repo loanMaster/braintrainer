@@ -32,11 +32,11 @@ const solveMemory = async (page: Page, count: number) => {
 };
 
 test('train memory', async ({ page }) => {
-  await navigateToGame(page, 'memory', 'easy');
+  await navigateToGame(page, 'memory', 'normal');
   await solveMemory(page, 12);
 });
 
 test('train memory with animals', async ({ page }) => {
-  await navigateToGame(page, 'memory-animals', 'hard');
+  await navigateToGame(page, 'memory-animals', 'veryhard');
   await solveMemory(page, 40);
 });

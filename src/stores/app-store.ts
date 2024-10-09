@@ -26,12 +26,14 @@ export interface Exercise {
   score?: number;
   audioState: AudioState;
   totalAudioDuration: number;
+  enableSkip: boolean;
 }
 
 export const newExercise = (
   nameOfTheGame: string,
   difficulty: string,
-  totalQuestions: number
+  totalQuestions: number,
+  enableSkip: boolean
 ): Exercise => ({
   correctAnswers: 0,
   totalQuestions,
@@ -48,6 +50,7 @@ export const newExercise = (
   currentQuestion: 0,
   totalAudioDuration: 0,
   audioState: { playing: false, meta: {}, playingSequence: false },
+  enableSkip,
 });
 
 export interface AudioState {
@@ -119,7 +122,7 @@ export const useAppStore = defineStore('main', {
     return {
       machineId: localStorage.getItem('machineId') || uuidv4(),
       dailyTraining: { active: false, results: [] as Exercise[] },
-      exercise: newExercise('remember-numbers', 'easy', 5),
+      exercise: newExercise('remember-numbers', 'normal', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
       _themePreference: localStorage.getItem('themePreference') || 'dark',
       playerScores,
@@ -225,6 +228,9 @@ export const useAppStore = defineStore('main', {
       this.exercise.beginTimeStamp = Date.now();
     },
     repeatAudio() {
+      // noop
+    },
+    skip() {
       // noop
     },
     startedPlayingSound(meta: {

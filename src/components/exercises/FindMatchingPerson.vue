@@ -69,15 +69,11 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import {
-  ExerciseService,
-  IntroductionResponse,
-} from 'src/shared-services/exercise.service';
+import {} from 'src/shared-services/exercise.service';
 import { shuffle } from 'src/util/array.utils';
 import { padNumber } from 'src/util/format-number';
 import { preloadAssets } from 'src/util/preload-assets';
@@ -101,6 +97,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => start(),
+  skipCb: () => reveal(),
 });
 
 const currentTask: Ref<Introductions | undefined> = ref();
@@ -114,7 +111,7 @@ const router = useRouter();
 
 onBeforeMount(() => {
   const numberOfQuestions =
-    difficulty.value === 'easy' ? 5 : difficulty.value === 'normal' ? 7 : 10;
+    difficulty.value === 'normal' ? 5 : difficulty.value === 'hard' ? 7 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
   currentTask.value = new PersonIntroductionService().createIntroductions(
     store.language,

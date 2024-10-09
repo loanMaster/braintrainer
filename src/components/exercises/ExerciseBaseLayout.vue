@@ -4,7 +4,7 @@
     :style="{ 'overflow-x': overflow, 'max-width': '100%' }"
   >
     <MovingColorsBackground
-      :style="{ opacity: notPlaying ? '1' : '0.2' }"
+      :style="{ opacity: notPlaying ? '1' : '0.25' }"
       style="transition-property: opacity; transition-duration: 1s"
     />
     <ExerciseHeader />

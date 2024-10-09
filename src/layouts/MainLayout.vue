@@ -86,13 +86,6 @@
         </div>
 
         <div class="row no-wrap">
-          <q-btn
-            flat
-            dense
-            @click="$q.fullscreen.toggle()"
-            data-testid="fullScreenToggle"
-            :icon="$q.fullscreen.isActive ? matFullscreenExit : matFullscreen"
-          />
           <q-toggle
             :modelValue="lightMode"
             data-testid="darkModeToggle"

@@ -103,23 +103,25 @@ export class LinearEquation extends AbstractEquation {
   public c: number;
   public x: number;
   public operation: string;
-  constructor(difficulty = 'easy') {
+  constructor(difficulty = 'normal') {
     super();
     this.operation = Math.random() > 0.25 ? '+' : '-';
     this.a =
-      difficulty === 'easy'
+      difficulty === 'normal'
         ? getRandomInteger(2, 10)
-        : difficulty === 'normal'
+        : difficulty === 'hard'
         ? getRandomInteger(2, 20)
         : getRandomInteger(11, 19);
     this.x =
-      difficulty === 'easy' ? getRandomInteger(0, 10) : getRandomInteger(0, 20);
+      difficulty === 'normal'
+        ? getRandomInteger(0, 10)
+        : getRandomInteger(0, 20);
     const max =
       this.operation === '-' ? this.a * this.x : Number.MAX_SAFE_INTEGER;
     this.b =
-      difficulty === 'easy'
+      difficulty === 'normal'
         ? getRandomInteger(2, 10, max)
-        : difficulty === 'normal'
+        : difficulty === 'hard'
         ? getRandomInteger(2, 20, max)
         : getRandomInteger(2, 100, max);
     this.c = this.a * this.x + this.b * (this.operation === '+' ? 1 : -1);
@@ -136,23 +138,19 @@ export class QuadraticEquation extends AbstractEquation {
   public c: number;
   public x: number;
   public operation: string;
-  constructor(difficulty = 'normal') {
+  constructor(difficulty = 'hard') {
     super();
     this.operation = Math.random() > 0.5 ? '+' : '-';
     this.a =
-      difficulty === 'normal'
-        ? getRandomInteger(2, 7)
-        : getRandomInteger(5, 25);
+      difficulty === 'hard' ? getRandomInteger(2, 7) : getRandomInteger(5, 25);
     this.x =
-      difficulty === 'normal'
-        ? getRandomInteger(2, 7)
-        : getRandomInteger(2, 10);
+      difficulty === 'hard' ? getRandomInteger(2, 7) : getRandomInteger(2, 10);
     const max =
       this.operation === '-'
         ? this.a * this.x * this.x
         : Number.MAX_SAFE_INTEGER;
     this.b =
-      difficulty === 'normal'
+      difficulty === 'hard'
         ? getRandomInteger(2, 10, max)
         : getRandomInteger(2, 20, max);
     this.c =
@@ -170,20 +168,18 @@ export class SqrtEquation extends AbstractEquation {
   public c: number;
   public x: number;
   public operation: string;
-  constructor(difficulty = 'normal') {
+  constructor(difficulty = 'hard') {
     super();
     this.operation = Math.random() > 0.5 ? '+' : '-';
     this.a =
-      difficulty === 'normal'
-        ? getRandomInteger(2, 7)
-        : getRandomInteger(11, 19);
+      difficulty === 'hard' ? getRandomInteger(2, 7) : getRandomInteger(11, 19);
     const sqrt =
-      difficulty === 'normal' ? getRandomInteger(2, 7) : getRandomInteger(2, 7);
+      difficulty === 'hard' ? getRandomInteger(2, 7) : getRandomInteger(2, 7);
     this.x = sqrt * sqrt;
     const max =
       this.operation === '-' ? this.a * sqrt : Number.MAX_SAFE_INTEGER;
     this.b =
-      difficulty === 'normal'
+      difficulty === 'hard'
         ? getRandomInteger(2, 10, max)
         : getRandomInteger(2, 20, max);
     this.c = this.a * sqrt + this.b * (this.operation === '+' ? 1 : -1);
@@ -280,8 +276,10 @@ export class MathExerciseService {
     return { num: newNum, success: isSuccess() || false };
   }
 
-  createAddSubExercise(difficulty: 'easy' | 'normal' | 'hard'): MathExercise {
-    const digits = difficulty === 'easy' ? 2 : difficulty === 'normal' ? 3 : 4;
+  createAddSubExercise(
+    difficulty: 'normal' | 'hard' | 'veryhard'
+  ): MathExercise {
+    const digits = difficulty === 'normal' ? 2 : difficulty === 'hard' ? 3 : 4;
     const plus = Math.random() > 0.5;
     const result = this.getNumberPairWithDigitsFlip(digits, plus);
     return {
@@ -296,14 +294,16 @@ export class MathExerciseService {
   }
 
   createMulDivExercise(
-    difficulty: 'easy' | 'normal' | 'hard',
+    difficulty: 'normal' | 'hard' | 'veryhard',
     lang?: string
   ): MathExercise {
     const operation = Math.random() > 0.5 ? '*' : '/';
     const a =
-      difficulty === 'easy' ? getRandomInteger(2, 9) : getRandomInteger(11, 19);
+      difficulty === 'normal'
+        ? getRandomInteger(2, 9)
+        : getRandomInteger(11, 19);
     const b =
-      difficulty === 'hard'
+      difficulty === 'veryhard'
         ? getRandomInteger(21, 99)
         : getRandomInteger(11, 19);
     const order = Math.random() > 0.5;
@@ -329,7 +329,7 @@ export class MathExerciseService {
 
   createEquation(query: MathExerciseRequest) {
     let eq: IEquation;
-    if (query.difficulty === 'easy' || Math.random() < 0.33) {
+    if (query.difficulty === 'normal' || Math.random() < 0.33) {
       eq = new LinearEquation(query.difficulty);
     } else if (Math.random() < 0.5) {
       eq = new SqrtEquation(query.difficulty);
@@ -357,7 +357,7 @@ export class MathExerciseService {
     query: ContinuationExerciseRequest
   ): ContinuationExerciseResponse {
     const digits =
-      query.difficulty === 'easy' ? 2 : query.difficulty === 'normal' ? 3 : 4;
+      query.difficulty === 'normal' ? 2 : query.difficulty === 'hard' ? 3 : 4;
     const initialVal =
       query.current ||
       this.getRandomNumber(Math.pow(10, digits - 1), Math.pow(10, digits) - 1);

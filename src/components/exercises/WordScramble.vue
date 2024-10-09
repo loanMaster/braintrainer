@@ -10,12 +10,6 @@
       :text="store.exercise.audioState.meta.text"
       :transparentText="!store.exercise.audioState.playing"
     />
-    <CountdownTimer
-      :totalTime="25000"
-      ref="countdownTimer"
-      @timeout="reveal"
-      class="q-mt-md"
-    />
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -43,7 +37,6 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
-import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
@@ -73,13 +66,13 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 const currentIndex = ref(0);
 const inputValue = ref('');
 const coreExercise = ref();
 const letterButtons = ref();
-const countdownTimer = ref();
 const showLoadingIndicator = ref(false);
 let nextAnagrams: ReplaySubject<string[]>;
 let anagrams: string[] = [];
@@ -129,7 +122,6 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value?.reset();
   currentIndex.value = 0;
 
   showLoadingIndicator.value = true;
@@ -150,7 +142,6 @@ async function nextQuestion() {
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
   await playAudio(true);
-  countdownTimer.value?.start();
 }
 
 function isAnagram(permutation: string[]): boolean {
@@ -168,9 +159,6 @@ function updateButtonLabels() {
 async function playAudio(measureTime = false) {
   const audio = [];
   for (let idx = 0; idx < permutation.length; idx++) {
-    const matchingAudio = alphabet.find(
-      (a) => a.toUpperCase() === permutation[idx]
-    );
     const letter = permutation[idx];
     audio.push({ text: letter, meta: { text: letter } });
   }
@@ -181,9 +169,9 @@ function loadNextAnagram(exclude?: string[]) {
   nextAnagrams.next(
     new ExerciseService().getAnagram({
       minLength:
-        difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 5 : 6,
+        difficulty.value === 'normal' ? 3 : difficulty.value === 'hard' ? 5 : 6,
       maxLength:
-        difficulty.value === 'easy' ? 4 : difficulty.value === 'normal' ? 6 : 7,
+        difficulty.value === 'normal' ? 4 : difficulty.value === 'hard' ? 6 : 7,
       lang: store.language,
       number: 1,
       exclude,
@@ -191,7 +179,7 @@ function loadNextAnagram(exclude?: string[]) {
   );
 }
 
-async function onLetterEntered(letter: string) {
+function onLetterEntered(letter: string) {
   if (inputDisabled.value) {
     return;
   }
@@ -201,17 +189,20 @@ async function onLetterEntered(letter: string) {
     currentIndex.value++;
     const anagram = getMatchingAnagram();
     if (currentIndex.value >= anagram.length) {
-      inputDisabled.value = true;
-      countdownTimer.value?.stop();
-      new SoundService().playSuccess();
-      store.$patch((store) => store.exercise.correctAnswers++);
-      await exerciseUtils.wait(150);
-      nextQuestion();
+      onSuccess();
     }
   } else {
     displayLetter(letter, true);
     exerciseUtils.handleMistake(reveal, coreExercise);
   }
+}
+
+async function onSuccess() {
+  inputDisabled.value = true;
+  new SoundService().playSuccess();
+  store.$patch((store) => store.exercise.correctAnswers++);
+  await exerciseUtils.wait(150);
+  nextQuestion();
 }
 
 function displayEmptyInput() {
@@ -238,7 +229,6 @@ function displayLetter(letter: string, hasError: boolean) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value?.stop();
 }
 
 function getMatchingAnagram(): string {

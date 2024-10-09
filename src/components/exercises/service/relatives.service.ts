@@ -249,7 +249,7 @@ export class RelativesService {
 
   public createRelationshipTree(difficulty: string): FindRelativeTask {
     const maxDepth =
-      difficulty === 'easy' ? 3 : difficulty === 'normal' ? 4 : 5;
+      difficulty === 'normal' ? 3 : difficulty === 'hard' ? 4 : 5;
     let tree: Relative;
     do {
       this.relations = [];

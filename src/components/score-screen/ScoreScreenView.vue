@@ -116,14 +116,36 @@ import { takeUntil } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
 import { formatScore } from 'src/util/format-number';
 import { useRouter } from 'vue-router';
+import { SpeechService } from 'src/shared-services/speech.service';
+import { randomElement } from 'src/util/array.utils';
+import { useI18n } from 'vue-i18n';
 
 const store = useAppStore();
 const router = useRouter();
 const knob = ref();
 const score = ref(0);
+const { t } = useI18n();
+
+const texts = {
+  positive: ['Well done!', 'Excellent!', 'Very good!'],
+  negative: ['That went wrong.', 'Practise makes perfect.'],
+  inBetween: ['Practise makes perfect.', 'Keep going!'],
+  neutral: ['Made it!'],
+};
 
 onMounted(async () => {
   new SoundService().playLevelFinished();
+  const text = t(
+    'ScoreScreenView.' +
+      randomElement([
+        ...(store.exercise.score! > 75
+          ? texts.positive
+          : store.exercise.score! > 40
+          ? texts.inBetween
+          : texts.negative),
+        ...texts.neutral,
+      ])
+  );
 
   const stop = new Subject<void>();
   setTimeout(() => {
@@ -133,6 +155,7 @@ onMounted(async () => {
         if (score.value < store.exercise.score!) {
           score.value++;
         } else {
+          new SpeechService().say(text);
           score.value = store.exercise.score!;
           new TweenService().animateCSS(knob.value, 'pulse', 1);
           stop.next();

@@ -45,7 +45,7 @@ const routes: RouteRecordRaw[] = [
             component: GameSelectionView,
           },
           {
-            path: ':difficulty(easy|normal|hard)',
+            path: ':difficulty(normal|hard|veryhard)',
             component: ExerciseView,
             name: 'exercise',
             children: [
@@ -108,6 +108,12 @@ const routes: RouteRecordRaw[] = [
                 name: 'voices-memory',
                 component: () =>
                   import('src/components/exercises/AudioMemory.vue'),
+              },
+              {
+                path: ':game(picture-memory)',
+                name: 'picture-memory',
+                component: () =>
+                  import('src/components/exercises/PictureMemory.vue'),
               },
               {
                 path: ':game(countries-and-capitals)',

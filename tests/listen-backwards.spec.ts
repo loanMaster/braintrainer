@@ -5,7 +5,7 @@ import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 test.beforeEach(listenForConsoleErrors);
 
 test('train listen-backwards', async ({ page }) => {
-  await navigateToGame(page, 'listen-backwards', 'easy');
+  await navigateToGame(page, 'listen-backwards', 'normal');
 
   const buttonWrapper = await page.getByTestId('exercise-buttons');
   await expect(

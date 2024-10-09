@@ -17,9 +17,8 @@ export class SpeechService {
         take(1)
       )
       .toPromise();
-    const p = new Promise<boolean>((resolve, reject) => {
+    const p = new Promise<boolean>((resolve) => {
       const synth = window.speechSynthesis;
-      const voices = synth.getVoices();
       const utterThis = new SpeechSynthesisUtterance(text);
       utterThis.onerror = () => {
         resolve(false);
@@ -65,7 +64,9 @@ export class SpeechService {
     if (this.isPlayingSequence) {
       this.abort = true;
     }
-    window.speechSynthesis.cancel();
+    if (this.isPlaying()) {
+      window.speechSynthesis.cancel();
+    }
   }
 
   isPlaying() {

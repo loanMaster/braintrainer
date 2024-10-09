@@ -5,7 +5,6 @@
     :data-test="isDev && solution"
     data-testid="core-exercise"
   >
-    <CountdownTimer :totalTime="10000" ref="countdownTimer" @timeout="reveal" />
     <div class="q-my-md">
       <WordDisplay
         :value="inputValue"
@@ -22,7 +21,6 @@
       />
     </div>
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="solution"
@@ -33,11 +31,9 @@
 <script setup lang="ts">
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
-import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { Subject, takeUntil, ReplaySubject } from 'rxjs';
 import { SoundService } from 'src/shared-services/sound.service';
 import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
@@ -56,7 +52,6 @@ const {
   revealed,
   destroy,
   isDev,
-  route,
   store,
   difficulty,
   inputDisabled,
@@ -65,23 +60,22 @@ const {
   playAudioCb: () => speak(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let currentIndex = 0;
 const inputValue = ref('');
 let homophones: string[] = [];
 let highlightError = ref(false);
-const showLoadingIndicator = ref(false);
 
 let nextWord: Subject<WordList>;
 let currentWord: Ref<WordList | undefined> = ref();
 const router = useRouter();
 const coreExercise = ref();
 const letterButtons = ref();
-const countdownTimer = ref();
 
 onBeforeMount(() => {
-  const numberOfQuestions = difficulty.value === 'easy' ? 5 : 10;
+  const numberOfQuestions = difficulty.value === 'normal' ? 5 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
   nextWord = new ReplaySubject<WordList>(numberOfQuestions);
   const exclude: string[] = [];
@@ -117,13 +111,9 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(coreExercise.value);
   }
-  countdownTimer.value?.reset();
-  showLoadingIndicator.value = true;
   currentWord.value = await nextWord
     .pipe(skip(store.exercise.currentQuestion - 1), take(1))
     .toPromise();
-
-  showLoadingIndicator.value = false;
 
   homophones = currentWord.value!.val.map((value) => value.toUpperCase());
   currentIndex = homophones[0].length - 1;
@@ -137,7 +127,6 @@ async function nextQuestion() {
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
   await speak(true);
-  countdownTimer.value?.start();
 }
 
 function updateButtonLabels() {
@@ -160,11 +149,11 @@ function fetchNextWord(exclude?: string[]) {
   nextWord.next(
     new ExerciseService().randomHomophone({
       minLength:
-        difficulty.value === 'easy' ? 3 : difficulty.value === 'normal' ? 5 : 7,
+        difficulty.value === 'normal' ? 3 : difficulty.value === 'hard' ? 5 : 7,
       maxLength:
-        difficulty.value === 'easy'
+        difficulty.value === 'normal'
           ? 5
-          : difficulty.value === 'normal'
+          : difficulty.value === 'hard'
           ? 9
           : 16,
       lang: store.language,
@@ -184,7 +173,6 @@ async function onLetterEntered(letter: string) {
     currentIndex--;
     if (currentIndex < 0) {
       inputDisabled.value = true;
-      countdownTimer.value?.stop();
       new SoundService().playSuccess();
       await exerciseUtils.wait(150);
       store.$patch((store) => store.exercise.correctAnswers++);
@@ -220,7 +208,6 @@ function displayLetter(letter: string, hasError: boolean) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  countdownTimer.value?.stop();
 }
 
 const solution = computed(() => {

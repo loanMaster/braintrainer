@@ -26,13 +26,13 @@ const solve = async (page: Page) => {
 };
 
 test('train remember-words', async ({ page }) => {
-  await navigateToGame(page, 'remember-words', 'easy', 'de');
+  await navigateToGame(page, 'remember-words', 'normal', 'de');
   await solve(page);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });
 
 test('train remember-words-rev', async ({ page }) => {
-  await navigateToGame(page, 'remember-words-rev', 'easy', 'de');
+  await navigateToGame(page, 'remember-words-rev', 'normal', 'de');
   await solve(page);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });

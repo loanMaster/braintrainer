@@ -82,7 +82,7 @@ const { t } = useI18n();
 const showLoadingIndicator = ref(false);
 const scores: Ref<Score[]> = ref([]);
 const nameOfTheGame = ref('');
-const difficulty = ref('easy');
+const difficulty = ref('normal');
 const showProgressDiagram = ref(false);
 
 onMounted(async () => {

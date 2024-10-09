@@ -23,18 +23,19 @@ export const exerciseUtils = {
   ) {
     if (useAppStore().strike()) {
       new SoundService().playError();
-      if (useAppStore().exercise.strikes >= 3) {
+      if (useAppStore().exercise.strikes >= 5) {
         reveal();
       }
     }
     new TweenService().wiggle(elementToWiggle.value);
   },
-  createExercise: (numberOfQuestions: number) => {
+  createExercise: (numberOfQuestions: number, enableSkip = true) => {
     useAppStore().$patch((store) => {
       store.exercise = newExercise(
         useRoute().params.game as string,
         useRoute().params.difficulty as string,
-        numberOfQuestions
+        numberOfQuestions,
+        enableSkip
       );
     });
   },

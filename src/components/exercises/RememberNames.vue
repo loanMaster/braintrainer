@@ -95,6 +95,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => start(),
+  skipCb: () => reveal(),
 });
 
 const currentTask: Ref<Introductions | undefined> = ref();
@@ -108,7 +109,7 @@ const router = useRouter();
 
 onBeforeMount(() => {
   const numberOfQuestions =
-    difficulty.value === 'easy' ? 5 : difficulty.value === 'normal' ? 7 : 10;
+    difficulty.value === 'normal' ? 5 : difficulty.value === 'hard' ? 7 : 10;
   exerciseUtils.createExercise(numberOfQuestions);
   currentTask.value = new PersonIntroductionService().createIntroductions(
     store.language,

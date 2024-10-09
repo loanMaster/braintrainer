@@ -5,7 +5,7 @@ import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 test.beforeEach(listenForConsoleErrors);
 
 test('train find-matching-person', async ({ page }) => {
-  await navigateToGame(page, 'find-matching-person', 'easy');
+  await navigateToGame(page, 'find-matching-person', 'normal');
 
   for (let i = 0; i < 5; i++) {
     await expect(

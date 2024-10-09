@@ -25,12 +25,17 @@
         <div ref="letterButtonsWrapper" class="flex-1 justify-center">
           <LetterButtons
             ref="letterButtons"
-            :numberOfButtons="6"
+            :numberOfButtons="numberOfLetterButtons"
             :disabled="inputDisabled"
+            :style="{ display: activeButtons === 'letter' ? 'flex' : 'none' }"
             @letter-selected="onLetterEntered"
           />
         </div>
-        <div class="row q-gutter-sm justify-center flex-1" ref="buttons">
+        <div
+          class="row q-gutter-sm justify-center flex-1 full-width"
+          ref="wordButtons"
+          :style="{ display: activeButtons === 'word' ? 'flex' : 'none' }"
+        >
           <div
             v-for="(label, idx) in buttonLabels"
             v-bind:key="idx"
@@ -91,11 +96,12 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => start(),
+  skipCb: () => reveal(),
 });
 
 const task: Ref<CountryAndCapital[]> = ref([]);
 let buttonLabels: Ref<string[]> = ref([]);
-const buttons = ref();
+const wordButtons = ref();
 const worldMap = ref();
 const coreExercise = ref();
 let showLoadingIndicator = ref(false);
@@ -103,11 +109,11 @@ const router = useRouter();
 const letterButtons = ref();
 const letterButtonsWrapper = ref();
 const exerciseButtons = ref();
+const activeButtons: Ref<'letter' | 'word'> = ref('letter');
 
 onBeforeMount(() => {
   const numberOfQuestion = 10;
   exerciseUtils.createExercise(numberOfQuestion);
-  store.$patch((s) => (s.exercise.difficulty = 'normal'));
 });
 
 onMounted(async () => {
@@ -129,21 +135,25 @@ async function start() {
 
   store.beginExercise();
 
-  letterButtons.value.showAtLeast(['?']);
-  new TweenService().setDisplay(buttons.value, 'none');
-  new TweenService().setDisplay(coreExercise.value, 'flex');
-  await new TweenService().fadeIn(exerciseButtons.value);
   nextQuestion();
 }
 
 function updateButtons() {
   let capitalOptions = [getCurrentTask().capital];
-  capitalOptions.push(
-    ...new GeographyService().getCapitalsByFirstLetter(
-      store.language,
-      getCurrentTask().capital[0]
-    )
-  );
+  if (store.exercise.difficulty !== 'normal') {
+    capitalOptions.push(
+      ...new GeographyService().getCapitalsByFirstLetter(
+        store.language,
+        getCurrentTask().capital[0]
+      )
+    );
+  }
+  const numberOfOptions =
+    store.exercise.difficulty === 'normal'
+      ? 5
+      : store.exercise.difficulty === 'hard'
+      ? 3
+      : 4;
   capitalOptions = [...new Set(capitalOptions)];
   do {
     const randomCapital = new GeographyService().getRandomCapital(
@@ -152,8 +162,8 @@ function updateButtons() {
     if (capitalOptions.indexOf(randomCapital) === -1) {
       capitalOptions.push(randomCapital);
     }
-  } while (capitalOptions.length < 4);
-  capitalOptions = capitalOptions.splice(0, 4);
+  } while (capitalOptions.length < numberOfOptions);
+  capitalOptions = capitalOptions.splice(0, numberOfOptions);
   capitalOptions.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   buttonLabels.value = capitalOptions;
   letterButtons.value.showAtLeast([getCurrentTask().capital[0]]);
@@ -173,13 +183,16 @@ async function nextQuestion() {
   inputDisabled.value = false;
   if (store.exercise.currentQuestion > 1) {
     await new TweenService().fadeOut(exerciseButtons.value);
-    new TweenService().setDisplay(buttons.value, 'none');
-    new TweenService().setDisplay(letterButtonsWrapper.value, 'flex');
+    activeButtons.value =
+      store.exercise.difficulty === 'normal' ? 'word' : 'letter';
     updateButtons();
-    await new TweenService().fadeIn(exerciseButtons.value);
   } else {
     updateButtons();
+    activeButtons.value =
+      store.exercise.difficulty === 'normal' ? 'word' : 'letter';
+    new TweenService().setDisplay(coreExercise.value, 'flex');
   }
+  await new TweenService().fadeIn(exerciseButtons.value);
   highlightCountry(getCurrentTask().countryEn);
   await playAudio();
 }
@@ -230,8 +243,7 @@ function onLetterEntered(letter: string) {
     return;
   }
   if (letter === getCurrentTask().capital[0]) {
-    new TweenService().setDisplay(letterButtonsWrapper.value, 'none');
-    new TweenService().setDisplay(buttons.value, 'flex');
+    activeButtons.value = 'word';
   } else {
     handleMistake(reveal, letterButtonsWrapper);
   }
@@ -249,7 +261,7 @@ async function selectWord(idx: number, $event: Event) {
     await exerciseUtils.wait(250);
     nextQuestion();
   } else {
-    handleMistake(reveal, buttons);
+    handleMistake(reveal, wordButtons);
   }
 }
 
@@ -283,5 +295,9 @@ const solution = computed(() => {
 
 const country = computed(() => {
   return getCurrentTask().country;
+});
+
+const numberOfLetterButtons = computed(() => {
+  return store.exercise.difficulty === 'veryhard' ? 6 : 2;
 });
 </script>

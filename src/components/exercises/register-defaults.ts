@@ -1,7 +1,7 @@
 import { SoundService } from 'src/shared-services/sound.service';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
-import { ref, onBeforeUnmount, computed } from 'vue';
+import { ref, onBeforeUnmount, computed, onMounted } from 'vue';
 import { Subject } from 'rxjs';
 import { useAppStore } from 'stores/app-store';
 import { useRoute } from 'vue-router';
@@ -13,10 +13,12 @@ export function createExerciseContext({
   playAudioCb,
   nextQuestionCb,
   startCb,
+  skipCb,
 }: {
   playAudioCb: () => any;
   nextQuestionCb: () => any;
   startCb: () => any;
+  skipCb: () => any;
 }) {
   const store = useAppStore();
   const $q = useQuasar();
@@ -24,6 +26,7 @@ export function createExerciseContext({
   const route = useRoute();
   const soundService = new SoundService();
   const speechService = new SpeechService();
+
   const inputDisabled = ref(true);
   const revealed = ref(false);
   const destroy = new Subject<void>();
@@ -59,6 +62,9 @@ export function createExerciseContext({
             inputDisabled.value = false;
           }
         }
+      }
+      if (name === 'skip') {
+        skipCb();
       }
     });
   });

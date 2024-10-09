@@ -133,7 +133,7 @@ const rows = computed(() => {
       score: s.score,
       date: s.date,
       stars: mapScoreToRating(s.score),
-      sortDiff: ['easy', 'normal', 'hard'].indexOf(s.difficulty),
+      sortDiff: ['normal', 'hard', 'veryhard'].indexOf(s.difficulty),
     });
   });
   _rows.sort((a, b) => {

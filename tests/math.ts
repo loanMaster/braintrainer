@@ -24,25 +24,25 @@ const solve = async (page: Page, count: number) => {
 };
 
 test('train mental-arithmetic', async ({ page }) => {
-  await navigateToGame(page, 'mental-arithmetic', 'easy', 'de');
+  await navigateToGame(page, 'mental-arithmetic', 'normal', 'de');
   await solve(page, 5);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });
 
 test('train mental-arithmetic-mul', async ({ page }) => {
-  await navigateToGame(page, 'mental-arithmetic-mul', 'easy', 'de');
+  await navigateToGame(page, 'mental-arithmetic-mul', 'normal', 'de');
   await solve(page, 5);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });
 
 test('train math-marathon', async ({ page }) => {
-  await navigateToGame(page, 'math-marathon', 'easy', 'de');
+  await navigateToGame(page, 'math-marathon', 'normal', 'de');
   await solve(page, 15);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });
 
 test('train solve-equation', async ({ page }) => {
-  await navigateToGame(page, 'solve-equation', 'easy', 'de');
+  await navigateToGame(page, 'solve-equation', 'normal', 'de');
   await solve(page, 5);
   await page.waitForURL('http://localhost:9000/de/score-screen');
 });

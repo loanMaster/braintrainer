@@ -7,9 +7,9 @@ export const calculateScore = (exercise: Exercise) => {
   const maxScore = percentageCorrect * 100;
   const errorPenalty = 5 * exercise.totalStrikeCount;
   const time_divisor =
-    exercise.difficulty === 'easy'
+    exercise.difficulty === 'normal'
       ? 6_000
-      : exercise.difficulty === 'normal'
+      : exercise.difficulty === 'hard'
       ? 9_000
       : 12_000;
   const timePenalty = Math.min(

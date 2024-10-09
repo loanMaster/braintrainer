@@ -9,3 +9,11 @@ $positive: #21ba45;
 $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
+
+$body-font-size: var(--q-theme-font-size, 20px);
+$body-line-height: var(--q-theme-line-height, 1.2);
+$typography-font-family: var(
+  --q-theme-font-family,
+  "'Roboto', '-apple-system', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+);
+$button-font-size: var(--q-theme-btn-font-size, 18px);

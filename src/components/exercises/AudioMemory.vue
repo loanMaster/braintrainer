@@ -13,8 +13,13 @@
     >
       <q-btn
         :color="isSelected(idx) ? 'secondary' : 'primary'"
-        class="transition-duration-md text-h5"
-        :class="{ invisible: isSolved(idx) }"
+        class="transition-duration-md"
+        :class="{
+          invisible: isSolved(idx),
+          'text-h3': store.exercise.difficulty === 'normal',
+          'text-h4': store.exercise.difficulty === 'hard',
+          'text-h5': store.exercise.difficulty === 'veryhard',
+        }"
         @click="buttonClick(idx, $event)"
         :data-test="isDev ? 'button-' + buttonValue(idx) : ''"
         :disabled="inputDisabled || isSolved(idx)"
@@ -28,16 +33,11 @@
 <script setup lang="ts">
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import { createExerciseContext } from 'components/exercises/register-defaults';
-import { Sound, SoundService } from 'src/shared-services/sound.service';
+import { SoundService } from 'src/shared-services/sound.service';
 import { onBeforeMount, onMounted, ref, Ref } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { TweenService } from 'src/shared-services/tween.service';
-import {
-  AudioResponse,
-  ExerciseService,
-} from 'src/shared-services/exercise.service';
-import { ReplaySubject, Subject, take } from 'rxjs';
-import { skip } from 'rxjs/operators';
+import { ExerciseService } from 'src/shared-services/exercise.service';
 import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
 import { useRoute, useRouter } from 'vue-router';
@@ -55,6 +55,7 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => undefined,
 });
 
 let permutation: number[] = [];
@@ -72,17 +73,17 @@ const router = useRouter();
 onBeforeMount(() => {
   const numberOfQuestions =
     useRoute().params.game === 'voices-memory'
-      ? difficulty.value === 'easy'
+      ? difficulty.value === 'normal'
         ? 4
-        : difficulty.value === 'normal'
+        : difficulty.value === 'hard'
         ? 5
         : 6
-      : difficulty.value === 'easy'
-      ? 6
       : difficulty.value === 'normal'
+      ? 6
+      : difficulty.value === 'hard'
       ? 12
       : 20;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise(numberOfQuestions, false);
 });
 
 onMounted(async () => {
@@ -106,18 +107,14 @@ async function nextQuestion() {
   wordList.value =
     store.exercise.nameOfTheGame === 'voices-memory'
       ? await loadExerciseVoiceMemory()
+      : store.exercise.nameOfTheGame === 'memory-animals'
+      ? await loadExerciseVoiceMemorySingleSpeaker()
       : loadExercise();
-  if (store.exercise.nameOfTheGame === 'voices-memory') {
-    permutation = Array.from(Array(store.exercise.totalQuestions * 2).keys());
-  } else {
-    permutation = Array.from(Array(store.exercise.totalQuestions).keys());
-    permutation.push(
-      ...Array.from(Array(store.exercise.totalQuestions).keys())
-    );
-  }
+  permutation = Array.from(Array(store.exercise.totalQuestions * 2).keys());
   shuffle(permutation);
   new TweenService().setDisplay(buttons.value, 'flex');
   await new TweenService().fadeIn(buttons.value);
+  store.beginExercise();
   inputDisabled.value = false;
 }
 
@@ -125,10 +122,10 @@ async function readWord(word: { src: string; val: string }) {
   speechService.stop();
   soundService.stop();
   lastPlayed = word;
-  if (store.exercise.nameOfTheGame === 'voices-memory') {
-    await soundService.play(word);
+  if (!word.src) {
+    await speechService.say(word.val);
   } else {
-    await speechService.say(word.src);
+    await soundService.play(word);
   }
 }
 
@@ -139,18 +136,26 @@ function playAudio() {
 }
 
 function loadExercise(): { src: string; val: string }[] {
-  return new ExerciseService()
+  const words = new ExerciseService()
     .getRandomWords({
       minLength: 3,
       maxLength: 14,
       lang: store.language,
       number: store.exercise.totalQuestions,
-      category:
-        store.exercise.nameOfTheGame === 'memory-animals'
-          ? 'ANIMALS'
-          : undefined,
     })
-    .map((w) => ({ src: w, val: w }));
+    .map((w) => ({ src: '', val: w }));
+  return [...words, ...words];
+}
+
+async function loadExerciseVoiceMemorySingleSpeaker(): Promise<
+  { src: string; val: string }[]
+> {
+  const items = new ExerciseService().getVoiceMemorySingleSpeaker(
+    store.exercise.totalQuestions,
+    store.language
+  );
+  await preloadAudio(items.map((i) => i.src));
+  return items;
 }
 
 async function loadExerciseVoiceMemory(): Promise<
@@ -175,7 +180,7 @@ function isSolved(idx: number) {
 }
 
 function buttonValue(buttonIndex: number) {
-  if (!permutation || wordList.value.length === 0) {
+  if (!permutation || permutation.length === 0 || wordList.value.length === 0) {
     return '';
   }
   return wordList.value[permutation[buttonIndex]].val;

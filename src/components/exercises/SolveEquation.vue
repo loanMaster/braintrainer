@@ -10,11 +10,8 @@
       :input-disabled="inputDisabled"
       :input-value="inputValue"
       @button-click="onNumberEntered"
-      :totalTime="10000"
-      @timeout="reveal"
     />
   </div>
-  <LoadingIndicator :showing="showLoadingIndicator" />
   <SolutionBanner
     :show="revealed"
     :solution="`${currentExercise?.formula} -> x=${currentExercise?.result}`"
@@ -23,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import NumPadWithDisplay from 'src/components/exercises/shared/NumPadWithDisplay.vue';
 import { takeUntil } from 'rxjs';
@@ -53,19 +49,19 @@ const {
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
   startCb: () => nextQuestion(),
+  skipCb: () => reveal(),
 });
 
 let currentIndex = 0;
 const inputValue = ref('');
 const numpadContainer = ref();
 const numpad = ref();
-const showLoadingIndicator = ref(false);
 const router = useRouter();
 let currentExercise: Ref<Equation | undefined> = ref();
 
 onBeforeMount(async () => {
   const difficulty = exerciseUtils.difficulty(route);
-  const numberOfQuestions = difficulty === 'easy' ? 5 : 7;
+  const numberOfQuestions = difficulty === 'normal' ? 5 : 7;
   exerciseUtils.createExercise(numberOfQuestions);
 });
 
@@ -97,9 +93,7 @@ async function nextQuestion() {
   }
   numpad.value?.resetTimer();
   inputValue.value = 'x=';
-  showLoadingIndicator.value = true;
   currentExercise.value = getNextExercise();
-  showLoadingIndicator.value = false;
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'block');
     store.beginExercise();

@@ -1,13 +1,8 @@
 import { randomElement, shuffle } from 'src/util/array.utils';
-import { DictionaryProvider } from '../components/exercises/service/dictionary.provider';
-import { DictionaryService } from '../components/exercises/service/dictionary.service';
+import { DictionaryProvider } from './dictionary.provider';
+import { DictionaryService } from './dictionary.service';
 import { requestHelper } from '../shared-services/request.helper';
 import languageBasics from '../components/exercises/service/other-languages/language-basics.json';
-
-export interface IntroductionRequest {
-  lang: string;
-  count: number;
-}
 
 export interface LanguageBasics {
   lang: string;
@@ -37,12 +32,6 @@ export interface WordsMultipleSpeakers {
   category?: string;
 }
 
-export interface HomophoneAudioResponse {
-  audio: string;
-  val: string[];
-  alts?: string[];
-}
-
 export interface WordList {
   val: string[];
   alts?: string[];
@@ -67,10 +56,6 @@ export interface AudioResponse {
   audio: string;
   val: string | number;
   alts?: string[];
-}
-
-export interface AnagramResponse {
-  words: string[];
 }
 
 export class ExerciseService {
@@ -127,7 +112,7 @@ export class ExerciseService {
       easy: { [word: string]: string };
       normal: { [word: string]: string };
     } = randomElement(languageBasics);
-    const words = entry[difficulty === 'easy' ? 'easy' : 'normal'];
+    const words = entry[difficulty === 'normal' ? 'easy' : 'normal'];
     return {
       words: Object.keys(words).map((word) => ({
         src: `/sounds/other-languages/${entry.lang}_${word}.mp3`,
@@ -136,6 +121,52 @@ export class ExerciseService {
       })),
       lang: entry.lang,
     };
+  }
+
+  getVoiceMemorySingleSpeaker(
+    numberSpeakers: number,
+    lang: string
+  ): { src: string; val: string }[] {
+    const animals = new DictionaryProvider()
+      .getDictionary(lang, 'ANIMALS')
+      .map((a) => a);
+    const shuffledAnimals = shuffle(animals);
+    const voices_en = [
+      'en-US-Studio-O',
+      'en-US-Studio-Q',
+      'en-US-Wavenet-A',
+      'en-US-Wavenet-B',
+      'en-US-Wavenet-C',
+      'en-US-Wavenet-D',
+      'en-US-Wavenet-E',
+      'en-US-Wavenet-F',
+      'en-US-Wavenet-G',
+      'en-US-Wavenet-H',
+    ];
+    const voices_de = [
+      'de-DE-Studio-B',
+      'de-DE-Studio-C',
+      'de-DE-Wavenet-B',
+      'de-DE-Wavenet-C',
+      'de-DE-Wavenet-D',
+      'de-DE-Wavenet-E',
+      'de-DE-Wavenet-F',
+      'de-DE-Wavenet-H',
+    ];
+    const voice =
+      lang === 'de' ? randomElement(voices_de) : randomElement(voices_en);
+    const result = [];
+    for (const animal of shuffledAnimals) {
+      result.push({
+        src: `/sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
+        val: animal,
+      });
+      result.push({
+        src: `/sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
+        val: animal,
+      });
+    }
+    return result.splice(0, numberSpeakers * 2);
   }
 
   getVoiceMemory(
@@ -216,18 +247,6 @@ export class ExerciseService {
         ? letters_es
         : letters_en;
     return letters.split('');
-  }
-
-  async fetchAnagram(randomWord: RandomWord): Promise<AnagramResponse> {
-    const response = await fetch(
-      this.serverPath + '/dictionary/random-anagram',
-      {
-        ...requestHelper.getStandardRequestInit(),
-        method: 'POST',
-        body: JSON.stringify(randomWord),
-      }
-    );
-    return response.json();
   }
 
   getAnagram(query: RandomWord): string[] {

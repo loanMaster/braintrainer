@@ -10,12 +10,6 @@
         <div class="flex-1 c-num-field text-center non-selectable q-mr-xs">
           {{ inputValue }}
         </div>
-        <CountdownTimer
-          v-if="totalTime"
-          :totalTime="totalTime"
-          ref="countdownTimer"
-          @timeout="onTimeout"
-        />
       </div>
     </q-card-section>
   </q-card>
@@ -23,14 +17,12 @@
 
 <script setup lang="ts">
 import NumPad from 'src/components/exercises/shared/NumPad.vue';
-import CountdownTimer from 'src/components/exercises/shared/CountdownTimer.vue';
 import { ref } from 'vue';
 
-const emits = defineEmits(['button-click', 'timeout']);
+const emits = defineEmits(['button-click']);
 defineProps({
   inputValue: String,
   inputDisabled: Boolean,
-  totalTime: Number,
 });
 const countdownTimer = ref();
 
@@ -48,10 +40,6 @@ function resetTimer() {
 
 function startTimer() {
   countdownTimer.value?.start();
-}
-
-function onTimeout() {
-  emits('timeout');
 }
 
 defineExpose({

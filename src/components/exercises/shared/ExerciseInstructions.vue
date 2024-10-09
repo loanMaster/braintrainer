@@ -28,11 +28,18 @@ import { useRoute } from 'vue-router';
 import { keyInput } from 'src/util/key.input';
 import { filter, take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { useAppStore } from 'src/stores/app-store';
+import { SpeechService } from 'src/shared-services/speech.service';
+import { useI18n } from 'vue-i18n';
 
 const emits = defineEmits(['confirm']);
 const route = useRoute();
 const disabled = ref(false);
 const destroy = new Subject<void>();
+const store = useAppStore();
+const { t } = useI18n({ useScope: 'global' });
+
+const speechService = new SpeechService();
 
 onMounted(() => {
   keyInput
@@ -44,14 +51,23 @@ onMounted(() => {
     .subscribe(() => {
       confirm();
     });
+  speechService.say(
+    t(nameOfTheGame.value + '.hint') +
+      '. ' +
+      t('Press "START" when you are ready'),
+    undefined,
+    store.language
+  );
 });
 
 onBeforeUnmount(() => {
+  speechService.stop();
   destroy.next();
   destroy.complete();
 });
 
 function confirm() {
+  speechService.stop();
   disabled.value = true;
   emits('confirm');
 }

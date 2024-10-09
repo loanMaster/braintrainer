@@ -5,7 +5,7 @@ import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 test.beforeEach(listenForConsoleErrors);
 
 test('train find-relative', async ({ page }) => {
-  await navigateToGame(page, 'find-relative', 'easy');
+  await navigateToGame(page, 'find-relative', 'normal');
 
   const buttonWrapper = await page.getByTestId('exercise-buttons');
 

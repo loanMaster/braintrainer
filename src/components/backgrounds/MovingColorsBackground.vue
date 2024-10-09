@@ -25,8 +25,6 @@
 }
 
 .animated-bg::before,
-.animated-bg::after,
-.animated-bg::before,
 .animated-bg::after {
   position: fixed;
   top: 50%;
@@ -38,35 +36,16 @@
   animation: 44s -27s move infinite ease-in-out alternate;
 }
 
-.bg-abs .animated-bg::before,
-.bg-abs .animated-bg::after,
-.bg-abs .animated-bg::before,
-.bg-abs .animated-bg::after {
-  position: absolute;
-}
-
 .animated-bg::before {
-  @include dots(40);
-  animation-duration: 44s;
+  @include dots(20);
+  animation-duration: 34s;
   animation-delay: -27s;
 }
 
 .animated-bg::after {
-  @include dots(40);
-  animation-duration: 43s;
+  @include dots(20);
+  animation-duration: 33s;
   animation-delay: -32s;
-}
-
-.animated-bg::before {
-  @include dots(40);
-  animation-duration: 42s;
-  animation-delay: -23s;
-}
-
-.animated-bg::after {
-  @include dots(40);
-  animation-duration: 41s;
-  animation-delay: -19s;
 }
 
 @keyframes move {
