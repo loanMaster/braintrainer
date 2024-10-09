@@ -145,7 +145,6 @@ async function onNumberEntered(num: number) {
     );
     if (currentIndex.value === String(expectedResult.value).length) {
       inputDisabled.value = true;
-      numpad.value?.stopTimer();
       store.$patch((store) => store.exercise.correctAnswers++);
       new SoundService().playSuccess();
       await exerciseUtils.wait(150);
@@ -159,6 +158,5 @@ async function onNumberEntered(num: number) {
 function reveal() {
   inputDisabled.value = true;
   revealed.value = true;
-  numpad.value?.stopTimer();
 }
 </script>
