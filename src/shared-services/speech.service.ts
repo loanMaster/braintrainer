@@ -5,18 +5,17 @@ export class SpeechService {
   private queue: { text: string; meta?: any }[] = [];
   private isPlayingSequence = false;
   private abort = false;
-  pausing: Subject<boolean> = new BehaviorSubject<boolean>(false);
+
+  init() {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.getVoices();
+    }
+  }
 
   async say(text: string, meta: any = {}, lang?: string): Promise<boolean> {
     if (meta) {
       useAppStore().startedPlayingSound(meta);
     }
-    await this.pausing
-      .pipe(
-        filter((p) => !p),
-        take(1)
-      )
-      .toPromise();
     const p = new Promise<boolean>((resolve) => {
       const synth = window.speechSynthesis;
       const utterThis = new SpeechSynthesisUtterance(text);
@@ -55,10 +54,6 @@ export class SpeechService {
     useAppStore().finishedPlayingSequence();
   }
 
-  pause(pausing: boolean) {
-    this.pausing.next(pausing);
-  }
-
   stop() {
     if (this.isPlayingSequence) {
       this.abort = true;
@@ -70,5 +65,16 @@ export class SpeechService {
 
   isPlaying() {
     return window.speechSynthesis.pending || window.speechSynthesis.speaking;
+  }
+
+  async isAvailable() {
+    if (!window.speechSynthesis) {
+      return false;
+    }
+    if (window.speechSynthesis.getVoices().length > 0) {
+      return true;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150));
+    return window.speechSynthesis.getVoices().length > 0;
   }
 }

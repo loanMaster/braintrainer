@@ -26,6 +26,7 @@
       </q-card>
     </div>
     <div ref="coreExercise" class="column justify-center">
+      <SkipRepeatButtons />
       <q-card>
         <div class="text-h5 non-selectable text-center q-mt-sm q-mx-sm">
           <div>
@@ -67,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import { SoundService } from 'src/shared-services/sound.service';

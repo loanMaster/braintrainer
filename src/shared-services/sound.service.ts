@@ -31,7 +31,6 @@ export class SoundService {
   private deactivated = false;
   _isPlaying = false;
   queue: Sound[] = [];
-  pausing: Subject<boolean> = new BehaviorSubject<boolean>(false);
   private soundsToPreload: { [key: string]: string } = {
     success: '/sounds/Menu1A.ogg',
     error: '/sounds/negative_2.ogg',
@@ -51,12 +50,6 @@ export class SoundService {
 
   async play(sound: Sound): Promise<void> {
     this._isPlaying = true;
-    await this.pausing
-      .pipe(
-        filter((p) => !p),
-        take(1)
-      )
-      .toPromise();
     const howl = new Howl({
       src: [
         sound.audio
@@ -97,10 +90,6 @@ export class SoundService {
       this.howls.push(howl);
       howl.play();
     });
-  }
-
-  pause(pausing: boolean) {
-    this.pausing.next(pausing);
   }
 
   async playAll(sounds: Sound[], pauseTime = 0) {

@@ -128,8 +128,8 @@ const { t } = useI18n();
 
 const texts = {
   positive: ['Well done!', 'Excellent!', 'Very good!'],
-  negative: ['That went wrong.', 'Practise makes perfect.'],
-  inBetween: ['Practise makes perfect.', 'Keep going!'],
+  negative: ['That went wrong', 'Practise makes perfect'],
+  inBetween: ['Practise makes perfect', 'Keep going!'],
   neutral: ['Made it!'],
 };
 

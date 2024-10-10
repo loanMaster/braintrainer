@@ -54,8 +54,8 @@ export default {
   },
   'countries-and-capitals': {
     title: 'Countries and capitals',
-    description: 'Do you know capital of each country?',
-    hint: 'Do you know capitals of the following countries?',
+    description: 'Do you know the capital of each country?',
+    hint: 'Do you know the capitals of the following countries?',
   },
   'find-matching-person': {
     title: 'Remember people (II)',
@@ -196,7 +196,6 @@ export default {
   History: 'History',
   Level: 'Level',
   Highscores: 'High scores',
-  'Application paused': 'Application paused',
   Privacy: '_',
   'Terms of service': '_',
   Cookies: '_',
@@ -367,10 +366,16 @@ export default {
     'Very good!': '_',
     'Made it!': '_',
     'Keep going!': '_',
-    'Practise makes perfect.': '_',
-    'That went wrong.': '_',
+    'Practise makes perfect': '_',
+    'That went wrong': '_',
   },
   'Please take the following survey to improve BrainTrainer:': '_',
   'Have a look at our partner website:': '_',
   SURVEY_URL: 'https://freeonlinesurveys.com/s/V4SH5VqZ',
+  NotSupported: {
+    notSupported:
+      'Unfortunately your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">speech synthesis</a>.',
+    downloadChrome:
+      'We recommend to use the newest version of <a href="https://www.google.com/intl/en/chrome/">Google Chrome</a> browser to use this application.',
+  },
 };

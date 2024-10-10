@@ -16,7 +16,6 @@ export interface Exercise {
   difficulty: string;
   nameOfTheGame: string;
   state: 'created' | 'started' | 'finished';
-  paused: boolean;
   beginTimeStamp: number;
   totalStrikeCount: number;
   lastStrike: number;
@@ -42,7 +41,6 @@ export const newExercise = (
   difficulty,
   nameOfTheGame,
   state: 'created',
-  paused: false,
   beginTimeStamp: Date.now(),
   totalStrikeCount: 0,
   lastSuccessfulStrike: 0,
@@ -86,11 +84,6 @@ const getBrowserLanguage = (): string => {
     default:
       return 'en';
   }
-};
-
-const tmp = {
-  soundStart: 0,
-  pauseEnd: 0,
 };
 
 const store = (data: any, key: string) => {
@@ -162,7 +155,7 @@ export const useAppStore = defineStore('main', {
     },
     finishExercise() {
       this.exercise.duration +=
-        Date.now() - Math.max(tmp.pauseEnd || this.exercise.beginTimeStamp);
+        Date.now() - Math.max(this.exercise.beginTimeStamp);
       this.exercise.state = 'finished';
       this.exercise.score = calculateScore(this.exercise);
       this.exercise.rating = mapScoreToRating(this.exercise.score);
@@ -195,23 +188,6 @@ export const useAppStore = defineStore('main', {
           store(this.playerScores, 'playerScores');
         }
       }
-    },
-    pause(): boolean {
-      if (this.exercise.state === 'started') {
-        this.exercise.paused = true;
-        this.exercise.duration +=
-          Date.now() - Math.max(this.exercise.beginTimeStamp, tmp.pauseEnd);
-        return true;
-      }
-      return false;
-    },
-    resume(): boolean {
-      if (this.exercise.paused) {
-        this.exercise.paused = false;
-        tmp.pauseEnd = Date.now();
-        return true;
-      }
-      return false;
     },
     playerReady() {
       // noop

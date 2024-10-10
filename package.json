@@ -8,7 +8,9 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.ts,.vue ./ ",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "playwright test --headed"
+    "test": "playwright test --headed",
+    "server": "cross-env-shell APP_DIST_FOLDER=dist/spa PORT=3002 simple-static-server ",
+    "server-prod": "cross-env-shell APP_DIST_FOLDER=dist/spa KEY_FILE=/etc/letsencrypt/live/??/privkey.pem CERT_FILE=/etc/letsencrypt/live/??/fullchain.pem PORT=443 simple-static-server"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",

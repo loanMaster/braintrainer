@@ -97,9 +97,6 @@ async function nextQuestion() {
   ) {
     return;
   }
-  if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(numpadContainer.value);
-  }
   showLoadingIndicator.value = true;
   currentExercise = createNewExercise();
   solution.value = currentExercise.result;
@@ -107,8 +104,8 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'block');
     store.beginExercise();
+    await new TweenService().fadeIn(numpadContainer.value);
   }
-  await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
   await playAudio();
 }
@@ -141,7 +138,6 @@ async function onNumberEntered(num: number) {
       new SoundService().playSuccess();
       await exerciseUtils.wait(200);
       store.$patch((store) => store.exercise.correctAnswers++);
-      new TweenService().fadeOut(numpadContainer.value);
       nextQuestion();
     }
   } else {

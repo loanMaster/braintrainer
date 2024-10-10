@@ -105,9 +105,6 @@ async function nextQuestion() {
   ) {
     return;
   }
-  if (store.exercise.currentQuestion > 1) {
-    await new TweenService().fadeOut(numpadContainer.value);
-  }
   previousResult.value = expectedResult.value;
 
   currentExercise = fetchNextExercise(currentExercise?.result);
@@ -116,8 +113,8 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion === 1) {
     new TweenService().setDisplay(numpadContainer.value, 'flex');
     store.beginExercise();
+    await new TweenService().fadeIn(numpadContainer.value);
   }
-  await new TweenService().fadeIn(numpadContainer.value);
   inputDisabled.value = false;
   await playAudio();
 }

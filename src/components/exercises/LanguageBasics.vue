@@ -37,9 +37,11 @@
           :transparentText="false"
           :text="currentAudio?.val || '...'"
         />
+        <SkipRepeatButtons />
         <div
           class="max-width-xs row wrap justify-center q-gutter-sm"
           :data-test="isDev && solution"
+          style="margin-top: 0"
           data-testid="core-exercise"
         >
           <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
@@ -65,6 +67,7 @@
 </template>
 
 <script setup lang="ts">
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';

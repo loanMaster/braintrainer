@@ -1,20 +1,22 @@
 <template>
-  <div
-    ref="buttons"
-    class="max-width-xs row wrap justify-center q-gutter-sm"
-    :data-test="isDev && solution"
-    data-testid="core-exercise"
-  >
-    <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
-      <q-btn
-        color="primary"
-        :class="textTransparent ? 'text-transparent' : ''"
-        @click="selectWord(idx, $event)"
-        :data-testid="'button-' + label"
-        :disabled="isButtonDisabled(idx)"
-        class="transition-duration-md"
-        >{{ label }}</q-btn
-      >
+  <div ref="buttons" class="max-width-xs row wrap justify-center">
+    <SkipRepeatButtons :disabled="inputDisabled" />
+    <div
+      class="max-width-xs row wrap justify-center q-gutter-sm"
+      :data-test="isDev && solution"
+      data-testid="core-exercise"
+    >
+      <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
+        <q-btn
+          color="primary"
+          :class="textTransparent ? 'text-transparent' : ''"
+          @click="selectWord(idx, $event)"
+          :data-testid="'button-' + label"
+          :disabled="isButtonDisabled(idx)"
+          class="transition-duration-md"
+          >{{ label }}</q-btn
+        >
+      </div>
     </div>
   </div>
   <SolutionBanner
@@ -25,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import { SoundService } from 'src/shared-services/sound.service';

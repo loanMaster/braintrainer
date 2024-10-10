@@ -17,6 +17,7 @@
         :highlightColor="highlightError ? 'red' : undefined"
       />
     </div>
+    <SkipRepeatButtons />
     <div>
       <LetterButtons
         ref="letterButtons"
@@ -38,6 +39,7 @@
 import { TweenService } from 'src/shared-services/tween.service';
 import { keyInput } from 'src/util/key.input';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import WordDisplay from 'src/components/exercises/shared/WordDisplay.vue';
 import LetterButtons from 'src/components/exercises/shared/LetterButtons.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';

@@ -19,7 +19,7 @@ onMounted(() => {
   interval(200)
     .pipe(takeUntil(destroy))
     .subscribe(() => {
-      if (store.exercise.state === 'started' && !store.exercise.paused) {
+      if (store.exercise.state === 'started') {
         timeElapsed.value += Date.now() - lastTick;
         lastTick = Date.now();
       }
@@ -36,14 +36,6 @@ store.$onAction(({ name, after }) => {
   if (name === 'beginExercise') {
     lastTick = Date.now();
   }
-  after(() => {
-    if (name === 'pause') {
-      timeElapsed.value += Date.now() - lastTick;
-    }
-    if (name === 'resume') {
-      lastTick = Date.now();
-    }
-  });
 });
 
 onBeforeMount(() => {

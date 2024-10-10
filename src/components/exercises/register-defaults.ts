@@ -47,9 +47,6 @@ export function createExerciseContext({
 
   store.$onAction(({ name, after }) => {
     after(async () => {
-      if (name === 'pause' || name === 'resume') {
-        speechService.pause(store.exercise.paused);
-      }
       if (name === 'playerReady') {
         startCb();
       }

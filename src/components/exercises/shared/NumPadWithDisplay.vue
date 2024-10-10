@@ -36,6 +36,6 @@ function onNumberEntered(num: number) {
   border: 1px solid gray;
   background-color: whitesmoke;
   font-size: 1.5rem;
-  min-height: 2.5rem;
+  min-height: 2rem;
 }
 </style>

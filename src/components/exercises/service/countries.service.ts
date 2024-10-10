@@ -1,6 +1,5 @@
-import countries_de from './countries-and-capitals-de.json';
-import countries_en from './countries-and-capitals-en.json';
-import countries_es from './countries-and-capitals-es.json';
+import countries_de from 'src/assets/language/de/countries-and-capitals.json';
+import countries_en from 'src/assets/language/en/countries-and-capitals.json';
 import { randomElement, shuffle } from 'src/util/array.utils';
 
 export interface CountryAndCapital {
@@ -11,11 +10,7 @@ export interface CountryAndCapital {
 
 export class GeographyService {
   private getList(lang: string) {
-    return lang === 'de'
-      ? countries_de
-      : lang === 'es'
-      ? countries_es
-      : countries_en;
+    return lang === 'de' ? countries_de : countries_en;
   }
 
   getCountriesAndGeographies(lang: string, count: number): CountryAndCapital[] {

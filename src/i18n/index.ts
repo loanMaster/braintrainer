@@ -1,6 +1,5 @@
 import en from './en';
 import de from './de';
-import es from './es';
 
 const replacePlaceHolderRecursive = (key: string, value: any) => {
   const current = value[key];
@@ -18,5 +17,4 @@ Object.keys(en).forEach((key) => replacePlaceHolderRecursive(key, en));
 export default {
   en,
   de,
-  es,
 };

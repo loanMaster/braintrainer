@@ -202,7 +202,6 @@ export default {
   'Select difficulty': 'Schwierigkeit wählen',
   LANGUAGE_CODE: 'de',
   Highscores: 'Highscores',
-  'Application paused': 'Pause',
   Privacy: 'Datenschutz',
   'Terms of service': 'Nutzungsbedingungen',
   Cookies: 'Verwendung von Cookies',
@@ -374,7 +373,13 @@ export default {
     'Very good!': 'Sehr gut!',
     'Made it!': 'Geschafft!',
     'Keep going!': 'Weiter so!',
-    'Practise makes perfect.': 'Übung macht den meister',
-    'That went wrong.': 'Das ging daneben.',
+    'Practise makes perfect': 'Übung macht den meister',
+    'That went wrong': 'Das ging daneben.',
+  },
+  NotSupported: {
+    notSupported:
+      'Leider unterstützt Dein Browser keine <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">Sprachsynthese</a>.',
+    downloadChrome:
+      'Wir empfehlen Dir, <a href="https://www.google.com/intl/de/chrome/">Google Chrome</a> zu verwenden, wenn sie diese Anwendung nutzen möchten.',
   },
 };

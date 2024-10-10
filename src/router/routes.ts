@@ -11,6 +11,7 @@ import ExerciseBaseLayout from 'src/components/exercises/ExerciseBaseLayout.vue'
 import StartScreen from 'src/components/start/StartScreen.vue';
 import MainLayout from 'src/layouts/MainLayout.vue';
 import { useAppStore } from 'stores/app-store';
+import { SpeechService } from 'src/shared-services/speech.service';
 
 const exerciseFinishedGuard = (
   to: RouteLocationNormalized,
@@ -30,6 +31,19 @@ const routes: RouteRecordRaw[] = [
     component: MainLayout,
     children: [
       {
+        path: 'not-supported',
+        name: 'not-supported',
+        component: () => import('src/pages/SpeechSynthesisNotSupported.vue'),
+        beforeEnter: async (to, from, next) => {
+          const available = await new SpeechService().isAvailable();
+          if (!available) {
+            next();
+          } else {
+            next('/');
+          }
+        },
+      },
+      {
         path: 'user-settings',
         name: 'user-settings',
         component: () => import('src/components/auth/UserSettings.vue'),
@@ -48,6 +62,14 @@ const routes: RouteRecordRaw[] = [
             path: ':difficulty(normal|hard|veryhard)',
             component: ExerciseView,
             name: 'exercise',
+            beforeEnter: async (to, from, next) => {
+              const available = await new SpeechService().isAvailable();
+              if (!available) {
+                next('/not-supported');
+              } else {
+                next();
+              }
+            },
             children: [
               {
                 path: ':game(remember-numbers)',

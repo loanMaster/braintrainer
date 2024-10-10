@@ -8,6 +8,7 @@
       />
     </div>
     <div style="flex: 2">
+      <SkipRepeatButtons />
       <div class="text-h5 q-my-md row justify-center">
         {{ whoIs }}
       </div>
@@ -43,6 +44,7 @@
 </template>
 
 <script setup lang="ts">
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import SpeechBubble from 'src/components/exercises/shared/SpeechBubble.vue';

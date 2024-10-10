@@ -17,6 +17,7 @@
           />
         </div>
       </div>
+      <SkipRepeatButtons />
       <div
         style="flex: 1 1 0"
         class="flex align-center content-center"
@@ -67,6 +68,7 @@
 </template>
 
 <script setup lang="ts">
+import SkipRepeatButtons from 'src/components/exercises/shared/SkipRepeatButtons.vue';
 import { TweenService } from 'src/shared-services/tween.service';
 import SolutionBanner from 'src/components/exercises/shared/SolutionBanner.vue';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';

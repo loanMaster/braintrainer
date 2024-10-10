@@ -15,6 +15,7 @@ import {
 import { useQuasar } from 'quasar';
 import { SoundService } from 'src/shared-services/sound.service';
 import { getCurrentInstance } from 'vue';
+import { SpeechService } from './shared-services/speech.service';
 
 const store = useAppStore();
 const i18n = useI18n();
@@ -34,6 +35,7 @@ onBeforeMount(() => {
       ),
     }).onOk(() => location.reload());
   };
+  new SpeechService().init();
 });
 
 onMounted(() => {
@@ -93,16 +95,6 @@ store.$onAction(({ name, after, args }) => {
           removeTrailingSlash(`/${store.language}${withoutLangPath}`)
         );
       }
-    }
-
-    if (name === 'pause' && store.exercise.paused) {
-      $q.dialog({
-        message: '😴💤' + i18n.t('Application paused'),
-        ok: 'X',
-        persistent: true,
-      }).onOk(() => {
-        store.resume();
-      });
     }
   });
 });
