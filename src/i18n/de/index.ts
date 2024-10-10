@@ -73,23 +73,11 @@ export default {
       'Merke dir die Namen der angezeigten Personen und ordne den Gesichtern einen Namen zu.',
     hint: 'Merke dir die Namen der angezeigten Personen. Ordne danach jeder Person den passenden Namen zu.',
   },
-  'remember-numbers-rev': {
-    title: 'Zahlen merken (Rückwärts)',
-    description:
-      'Merke dir die Zahlen und gib sie in umgekehrter Reihenfolge wieder.',
-    hint: 'Merke dir die Zahlen und gib sie in umgekehrter Reihenfolge wieder.',
-  },
   'remember-numbers': {
     title: 'Zahlen merken',
     description:
       'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.',
     hint: 'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.',
-  },
-  'remember-words-rev': {
-    title: 'Wörter merken (Rückwärts)',
-    description:
-      'Merke dir die Wörter und gib sie in umgekehrter Reihenfolge wieder.',
-    hint: 'Merke dir die Wörter und gib sie in umgekehrter Reihenfolge wieder.',
   },
   'remember-words': {
     title: 'Wörter merken',
@@ -122,17 +110,6 @@ export default {
     title: 'Rückwärts schreiben',
     description: 'Buchstabiere rückwärts',
     hint: 'Buchstabiere rückwärts! Anstatt ‹ß› bitte ‹ss› verwenden.',
-  },
-  'rapid-math': {
-    title: 'Schnellrechnen',
-    description: 'Sind die zwei Zahlen zusammen gleich gross wie die dritte?',
-    hint: 'Du siehst 2 Zahlen und hörst eine weitere. Klicke schnell auf den grünen Knopf, wenn die Summe von 2 der Zahlen so gross wie die dritte Zahl ist. Sonst drücke auf den roten Knopf. Du hast jeweils nur etwa eine Sekunde Zeit!',
-  },
-  'rapid-word-scramble': {
-    title: 'Buchstabenmix',
-    description:
-      'Lässt sich das vorgelesene Wort aus den angzeigten Buchstaben bilden?',
-    hint: 'Lässt sich das vorgelesene Wort durch Umsortieren der angezeigten Buchstaben bilden? Drücke auf den grünen Knopf, falls ja, ansonsten drücke den roten. Du hast jeweils nur etwa eine Sekunde Zeit!',
   },
   'Press "START" when you are ready':
     'Klicke auf "START" sobald Du bereit bist.',
@@ -173,13 +150,7 @@ export default {
   Evaluation: 'Auswertung',
   Solved: 'Gelöst',
   Mistakes: 'Fehler',
-  'Time required': 'Benötigte Zeit',
-  'You are in the top { percentile }% of users':
-    'Du bist unter den Top { percentile }% der Spieler',
   'New highscore': '🎉 Neuer highscore 🎉',
-  'Continue as guest': 'Weiter als Gast',
-  'Try up to three exercises as guest before creating an account.':
-    'Probiere bis zu drei Übungen als Gast aus, bevor du dich registrierst.',
   'Train now': 'Jetzt trainieren',
   'What is { APP_NAME }?': 'Was ist { APP_NAME }?',
   'What is_RESPONSE': `{ APP_NAME } ist eine Gehirnjogging app mit Audio-Übungen, um Deine geistige Leistungsfähigkeit zu verbessern.
@@ -198,10 +169,8 @@ export default {
   normal: 'Normal',
   hard: 'Schwer',
   veryhard: 'Sehr schwer',
-  Resume: 'Schliessen',
   'Select difficulty': 'Schwierigkeit wählen',
   LANGUAGE_CODE: 'de',
-  Highscores: 'Highscores',
   Privacy: 'Datenschutz',
   'Terms of service': 'Nutzungsbedingungen',
   Cookies: 'Verwendung von Cookies',
