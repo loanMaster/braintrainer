@@ -1,6 +1,4 @@
 import { Howl } from 'howler';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
 import { useAppStore } from 'stores/app-store';
 import { preloadAudio } from 'src/util/preload-assets';
 

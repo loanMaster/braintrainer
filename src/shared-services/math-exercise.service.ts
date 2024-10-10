@@ -1,5 +1,3 @@
-import { requestHelper } from 'src/shared-services/request.helper';
-
 export interface MathExerciseRequest {
   lang: string;
   difficulty: string;
