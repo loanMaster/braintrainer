@@ -11,5 +11,4 @@ export const login = async (
   await page.getByTestId('password-input').fill(password);
   await acceptCookies(page);
   await page.getByTestId('submit').click();
-  await page.waitForURL('http://localhost:9000/en/user-settings');
 };

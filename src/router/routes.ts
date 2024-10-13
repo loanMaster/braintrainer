@@ -45,11 +45,6 @@ const routes: RouteRecordRaw[] = [
           }
         },
       },
-      {
-        path: 'user-settings',
-        name: 'user-settings',
-        component: () => import('src/components/auth/UserSettings.vue'),
-      },
       { path: '', component: StartScreen, name: 'home' },
       {
         path: 'train',

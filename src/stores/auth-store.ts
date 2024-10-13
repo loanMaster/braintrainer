@@ -1,21 +1,15 @@
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
-import { padNumber } from 'src/util/format-number';
 import { randomElement } from 'src/util/array.utils';
 
 export interface User {
   id: string | undefined;
   username: string | undefined;
-  image: string | undefined;
 }
 
 const storeUser = (u: User) => {
   localStorage.setItem('auth.user', btoa(JSON.stringify(u)));
 };
-
-const avatars = Array.from(new Array(25).keys()).map(
-  (v) => `images/avatars/avatar_${padNumber(v, 2)}.jpg`
-);
 
 const nameFirstPart = ['Wild', 'Crazy', 'Awesome', 'Proud'];
 const nameSecondPart = ['Goose', 'Melon', 'Apple', 'Coconut'];
@@ -29,7 +23,6 @@ const retrieveUser = () => {
       id: uuidv4(),
       username:
         randomElement(nameFirstPart) + ' ' + randomElement(nameSecondPart),
-      image: randomElement(avatars),
     };
     storeUser(user);
     return user;

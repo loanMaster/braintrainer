@@ -66,23 +66,6 @@
               class="text-white q-px-sm"
             />
           </router-link>
-
-          <router-link
-            data-testid="user-settings-nav-item"
-            :to="{
-              name: 'user-settings',
-              params: { language: store.language },
-            }"
-          >
-            <q-btn
-              flat
-              dense
-              no-wrap
-              no-caps
-              :label="$t('User profile')"
-              class="text-white q-px-sm"
-            />
-          </router-link>
         </div>
 
         <div class="row no-wrap">
@@ -123,27 +106,6 @@
                 <!-- <q-item clickable v-close-popup @click="setLanguage('es')">
                   <q-item-section>español</q-item-section>
                 </q-item> -->
-              </q-list>
-            </q-menu>
-          </q-btn>
-
-          <q-btn flat round>
-            <q-avatar>
-              <img :src="profileImage" data-testid="profile-picture" />
-            </q-avatar>
-            <q-menu>
-              <q-list dense>
-                <q-item clickable v-close-popup>
-                  <q-item-section class="column justify-center"
-                    ><router-link
-                      :to="{
-                        name: 'user-settings',
-                        params: { language: store.language },
-                      }"
-                      >{{ $t('User profile') }}</router-link
-                    ></q-item-section
-                  >
-                </q-item>
               </q-list>
             </q-menu>
           </q-btn>
@@ -238,13 +200,10 @@ function setLanguage(lang: string) {
   store.setLanguage(i18n, lang);
 }
 
-const profileImage = computed(() => authStore.image);
-
 const links1 = ref([
   { icon: matHome, text: t('Home'), to: 'home' },
   { icon: matFitnessCenter, text: t('Practise'), to: 'select-exercise' },
   { icon: matBarChart, text: t('Progress'), to: 'player-scores' },
-  { icon: matPerson, text: t('User profile'), to: 'user-settings' },
 ]);
 </script>
 

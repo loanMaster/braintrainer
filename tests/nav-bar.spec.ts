@@ -52,9 +52,6 @@ test('navigation-not-logged-in', async ({ page }) => {
   await page.getByTestId('player-scores-nav-item').click();
   await page.waitForURL('http://localhost:9000/en/login');
 
-  await page.getByTestId('user-settings-nav-item').click();
-  await page.waitForURL('http://localhost:9000/en/login');
-
   await page.getByTestId('practise-nav-item').click();
   await page.waitForURL('http://localhost:9000/en/train');
 });
