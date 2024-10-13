@@ -14,7 +14,7 @@ const storeUser = (u: User) => {
 };
 
 const avatars = Array.from(new Array(25).keys()).map(
-  (v) => `/images/avatars/avatar_${padNumber(v, 2)}.jpg`
+  (v) => `images/avatars/avatar_${padNumber(v, 2)}.jpg`
 );
 
 const nameFirstPart = ['Wild', 'Crazy', 'Awesome', 'Proud'];

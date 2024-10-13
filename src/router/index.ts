@@ -1,11 +1,11 @@
 import { route } from 'quasar/wrappers';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import routes from './routes';
 
 export const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
   scrollBehavior: () => ({ left: 0, top: 0 }),
+  history: createWebHashHistory(),
   routes,
   linkActiveClass: 'router-link-active',
   linkExactActiveClass: 'exact-active-link',

@@ -116,7 +116,7 @@ export const useAppStore = defineStore('main', {
       dailyTraining: { active: false, results: [] as Exercise[] },
       exercise: newExercise('remember-numbers', 'normal', 5),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
-      _themePreference: localStorage.getItem('themePreference') || 'dark',
+      _themePreference: localStorage.getItem('themePreference') || 'light',
       playerScores,
       scoreHistory,
     } as IAppState;

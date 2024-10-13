@@ -66,7 +66,7 @@ export class SpeechService {
     return window.speechSynthesis.pending || window.speechSynthesis.speaking;
   }
 
-  async isAvailable() {
+  async isAvailable(lang: string) {
     if (!window.speechSynthesis) {
       return false;
     }
@@ -74,6 +74,7 @@ export class SpeechService {
       return true;
     }
     await new Promise((resolve) => setTimeout(resolve, 150));
-    return window.speechSynthesis.getVoices().length > 0;
+    const supported = window.speechSynthesis.getVoices();
+    return supported.filter((l) => l.lang.substring(0, 2) === lang).length > 0;
   }
 }

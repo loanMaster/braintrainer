@@ -22,6 +22,7 @@ defineProps({
 
 <style scoped>
 .c-speech-bubble {
+  color: black;
   border: 4px black solid;
   border-radius: 20px;
   display: flex;

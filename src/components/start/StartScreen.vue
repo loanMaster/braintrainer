@@ -7,7 +7,7 @@
       <MovingColorsBackground />
       <q-img
         style="max-width: 280px"
-        src="/images/logo_transparent.png"
+        src="images/logo_transparent.png"
         spinner-color="white"
       />
       <div class="text-h3 relative-position">{{ $t('APP_NAME') }}</div>
@@ -34,7 +34,7 @@
       >
         <div class="col-4 q-mb-xs-md">
           <q-card class="border-box">
-            <img src="/images/promo/promo11.jpg" />
+            <img src="images/promo/promo11.jpg" />
           </q-card>
         </div>
         <div class="col-8 text-center">
@@ -72,7 +72,7 @@
         </div>
         <div class="col-4">
           <q-card class="border-box">
-            <img src="/images/promo/promo4.jpg" />
+            <img src="images/promo/promo4.jpg" />
           </q-card>
         </div>
       </div>
@@ -86,7 +86,7 @@
       >
         <div class="col-4 q-mb-xs-md">
           <q-card class="border-box">
-            <img src="/images/promo/promo3.jpg" />
+            <img src="images/promo/promo3.jpg" />
           </q-card>
         </div>
         <div class="col-8 text-center">

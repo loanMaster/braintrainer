@@ -82,7 +82,7 @@ onMounted(async () => {
   inputDisabled.value = true;
 
   const preload = Array.from(new Array(10).keys()).map(
-    (k) => `/sounds/maths/${store.language}_${k}.mp3`
+    (k) => `sounds/maths/${store.language}_${k}.mp3`
   );
   preloadAudio(preload);
   new TweenService().setDisplay(numpad.value, 'none');
@@ -121,7 +121,7 @@ function createTask() {
   for (let i = 0; i < sequenceLength.value; i++) {
     const nextNumber = Math.floor(Math.random() * 10);
     currentAudio.value.push({
-      src: `/sounds/maths/${store.language}_${nextNumber}.mp3`,
+      src: `sounds/maths/${store.language}_${nextNumber}.mp3`,
       val: nextNumber,
     });
   }

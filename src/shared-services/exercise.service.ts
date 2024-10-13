@@ -114,7 +114,7 @@ export class ExerciseService {
     const words = entry[difficulty === 'normal' ? 'easy' : 'normal'];
     return {
       words: Object.keys(words).map((word) => ({
-        src: `/sounds/other-languages/${entry.lang}_${word}.mp3`,
+        src: `sounds/other-languages/${entry.lang}_${word}.mp3`,
         val: words[word],
         key: word,
       })),
@@ -157,11 +157,11 @@ export class ExerciseService {
     const result = [];
     for (const animal of shuffledAnimals) {
       result.push({
-        src: `/sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
+        src: `sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
         val: animal,
       });
       result.push({
-        src: `/sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
+        src: `sounds/voice-memory/${lang}_${voice}_${animal}.mp3`,
         val: animal,
       });
     }
@@ -203,11 +203,11 @@ export class ExerciseService {
     const result = [];
     for (const voice of voices) {
       result.push({
-        src: `/sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
+        src: `sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
         val: voice,
       });
       result.push({
-        src: `/sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
+        src: `sounds/voice-memory/${lang}_${voice}_${shuffledAnimals.pop()}.mp3`,
         val: voice,
       });
     }

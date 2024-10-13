@@ -5,7 +5,7 @@
         <InlineSvg
           ref="worldMap"
           style="max-width: 100%; width: 100vw; max-height: 55vh"
-          src="/images/world-map.svg"
+          src="images/world-map.svg"
           fill="black"
         >
         </InlineSvg>
@@ -129,9 +129,7 @@ async function start() {
     store.exercise.totalQuestions
   );
   await preloadAudio(
-    task.value.map(
-      (c) => `/sounds/countries/${store.language}_${c.country}.mp3`
-    )
+    task.value.map((c) => `sounds/countries/${store.language}_${c.country}.mp3`)
   );
   showLoadingIndicator.value = false;
 
@@ -201,7 +199,7 @@ async function nextQuestion() {
 
 async function playAudio() {
   await soundService.play({
-    src: `/sounds/countries/${store.language}_${country.value}.mp3`,
+    src: `sounds/countries/${store.language}_${country.value}.mp3`,
     meta: { tag: country.value },
   });
 }

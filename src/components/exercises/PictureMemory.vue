@@ -30,7 +30,7 @@
         :data-test="isDev ? 'button-' + buttonValue(idx) : ''"
       >
         <img
-          :src="'/images/memory/' + buttonValue(idx) + '.jpg'"
+          :src="'images/memory/' + buttonValue(idx) + '.jpg'"
           style="
             width: 100%;
             padding: none;
@@ -103,7 +103,7 @@ async function nextQuestion() {
   showLoadingIndicator.value = false;
   fileList.value = loadExercise();
   await preloadAssets(
-    fileList.value.map((name) => '/images/memory/' + name + '.jpg')
+    fileList.value.map((name) => 'images/memory/' + name + '.jpg')
   );
   permutation = Array.from(Array(store.exercise.totalQuestions).keys());
   permutation.push(...Array.from(Array(store.exercise.totalQuestions).keys()));

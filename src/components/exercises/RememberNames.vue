@@ -134,8 +134,8 @@ async function start() {
   currentTask.value!.introductions.forEach((i) => {
     nameToImageMapping[i.name] =
       (i.gender === 'FEMALE'
-        ? '/images/w_' + padNumber(women.pop()!, 2)
-        : '/images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
+        ? 'images/w_' + padNumber(women.pop()!, 2)
+        : 'images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
   });
   await preloadAssets(Object.values(nameToImageMapping));
   showLoadingIndicator.value = false;

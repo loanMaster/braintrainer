@@ -138,8 +138,8 @@ async function start() {
   currentTask.value!.introductions.forEach((i) => {
     nameToImageMapping[i.name] =
       (i.gender === 'FEMALE'
-        ? '/images/w_' + padNumber(women.pop()!, 2)
-        : '/images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
+        ? 'images/w_' + padNumber(women.pop()!, 2)
+        : 'images/m_' + padNumber(men.pop()!, 2)) + '.jpg';
   });
   await preloadAssets(Object.values(nameToImageMapping));
   await exerciseUtils.wait(1000);
@@ -185,7 +185,7 @@ async function nextQuestion() {
   options.value = [...new Set(options.value)].splice(0, 4);
   while (options.value.length < 4) {
     const randomIdx = Math.floor(Math.random() * 20);
-    const randomImage = `/images/${
+    const randomImage = `images/${
       personToGuess.value.gender === 'FEMALE' ? 'w' : 'm'
     }_${padNumber(randomIdx, 2)}.jpg`;
     if (options.value.indexOf(randomImage) === -1) {

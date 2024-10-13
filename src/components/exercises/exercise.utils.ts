@@ -73,13 +73,13 @@ export const exerciseUtils = {
   getSoundForMathOp: (op: string) => {
     switch (op) {
       case '+':
-        return { src: `/sounds/${useAppStore().language}_+.mp3` };
+        return { src: `sounds/${useAppStore().language}_+.mp3` };
       case '-':
-        return { src: `/sounds/${useAppStore().language}_−.mp3` };
+        return { src: `sounds/${useAppStore().language}_−.mp3` };
       case '*':
-        return { src: `/sounds/${useAppStore().language}_×.mp3` };
+        return { src: `sounds/${useAppStore().language}_×.mp3` };
       default:
-        return { src: `/sounds/${useAppStore().language}_÷.mp3` };
+        return { src: `sounds/${useAppStore().language}_÷.mp3` };
     }
   },
 };

@@ -35,7 +35,9 @@ const routes: RouteRecordRaw[] = [
         name: 'not-supported',
         component: () => import('src/pages/SpeechSynthesisNotSupported.vue'),
         beforeEnter: async (to, from, next) => {
-          const available = await new SpeechService().isAvailable();
+          const available = await new SpeechService().isAvailable(
+            useAppStore().language
+          );
           if (!available) {
             next();
           } else {
@@ -63,7 +65,9 @@ const routes: RouteRecordRaw[] = [
             component: ExerciseView,
             name: 'exercise',
             beforeEnter: async (to, from, next) => {
-              const available = await new SpeechService().isAvailable();
+              const available = await new SpeechService().isAvailable(
+                useAppStore().language
+              );
               if (!available) {
                 next('/not-supported');
               } else {

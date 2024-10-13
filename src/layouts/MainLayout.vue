@@ -17,7 +17,7 @@
               class="text-white"
             >
               <q-avatar>
-                <img src="/images/logo_small.png" />
+                <img src="images/logo_small.png" />
               </q-avatar>
               <span class="xs-hide">{{ $t('APP_NAME') }}</span>
             </router-link>

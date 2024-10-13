@@ -77,7 +77,7 @@ const { t } = useI18n();
 
 const avatars = ref(
   Array.from(new Array(25).keys()).map(
-    (v) => `/images/avatars/avatar_${padNumber(v, 2)}.jpg`
+    (v) => `images/avatars/avatar_${padNumber(v, 2)}.jpg`
   )
 );
 const currentAvatar = ref(authStore.image);

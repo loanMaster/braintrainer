@@ -79,7 +79,7 @@
     </q-card>
     <div class="q-mx-auto text-h6 text-center q-mt-xl q-px-sm">
       <div class="">
-        {{ $t('Please take the following survey to improve BrainTrainer:') }}
+        {{ $t('Please take the following survey to improve HearHealthy:') }}
       </div>
       <a
         class="text-color-default"

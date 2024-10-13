@@ -78,7 +78,7 @@ onMounted(() => {
     }
   });
   preloadAudio(
-    ['÷', '+', '×', '−'].map((k) => `/sounds/maths/${store.language}_${k}.mp3`)
+    ['÷', '+', '×', '−'].map((k) => `sounds/maths/${store.language}_${k}.mp3`)
   );
   new TweenService().setDisplay(numpadContainer.value, 'none');
 });

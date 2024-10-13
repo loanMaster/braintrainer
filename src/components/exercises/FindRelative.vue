@@ -216,7 +216,7 @@ async function fetchNextExercise() {
 
   const audio = texts.map((text) => {
     return {
-      src: `/sounds/relatives/${useAppStore().language}_${text}.mp3`,
+      src: `sounds/relatives/${useAppStore().language}_${text}.mp3`,
       meta: { text },
     };
   });

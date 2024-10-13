@@ -1,9 +1,7 @@
-import ScoreScreenView from 'src/components/score-screen/ScoreScreenView.vue';
-
 export default {
   'High scores (last 30 days)': 'Highscores der letzen 30 Tage',
   'An error occurred': 'Es ist ein Fehler aufgetreten',
-  APP_NAME: 'BrainTrainer',
+  APP_NAME: 'HearHealthy',
   'Train again': 'Nochmal trainieren',
   Practise: 'Trainieren',
   Home: 'Home',
@@ -332,8 +330,8 @@ export default {
     I: 'Ich',
     You: 'Du',
   },
-  'Please take the following survey to improve BrainTrainer:':
-    'Bitte nimm an folgender Umfrage Teil, um BrainTrainer weiter zu verbessern:',
+  'Please take the following survey to improve HearHealthy:':
+    'Bitte nimm an folgender Umfrage Teil, um HearHealthy weiter zu verbessern:',
   'Have a look at our partner website:': 'Besuche unsere Partner-Website:',
   SURVEY_URL: 'https://freeonlinesurveys.com/s/SXpB2X1J',
   ScoreScreenView: {
@@ -347,8 +345,15 @@ export default {
   },
   NotSupported: {
     notSupported:
-      'Leider unterstützt Dein Browser keine <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">Sprachsynthese</a>.',
+      'Leider steht die <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">Sprachsynthese</a> in Deinem Browser nicht zur verfügung .',
     downloadChrome:
-      'Wir empfehlen Dir, <a href="https://www.google.com/intl/de/chrome/">Google Chrome</a> zu verwenden, wenn sie diese Anwendung nutzen möchten.',
+      'Wir empfehlen Dir, <a href="https://www.google.com/intl/de/chrome/">Google Chrome</a> zu verwenden, wenn Du diese Anwendung nutzen möchtest. Stelle ausserdem sicher, dass du Internetzugang hast.',
+    lang: 'Leider wird die Sprachsynthese auf deutsch in deinem Browser nicht unterstützt. Du kannst versuchen, das entsprechende Sprachpaket auf deinem Gerät zu installieren.',
+    installAndroid:
+      'Auf Android füge deutsch unter Bedienungshilfen -> Text-zu-Sprache hinzu.',
+    installWindows:
+      'Auf Windows gehe zu Einstellungen -> Zeit und Sprache -> Sprache und füge deutsch als bevorzugte Sprach hinzu.',
+    installMac:
+      'Auf dem Mac gehe zu Systemeinstellungen -> Bedienungshilfen -> Sprachausgabe -> Systemstimme und klick auf anpassen. Füge dort deutsch hinzu.',
   },
 };

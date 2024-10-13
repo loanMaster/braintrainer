@@ -1,7 +1,7 @@
 export default {
   'High scores (last 30 days)': '_',
   'An error occurred': '_',
-  APP_NAME: 'BrainTrainer',
+  APP_NAME: 'HearHealthy',
   'Train again': '_',
   Practise: 'Train',
   Home: 'Home',
@@ -338,13 +338,20 @@ export default {
     'Practise makes perfect': '_',
     'That went wrong': '_',
   },
-  'Please take the following survey to improve BrainTrainer:': '_',
+  'Please take the following survey to improve HearHealthy:': '_',
   'Have a look at our partner website:': '_',
   SURVEY_URL: 'https://freeonlinesurveys.com/s/V4SH5VqZ',
   NotSupported: {
     notSupported:
-      'Unfortunately your browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">speech synthesis</a>.',
+      'Unfortunately <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis">speech synthesis</a> is currently unavailable.',
     downloadChrome:
-      'We recommend to use the newest version of <a href="https://www.google.com/intl/en/chrome/">Google Chrome</a> browser to use this application.',
+      'We recommend to use the newest version of <a href="https://www.google.com/intl/en/chrome/">Google Chrome</a> browser to use this application. Also verify that you are connected to the internet.',
+    lang: 'Unfortunately, speech synthesis in English is not supported in your browser. You can try installing the corresponding language pack on your device.',
+    installAndroid:
+      'On Android, add English under Accessibility -> Text-to-Speech.',
+    installWindows:
+      'On Windows, go to Settings -> Time & Language -> Language and add English as a preferred language.',
+    installMac:
+      'On Mac, go to System Preferences -> Accessibility -> Speech -> System Voice and click on customize. Add English there.',
   },
 };

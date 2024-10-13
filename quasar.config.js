@@ -65,7 +65,7 @@ module.exports = configure(function (ctx) {
       env: {
         serverPath: ctx.dev
           ? 'http://localhost:3000'
-          : 'https://braintrainer.io',
+          : 'https://hearhealthy.com',
         dev: ctx.dev,
       },
       // rawDefine: {}
@@ -76,7 +76,9 @@ module.exports = configure(function (ctx) {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
-
+      extendViteConf(viteConf) {
+        viteConf.base = '';
+      },
       vitePlugins: [
         [
           '@intlify/vite-plugin-vue-i18n',
