@@ -137,7 +137,6 @@ export default {
   Difficulty: 'Schwierigkeit',
   SPELLING_WARNING: '! Anstatt ‹ß› bitte ‹ss› verwenden !',
   User: 'Benutzer',
-  Avatar: 'Avatar',
   Rating: 'Bewertung',
   Date: 'Datum',
   'Your rating': 'Deine Bewertung',

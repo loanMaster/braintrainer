@@ -70,8 +70,8 @@ export class SpeechService {
     if (!window.speechSynthesis) {
       return false;
     }
-    if (window.speechSynthesis.getVoices().length > 0) {
-      return true;
+    if (window.speechSynthesis.getVoices().length === 0) {
+      return false;
     }
     await new Promise((resolve) => setTimeout(resolve, 150));
     const supported = window.speechSynthesis.getVoices();

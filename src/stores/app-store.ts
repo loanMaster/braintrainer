@@ -103,13 +103,15 @@ export const useAppStore = defineStore('main', {
     if (!localStorage.getItem('machineId')) {
       localStorage.setItem('machineId', uuidv4());
     }
-    const playerScores = fetch('playerScores');
+    let playerScores = fetch('playerScores');
     if (playerScores === undefined) {
-      store({ scores: [] }, 'playerScores');
+      playerScores = { scores: [] };
+      store(playerScores, 'playerScores');
     }
-    const scoreHistory = fetch('scoreHistory');
+    let scoreHistory = fetch('scoreHistory');
     if (scoreHistory === undefined) {
-      store([], 'scoreHistory');
+      scoreHistory = [];
+      store(scoreHistory, 'scoreHistory');
     }
     return {
       machineId: localStorage.getItem('machineId') || uuidv4(),

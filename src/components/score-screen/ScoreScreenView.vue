@@ -33,7 +33,10 @@
               <span>{{ $t('Time required') }}</span>
               <span
                 >{{
-                  formatScore(store.exercise.duration / 1000, store.language)
+                  formatScore(
+                    (store.exercise.duration || 0) / 1000,
+                    store.language
+                  )
                 }}
                 s</span
               >
@@ -57,7 +60,7 @@
               track-color="amber-1"
               class="text-amber-4 q-ma-md flex-auto full-width no-pointer-events"
               ><span class="pink-text-shadow">{{
-                formatScore(score, store.language)
+                formatScore(score || 0, store.language)
               }}</span></q-knob
             >
           </div>
@@ -155,8 +158,8 @@ onMounted(async () => {
         if (score.value < store.exercise.score!) {
           score.value++;
         } else {
-          new SpeechService().say(text);
           score.value = store.exercise.score!;
+          new SpeechService().say(text);
           new TweenService().animateCSS(knob.value, 'pulse', 1);
           stop.next();
           stop.complete();

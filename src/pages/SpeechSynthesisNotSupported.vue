@@ -5,10 +5,13 @@
       <span v-html="$t('NotSupported.downloadChrome')"></span>
     </div>
     <div class="text-h5" v-if="langNotSupported">
-      <span v-html="$t('NotSupported.lang')"></span><br />
-      <span v-html="$t('NotSupported.installAndroid')"></span>
-      <span v-html="$t('NotSupported.installWindows')"></span>
-      <span v-html="$t('NotSupported.installMac')"></span>
+      <p v-html="$t('NotSupported.lang')"></p>
+      <br />
+      <p v-html="$t('NotSupported.installAndroid')"></p>
+      <br />
+      <p v-html="$t('NotSupported.installWindows')"></p>
+      <br />
+      <p v-html="$t('NotSupported.installMac')"></p>
     </div>
   </div>
 </template>
@@ -29,7 +32,11 @@ const langNotSupported = computed(() => {
     window.speechSynthesis &&
     window.speechSynthesis
       .getVoices()
-      .find((v) => v.name.substring(0, 2).indexOf(store.language) === -1)
+      .find(
+        (v) =>
+          v.name.substring(0, 2).toLocaleLowerCase().indexOf(store.language) ===
+          -1
+      )
   );
 });
 </script>

@@ -2,7 +2,7 @@
   "name": "brain-trainer-app",
   "version": "0.0.1",
   "description": "The Brain Trainer based on Audio",
-  "productName": "Brain Trainer",
+  "productName": "Hear Healthy",
   "author": "Incognito",
   "private": true,
   "scripts": {

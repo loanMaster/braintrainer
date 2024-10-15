@@ -46,7 +46,7 @@ export default {
   'picture-memory': {
     title: 'Picture Memory',
     description: 'Memory game as you know it.',
-    hint: 'Look for pairs with identical pictures."',
+    hint: 'Look for pairs with identical pictures.',
   },
   'language-basics': {
     title: 'Travel Vocabulary',
@@ -125,7 +125,6 @@ export default {
   Difficulty: '_',
   SPELLING_WARNING: '! American English spelling is used !',
   User: '_',
-  Avatar: '_',
   Rating: '_',
   Date: '_',
   'Your rating': '_',

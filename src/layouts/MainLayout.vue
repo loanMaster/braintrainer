@@ -163,14 +163,12 @@ import {
   matHome,
   matFitnessCenter,
   matBarChart,
-  matPerson,
 } from '@quasar/extras/material-icons';
 import { ref, onMounted, computed } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useQuasar } from 'quasar';
 import { setDarkMode } from 'src/util/dark-model.toggle';
-import { useAuthStore } from 'stores/auth-store';
 const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
@@ -191,7 +189,6 @@ function toggleDarkMode() {
 }
 
 const i18n = useI18n();
-const authStore = useAuthStore();
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
