@@ -81,7 +81,7 @@ import InlineSvg from 'vue-inline-svg';
 import {
   CountryAndCapital,
   GeographyService,
-} from './service/countries.service';
+} from '../../shared-services/countries.service';
 import { preloadAudio } from 'src/util/preload-assets';
 import { useAppStore } from 'stores/app-store';
 

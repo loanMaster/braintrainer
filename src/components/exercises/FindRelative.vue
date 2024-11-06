@@ -53,7 +53,7 @@ import { ref, Ref, onBeforeMount, computed, onMounted } from 'vue';
 import { exerciseUtils } from 'components/exercises/exercise.utils';
 import { createExerciseContext } from 'components/exercises/register-defaults';
 import { useAppStore } from 'stores/app-store';
-import { RelativesService } from 'components/exercises/service/relatives.service';
+import { RelativesService } from 'src/shared-services/relatives.service';
 import { randomElement, shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 import { preloadAudio } from 'src/util/preload-assets';
