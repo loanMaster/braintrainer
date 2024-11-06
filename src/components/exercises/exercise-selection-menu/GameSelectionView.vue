@@ -129,7 +129,7 @@ function selectExercise(name: string) {
 
 <style lang="scss" scoped>
 @import 'node_modules/quasar/dist/quasar.sass';
-@import '../../../css/app';
+@import 'src/css/app';
 
 .math-bg {
   background-color: $math-bg-color;

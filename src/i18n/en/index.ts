@@ -100,6 +100,8 @@ export default {
     hint: 'Spell the words in reverse order.',
   },
   'Press "START" when you are ready': '_',
+  'This exercise works with audio. Make sure your speakers are enabled and the volume is adjusted.':
+    '_',
   START: '_',
   'The solution is': '_',
   Continue: '_',

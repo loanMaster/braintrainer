@@ -111,6 +111,8 @@ export default {
   },
   'Press "START" when you are ready':
     'Klicke auf "START" sobald Du bereit bist.',
+  'This exercise works with audio. Make sure your speakers are enabled and the volume is adjusted.':
+    'Diese Übung verwendet Audio. Stelle sicher, dass die Lautsprecher eingeschaltet sind und die Lautstärke nicht auf 0 ist.',
   START: 'START',
   'The solution is': 'Die Lösung ist',
   Continue: 'Weiter',

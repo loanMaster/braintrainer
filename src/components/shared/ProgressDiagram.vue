@@ -104,7 +104,7 @@ function createChart(values: Score[]) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      animations: false,
+      animations: { animation: false },
       plugins: {
         legend: {
           display: props.showLegend,
