@@ -247,15 +247,13 @@ export class RelativesService {
     return node;
   }
 
-  public createRelationshipTree(difficulty: string): FindRelativeTask {
-    const maxDepth =
-      difficulty === 'normal' ? 3 : difficulty === 'hard' ? 4 : 5;
+  public createRelationshipTree(sequenceLength: number): FindRelativeTask {
     let tree: Relative;
     do {
       this.relations = [];
-      tree = this.createTree(maxDepth);
+      tree = this.createTree(sequenceLength);
     } while (
-      tree.depth() < maxDepth ||
+      tree.depth() < sequenceLength ||
       tree.getLeaves().filter((l) => !l.isIncest()).length === 0
     );
     const relationsRev = this.relations.reverse();

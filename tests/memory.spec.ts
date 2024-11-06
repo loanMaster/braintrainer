@@ -28,7 +28,7 @@ const solveMemory = async (page: Page, count: number) => {
     await new Promise((resolve) => setTimeout(() => resolve(''), 250));
   }
 
-  await page.waitForURL('http://localhost:9000/en/score-screen');
+  await page.waitForURL('/#/en/score-screen');
 };
 
 test('train memory', async ({ page }) => {

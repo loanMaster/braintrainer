@@ -29,13 +29,11 @@ export const exerciseUtils = {
     }
     new TweenService().wiggle(elementToWiggle.value);
   },
-  createExercise: (numberOfQuestions: number, enableSkip = true) => {
+  createExercise: () => {
     useAppStore().$patch((store) => {
       store.exercise = newExercise(
         useRoute().params.game as string,
-        useRoute().params.difficulty as string,
-        numberOfQuestions,
-        enableSkip
+        useRoute().params.difficulty as string
       );
     });
   },

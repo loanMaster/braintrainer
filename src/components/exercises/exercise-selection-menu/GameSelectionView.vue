@@ -98,26 +98,29 @@ import { ref } from 'vue';
 import { useAppStore } from 'stores/app-store';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import {
-  knowledgeExercises,
-  languageExercises,
-  mathExercises,
-  memoryExercises,
-} from 'src/const/games';
+import { exercises } from 'src/const/exercises';
 
 const { t } = useI18n();
 const router = useRouter();
 
-const languageEx = ref(languageExercises);
-const mathEx = ref(mathExercises);
-const memoryEx = ref(memoryExercises);
-const knowledgeEx = ref(knowledgeExercises);
+const languageEx = ref(
+  exercises.filter((e) => e.category === 'language').map((e) => e.name)
+);
+const mathEx = ref(
+  exercises.filter((e) => e.category === 'math').map((e) => e.name)
+);
+const memoryEx = ref(
+  exercises.filter((e) => e.category === 'memory').map((e) => e.name)
+);
+const knowledgeEx = ref(
+  exercises.filter((e) => e.category === 'knowledge').map((e) => e.name)
+);
 
-function selectExercise(game: string) {
+function selectExercise(name: string) {
   router.push({
     name: 'select-difficulty',
     params: {
-      game: game.toLowerCase(),
+      game: name.toLowerCase(),
       language: useAppStore().language,
     },
   });

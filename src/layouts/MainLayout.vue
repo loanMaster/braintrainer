@@ -50,7 +50,6 @@
           </router-link>
 
           <router-link
-            data-testid="player-scores-nav-item"
             :to="{
               name: 'player-scores',
               params: { language: store.language },
@@ -61,7 +60,7 @@
               dense
               no-wrap
               no-caps
-              data-testid="progress-nav-item"
+              data-testid="player-scores-nav-item"
               :label="$t('Progress')"
               class="text-white q-px-sm"
             />
@@ -72,7 +71,7 @@
           <q-toggle
             :modelValue="lightMode"
             data-testid="darkModeToggle"
-            @update:modelValue="toggleDarkMode($event)"
+            @update:modelValue="toggleDarkMode()"
             :checked-icon="matLightMode"
             color="secondary"
             :unchecked-icon="matDarkMode"
@@ -103,9 +102,6 @@
                 >
                   <q-item-section>deutsch</q-item-section>
                 </q-item>
-                <!-- <q-item clickable v-close-popup @click="setLanguage('es')">
-                  <q-item-section>español</q-item-section>
-                </q-item> -->
               </q-list>
             </q-menu>
           </q-btn>
@@ -137,7 +133,7 @@
                 <q-icon :name="link.icon" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ link.text }}</q-item-label>
+                <q-item-label>{{ $t(link.text) }}</q-item-label>
               </q-item-section>
             </router-link>
           </q-item>
@@ -173,7 +169,6 @@ const leftDrawerOpen = ref(false);
 
 const $q = useQuasar();
 const store = useAppStore();
-const { t } = useI18n();
 
 onMounted(() => {
   leftDrawerOpen.value = false;
@@ -198,9 +193,9 @@ function setLanguage(lang: string) {
 }
 
 const links1 = ref([
-  { icon: matHome, text: t('Home'), to: 'home' },
-  { icon: matFitnessCenter, text: t('Practise'), to: 'select-exercise' },
-  { icon: matBarChart, text: t('Progress'), to: 'player-scores' },
+  { icon: matHome, text: 'Home', to: 'home' },
+  { icon: matFitnessCenter, text: 'Practise', to: 'select-exercise' },
+  { icon: matBarChart, text: 'Progress', to: 'player-scores' },
 ]);
 </script>
 
@@ -212,7 +207,6 @@ a {
 
 .router-link-active button {
   text-decoration: underline;
-  text-underline-color: white;
-  text-decoration-width: 2px;
+  text-decoration-style: white 2px;
 }
 </style>

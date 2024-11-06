@@ -30,7 +30,6 @@ export function createExerciseContext({
   const inputDisabled = ref(true);
   const revealed = ref(false);
   const destroy = new Subject<void>();
-  const isDev = ref(dev);
 
   const difficulty = computed(() => {
     return route.params.difficulty;
@@ -94,7 +93,6 @@ export function createExerciseContext({
     route,
     onSolutionConfirmed,
     difficulty,
-    isDev,
     t,
   };
 }

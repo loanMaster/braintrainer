@@ -2,7 +2,7 @@
   <div
     ref="coreExercise"
     class="column items-center"
-    :data-test="isDev && solution"
+    :data-test="solution"
     data-testid="core-exercise"
   >
     <div class="q-my-md">
@@ -53,7 +53,6 @@ const {
   soundService,
   revealed,
   destroy,
-  isDev,
   store,
   difficulty,
   inputDisabled,
@@ -77,12 +76,11 @@ const coreExercise = ref();
 const letterButtons = ref();
 
 onBeforeMount(() => {
-  const numberOfQuestions = difficulty.value === 'normal' ? 5 : 10;
-  exerciseUtils.createExercise(numberOfQuestions);
-  nextWord = new ReplaySubject<WordList>(numberOfQuestions);
+  exerciseUtils.createExercise();
+  nextWord = new ReplaySubject<WordList>(store.exercise.totalQuestions);
   const exclude: string[] = [];
   nextWord
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
+    .pipe(take(store.exercise.totalQuestions), takeUntil(destroy))
     .subscribe((result) => {
       result.val.forEach((v) => exclude.push(v));
       fetchNextWord(exclude);
@@ -128,7 +126,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  await speak(true);
+  await speak();
 }
 
 function updateButtonLabels() {

@@ -25,7 +25,7 @@
           <q-btn
             color="primary"
             :data-test="
-              isDev && isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'
+              isCorrectBtn(idx) ? 'correct-button' : 'incorrect-button'
             "
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
@@ -64,8 +64,6 @@ const {
   soundService,
   revealed,
   t,
-  isDev,
-  route,
   store,
   inputDisabled,
   destroy,
@@ -126,11 +124,8 @@ const coreExercise = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions = 6;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
 });
-
-const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
   new TweenService().setDisplay(coreExercise.value, 'none');
@@ -197,7 +192,7 @@ async function nextQuestion() {
 async function fetchNextExercise() {
   const relativesService = new RelativesService();
   const task = relativesService.createRelationshipTree(
-    difficulty.value as string
+    store.exercise.sequenceLength
   );
   const person =
     task.gender === 'f'
@@ -235,7 +230,7 @@ async function fetchNextExercise() {
 
 async function playAudio() {
   soundService.stop();
-  await soundService.playAll(currentTask.value!.audio, 100, true);
+  await soundService.playAll(currentTask.value!.audio, 100);
 }
 
 function isCorrectBtn(idx: number) {

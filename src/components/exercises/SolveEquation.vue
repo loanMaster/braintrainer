@@ -3,7 +3,7 @@
     ref="numpadContainer"
     class="relative-position"
     data-testid="core-exercise"
-    :data-test="isDev && currentExercise?.result"
+    :data-test="currentExercise?.result"
   >
     <NumPadWithDisplay
       ref="numpad"
@@ -41,10 +41,8 @@ const {
   revealed,
   destroy,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
-  route,
 } = createExerciseContext({
   playAudioCb: () => playAudio(),
   nextQuestionCb: () => nextQuestion(),
@@ -60,9 +58,7 @@ const router = useRouter();
 let currentExercise: Ref<Equation | undefined> = ref();
 
 onBeforeMount(async () => {
-  const difficulty = exerciseUtils.difficulty(route);
-  const numberOfQuestions = difficulty === 'normal' ? 5 : 7;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
 });
 
 onMounted(async () => {

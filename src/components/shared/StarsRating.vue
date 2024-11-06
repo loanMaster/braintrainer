@@ -9,7 +9,7 @@
     <q-icon
       :name="matStarBorder"
       color="amber-4"
-      v-for="val in Array.from(Array(5 - rating).keys())"
+      v-for="val in Array.from(Array(5 - rating!).keys())"
       :key="val"
     ></q-icon>
   </div>

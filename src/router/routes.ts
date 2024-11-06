@@ -64,6 +64,9 @@ const routes: RouteRecordRaw[] = [
                 useAppStore().language
               );
               if (!available) {
+                console.log(window.speechSynthesis);
+                console.log(JSON.stringify(window.speechSynthesis));
+                console.log('not supporrted..');
                 next('/not-supported');
               } else {
                 next();

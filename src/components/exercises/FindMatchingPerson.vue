@@ -35,7 +35,7 @@
         </div>
         <div
           class="q-pa-sm relative-position"
-          :data-test="isDev ? solution : ''"
+          :data-test="solution"
           data-testid="core-exercise"
         >
           <q-carousel swipeable animated v-model="slide" thumbnails infinite>
@@ -90,9 +90,7 @@ const {
   soundService,
   speechService,
   revealed,
-  route,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({
@@ -112,16 +110,12 @@ const nameToImageMapping: { [key: string]: string } = {};
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions =
-    difficulty.value === 'normal' ? 5 : difficulty.value === 'hard' ? 7 : 10;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
   currentTask.value = new PersonIntroductionService().createIntroductions(
     store.language,
-    numberOfQuestions
+    store.exercise.totalQuestions
   );
 });
-
-const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
   new TweenService().setDisplay(coreExercise.value, 'none');
@@ -146,7 +140,7 @@ async function start() {
   showLoadingIndicator.value = false;
   shuffle(currentTask.value!.introductions);
   store.beginExercise();
-  await speechService.playAll(speech, 100, true);
+  await speechService.playAll(speech, 100);
   await exerciseUtils.wait(150);
   nextQuestion();
 }

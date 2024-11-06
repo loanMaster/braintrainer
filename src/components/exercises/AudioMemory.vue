@@ -21,7 +21,7 @@
           'text-h5': store.exercise.difficulty === 'veryhard',
         }"
         @click="buttonClick(idx, $event)"
-        :data-test="isDev ? 'button-' + buttonValue(idx) : ''"
+        :data-test="'button-' + buttonValue(idx)"
         :disabled="inputDisabled || isSolved(idx)"
         >🔉</q-btn
       >
@@ -40,23 +40,16 @@ import { TweenService } from 'src/shared-services/tween.service';
 import { ExerciseService } from 'src/shared-services/exercise.service';
 import { useAppStore } from 'stores/app-store';
 import { shuffle } from 'src/util/array.utils';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { preloadAudio } from 'src/util/preload-assets';
 
-const {
-  soundService,
-  speechService,
-  revealed,
-  store,
-  inputDisabled,
-  difficulty,
-  isDev,
-} = createExerciseContext({
-  playAudioCb: () => playAudio(),
-  nextQuestionCb: () => nextQuestion(),
-  startCb: () => nextQuestion(),
-  skipCb: () => undefined,
-});
+const { soundService, speechService, revealed, store, inputDisabled } =
+  createExerciseContext({
+    playAudioCb: () => playAudio(),
+    nextQuestionCb: () => nextQuestion(),
+    startCb: () => nextQuestion(),
+    skipCb: () => undefined,
+  });
 
 let permutation: number[] = [];
 let wordList: Ref<{ src: string; val: string }[]> = ref([]);
@@ -71,19 +64,7 @@ const buttons = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions =
-    useRoute().params.game === 'voices-memory'
-      ? difficulty.value === 'normal'
-        ? 4
-        : difficulty.value === 'hard'
-        ? 5
-        : 6
-      : difficulty.value === 'normal'
-      ? 6
-      : difficulty.value === 'hard'
-      ? 12
-      : 20;
-  exerciseUtils.createExercise(numberOfQuestions, false);
+  exerciseUtils.createExercise();
 });
 
 onMounted(async () => {
@@ -138,8 +119,8 @@ function playAudio() {
 function loadExercise(): { src: string; val: string }[] {
   const words = new ExerciseService()
     .getRandomWords({
-      minLength: 3,
-      maxLength: 14,
+      minLength: store.exercise.minLength!,
+      maxLength: store.exercise.maxLength!,
       lang: store.language,
       number: store.exercise.totalQuestions,
     })

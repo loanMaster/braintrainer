@@ -47,9 +47,7 @@
               @click="selectWord(idx, $event)"
               :disabled="inputDisabled"
               :data-test="
-                isDev && isCorrectButton(idx)
-                  ? 'correct-button'
-                  : 'incorrect-button'
+                isCorrectButton(idx) ? 'correct-button' : 'incorrect-button'
               "
               class="transition-duration-md"
               >{{ label }}</q-btn
@@ -87,19 +85,13 @@ import {
 import { preloadAudio } from 'src/util/preload-assets';
 import { useAppStore } from 'stores/app-store';
 
-const {
-  soundService,
-  revealed,
-  store,
-  isDev,
-  inputDisabled,
-  onSolutionConfirmed,
-} = createExerciseContext({
-  playAudioCb: () => playAudio(),
-  nextQuestionCb: () => nextQuestion(),
-  startCb: () => start(),
-  skipCb: () => reveal(),
-});
+const { soundService, revealed, store, inputDisabled, onSolutionConfirmed } =
+  createExerciseContext({
+    playAudioCb: () => playAudio(),
+    nextQuestionCb: () => nextQuestion(),
+    startCb: () => start(),
+    skipCb: () => reveal(),
+  });
 
 const task: Ref<CountryAndCapital[]> = ref([]);
 let buttonLabels: Ref<string[]> = ref([]);
@@ -114,8 +106,7 @@ const exerciseButtons = ref();
 const activeButtons: Ref<'letter' | 'word'> = ref('letter');
 
 onBeforeMount(() => {
-  const numberOfQuestion = 10;
-  exerciseUtils.createExercise(numberOfQuestion);
+  exerciseUtils.createExercise();
 });
 
 onMounted(async () => {
@@ -148,12 +139,6 @@ function updateButtons() {
       )
     );
   }
-  const numberOfOptions =
-    store.exercise.difficulty === 'normal'
-      ? 5
-      : store.exercise.difficulty === 'hard'
-      ? 3
-      : 4;
   capitalOptions = [...new Set(capitalOptions)];
   do {
     const randomCapital = new GeographyService().getRandomCapital(
@@ -162,8 +147,8 @@ function updateButtons() {
     if (capitalOptions.indexOf(randomCapital) === -1) {
       capitalOptions.push(randomCapital);
     }
-  } while (capitalOptions.length < numberOfOptions);
-  capitalOptions = capitalOptions.splice(0, numberOfOptions);
+  } while (capitalOptions.length < 5);
+  capitalOptions = capitalOptions.splice(0, 5);
   capitalOptions.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
   buttonLabels.value = capitalOptions;
   letterButtons.value.showAtLeast([getCurrentTask().capital[0]]);

@@ -3,7 +3,7 @@
     <SkipRepeatButtons :disabled="inputDisabled" />
     <div
       class="max-width-xs row wrap justify-center q-gutter-sm"
-      :data-test="isDev && solution"
+      :data-test="solution"
       data-testid="core-exercise"
     >
       <div v-for="(label, idx) in buttonLabels" v-bind:key="idx">
@@ -42,9 +42,7 @@ const {
   soundService,
   speechService,
   revealed,
-  route,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({
@@ -54,23 +52,19 @@ const {
   skipCb: () => reveal(),
 });
 
-let currentIndex = ref(0);
-
-let permutation: Ref<number[]> = ref([]);
-let currentExercise: Ref<string[]> = ref([]);
+const currentIndex = ref(0);
+const permutation: Ref<number[]> = ref([]);
+const currentExercise: Ref<string[]> = ref([]);
 const sequence: Ref<string[]> = ref([]);
 const reverse = ref(false);
-let buttonLabels: Ref<string[]> = ref([]);
+const buttonLabels: Ref<string[]> = ref([]);
 const buttons = ref();
 const textTransparent = ref(false);
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions = 5;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
 });
-
-const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
   reverse.value = store.exercise.nameOfTheGame.indexOf('-rev') > -1;
@@ -82,11 +76,7 @@ onMounted(async () => {
 });
 
 const sequenceLength = computed(() => {
-  return difficulty.value === 'normal'
-    ? 6
-    : difficulty.value === 'hard'
-    ? 9
-    : 12;
+  return store.exercise.sequenceLength!;
 });
 
 async function nextQuestion() {
@@ -123,7 +113,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(buttons.value);
 
-  await playAudio(true);
+  await playAudio();
   textTransparent.value = false;
   inputDisabled.value = false;
 }
@@ -138,8 +128,8 @@ async function playAudio() {
 
 function getNextExercise(): string[] {
   return new ExerciseService().getRandomWords({
-    minLength: 3,
-    maxLength: 12,
+    minLength: store.exercise.minLength!,
+    maxLength: store.exercise.maxLength!,
     lang: store.language,
     number: sequenceLength.value,
   });

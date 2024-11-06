@@ -3,7 +3,7 @@
     ref="coreExercise"
     class="column items-center"
     data-testid="core-exercise"
-    :data-test="isDev && getMatchingAnagram()"
+    :data-test="getMatchingAnagram()"
   >
     <SpeechBubble
       :show="store.exercise.audioState.playingSequence"
@@ -60,7 +60,6 @@ const {
   revealed,
   destroy,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
   difficulty,
@@ -83,12 +82,11 @@ let highlightError = false;
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions = 10;
-  exerciseUtils.createExercise(numberOfQuestions);
-  nextAnagrams = new ReplaySubject<string[]>(numberOfQuestions);
+  exerciseUtils.createExercise();
+  nextAnagrams = new ReplaySubject<string[]>(store.exercise.totalQuestions);
   const exclude: string[] = [];
   nextAnagrams
-    .pipe(take(numberOfQuestions), takeUntil(destroy))
+    .pipe(take(store.exercise.totalQuestions), takeUntil(destroy))
     .subscribe((result) => {
       result.forEach((v) => exclude.push(v));
       loadNextAnagram(exclude);
@@ -139,7 +137,7 @@ async function nextQuestion() {
   }
   await new TweenService().fadeIn(coreExercise.value);
   inputDisabled.value = false;
-  await playAudio(true);
+  await playAudio();
 }
 
 function isAnagram(permutation: string[]): boolean {

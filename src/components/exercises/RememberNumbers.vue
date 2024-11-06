@@ -2,7 +2,7 @@
   <div
     ref="numpad"
     class="relative-position"
-    :data-test="isDev && solution"
+    :data-test="solution"
     data-testid="core-exercise"
   >
     <NumPadWithDisplay
@@ -34,9 +34,7 @@ import { preloadAudio } from 'src/util/preload-assets';
 const {
   soundService,
   revealed,
-  isDev,
   destroy,
-  route,
   store,
   inputDisabled,
   onSolutionConfirmed,
@@ -56,17 +54,8 @@ const reverse = ref(false);
 const router = useRouter();
 const numpad = ref();
 
-const sequenceLength = computed(() => {
-  return exerciseUtils.difficulty(route) === 'normal'
-    ? 6
-    : exerciseUtils.difficulty(route) === 'hard'
-    ? 8
-    : 10;
-});
-
 onBeforeMount(() => {
-  const numberOfQuestions = 5;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
 });
 
 onMounted(async () => {
@@ -112,13 +101,13 @@ async function nextQuestion() {
   if (store.exercise.currentQuestion === 1) {
     store.beginExercise();
   }
-  await playAudio(true);
+  await playAudio();
   inputDisabled.value = false;
 }
 
 function createTask() {
   currentAudio.value = [];
-  for (let i = 0; i < sequenceLength.value; i++) {
+  for (let i = 0; i < store.exercise.sequenceLength; i++) {
     const nextNumber = Math.floor(Math.random() * 10);
     currentAudio.value.push({
       src: `sounds/maths/${store.language}_${nextNumber}.mp3`,
@@ -142,7 +131,7 @@ async function onNumberEntered(num: number) {
   if (num === sequence.value[currentIndex]) {
     inputValue.value = inputValue.value + String(sequence.value[currentIndex]);
     currentIndex++;
-    if (currentIndex === sequenceLength.value) {
+    if (currentIndex === store.exercise.sequenceLength) {
       inputDisabled.value = true;
       store.$patch((state) => state.exercise.correctAnswers++);
       new SoundService().playSuccess();

@@ -7,11 +7,10 @@ test.beforeEach(listenForConsoleErrors);
 const solve = async (page: Page, count: number) => {
   const coreExercise = await page.getByTestId('core-exercise');
 
-  let previousSolution = '';
   for (let i = 0; i < count; i++) {
     await expect(
       await coreExercise.locator('button:not([disabled])')
-    ).toHaveCount(10, { timeout: 10000 });
+    ).toHaveCount(12, { timeout: 10000 });
     const solutionNo = await coreExercise.getAttribute('data-test');
     const solution = String(solutionNo);
     for (let j = 0; j < solution.length; j++) {
@@ -19,30 +18,29 @@ const solve = async (page: Page, count: number) => {
         .locator(`[data-testid="numpad-${solution[j]}"]:not([disabled])`)
         .click();
     }
-    previousSolution = solution;
   }
 };
 
 test('train mental-arithmetic', async ({ page }) => {
   await navigateToGame(page, 'mental-arithmetic', 'normal', 'de');
-  await solve(page, 5);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await solve(page, 6);
+  await page.waitForURL('/#/de/score-screen');
 });
 
 test('train mental-arithmetic-mul', async ({ page }) => {
   await navigateToGame(page, 'mental-arithmetic-mul', 'normal', 'de');
-  await solve(page, 5);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await solve(page, 6);
+  await page.waitForURL('/#/de/score-screen');
 });
 
 test('train math-marathon', async ({ page }) => {
   await navigateToGame(page, 'math-marathon', 'normal', 'de');
   await solve(page, 15);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await page.waitForURL('/#/de/score-screen');
 });
 
 test('train solve-equation', async ({ page }) => {
   await navigateToGame(page, 'solve-equation', 'normal', 'de');
-  await solve(page, 5);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await solve(page, 6);
+  await page.waitForURL('/#/de/score-screen');
 });

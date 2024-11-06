@@ -3,7 +3,7 @@
     ref="numpadContainer"
     class="column relative-position"
     data-testid="core-exercise"
-    :data-test="isDev ? expectedResult : ''"
+    :data-test="expectedResult"
   >
     <input :value="previousResult" disabled class="text-center text-h6" />
     <NumPadWithDisplay
@@ -15,7 +15,7 @@
   </div>
   <SolutionBanner
     :show="revealed"
-    :solution="expectedResult"
+    :solution="expectedResult!"
     @confirmed="onSolutionConfirmed"
   />
 </template>
@@ -43,7 +43,6 @@ const {
   revealed,
   destroy,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
   difficulty,
@@ -66,8 +65,7 @@ const expectedResult: Ref<number | null> = ref(null);
 const previousResult: Ref<number | null> = ref(null);
 
 onBeforeMount(() => {
-  const numberOfQuestions = 15;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
 });
 
 onMounted(() => {

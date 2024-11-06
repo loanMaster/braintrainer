@@ -47,9 +47,7 @@
             @click="selectWord(idx, $event)"
             :disabled="inputDisabled"
             :data-test="
-              isDev && isCorrectButton(idx)
-                ? 'correct-button'
-                : 'incorrect-button'
+              isCorrectButton(idx) ? 'correct-button' : 'incorrect-button'
             "
             class="transition-duration-md"
             >{{ label }}</q-btn
@@ -86,9 +84,7 @@ const {
   soundService,
   speechService,
   revealed,
-  route,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({
@@ -108,16 +104,12 @@ const nameToImageMapping: { [key: string]: string } = {};
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions =
-    difficulty.value === 'normal' ? 5 : difficulty.value === 'hard' ? 7 : 10;
-  exerciseUtils.createExercise(numberOfQuestions);
+  exerciseUtils.createExercise();
   currentTask.value = new PersonIntroductionService().createIntroductions(
     store.language,
-    numberOfQuestions
+    store.exercise.totalQuestions
   );
 });
-
-const difficulty = computed(() => route.params.difficulty);
 
 onMounted(async () => {
   new TweenService().setDisplay(coreExercise.value, 'none');
@@ -142,7 +134,7 @@ async function start() {
   shuffle(currentTask.value!.introductions);
   await exerciseUtils.wait(1000);
   store.beginExercise();
-  await speechService.playAll(speech, 100, true);
+  await speechService.playAll(speech, 100);
   await exerciseUtils.wait(150);
   nextQuestion();
 }

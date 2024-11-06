@@ -119,68 +119,14 @@
       </div>
     </div>
   </div>
-  <div class="full-width column items-center q-pa-lg bg-primary">
-    <div
-      class="max-width-sm row-sm column-xs justify-between full-width text-center text-white"
-    >
-      <q-btn flat no-caps class="col-3" @click="showPrivacyStatement">{{
-        $t('Privacy')
-      }}</q-btn>
-      <q-btn flat no-caps class="col-3" @click="showTermsAndConditions">{{
-        $t('Terms of service')
-      }}</q-btn>
-      <q-btn flat no-caps class="col-3" @click="showCookiePolicy">{{
-        $t('Cookies')
-      }}</q-btn>
-      <q-btn flat no-caps class="col-3" @click="showLegalNotice">{{
-        $t('Legal notice')
-      }}</q-btn>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { matDoubleArrow } from '@quasar/extras/material-icons';
-import { useQuasar } from 'quasar';
 import MovingColorsBackground from 'src/components/backgrounds/MovingColorsBackground.vue';
-import { useI18n } from 'vue-i18n';
 import { useAppStore } from 'stores/app-store';
 
-const $q = useQuasar();
-const { t } = useI18n();
 const store = useAppStore();
-
-function showLegalNotice() {
-  $q.dialog({
-    message: t('LEGAL_NOTICE'),
-    ok: true,
-    html: true,
-  });
-}
-
-function showCookiePolicy() {
-  $q.dialog({
-    message: t('COOKIE_POLICY'),
-    ok: true,
-    html: true,
-  });
-}
-
-function showPrivacyStatement() {
-  $q.dialog({
-    message: t('PRIVACY_STATEMENT'),
-    ok: true,
-    html: true,
-  });
-}
-
-function showTermsAndConditions() {
-  $q.dialog({
-    message: t('TERMS_AND_CONDITIONS'),
-    ok: true,
-    html: true,
-  });
-}
 </script>
 
 <style scoped lang="scss">

@@ -4,6 +4,7 @@ import { LETTERS } from 'src/const/letters';
 import { calculateScore } from 'src/util/calculate-score';
 import { Composer } from 'vue-i18n';
 import { mapScoreToRating } from 'src/util/calculate-rating';
+import { exercises } from 'src/const/exercises';
 
 const refractoryTime = 250;
 const maxRefractoryTime = 750;
@@ -26,30 +27,42 @@ export interface Exercise {
   audioState: AudioState;
   totalAudioDuration: number;
   enableSkip: boolean;
+  audio: boolean;
+  minLength: number;
+  maxLength: number;
+  sequenceLength: number;
 }
 
 export const newExercise = (
   nameOfTheGame: string,
-  difficulty: string,
-  totalQuestions: number,
-  enableSkip = true
-): Exercise => ({
-  correctAnswers: 0,
-  totalQuestions,
-  strikes: 0,
-  duration: 10,
-  difficulty,
-  nameOfTheGame,
-  state: 'created',
-  beginTimeStamp: Date.now(),
-  totalStrikeCount: 0,
-  lastSuccessfulStrike: 0,
-  lastStrike: 0,
-  currentQuestion: 0,
-  totalAudioDuration: 0,
-  audioState: { playing: false, meta: {}, playingSequence: false },
-  enableSkip,
-});
+  difficulty: string
+): Exercise => {
+  const index = difficulty === 'normal' ? 0 : difficulty === 'hard' ? 1 : 2;
+  const config = exercises.find((e) => e.name === nameOfTheGame)!;
+  return {
+    correctAnswers: 0,
+    strikes: 0,
+    duration: 10,
+    difficulty,
+    nameOfTheGame,
+    state: 'created',
+    beginTimeStamp: Date.now(),
+    totalStrikeCount: 0,
+    lastSuccessfulStrike: 0,
+    lastStrike: 0,
+    currentQuestion: 0,
+    totalAudioDuration: 0,
+    audioState: { playing: false, meta: {}, playingSequence: false },
+    totalQuestions: config.numberOfQuestions
+      ? config.numberOfQuestions[index]
+      : 1,
+    audio: config.audio,
+    enableSkip: config.enableSkip || true,
+    minLength: config.minLength ? config.minLength[index] : 0,
+    maxLength: config.maxLength ? config.maxLength[index] : 0,
+    sequenceLength: config.sequenceLength ? config.sequenceLength[index] : 0,
+  };
+};
 
 export interface AudioState {
   playing: boolean;
@@ -116,7 +129,7 @@ export const useAppStore = defineStore('main', {
     return {
       machineId: localStorage.getItem('machineId') || uuidv4(),
       dailyTraining: { active: false, results: [] as Exercise[] },
-      exercise: newExercise('remember-numbers', 'normal', 5),
+      exercise: newExercise('remember-numbers', 'normal'),
       _language: localStorage.getItem('language') || getBrowserLanguage(),
       _themePreference: localStorage.getItem('themePreference') || 'light',
       playerScores,
@@ -135,8 +148,7 @@ export const useAppStore = defineStore('main', {
     },
   },
   actions: {
-    setLanguage(i18n: Composer<any>, lang: string, _redirect = true) {
-      console.log(_redirect);
+    setLanguage(i18n: Composer<any>, lang: string) {
       i18n.locale.value = lang;
       this._language = lang;
       localStorage.setItem('language', lang);

@@ -147,6 +147,7 @@ export default {
   Evaluation: 'Auswertung',
   Solved: 'Gelöst',
   Mistakes: 'Fehler',
+  'Time required': 'Benötigte Zeit',
   'New highscore': '🎉 Neuer highscore 🎉',
   'Train now': 'Jetzt trainieren',
   'What is { APP_NAME }?': 'Was ist { APP_NAME }?',

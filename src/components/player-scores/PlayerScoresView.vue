@@ -70,12 +70,7 @@ import { useI18n } from 'vue-i18n';
 import LoadingIndicator from 'src/components/shared/LoadingIndicator.vue';
 import PlayerScoresTable from './PlayerScoresTable.vue';
 import ProgressDiagram from 'src/components/shared/ProgressDiagram.vue';
-import {
-  knowledgeExercises,
-  languageExercises,
-  mathExercises,
-  memoryExercises,
-} from 'src/const/games';
+import { exercises } from 'src/const/exercises';
 import { Score, useAppStore } from 'stores/app-store';
 
 const { t } = useI18n();
@@ -91,27 +86,31 @@ onMounted(async () => {
   showLoadingIndicator.value = false;
 });
 
+function getExerciseNames(category: string) {
+  return exercises.filter((e) => e.category === category).map((e) => e.name);
+}
+
 const languageScores = computed(() => {
   return scores.value.filter(
-    (s) => languageExercises.indexOf(s.nameOfTheGame) > -1
+    (s) => getExerciseNames('language').indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const mathScores = computed(() => {
   return scores.value.filter(
-    (s) => mathExercises.indexOf(s.nameOfTheGame) > -1
+    (s) => getExerciseNames('math').indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const knowledgeScores = computed(() => {
   return scores.value.filter(
-    (s) => knowledgeExercises.indexOf(s.nameOfTheGame) > -1
+    (s) => getExerciseNames('knowledge').indexOf(s.nameOfTheGame) > -1
   );
 });
 
 const memoryScores = computed(() => {
   return scores.value.filter(
-    (s) => memoryExercises.indexOf(s.nameOfTheGame) > -1
+    (s) => getExerciseNames('memory').indexOf(s.nameOfTheGame) > -1
   );
 });
 

@@ -6,9 +6,16 @@ export class SpeechService {
   private abort = false;
 
   init() {
-    if (window.speechSynthesis) {
-      window.speechSynthesis.getVoices();
+    if (this.speechSynthesisFacade) {
+      this.speechSynthesisFacade.getVoices();
     }
+  }
+
+  get speechSynthesisFacade(): SpeechSynthesis {
+    if (!(window as any).speechSynthesisFacade) {
+      (window as any).speechSynthesisFacade = window.speechSynthesis;
+    }
+    return (window as any).speechSynthesisFacade;
   }
 
   async say(text: string, meta: any = {}, lang?: string): Promise<boolean> {
@@ -16,7 +23,7 @@ export class SpeechService {
       useAppStore().startedPlayingSound(meta);
     }
     const p = new Promise<boolean>((resolve) => {
-      const synth = window.speechSynthesis;
+      const synth = this.speechSynthesisFacade;
       const utterThis = new SpeechSynthesisUtterance(text);
       utterThis.onerror = () => {
         resolve(false);
@@ -58,23 +65,29 @@ export class SpeechService {
       this.abort = true;
     }
     if (this.isPlaying()) {
-      window.speechSynthesis.cancel();
+      this.speechSynthesisFacade.cancel();
     }
   }
 
   isPlaying() {
-    return window.speechSynthesis.pending || window.speechSynthesis.speaking;
+    return (
+      this.speechSynthesisFacade.pending || this.speechSynthesisFacade.speaking
+    );
   }
 
   async isAvailable(lang: string) {
-    if (!window.speechSynthesis) {
+    if (!this.speechSynthesisFacade) {
       return false;
     }
-    if (window.speechSynthesis.getVoices().length === 0) {
-      return false;
+    if (this.speechSynthesisFacade.getVoices().length > 0) {
+      return (
+        this.speechSynthesisFacade
+          .getVoices()
+          .filter((l) => l.lang.substring(0, 2) === lang).length > 0
+      );
     }
     await new Promise((resolve) => setTimeout(resolve, 150));
-    const supported = window.speechSynthesis.getVoices();
+    const supported = this.speechSynthesisFacade.getVoices();
     return supported.filter((l) => l.lang.substring(0, 2) === lang).length > 0;
   }
 }

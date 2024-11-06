@@ -64,10 +64,6 @@ export class ExerciseService {
     this.dictionaryService = new DictionaryService(new DictionaryProvider());
   }
 
-  get serverPath() {
-    return serverPath || '';
-  }
-
   private createWordList(
     lang = 'en',
     minLength: number,
@@ -233,19 +229,6 @@ export class ExerciseService {
     return {
       val: words,
     };
-  }
-
-  getAlphabet(query: { lang: string }): string[] {
-    const letters_de = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ';
-    const letters_en = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const letters_es = 'AÁBCDEÉFGHIÍJKLMNÑOÓPQRSTUÚÜVWXYZ';
-    const letters =
-      query.lang == 'de'
-        ? letters_de
-        : query.lang == 'es'
-        ? letters_es
-        : letters_en;
-    return letters.split('');
   }
 
   getAnagram(query: RandomWord): string[] {

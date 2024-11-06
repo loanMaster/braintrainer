@@ -1,4 +1,4 @@
-import { expect, Page, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { navigateToGame } from 'app/tests/pom/navigate-to-game.pom';
 import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 
@@ -16,5 +16,5 @@ test('train remember-names', async ({ page }) => {
     await page.locator('[data-test="correct-button"]:not([disabled])').click();
   }
 
-  await page.waitForURL('http://localhost:9000/en/score-screen');
+  await page.waitForURL('/#/en/score-screen');
 });

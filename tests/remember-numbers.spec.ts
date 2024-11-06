@@ -27,11 +27,5 @@ const solve = async (page: Page) => {
 test('train remember-numbers', async ({ page }) => {
   await navigateToGame(page, 'remember-numbers', 'normal', 'de');
   await solve(page);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
-});
-
-test('train remember-numbers-rev', async ({ page }) => {
-  await navigateToGame(page, 'remember-numbers-rev', 'normal', 'de');
-  await solve(page);
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await page.waitForURL('/#/de/score-screen');
 });

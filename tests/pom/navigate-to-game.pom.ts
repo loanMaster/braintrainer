@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { acceptCookies } from 'app/tests/pom/accept-cookies.pom';
+import { mockSpeechSynthesis } from '../mocks/speech-synthesis.mock';
 
 export const navigateToGame = async (
   page: Page,
@@ -7,17 +7,14 @@ export const navigateToGame = async (
   difficulty: string,
   lang = 'en'
 ) => {
-  await page.goto(`http://localhost:9000/${lang}/train`);
-  await acceptCookies(page);
-  await page.waitForSelector('[data-testid="continueAsGuestButton"]');
-  await page.getByTestId('continueAsGuestButton').click();
+  await page.goto(`/#/${lang}/train`);
+  await mockSpeechSynthesis(page);
   await page.getByTestId('card-' + nameOfTheGame).click();
-  await page.waitForURL(
-    `http://localhost:9000/${lang}/train/select-difficulty/${nameOfTheGame}`
-  );
+  await page.waitForURL(`/#/${lang}/train/select-difficulty/${nameOfTheGame}`);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   await page.getByTestId('card-' + difficulty).click();
-  await page.waitForURL(
-    `http://localhost:9000/${lang}/train/${difficulty}/${nameOfTheGame}`
-  );
+
+  await page.waitForURL(`/#/${lang}/train/${difficulty}/${nameOfTheGame}`);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   await page.getByTestId('confirm-exercise-instructions-btn').click();
 };

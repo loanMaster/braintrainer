@@ -8,9 +8,7 @@
   "scripts": {
     "lint": "eslint --fix --ext .js,.ts,.vue ./ ",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "playwright test --headed",
-    "server": "cross-env-shell APP_DIST_FOLDER=dist/spa PORT=3002 simple-static-server ",
-    "server-prod": "cross-env-shell APP_DIST_FOLDER=dist/spa KEY_FILE=/etc/letsencrypt/live/??/privkey.pem CERT_FILE=/etc/letsencrypt/live/??/fullchain.pem PORT=443 simple-static-server"
+    "test": "playwright test --headed"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -28,7 +26,7 @@
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^3.3.1",
-    "@playwright/test": "^1.29.0",
+    "@playwright/test": "^1.48.2",
     "@quasar/app-vite": "^1.0.0",
     "@types/howler": "^2.2.7",
     "@types/jwt-decode": "^3.1.0",

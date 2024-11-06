@@ -27,7 +27,7 @@
           border-color: transparent;
           cursor: pointer;
         "
-        :data-test="isDev ? 'button-' + buttonValue(idx) : ''"
+        :data-test="'button-' + buttonValue(idx)"
       >
         <img
           :src="'images/memory/' + buttonValue(idx) + '.jpg'"
@@ -58,13 +58,12 @@ import { shuffle } from 'src/util/array.utils';
 import { useRouter } from 'vue-router';
 import { preloadAssets } from 'src/util/preload-assets';
 
-const { soundService, revealed, store, inputDisabled, difficulty, isDev } =
-  createExerciseContext({
-    playAudioCb: () => undefined,
-    nextQuestionCb: () => nextQuestion(),
-    startCb: () => nextQuestion(),
-    skipCb: () => undefined,
-  });
+const { soundService, revealed, store, inputDisabled } = createExerciseContext({
+  playAudioCb: () => undefined,
+  nextQuestionCb: () => nextQuestion(),
+  startCb: () => nextQuestion(),
+  skipCb: () => undefined,
+});
 
 let permutation: number[] = [];
 let fileList: Ref<string[]> = ref([]);
@@ -78,9 +77,7 @@ const buttons = ref();
 const router = useRouter();
 
 onBeforeMount(() => {
-  const numberOfQuestions =
-    difficulty.value === 'normal' ? 6 : difficulty.value === 'hard' ? 12 : 20;
-  exerciseUtils.createExercise(numberOfQuestions, false);
+  exerciseUtils.createExercise();
 });
 
 onMounted(async () => {

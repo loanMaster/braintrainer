@@ -1,4 +1,4 @@
-import { expect, Page, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { navigateToGame } from 'app/tests/pom/navigate-to-game.pom';
 import { listenForConsoleErrors } from 'app/tests/listen-for-console-errors';
 
@@ -10,7 +10,7 @@ test('train word-scramble', async ({ page }) => {
   const coreExercise = await page.getByTestId('core-exercise');
 
   let previousSolution = '';
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 6; i++) {
     await expect(coreExercise).not.toHaveAttribute(
       'data-test',
       previousSolution,
@@ -25,5 +25,5 @@ test('train word-scramble', async ({ page }) => {
     previousSolution = solution;
   }
 
-  await page.waitForURL('http://localhost:9000/de/score-screen');
+  await page.waitForURL('/#/de/score-screen');
 });

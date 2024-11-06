@@ -40,7 +40,7 @@
         <SkipRepeatButtons />
         <div
           class="max-width-xs row wrap justify-center q-gutter-sm"
-          :data-test="isDev && solution"
+          :data-test="solution"
           style="margin-top: 0"
           data-testid="core-exercise"
         >
@@ -90,7 +90,6 @@ const {
   revealed,
   route,
   store,
-  isDev,
   inputDisabled,
   onSolutionConfirmed,
 } = createExerciseContext({
@@ -114,7 +113,7 @@ const currentAudio: Ref<{ val: string; key: string; src: string } | undefined> =
   ref(undefined);
 
 onBeforeMount(() => {
-  exerciseUtils.createExercise(sequenceLength.value);
+  exerciseUtils.createExercise();
 });
 
 const difficulty = computed(() => route.params.difficulty);
@@ -156,20 +155,14 @@ async function start() {
   store.beginExercise();
 
   shuffle(task.value.words);
-  permutation.value = shuffle(Array.from(Array(sequenceLength.value).keys()));
-  for (let idx = 0; idx < sequenceLength.value; idx++) {
+  permutation.value = shuffle(
+    Array.from(Array(store.exercise.totalQuestions).keys())
+  );
+  for (let idx = 0; idx < store.exercise.totalQuestions; idx++) {
     buttonLabels.value[idx] = task.value!.words[permutation.value[idx]].key;
   }
   nextQuestion();
 }
-
-const sequenceLength = computed(() => {
-  return difficulty.value === 'normal'
-    ? 5
-    : difficulty.value === 'hard'
-    ? 7
-    : 9;
-});
 
 async function nextQuestion() {
   if (
@@ -202,7 +195,7 @@ function loadTask(): LanguageBasics {
   const result = new ExerciseService().getLanguageBasics(
     difficulty.value as string
   );
-  const sub = shuffle(result.words).splice(0, sequenceLength.value);
+  const sub = shuffle(result.words).splice(0, store.exercise.totalQuestions);
   return {
     lang: result.lang,
     words: sub,
