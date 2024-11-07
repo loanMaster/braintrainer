@@ -15,7 +15,7 @@ export default {
   'solve-equation': {
     title: 'Solve Equations',
     description: 'Memorize the equations and solve for x.',
-    hint: 'Memorize the equations and solve for x.',
+    hint: 'Memorize the equations read aloud and solve for x.',
   },
   'find-relative': {
     title: 'Find Your Relative',
@@ -25,7 +25,7 @@ export default {
   'word-scramble': {
     title: 'Word Scramble',
     description: 'Form a word from the letters provided.',
-    hint: 'Form a word from the letters provided.',
+    hint: 'Form a word from the letters read aloud.',
   },
   'memory-animals': {
     title: 'Memory - Animals',

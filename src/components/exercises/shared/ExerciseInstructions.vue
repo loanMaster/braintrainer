@@ -2,12 +2,7 @@
   <div style="max-width: 512px">
     <q-card class="q-ma-sm">
       <q-card-section class="text-center" v-if="store.exercise.audio">
-        <q-icon
-          :name="matWarning"
-          tag="timer-outline"
-          size="3rem"
-          color="yellow"
-        ></q-icon
+        <q-icon :name="matVolumeUp" tag="timer-outline" size="3rem"></q-icon
         ><br />
         {{
           $t(
@@ -37,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { matWarning } from '@quasar/extras/material-icons';
+import { matVolumeUp } from '@quasar/extras/material-icons';
 import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { keyInput } from 'src/util/key.input';

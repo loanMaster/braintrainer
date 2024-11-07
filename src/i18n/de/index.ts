@@ -15,7 +15,7 @@ export default {
   'solve-equation': {
     title: 'Gleichungen lösen',
     description: 'Merke dir die Gleichung und löse nach x auf.',
-    hint: 'Merke dir die Gleichung und löse nach x auf.',
+    hint: 'Merke dir die vorgelesenen Gleichungen und löse nach x auf.',
   },
   'find-relative': {
     title: 'Verwandtschaft bestimmen',
@@ -75,13 +75,13 @@ export default {
     title: 'Zahlen merken',
     description:
       'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.',
-    hint: 'Merke dir die Zahlen und gib sie in der richtigen Reihenfolge wieder.',
+    hint: 'Merke dir die vorgelesenen Zahlen und gib sie in der richtigen Reihenfolge wieder.',
   },
   'remember-words': {
     title: 'Wörter merken',
     description:
       'Merke dir die Wörter und gib sie in der richtigen Reihenfolge wieder',
-    hint: 'Merke dir die Wörter und gib sie in der richtigen Reihenfolge wieder.',
+    hint: 'Merke dir vorgelesenen die Wörter und gib sie in der richtigen Reihenfolge wieder.',
   },
   'math-marathon': {
     title: 'Mathe-Marathon',
